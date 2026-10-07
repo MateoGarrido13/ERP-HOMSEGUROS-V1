@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #181f27;
+  --hom-color-primary: #ff9f1c;
+  --hom-color-primary-soft: #f8af37;
+  --hom-color-secondary: #110229;
+  --hom-color-text: #181f27;
+  --hom-color-body: #343c46;
+  --hom-color-muted: #4f4f67;
+  --hom-color-teal: #10c0c0;
+  --hom-color-teal-deep: #2090a0;
+  --hom-color-ink: #001020;
+  --hom-color-wash: #e7f7f6;
+  --hom-color-line: #e8e8e8;
+  --hom-color-field: #d7daea;
+  --hom-color-field-text: #555555;
+  --hom-color-tab: #b6b6b6;
+  --hom-color-whatsapp: #25d366;
+  --hom-color-accent: #23a455;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--hom-color-primary);
+  --color-primary-soft: var(--hom-color-primary-soft);
+  --color-secondary: var(--hom-color-secondary);
+  --color-ink: var(--hom-color-text);
+  --color-body: var(--hom-color-body);
+  --color-muted: var(--hom-color-muted);
+  --color-teal: var(--hom-color-teal);
+  --color-teal-deep: var(--hom-color-teal-deep);
+  --color-night: var(--hom-color-ink);
+  --color-wash: var(--hom-color-wash);
+  --color-line: var(--hom-color-line);
+  --color-field: var(--hom-color-field);
+  --color-field-text: var(--hom-color-field-text);
+  --color-tab: var(--hom-color-tab);
+  --color-whatsapp: var(--hom-color-whatsapp);
+  --color-accent: var(--hom-color-accent);
+  --font-sans: var(--font-inter), "Inter", sans-serif;
+  --font-display: var(--font-dm), "DM Sans", Arial, sans-serif;
+  --radius-pill: 50px;
+  --radius-field: 6px;
+}
+
+body {
+  background: var(--hom-color-wash);
+  color: var(--hom-color-text);
+  font-family: var(--font-sans);
+}
