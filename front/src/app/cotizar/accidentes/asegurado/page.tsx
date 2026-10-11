@@ -1,4 +1,4 @@
-import { AseguradoForm } from "@/components/quote/asegurado-form"
+import { AseguradoOrigen } from "@/components/quote/asegurado-origen"
 import { accidentesHref, loadAccidentes } from "@/lib/accidentes-search"
 import { loadAsegurado } from "@/lib/asegurado-search"
 
@@ -14,7 +14,7 @@ export default async function AccidentesAseguradoPage({
   ])
 
   return (
-    <AseguradoForm
+    <AseguradoOrigen
       asegurado={asegurado}
       continueHref={accidentesHref("/cotizar/accidentes/enviado", accidentes)}
     />

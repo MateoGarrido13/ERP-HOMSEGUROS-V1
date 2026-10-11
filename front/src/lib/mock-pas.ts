@@ -59,6 +59,23 @@ export function offerById(id: CompanyId) {
   return offers.find((offer) => offer.id === id) ?? offers[0]
 }
 
+export function pickFeatured(ids: readonly CompanyId[]) {
+  const chosen = offers.filter((offer) => ids.includes(offer.id))
+  return (
+    chosen.find((offer) => offer.isRecommended) ??
+    chosen.toSorted((left, right) => left.monthly - right.monthly)[0]
+  )
+}
+
+export function offerSelection(compania: CompanyId, alternativas: readonly CompanyId[]) {
+  const featured = offerById(compania)
+  const alternatives = offers.filter(
+    (offer) => offer.id !== featured.id && alternativas.includes(offer.id),
+  )
+
+  return { featured, alternatives }
+}
+
 export const modelLines = ["Onix 1.2 LT"]
 
 export const decodedRisk = {

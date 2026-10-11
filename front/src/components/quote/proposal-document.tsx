@@ -3,7 +3,7 @@ import { ScreenBody } from "@/components/ui/screen-body"
 import { ScreenTitle } from "@/components/ui/screen-title"
 import { SurfaceCard } from "@/components/ui/surface-card"
 import { formatPesos } from "@/lib/format"
-import { decodedRisk, holder, offerById, producer } from "@/lib/mock-pas"
+import { decodedRisk, holder, offerSelection, producer } from "@/lib/mock-pas"
 import { quoteHref, type QuoteSearch } from "@/lib/quote-search"
 
 interface ProposalDocumentProps {
@@ -11,7 +11,7 @@ interface ProposalDocumentProps {
 }
 
 export function ProposalDocument({ quote }: ProposalDocumentProps) {
-  const offer = offerById(quote.compania)
+  const { featured: offer, alternatives } = offerSelection(quote.compania, quote.alternativas)
   const vehicle = [quote.marca || decodedRisk.brand, quote.modelo || decodedRisk.line, quote.anio]
     .filter(Boolean)
     .join(" ")
@@ -36,7 +36,8 @@ export function ProposalDocument({ quote }: ProposalDocumentProps) {
           Productor: {producer.name} — matrícula {producer.license}
         </p>
         <hr className="my-3 border-line" />
-        <p className="text-[13px] font-medium text-ink">
+        <p className="text-[11px] font-medium tracking-wide text-teal-deep">OPCIÓN DESTACADA</p>
+        <p className="mt-1 text-[13px] font-medium text-ink">
           {offer.name} · {offer.coverage}
         </p>
         <dl className="mt-2 flex flex-col gap-1.5">
@@ -52,6 +53,21 @@ export function ProposalDocument({ quote }: ProposalDocumentProps) {
           <p className="text-lg font-bold text-ink">{formatPesos(offer.monthly)}</p>
         </div>
       </SurfaceCard>
+      {alternatives.length > 0 ? (
+        <section className="flex flex-col gap-2.5">
+          <h2 className="text-sm font-medium text-teal-deep">Alternativas</h2>
+          {alternatives.map((alternative) => (
+            <SurfaceCard key={alternative.id}>
+              <p className="text-base font-medium text-ink">
+                {alternative.name} · {alternative.coverage}
+              </p>
+              <p className="mt-1 font-display text-[22px] font-bold text-ink">
+                {formatPesos(alternative.monthly)}
+              </p>
+            </SurfaceCard>
+          ))}
+        </section>
+      ) : null}
       <BrandButtonLink href={quoteHref("/cotizar/enviado", quote)} variant="whatsapp">
         Enviar a {holder.name}
       </BrandButtonLink>

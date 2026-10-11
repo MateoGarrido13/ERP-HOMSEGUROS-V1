@@ -3,7 +3,7 @@ import { ScreenBody } from "@/components/ui/screen-body"
 import { ScreenTitle } from "@/components/ui/screen-title"
 import { SurfaceCard } from "@/components/ui/surface-card"
 import { formatPesos } from "@/lib/format"
-import { offerById, producer, proposalTrace } from "@/lib/mock-pas"
+import { offerSelection, producer, proposalTrace } from "@/lib/mock-pas"
 import { loadQuote } from "@/lib/quote-search"
 
 export default async function EnviadoPage({
@@ -12,7 +12,7 @@ export default async function EnviadoPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
   const quote = await loadQuote(searchParams)
-  const offer = offerById(quote.compania)
+  const { featured: offer, alternatives } = offerSelection(quote.compania, quote.alternativas)
 
   return (
     <ScreenBody>
@@ -33,6 +33,11 @@ export default async function EnviadoPage({
         <p className="mt-1 text-sm font-light text-body">
           {offer.name} {formatPesos(offer.monthly)} · {proposalTrace.version}
         </p>
+        {alternatives.length > 0 ? (
+          <p className="mt-1 text-sm font-light text-body">
+            Alternativas: {alternatives.map((alternative) => alternative.name).join(", ")}
+          </p>
+        ) : null}
       </SurfaceCard>
       <BrandButtonLink href="/cartera" variant="whatsapp">
         Ver cartera

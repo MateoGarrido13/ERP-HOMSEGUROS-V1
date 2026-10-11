@@ -1,6 +1,7 @@
 import {
   createLoader,
   createSerializer,
+  parseAsArrayOf,
   parseAsBoolean,
   parseAsString,
   parseAsStringLiteral,
@@ -25,6 +26,7 @@ export const quoteParsers = {
   modelo: parseAsString.withDefault(""),
   nuevo: parseAsBoolean.withDefault(false),
   compania: parseAsStringLiteral(companyIds).withDefault("sancor"),
+  alternativas: parseAsArrayOf(parseAsStringLiteral(companyIds)).withDefault([]),
 }
 
 export type QuoteSearch = inferParserType<typeof quoteParsers>

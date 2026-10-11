@@ -13,6 +13,7 @@ const screens: { prefix: string; kicker: string; tab: TabId }[] = [
   { prefix: "/cotizar/pdf", kicker: "Propuesta PDF", tab: "cotizar" },
   { prefix: "/cotizar/propuesta", kicker: "Propuesta", tab: "cotizar" },
   { prefix: "/cotizar/comparar", kicker: "", tab: "cotizar" },
+  { prefix: "/cotizar/asegurado", kicker: "Datos del asegurado", tab: "cotizar" },
   { prefix: "/cotizar/riesgo", kicker: "Datos del riesgo", tab: "cotizar" },
   { prefix: "/cotizar/art/enviado", kicker: "Solicitud enviada", tab: "cotizar" },
   { prefix: "/cotizar/art/asegurado", kicker: "Datos del asegurado", tab: "cotizar" },

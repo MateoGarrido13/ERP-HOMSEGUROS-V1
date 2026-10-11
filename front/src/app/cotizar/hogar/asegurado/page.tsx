@@ -1,4 +1,4 @@
-import { AseguradoForm } from "@/components/quote/asegurado-form"
+import { AseguradoOrigen } from "@/components/quote/asegurado-origen"
 import { loadAsegurado } from "@/lib/asegurado-search"
 import { hogarHref, loadHogar } from "@/lib/hogar-search"
 
@@ -11,6 +11,9 @@ export default async function HogarAseguradoPage({
   const [hogar, asegurado] = await Promise.all([loadHogar(params), loadAsegurado(params)])
 
   return (
-    <AseguradoForm asegurado={asegurado} continueHref={hogarHref("/cotizar/hogar/enviado", hogar)} />
+    <AseguradoOrigen
+      asegurado={asegurado}
+      continueHref={hogarHref("/cotizar/hogar/enviado", hogar)}
+    />
   )
 }

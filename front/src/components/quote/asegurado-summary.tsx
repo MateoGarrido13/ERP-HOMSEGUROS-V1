@@ -9,9 +9,11 @@ export function AseguradoSummary({ asegurado }: { asegurado: AseguradoSearch }) 
       <p className="mt-1 text-sm font-medium text-ink">
         {asegurado.nombre} {asegurado.apellido}
       </p>
-      <p className="mt-1 text-sm font-light text-body">
-        {asegurado.email} · {asegurado.telefono}
-      </p>
+      {asegurado.email || asegurado.telefono ? (
+        <p className="mt-1 text-sm font-light text-body">
+          {[asegurado.email, asegurado.telefono].filter(Boolean).join(" · ")}
+        </p>
+      ) : null}
       {asegurado.dni ? (
         <p className="mt-1 text-sm font-light text-body">DNI {asegurado.dni}</p>
       ) : null}

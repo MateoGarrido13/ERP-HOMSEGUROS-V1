@@ -65,7 +65,7 @@ export function RiskForm({ quote }: RiskFormProps) {
     if (Object.values(nextErrors).some(Boolean)) return
 
     router.push(
-      quoteHref("/cotizar/comparar", quote, {
+      quoteHref("/cotizar/asegurado", quote, {
         nuevo: isNew,
         uso: isCommercial ? "comercial" : "particular",
         marca: brand,
