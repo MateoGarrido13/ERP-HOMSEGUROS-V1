@@ -1,5 +1,11 @@
-import { redirect } from "next/navigation"
+import { Suspense } from "react"
+
+import { LoginForm } from "@/components/auth/login-form"
 
 export default function Home() {
-  redirect("/cotizar")
+  return (
+    <Suspense fallback={<div className="flex-1" />}>
+      <LoginForm />
+    </Suspense>
+  )
 }

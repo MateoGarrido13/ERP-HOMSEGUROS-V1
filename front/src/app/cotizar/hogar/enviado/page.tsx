@@ -1,3 +1,4 @@
+import { SignedName } from "@/components/auth/signed-identity"
 import { ShareNotice } from "@/components/collections/share-notice"
 import { AseguradoSummary } from "@/components/quote/asegurado-summary"
 import { ScreenBody } from "@/components/ui/screen-body"
@@ -11,7 +12,6 @@ import {
   viviendaTipoLabels,
   viviendaUsoLabels,
 } from "@/lib/hogar-search"
-import { producer } from "@/lib/mock-pas"
 import { decodeObjetos, objetoResumen } from "@/lib/objetos-particulares"
 import { quoteWhatsappLabel, quoteWhatsappMessage } from "@/lib/quote-share"
 
@@ -38,7 +38,7 @@ export default async function HogarEnviadoPage({
       {hasSummary && hogar.uso && hogar.vivienda && hogar.mascotas ? (
         <SurfaceCard tone="mint">
           <p className="text-[11px] font-medium tracking-wide text-teal-deep">
-            HOGAR · {producer.name}
+            HOGAR · <SignedName />
           </p>
           <p className="mt-2 text-[19px] leading-tight font-medium text-ink">
             {viviendaTipoLabels[hogar.vivienda]}

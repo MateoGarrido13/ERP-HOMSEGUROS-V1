@@ -1,3 +1,4 @@
+import { SignedName } from "@/components/auth/signed-identity"
 import { ShareNotice } from "@/components/collections/share-notice"
 import { AseguradoSummary } from "@/components/quote/asegurado-summary"
 import { ScreenBody } from "@/components/ui/screen-body"
@@ -6,7 +7,6 @@ import { SurfaceCard } from "@/components/ui/surface-card"
 import { loadAsegurado } from "@/lib/asegurado-search"
 import { formatCuit, loadArt } from "@/lib/art-search"
 import { formatPesos } from "@/lib/format"
-import { producer } from "@/lib/mock-pas"
 import { quoteWhatsappLabel, quoteWhatsappMessage } from "@/lib/quote-share"
 
 export default async function ArtEnviadoPage({
@@ -32,7 +32,7 @@ export default async function ArtEnviadoPage({
       {hasSummary ? (
         <SurfaceCard tone="mint">
           <p className="text-[11px] font-medium tracking-wide text-teal-deep">
-            ART · {producer.name}
+            ART · <SignedName />
           </p>
           <p className="mt-2 text-[19px] leading-tight font-medium text-ink">{art.empresa}</p>
           <p className="mt-2 text-sm font-light text-body">CUIT {formatCuit(art.cuit)}</p>

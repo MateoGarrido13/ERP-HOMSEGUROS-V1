@@ -2,12 +2,14 @@
 
 import { useState } from "react"
 
+import { useSignedName } from "@/components/auth/signed-identity"
 import { ShareNotice } from "@/components/collections/share-notice"
 import { SurfaceCard } from "@/components/ui/surface-card"
 import { cn } from "@/lib/cn"
-import { collections } from "@/lib/mock-pas"
+import { collections, personalizeName } from "@/lib/mock-pas"
 
 export function CollectionBoard() {
+  const name = useSignedName()
   const [openIds, setOpenIds] = useState<string[]>([])
 
   function toggle(id: string) {
@@ -47,7 +49,7 @@ export function CollectionBoard() {
             {isOpen ? (
               <ShareNotice
                 actionLabel={item.actionLabel}
-                message={item.message}
+                message={personalizeName(item.message, name)}
               />
             ) : null}
           </div>

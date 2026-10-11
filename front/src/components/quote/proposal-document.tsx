@@ -1,9 +1,10 @@
+import { SignedLicense, SignedName } from "@/components/auth/signed-identity"
 import { BrandButtonLink } from "@/components/ui/brand-button"
 import { ScreenBody } from "@/components/ui/screen-body"
 import { ScreenTitle } from "@/components/ui/screen-title"
 import { SurfaceCard } from "@/components/ui/surface-card"
 import { formatPesos } from "@/lib/format"
-import { decodedRisk, holder, offerSelection, producer } from "@/lib/mock-pas"
+import { decodedRisk, holder, offerSelection } from "@/lib/mock-pas"
 import { quoteHref, type QuoteSearch } from "@/lib/quote-search"
 
 interface ProposalDocumentProps {
@@ -33,7 +34,7 @@ export function ProposalDocument({ quote }: ProposalDocumentProps) {
           Tomador: {holder.name} · {quote.patente} · {vehicle}
         </p>
         <p className="mt-1 text-[13px] font-light text-body">
-          Productor: {producer.name} — matrícula {producer.license}
+          Productor: <SignedName /> — matrícula <SignedLicense />
         </p>
         <hr className="my-3 border-line" />
         <p className="text-[11px] font-medium tracking-wide text-teal-deep">OPCIÓN DESTACADA</p>

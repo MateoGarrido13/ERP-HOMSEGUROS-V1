@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useQueryStates } from "nuqs"
 
+import { useSignedName } from "@/components/auth/signed-identity"
 import { ShareNotice } from "@/components/collections/share-notice"
 import { SurfaceCard } from "@/components/ui/surface-card"
 import { SelectField } from "@/components/ui/text-field"
@@ -23,9 +24,11 @@ import {
   ramoLabels,
   type PortfolioPolicy,
 } from "@/lib/portfolio"
+import { personalizeName } from "@/lib/mock-pas"
 import { companyIds } from "@/lib/quote-search"
 
 export function ClientSearch() {
+  const name = useSignedName()
   const [filters, setFilters] = useQueryStates(portfolioParsers)
   const [openId, setOpenId] = useState<string | null>(null)
   const clients = groupClients(
@@ -156,7 +159,7 @@ export function ClientSearch() {
                               ? `Enviar póliza de ${ramoLabels[policy.ramo]}`
                               : "Enviar póliza"
                           }
-                          message={policyShareMessage(policy)}
+                          message={personalizeName(policyShareMessage(policy), name)}
                         />
                       </div>
                     ))}

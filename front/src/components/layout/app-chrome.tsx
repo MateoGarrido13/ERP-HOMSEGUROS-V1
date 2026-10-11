@@ -4,9 +4,10 @@ import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
 
+import { useSession } from "@/components/auth/session-provider"
+import { roleLabels } from "@/lib/access"
 import { cn } from "@/lib/cn"
-import { screenForPath, tabs } from "@/lib/navigation"
-import { producer } from "@/lib/mock-pas"
+import { networkTabs, screenForPath, tabs } from "@/lib/navigation"
 
 export function StatusBar() {
   return (
@@ -19,7 +20,9 @@ export function StatusBar() {
 
 export function AppHeader() {
   const pathname = usePathname()
+  const { account } = useSession()
   const { kicker } = screenForPath(pathname)
+  if (!account) return null
 
   return (
     <header className="flex items-center gap-3 border-b border-line bg-white px-4 pt-2 pb-3">
@@ -34,7 +37,7 @@ export function AppHeader() {
       <div className="flex min-w-0 flex-col gap-0.5">
         {kicker ? <p className="text-xs font-normal text-muted">{kicker}</p> : null}
         <p className="text-[13px] font-medium text-ink">
-          {producer.role} · {producer.name}
+          {roleLabels[account.role].short} · {account.name}
         </p>
       </div>
     </header>
@@ -44,14 +47,16 @@ export function AppHeader() {
 export function TabBar() {
   const pathname = usePathname()
   const search = useSearchParams().toString()
+  const { account } = useSession()
   const { tab: activeTab } = screenForPath(pathname)
+  const items = account?.role === "pas" ? tabs : networkTabs
 
   return (
     <nav
-      aria-label="Secciones del productor"
+      aria-label="Secciones"
       className="flex border-t border-line bg-white px-2 pt-2.5 pb-5"
     >
-      {tabs.map((tab) => {
+      {items.map((tab) => {
         const isActive = tab.id === activeTab
         const href =
           tab.id === "cotizar" && search ? `${tab.href}?${search}` : tab.href

@@ -2,12 +2,15 @@
 
 import { useState } from "react"
 
+import { useSignedName } from "@/components/auth/signed-identity"
 import { ShareNotice } from "@/components/collections/share-notice"
 import { StatusPill } from "@/components/ui/status-pill"
 import { SurfaceCard } from "@/components/ui/surface-card"
+import { personalizeName } from "@/lib/mock-pas"
 import { pendingNotices, pendingWhatsappLabel } from "@/lib/pendientes"
 
 export function PendingBoard() {
+  const name = useSignedName()
   const [openId, setOpenId] = useState<string | null>(null)
 
   function toggle(id: string) {
@@ -53,7 +56,7 @@ export function PendingBoard() {
                 <div className="mt-4">
                   <ShareNotice
                     actionLabel={pendingWhatsappLabel}
-                    message={notice.message}
+                    message={personalizeName(notice.message, name)}
                   />
                 </div>
               </SurfaceCard>

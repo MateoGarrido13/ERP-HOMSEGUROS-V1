@@ -1,3 +1,4 @@
+import { SignedName } from "@/components/auth/signed-identity"
 import { ShareNotice } from "@/components/collections/share-notice"
 import { AseguradoSummary } from "@/components/quote/asegurado-summary"
 import { ScreenBody } from "@/components/ui/screen-body"
@@ -10,7 +11,6 @@ import {
   personasLabels,
 } from "@/lib/accidentes-search"
 import { formatPesos } from "@/lib/format"
-import { producer } from "@/lib/mock-pas"
 import { quoteWhatsappLabel, quoteWhatsappMessage } from "@/lib/quote-share"
 
 function formatDate(iso: string) {
@@ -46,7 +46,7 @@ export default async function AccidentesEnviadoPage({
       {hasSummary && accidentes.personas && accidentes.documento ? (
         <SurfaceCard tone="mint">
           <p className="text-[11px] font-medium tracking-wide text-teal-deep">
-            ACCIDENTES · {producer.name}
+            ACCIDENTES · <SignedName />
           </p>
           <p className="mt-2 text-[19px] leading-tight font-medium text-ink">
             {accidentes.actividad}

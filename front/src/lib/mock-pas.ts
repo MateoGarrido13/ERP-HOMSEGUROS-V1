@@ -6,6 +6,10 @@ export const producer = {
   role: "PAS",
 }
 
+export function personalizeName(text: string, name: string) {
+  return name === producer.name ? text : text.replaceAll(producer.name, name)
+}
+
 export const holder = {
   name: "Laura Pérez",
   plate: "AB 123 CD",

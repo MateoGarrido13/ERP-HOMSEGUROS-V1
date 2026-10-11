@@ -9,7 +9,7 @@ export default function NotFound() {
       <p className="text-sm font-light text-body">
         El prototipo del PAS cubre cotizar, cartera, pendientes, siniestros y perfil.
       </p>
-      <BrandButtonLink href="/cotizar">Volver a cotizar</BrandButtonLink>
+      <BrandButtonLink href="/">Volver al inicio</BrandButtonLink>
     </ScreenBody>
   )
 }

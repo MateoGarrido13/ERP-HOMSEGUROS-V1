@@ -1,9 +1,10 @@
+import { SignedName } from "@/components/auth/signed-identity"
 import { BrandButtonLink } from "@/components/ui/brand-button"
 import { ScreenBody } from "@/components/ui/screen-body"
 import { ScreenTitle } from "@/components/ui/screen-title"
 import { SurfaceCard } from "@/components/ui/surface-card"
 import { formatPesos } from "@/lib/format"
-import { offerSelection, producer, proposalTrace } from "@/lib/mock-pas"
+import { offerSelection, proposalTrace } from "@/lib/mock-pas"
 import { loadQuote } from "@/lib/quote-search"
 
 export default async function EnviadoPage({
@@ -28,7 +29,7 @@ export default async function EnviadoPage({
           {proposalTrace.code}
         </p>
         <p className="mt-2 text-sm font-light text-body">
-          {producer.name} · {proposalTrace.when}
+          <SignedName /> · {proposalTrace.when}
         </p>
         <p className="mt-1 text-sm font-light text-body">
           {offer.name} {formatPesos(offer.monthly)} · {proposalTrace.version}

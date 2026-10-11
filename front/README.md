@@ -7,4 +7,4 @@ npm install
 npm run dev
 ```
 
-Abrí [http://localhost:3000](http://localhost:3000). El recorrido arranca en Cotizar.
+Abrí [http://localhost:3000](http://localhost:3000). El recorrido arranca en el ingreso.

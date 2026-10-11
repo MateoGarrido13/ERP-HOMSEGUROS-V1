@@ -6,7 +6,12 @@ export const tabs = [
   { id: "perfil", href: "/perfil", label: "Perfil" },
 ] as const
 
-export type TabId = (typeof tabs)[number]["id"]
+export const networkTabs = [
+  { id: "red", href: "/red", label: "Red" },
+  { id: "perfil", href: "/perfil", label: "Perfil" },
+] as const
+
+export type TabId = (typeof tabs)[number]["id"] | (typeof networkTabs)[number]["id"]
 
 const screens: { prefix: string; kicker: string; tab: TabId }[] = [
   { prefix: "/cotizar/enviado", kicker: "Enviado", tab: "cotizar" },
@@ -30,6 +35,7 @@ const screens: { prefix: string; kicker: string; tab: TabId }[] = [
   { prefix: "/pendientes", kicker: "Pendientes", tab: "pendientes" },
   { prefix: "/siniestros", kicker: "Siniestros", tab: "siniestros" },
   { prefix: "/perfil", kicker: "Perfil", tab: "perfil" },
+  { prefix: "/red", kicker: "Red", tab: "red" },
 ]
 
 export function screenForPath(pathname: string) {
