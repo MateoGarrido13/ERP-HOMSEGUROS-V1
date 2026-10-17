@@ -16,6 +16,7 @@ Las rutas son relativas a `design/front/docs/casos-de-uso/`. Lo compartido por t
 
 ```
 casos-de-uso/
+  transicion-estados-bien.md           Grafo de estados del bien
   login-logout/                 1–4    Acceso, todos los roles
   rubrica_ssn/                  60–61  Extraer archivos y presentar la rúbrica
   PAS/
@@ -65,17 +66,17 @@ casos-de-uso/
 
 El caso 6 se parte en dos archivos, en `PAS/pendientes/`:
 
-- `CU-Pendientes-06` Resolver un aviso
-- `CU-Pendientes-06b` Editar un aviso
+- `CU-06-Pendientes_Resolver_Aviso` Resolver un aviso
+- `CU-06b-Pendientes_Editar_Aviso` Editar un aviso
 | 7   | Contactar al cliente por WhatsApp/ mail desde un aviso                              | P      | MVP  |
 | 8   | Gestionar un lead (contactar, reactivar, descartar, convertir en cotización) [epic] | A      | MVP  |
 
 El caso 8 se parte en cuatro archivos, en `PAS/pendientes/`:
 
-- `CU-Pendientes-08a` Contactar un lead
-- `CU-Pendientes-08b` Reactivar un lead
-- `CU-Pendientes-08c` Descartar un lead
-- `CU-Pendientes-08d` Convertir un lead en cotización
+- `CU-08a-Pendientes_Contactar_Lead` Contactar un lead
+- `CU-08b-Pendientes_Reactivar_Lead` Reactivar un lead
+- `CU-08c-Pendientes_Descartar_Lead` Descartar un lead
+- `CU-08d-Pendientes_Convertir_Lead_en_Cotizacion` Convertir un lead en cotización
 
 ## PAS: cotización y venta
 
@@ -108,12 +109,12 @@ El caso 8 se parte en cuatro archivos, en `PAS/pendientes/`:
 
 | #   | Caso de uso                                                           | Origen | Fase |
 | --- | --------------------------------------------------------------------- | ------ | ---- |
-| 27  | Buscar y filtrar clientes (sumar búsqueda por nombre)                 | A      | MVP  |
-| 28  | Dar de alta un cliente de forma independiente                         | A      | MVP  |
+| 27  | Buscar y filtrar clientes con póliza vigente (búsqueda por nombre). El "+" suma una póliza | A      | MVP  |
+| 28  | Sumar una póliza con "+" (redirige a cotizar). El cliente entra a la cartera solo con una cobertura o póliza asociada | A      | MVP  |
 | 29  | Editar los datos de un cliente                                        | N      | MVP  |
-| 30  | Ver la ficha del cliente (contacto, pólizas, propuestas, historial)   | A      | MVP  |
-| 31  | Ver la cartera y su distribución por ramo                             | P      | MVP  |
-| 32  | Ver el detalle de una póliza                                          | A      | MVP  |
+| 30  | Ver la ficha del cliente (contacto, pólizas vigentes, propuestas, historial). El "+" suma una póliza | A      | MVP  |
+| 31  | Ver la cartera y su distribución por ramo, solo pólizas vigentes      | P      | MVP  |
+| 32  | Ver el detalle de una póliza vigente                                  | A      | MVP  |
 | 33  | Enviar la póliza al cliente [#REP23]                                  | P      | MVP  |
 | 34  | Cargar pólizas ya existentes (carga inicial de la cartera) [SENSIBLE] | N      | MVP  |
 
@@ -271,7 +272,7 @@ Pendiente hasta que se redacten las tareas del rol. Hipótesis a validar:
 ## Qué le falta al prototipo
 
 1. **Registro de la póliza emitida** (caso 25). Es el hueco más grande: el flujo va de "Propuesta enviada" a "Cartera" sin ningún paso donde se asiente que la compañía emitió la póliza. La app no emite, es intermediaria, pero sin ese registro la cartera no se llena sola y no se puede calcular la conversión. [SERIA CAMBIAR DE ESTADO (HUECO), OFRECER EL AGREGAR]
-2. **Cliente en Automotor** (casos 10, 12 y 28). El flujo no tiene un paso para elegir o crear al cliente, ni forma de re-cotizar desde una póliza.
+2. **Cliente en Automotor** (casos 10 y 12). El flujo de cotización no tiene un paso para elegir o crear al cliente, ni forma de re-cotizar desde una póliza. El caso 28 no da de alta un cliente suelto: el "+" de Cartera redirige a cotizar, y el cliente se incorpora solo si queda una cobertura o póliza asociada.
 3. **Errores y recuperación al cotizar** (casos 14, 16 y 20) [OPCIONES POR DEFAULT].
 4. **Escritura en vez de solo lectura.** Siniestros, mora y avisos solo se pueden ver. Faltan crear, actualizar y cerrar (casos 6, 36, 41 a 43).
 5. **Todo el lado del Directivo y del administrativo** (casos 45 a 56).

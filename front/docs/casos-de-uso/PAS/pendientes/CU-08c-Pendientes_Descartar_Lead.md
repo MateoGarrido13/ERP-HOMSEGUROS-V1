@@ -1,7 +1,7 @@
-*CU-Pendientes-08c-Descartar_Lead* (SERA IMPORTANTE LOGEAR ESTE TIPO DE ACCCIONES -->POR QUE LO DESCARTASTE UN POTENCIAL CLIENTE?)
+## CU-08c-Pendientes_Descartar_Lead (SERA IMPORTANTE LOGEAR ESTE TIPO DE ACCCIONES -->POR QUE LO DESCARTASTE UN POTENCIAL CLIENTE?)
 *Actor principal:* PAS
 *Actor secundario:* Ninguno
-*Precondiciones:* El PAS tiene abierto un lead de su cartera (REF CU-Pendientes-05). Hay conexión.
+*Precondiciones:* El PAS tiene abierto un lead de su cartera (REF CU-05-Pendientes_Ver_Pendientes). Hay conexión.
 *Disparador:* Dejar de trabajar un lead
 
 *Flujo principal*

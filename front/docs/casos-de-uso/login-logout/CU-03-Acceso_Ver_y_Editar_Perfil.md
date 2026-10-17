@@ -1,7 +1,7 @@
-*CU-Acceso-03-Ver_y_Editar_Perfil*
+## CU-03-Acceso_Ver_y_Editar_Perfil
 *Actor principal:* Usuario del ERP (PAS, directivo o administrativo)
 *Actor secundario:* Base de datos 'Usuarios'
-*Precondiciones:* El usuario tiene la sesión abierta (REF CU-Acceso-01). Hay conexión.
+*Precondiciones:* El usuario tiene la sesión abierta (REF CU-01-Acceso_Iniciar_Sesion). Hay conexión.
 *Disparador:* Consultar o actualizar los datos del propio perfil
 
 *Flujo principal*
@@ -15,7 +15,7 @@
 8. El sistema valida nombre y teléfono (*ALT DATOS)
 9. El sistema guarda los cambios y registra usuario, fecha y hora (REF CU 56)
 10. El sistema vuelve a mostrar el perfil en solo lectura, con los datos nuevos
-11. Si el usuario necesita otra contraseña, selecciona "Cambiar contraseña" (REF CU-Acceso-02)
+11. Si el usuario necesita otra contraseña, selecciona "Cambiar contraseña" (REF CU-02-Acceso_Recuperar_o_Cambiar_Contrasena)
 
 *Flujos alternativos*
 
@@ -40,7 +40,7 @@ RN_1: Cada usuario ve y edita su propio perfil. Un PAS no abre el perfil de otro
 RN_2: Rol, matrícula y organización se muestran y no se editan en este caso. Los asigna la organización (REF CU 51, CU 53).
 RN_3: El nombre y el teléfono de contacto los actualiza el propio usuario.
 RN_4: Cancelar la edición no persiste cambios.
-RN_5: El cambio de contraseña no se resuelve en este caso. Sigue el CU-Acceso-02.
+RN_5: El cambio de contraseña no se resuelve en este caso. Sigue el CU-02-Acceso_Recuperar_o_Cambiar_Contrasena.
 
 *Supuestos a confirmar*
 SUP_1: Los campos editables por el usuario son el nombre y el teléfono. El prototipo hoy solo muestra nombre, rol, matrícula y organización.

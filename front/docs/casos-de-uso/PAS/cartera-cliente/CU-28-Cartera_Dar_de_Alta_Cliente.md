@@ -1,0 +1,48 @@
+## CU-28-Cartera_Dar_de_Alta_Cliente
+*Actor principal:* PAS
+*Actor secundario:* Ninguno
+*Precondiciones:* El PAS tiene la sesión abierta (REF CU-01-Acceso_Iniciar_Sesion). Hay conexión.
+*Disparador:* Sumar una póliza desde Cartera, con el control "+"
+
+*Flujo principal*
+1. El PAS abre "Cartera" o la ficha de un cliente que ya está en su cartera (REF CU-27-Cartera_Buscar_y_Filtrar_Clientes, CU-30-Cartera_Ver_Ficha_Cliente)
+2. El PAS selecciona "+"
+3. El sistema redirige a Cotizar (REF CU 9)
+4. Si partió de la ficha, ese cliente queda seleccionado. Si partió de Cartera, el PAS selecciona un cliente existente o carga uno en el flujo de cotización (REF CU 10) (*ALT CLIENTE EXISTENTE)
+5. El PAS completa la cotización del ramo
+6. Cuando queda asociada una cobertura o póliza, vigente o no, el sistema incorpora al cliente en la cartera del PAS (*ALT SIN COBERTURA)
+7. El sistema abre la ficha del cliente (REF CU-30-Cartera_Ver_Ficha_Cliente). En Cartera solo quedan expuestas las pólizas vigentes
+8. El sistema registra el PAS, el cliente, la cobertura o póliza asociada, la fecha y la hora (REF CU 56)
+
+*Flujos alternativos*
+
+`4. El PAS selecciona un cliente existente o carga uno en el flujo de cotización`
+4.1. El documento ya pertenece a un cliente
+4.2. El sistema reutiliza ese cliente y no crea otro registro (REF CU 10)
+4.3. **IR A (5)**
+
+`6. Cuando queda asociada una cobertura o póliza`
+6.1. El PAS abandona Cotizar sin que quede una cobertura o póliza asociada
+6.2. El sistema no incorpora al cliente
+6.3. Si el cliente ya estaba en la cartera, permanece como estaba, sin la póliza nueva
+6.4. **FIN**
+
+*Postcondiciones*
+1. El cliente queda incorporado a la cartera solo si tiene al menos una cobertura o póliza asociada, vigente o no
+2. Si no quedó ninguna cobertura o póliza asociada, no se crea el cliente
+3. En Cartera se exponen únicamente las pólizas vigentes
+4. La incorporación queda en el registro de auditoría
+
+*Reglas de negocio asociadas*
+RN_1: No se puede incorporar un cliente si no tiene una cobertura o póliza asociada. Esa asociación puede estar vigente o no.
+RN_2: "+" no abre un alta de cliente suelta. Redirige a Cotizar (REF CU 9).
+RN_3: Un cliente existente se reutiliza. No se da de alta de nuevo si el documento ya existe (REF CU 10).
+RN_4: El cliente incorporado pertenece a la cartera del PAS que tiene la sesión.
+RN_5: En Cartera solo se exponen las pólizas vigentes. Si el cliente retiró su bien, deja la cartera y pasa a Lead, con origen "Retiró el bien" (REF CU-08a-Pendientes_Contactar_Lead, CU-05-Pendientes_Ver_Pendientes).
+RN_6: Sumar una póliza con "+" no emite la póliza legal. La asociación operativa sigue el registro de emisión (REF CU 25) o la carga inicial (REF CU-34-Cartera_Cargar_Polizas_Existentes).
+
+*Supuestos a confirmar*
+SUP_1: Si una propuesta enviada ya cuenta como cobertura asociada, o si el cliente se incorpora recién cuando se registra la póliza (REF CU 25).
+SUP_2: Cómo se incorpora una persona jurídica. La cartera del prototipo contiene razones sociales.
+SUP_3: Dónde se consulta un cliente ya incorporado cuya única póliza no está vigente y que no retiró el bien. En Cartera no se expone.
+SUP_4: Quién registra que el cliente retiró el bien: el PAS, la compañía o un estado de la póliza.

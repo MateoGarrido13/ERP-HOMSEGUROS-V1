@@ -1,7 +1,7 @@
-*CU-Pendientes-08d-Convertir_Lead_en_Cotizacion*
+## CU-08d-Pendientes_Convertir_Lead_en_Cotizacion
 *Actor principal:* PAS
 *Actor secundario:* Ninguno
-*Precondiciones:* El PAS tiene abierto un lead de su cartera (REF CU-Pendientes-05). Hay conexión. El lead tiene ramo.
+*Precondiciones:* El PAS tiene abierto un lead de su cartera (REF CU-05-Pendientes_Ver_Pendientes). Hay conexión. El lead tiene ramo.
 *Disparador:* Cotizar a partir de un lead
 
 *Flujo principal*
@@ -32,10 +32,10 @@
 RN_1: Recotizar no emite la póliza. La emisión se asienta en otro caso (REF CU 25).
 RN_2: El ramo con el que abre Cotizar es el del lead.
 RN_3: Un cliente que ya existe se reutiliza. No se da de alta de nuevo (REF CU 10).
-RN_4: El lead sale de esta lista si el PAS lo descarta (REF CU-Pendientes-08c) o si lo reactiva y el cliente vuelve a la cartera (REF CU-Pendientes-08b).
+RN_4: El lead sale de esta lista si el PAS lo descarta (REF CU-08c-Pendientes_Descartar_Lead) o si lo reactiva y el cliente vuelve a la cartera (REF CU-08b-Pendientes_Reactivar_Lead).
 RN_5: Hasta que la propuesta se envía, el lead conserva el origen y la fecha anteriores.
 
 *Supuestos a confirmar*
 SUP_1: Hogar, Accidentes Personales y ART abren el flujo de solicitud, no el comparador de Automotor (REF CU 26).
 SUP_2: Si el lead de origen Retiró el bien precarga algún dato del bien anterior, o solo el cliente y el ramo.
-SUP_3: Si al enviar la propuesta también se crea el aviso Cotización enviada en Pendientes (REF CU-Pendientes-05).
+SUP_3: Si al enviar la propuesta también se crea el aviso Cotización enviada en Pendientes (REF CU-05-Pendientes_Ver_Pendientes).

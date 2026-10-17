@@ -1,7 +1,7 @@
-*CU-Pendientes-08a-Contactar_Lead*
+## CU-08a-Pendientes_Contactar_Lead
 *Actor principal:* PAS
 *Actor secundario:* Teléfono, WhatsApp o correo del cliente
-*Precondiciones:* El PAS tiene abierto un lead de su cartera (REF CU-Pendientes-05). Hay conexión. El lead tiene teléfono.
+*Precondiciones:* El PAS tiene abierto un lead de su cartera (REF CU-05-Pendientes_Ver_Pendientes). Hay conexión. El lead tiene teléfono.
 *Disparador:* Contactar a la persona del lead
 
 *Flujo principal*
@@ -38,10 +38,10 @@
 
 *Reglas de negocio asociadas*
 RN_1: En el prototipo, el lead abierto muestra el comentario y el teléfono, y el teléfono inicia una llamada.
-RN_2: WhatsApp y mail usan el mismo criterio que un aviso: firma el PAS autenticado y el texto menciona el origen (REF CU-Pendientes-07).
+RN_2: WhatsApp y mail usan el mismo criterio que un aviso: firma el PAS autenticado y el texto menciona el origen (REF CU-07-Pendientes_Contactar_desde_Aviso).
 RN_3: Los orígenes del prototipo son Cotización enviada y Retiró el bien.
 RN_4: Contactar no saca el lead de la lista.
-RN_5: Abrir el lead sin llamar ni enviar no actualiza la fecha (REF CU-Pendientes-05).
+RN_5: Abrir el lead sin llamar ni enviar no actualiza la fecha (REF CU-05-Pendientes_Ver_Pendientes).
 
 *Supuestos a confirmar*
 SUP_1: WhatsApp y mail en el lead. El prototipo hoy solo expone el teléfono.

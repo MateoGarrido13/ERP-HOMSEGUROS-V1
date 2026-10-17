@@ -1,17 +1,17 @@
-*CU-Acceso-04-Cerrar_Sesion*
+## CU-04-Acceso_Cerrar_Sesion
 *Actor principal:* Usuario del ERP (PAS, directivo o administrativo)
 *Actor secundario:* Ninguno
-*Precondiciones:* El usuario tiene la sesión abierta (REF CU-Acceso-01).
+*Precondiciones:* El usuario tiene la sesión abierta (REF CU-01-Acceso_Iniciar_Sesion).
 *Disparador:* Salir del ERP en este dispositivo
 
 *Flujo principal*
-1. El usuario autenticado selecciona "Cerrar sesión" desde Perfil (REF CU-Acceso-03)
+1. El usuario autenticado selecciona "Cerrar sesión" desde Perfil (REF CU-03-Acceso_Ver_y_Editar_Perfil)
 2. El sistema pide confirmación
 3. El usuario confirma
 4. El sistema invalida la sesión de este dispositivo
 5. El sistema limpia los datos de sesión guardados en el dispositivo
 6. El sistema registra el cierre: usuario, fecha y hora (REF CU 56)
-7. El sistema muestra la pantalla de ingreso, sin el menú de la aplicación (REF CU-Acceso-01)
+7. El sistema muestra la pantalla de ingreso, sin el menú de la aplicación (REF CU-01-Acceso_Iniciar_Sesion)
 
 *Flujos alternativos*
 

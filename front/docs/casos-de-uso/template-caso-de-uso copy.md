@@ -1,4 +1,4 @@
-## CU-FUNCIONALIDAD-XX nombre(verbo en  infinitivo)
+## CU-XX-FUNCIONALIDAD-nombre(verbo en  infinitivo)
 - *Actor principal:*
 - *Actor secundario:*
 - *Precondiciones:*

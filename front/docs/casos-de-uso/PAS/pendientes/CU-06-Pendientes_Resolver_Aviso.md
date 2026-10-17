@@ -1,7 +1,7 @@
-*CU-Pendientes-06-Resolver_Aviso*
+## CU-06-Pendientes_Resolver_Aviso
 *Actor principal:* PAS
 *Actor secundario:* Ninguno
-*Precondiciones:* El PAS tiene abierto un aviso de su cartera (REF CU-Pendientes-05). Hay conexión.
+*Precondiciones:* El PAS tiene abierto un aviso de su cartera (REF CU-05-Pendientes_Ver_Pendientes). Hay conexión.
 *Disparador:* Dar por resuelto un aviso
 
 *Flujo principal*
@@ -16,7 +16,7 @@
 
 `1. En el aviso abierto, el sistema muestra Resuelto`
 1.1. El PAS selecciona "Editar"
-1.2. Sigue el CU-Pendientes-06b-Editar_Aviso
+1.2. Sigue el CU-06b-Pendientes_Editar_Aviso
 1.3. **FIN**
 
 `4. El PAS confirma`
@@ -43,10 +43,10 @@ D.1.3. **FIN**
 
 *Reglas de negocio asociadas*
 RN_1: "Resuelto" se muestra con el aviso abierto. No está dentro de Editar.
-RN_2: Editar el aviso es otro caso (REF CU-Pendientes-06b-Editar_Aviso).
+RN_2: Editar el aviso es otro caso (REF CU-06b-Pendientes_Editar_Aviso).
 RN_3: Cancelar la confirmación no saca el aviso de la lista.
 RN_4: Resolver no borra al cliente, la póliza ni la cotización.
-RN_5: Enviar un mensaje no marca el aviso como resuelto (REF CU-Pendientes-07).
+RN_5: Enviar un mensaje no marca el aviso como resuelto (REF CU-07-Pendientes_Contactar_desde_Aviso).
 RN_6: Cumpleaños es el único tipo que figura un solo día. Si el PAS no lo resuelve, al día siguiente el sistema lo saca.
 RN_7: El resto de los avisos no se vencen solos. Sin Resuelto, continúan listados.
 

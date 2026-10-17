@@ -1,11 +1,11 @@
-*CU-Pendientes-06b-Editar_Aviso*
+## CU-06b-Pendientes_Editar_Aviso
 *Actor principal:* PAS
 *Actor secundario:* Ninguno
-*Precondiciones:* El PAS tiene abierto un aviso de su cartera (REF CU-Pendientes-05). Hay conexión.
+*Precondiciones:* El PAS tiene abierto un aviso de su cartera (REF CU-05-Pendientes_Ver_Pendientes). Hay conexión.
 *Disparador:* Actualizar la descripción o la fecha de importancia de un aviso
 
 *Flujo principal*
-1. En el aviso abierto, el PAS selecciona "Editar" (REF CU-Pendientes-06-Resolver_Aviso)
+1. En el aviso abierto, el PAS selecciona "Editar" (REF CU-06-Pendientes_Resolver_Aviso)
 2. El sistema muestra `NOMBRE Y APELLIDO`, `TIPO DE COBERTURA`, `FECHA DE IMPORTANCIA`, `TIPO` y `DESCRIPCION`
 3. El sistema permite modificar la descripción y consulta si quiere modificar la fecha de importancia (*ALT SIN CAMBIO DE FECHA)
 4. El PAS indica que sí y carga la nueva `FECHA DE IMPORTANCIA` (*ALT FECHA)
@@ -61,8 +61,8 @@ RN_2: En Editar se modifican la descripción y, si el PAS lo confirma, la fecha 
 RN_3: No existe la opción Posponer. Correr un aviso es cambiar su fecha de importancia.
 RN_4: La fecha de importancia es la fecha en que vence el aviso. En Cumpleaños, por defecto, es siempre el mismo día.
 RN_5: Cancelar no persiste el cambio.
-RN_6: Editar no saca el aviso por Resuelto. Eso sigue el CU-Pendientes-06-Resolver_Aviso.
-RN_7: Enviar un mensaje no cambia la descripción ni la fecha (REF CU-Pendientes-07).
+RN_6: Editar no saca el aviso por Resuelto. Eso sigue el CU-06-Pendientes_Resolver_Aviso.
+RN_7: Enviar un mensaje no cambia la descripción ni la fecha (REF CU-07-Pendientes_Contactar_desde_Aviso).
 RN_8: Próxima renovación se publica 30 días antes de su fecha de importancia, en la última cuota, y sigue hasta que el PAS lo resuelva.
 RN_9: Enviar póliza se publica 5 días antes del vencimiento del pago y sigue hasta que el PAS lo resuelva, también después de esa fecha.
 RN_10: Cumpleaños figura solo el día de su fecha de importancia.

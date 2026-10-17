@@ -1,7 +1,7 @@
-*CU-Acceso-02-Recuperar_o_Cambiar_Contrasena*
+## CU-02-Acceso_Recuperar_o_Cambiar_Contrasena
 *Actor principal:* Usuario del ERP (PAS, directivo o administrativo)
 *Actor secundario:* Servicio de correo
-*Precondiciones:* La cuenta existe y está activa (REF CU 51, CU 52). Hay conexión. Para recuperar, el usuario no está autenticado. Para cambiar, el usuario tiene la sesión abierta (REF CU-Acceso-01).
+*Precondiciones:* La cuenta existe y está activa (REF CU 51, CU 52). Hay conexión. Para recuperar, el usuario no está autenticado. Para cambiar, el usuario tiene la sesión abierta (REF CU-01-Acceso_Iniciar_Sesion).
 *Disparador:* El usuario no recuerda la contraseña, o quiere reemplazarla
 
 *Flujo principal*
@@ -19,7 +19,7 @@
 12. El sistema verifica que coincidan y que la nueva cumpla la política vigente (*ALT CONTRASEÑA NUEVA)
 13. El sistema reemplaza la contraseña, invalida el enlace y deja sin efecto la contraseña anterior
 14. El sistema registra el cambio: usuario, fecha y hora, sin guardar la contraseña (REF CU 56)
-15. El sistema vuelve a la pantalla de ingreso (REF CU-Acceso-01)
+15. El sistema vuelve a la pantalla de ingreso (REF CU-01-Acceso_Iniciar_Sesion)
 
 *Flujos alternativos*
 
@@ -49,7 +49,7 @@
 12.3. **IR A (10)**
 
 `Cambiar la contraseña con la sesión abierta`
-C.1. El usuario abre Perfil y selecciona "Cambiar contraseña" (REF CU-Acceso-03)
+C.1. El usuario abre Perfil y selecciona "Cambiar contraseña" (REF CU-03-Acceso_Ver_y_Editar_Perfil)
 C.2. El sistema pide `CONTRASEÑA ACTUAL`, `CONTRASEÑA NUEVA` y `CONFIRMACION`
 C.3. El usuario completa los tres campos y selecciona "Guardar"
 C.4. Si la contraseña actual no coincide, el sistema informa el error y no guarda. **IR A (C.2)**
@@ -59,7 +59,7 @@ C.5. **IR A (12)**
 1. La contraseña anterior deja de servir para iniciar sesión, se actualizan los datos de inicio en la db
 2. El enlace de recuperación, si se usó, queda invalidado
 3. El cambio queda en el registro de auditoría, sin la contraseña
-4. El usuario queda en la pantalla de ingreso y entra con la contraseña nueva (REF CU-Acceso-01)
+4. El usuario queda en la pantalla de ingreso y entra con la contraseña nueva (REF CU-01-Acceso_Iniciar_Sesion)
 
 *Reglas de negocio asociadas*
 RN_1: Recuperar no exige estar autenticado. Cambiar sí exige la sesión abierta y la contraseña actual.

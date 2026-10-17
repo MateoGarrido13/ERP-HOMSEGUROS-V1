@@ -1,7 +1,7 @@
-*CU-Pendientes-08b-Reactivar_Lead*
+## CU-08b-Pendientes_Reactivar_Lead
 *Actor principal:* PAS
 *Actor secundario:* Ninguno
-*Precondiciones:* El PAS tiene abierto un lead de su cartera (REF CU-Pendientes-05). Hay conexión. El lead tiene una cotización previa, con el formulario que el PAS ya había completado al enviarla.
+*Precondiciones:* El PAS tiene abierto un lead de su cartera (REF CU-05-Pendientes_Ver_Pendientes). Hay conexión. El lead tiene una cotización previa, con el formulario que el PAS ya había completado al enviarla.
 *Disparador:* El cliente volvió a contratar
 
 *Flujo principal*
@@ -50,7 +50,7 @@ RN_2: Antes de Activar, el PAS ve la previsualización del formulario de la coti
 RN_3: Activar abre ese formulario con los campos para editar. La previsualización no reemplaza al formulario.
 RN_4: Enviar una recotización no lo pasa a la cartera. Actualiza la fecha de la última interacción, o deja que el PAS modifique la descripción y esa fecha.
 RN_5: La fecha de la última interacción es `ULT. FECHA DE MODIFICACION`.
-RN_6: Reactivar no es recotizar el lead (REF CU-Pendientes-08d) ni descartarlo (REF CU-Pendientes-08c).
+RN_6: Reactivar no es recotizar el lead (REF CU-08d-Pendientes_Convertir_Lead_en_Cotizacion) ni descartarlo (REF CU-08c-Pendientes_Descartar_Lead).
 
 *Supuestos a confirmar*
 SUP_1: Si Activar, además del formulario, registra la póliza emitida (REF CU 25). El prototipo no tiene Reactivar.

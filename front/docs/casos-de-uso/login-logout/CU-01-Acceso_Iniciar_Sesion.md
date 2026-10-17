@@ -1,4 +1,4 @@
-*CU-Acceso-01-Iniciar_Sesion*
+## CU-01-Acceso_Iniciar_Sesion
 *Actor principal:* Usuario del ERP (PAS, directivo o administrativo)
 *Actor secundario:* Base de usuarios del ERP
 *Precondiciones:* La organización ya dio de alta la cuenta con email y contraseña (REF CU 51). El usuario no tiene una sesión vigente en este dispositivo. Hay conexión.
