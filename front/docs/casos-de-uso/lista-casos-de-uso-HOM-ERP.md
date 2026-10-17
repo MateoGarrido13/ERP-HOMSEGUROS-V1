@@ -12,9 +12,40 @@ Lista de casos de uso tomando el prototipo (`ERP-HOMSEGUROS-V1`) como fuente de 
 - `Final`: entrega final del presupuesto.
 - `?`: depende de una definición del negocio.
 
+Las rutas son relativas a `design/front/docs/casos-de-uso/`. Lo compartido por todos los roles queda en la raíz. Cada rol tiene su carpeta y, adentro, una subcarpeta por funcionalidad. El archivo de cada caso va suelto en esa subcarpeta.
+
+```
+casos-de-uso/
+  login-logout/                 1–4    Acceso, todos los roles
+  rubrica_ssn/                  60–61  Extraer archivos y presentar la rúbrica
+  PAS/
+    pendientes/                 5–8
+    multicotizador/             9–26   Cotización y venta
+    cartera-cliente/            27–34
+    cobranza/                   35–38
+    siniestros/                 39–43
+    comisiones/                 44
+    cross-selling/              62
+  ADMINISTRATIVO-OWNER/
+    red/                        45–47  Dashboard, rendimiento y cartera por PAS
+    mora/                       48–49
+    comisiones/                 50
+    productores/                51–53  Alta, edición y roles
+    configuracion/              54
+    siniestros/                 55
+    auditoria/                  56
+    comunicacion/               63–64  Avisos a la red y contenido formativo
+  back-office/
+    clientes-y-polizas/         57
+    pagos/                      58
+    siniestros/                 59
+```
+
 ---
 
 ## Acceso (todos los roles)
+
+`login-logout/` · casos 1–4
 
 | # | Caso de uso | Origen | Fase |
 |---|---|---|---|
@@ -25,14 +56,30 @@ Lista de casos de uso tomando el prototipo (`ERP-HOMSEGUROS-V1`) como fuente de 
 
 ## PAS: pendientes
 
+`PAS/pendientes/` · casos 5–8
+
 | #   | Caso de uso                                                                         | Origen | Fase |
 | --- | ----------------------------------------------------------------------------------- | ------ | ---- |
 | 5   | Ver pendientes (avisos y leads)                                                     | P      | MVP  |
 | 6   | Resolver o posponer un aviso [MODIFICAR COMO PAS]                                   | N      | MVP  |
+
+El caso 6 se parte en dos archivos, en `PAS/pendientes/`:
+
+- `CU-Pendientes-06` Resolver un aviso
+- `CU-Pendientes-06b` Editar un aviso
 | 7   | Contactar al cliente por WhatsApp/ mail desde un aviso                              | P      | MVP  |
 | 8   | Gestionar un lead (contactar, reactivar, descartar, convertir en cotización) [epic] | A      | MVP  |
 
+El caso 8 se parte en cuatro archivos, en `PAS/pendientes/`:
+
+- `CU-Pendientes-08a` Contactar un lead
+- `CU-Pendientes-08b` Reactivar un lead
+- `CU-Pendientes-08c` Descartar un lead
+- `CU-Pendientes-08d` Convertir un lead en cotización
+
 ## PAS: cotización y venta
+
+`PAS/multicotizador/` · casos 9–26
 
 | #   | Caso de uso                                                                                                       | Origen | Fase   |
 | --- | ----------------------------------------------------------------------------------------------------------------- | ------ | ------ |
@@ -57,6 +104,8 @@ Lista de casos de uso tomando el prototipo (`ERP-HOMSEGUROS-V1`) como fuente de 
 
 ## PAS: clientes y cartera
 
+`PAS/cartera-cliente/` · casos 27–34
+
 | #   | Caso de uso                                                           | Origen | Fase |
 | --- | --------------------------------------------------------------------- | ------ | ---- |
 | 27  | Buscar y filtrar clientes (sumar búsqueda por nombre)                 | A      | MVP  |
@@ -70,6 +119,8 @@ Lista de casos de uso tomando el prototipo (`ERP-HOMSEGUROS-V1`) como fuente de 
 
 ## PAS: cobranza
 
+`PAS/cobranza/` · casos 35–38
+
 | # | Caso de uso | Origen | Fase |
 |---|---|---|---|
 | 35 | Ver los morosos de mi cartera | A | MVP |
@@ -79,6 +130,8 @@ Lista de casos de uso tomando el prototipo (`ERP-HOMSEGUROS-V1`) como fuente de 
 [HAY ALGUNA FORMA DE ESTANDARIZAR LOS AVISOS,BAJO EL FLUJO: AVISO->(A) EDITAR EL ESTADO  ->SE GUARDAN CAMBIOS (B) 
 	   -> (B)VISUALIZAR EL DETALLE ->ENVIAR]
 ## PAS: siniestros
+
+`PAS/siniestros/` · casos 39–43
 
 | #   | Caso de uso                                                                           | Origen | Fase |
 | --- | ------------------------------------------------------------------------------------- | ------ | ---- |
@@ -90,46 +143,128 @@ Lista de casos de uso tomando el prototipo (`ERP-HOMSEGUROS-V1`) como fuente de 
 
 ## PAS: comisiones
 
+`PAS/comisiones/` · caso 44
+
 | # | Caso de uso | Origen | Fase |
 |---|---|---|---|
 | 44 | Ver mis comisiones, ya descontado lo que retiene la organización | N | ? |
 
-## Directivo y administrativo
+## Directivo y administrativo: red
+
+`ADMINISTRATIVO-OWNER/red/` · casos 45–47
 
 | #   | Caso de uso                                                                                                | Origen | Fase |
 | --- | ---------------------------------------------------------------------------------------------------------- | ------ | ---- |
 | 45  | Ver el dashboard de la red (KPIs)                                                                          | N      | MVP  |
 | 46  | Ver el rendimiento por PAS                                                                                 | N      | MVP  |
 | 47  | Ver la cartera resumida de cada PAS  Y SU PROPORCION CON INFO (nombre, apellido, póliza, compañía, estado) | N      | MVP  |
-| 48  | Ver la mora de la red (fecha de última actualización, plazo de suspensión, importe, filtros)               | N      | MVP  |
-| 49  | Actualizar el estado de pago de un cliente (también lo hace el PAS)                                        | N      | MVP  |
-| 50  | Ver comisiones por póliza y compañía, y los descuentos aplicados                                           | N      | ?    |
-| 51  | Dar de alta un PAS                                                                                         | N      | MVP  |
-| 52  | Editar, suspender o dar de baja a un PAS                                                                   | N      | MVP  |
-| 53  | Asignar roles y permisos                                                                                   | N      | MVP  |
-| 54  | Configurar compañías, ramos y coberturas habilitadas                                                       | N      | ?    |
-| 55  | Consultar siniestros de la red                                                                             | N      | ?    |
-| 56  | Consultar el registro de auditoría (quién cambió qué y cuándo) HABRA QUE LOGEAR                            | N      | MVP  |
+
+## Directivo y administrativo: mora
+
+`ADMINISTRATIVO-OWNER/mora/` · casos 48–49
+
+| #   | Caso de uso                                                                                  | Origen | Fase |
+| --- | -------------------------------------------------------------------------------------------- | ------ | ---- |
+| 48  | Ver la mora de la red (fecha de última actualización, plazo de suspensión, importe, filtros) | N      | MVP  |
+| 49  | Actualizar el estado de pago de un cliente (también lo hace el PAS)                          | N      | MVP  |
+
+## Directivo y administrativo: comisiones
+
+`ADMINISTRATIVO-OWNER/comisiones/` · caso 50
+
+| #   | Caso de uso                                                                      | Origen | Fase |
+| --- | -------------------------------------------------------------------------------- | ------ | ---- |
+| 50  | Ver comisiones por póliza y compañía, y los descuentos aplicados                 | N      | ?    |
+
+## Directivo y administrativo: productores
+
+`ADMINISTRATIVO-OWNER/productores/` · casos 51–53
+
+| #   | Caso de uso                              | Origen | Fase |
+| --- | ---------------------------------------- | ------ | ---- |
+| 51  | Dar de alta un PAS                       | N      | MVP  |
+| 52  | Editar, suspender o dar de baja a un PAS | N      | MVP  |
+| 53  | Asignar roles y permisos                 | N      | MVP  |
+
+## Directivo y administrativo: configuración
+
+`ADMINISTRATIVO-OWNER/configuracion/` · caso 54
+
+| #   | Caso de uso                                            | Origen | Fase |
+| --- | ------------------------------------------------------ | ------ | ---- |
+| 54  | Configurar compañías, ramos y coberturas habilitadas   | N      | ?    |
+
+## Directivo y administrativo: siniestros
+
+`ADMINISTRATIVO-OWNER/siniestros/` · caso 55
+
+| #   | Caso de uso                    | Origen | Fase |
+| --- | ------------------------------ | ------ | ---- |
+| 55  | Consultar siniestros de la red | N      | ?    |
+
+## Directivo y administrativo: auditoría
+
+`ADMINISTRATIVO-OWNER/auditoria/` · caso 56
+
+| #   | Caso de uso                                                                             | Origen | Fase |
+| --- | --------------------------------------------------------------------------------------- | ------ | ---- |
+| 56  | Consultar el registro de auditoría (quién cambió qué y cuándo) HABRA QUE LOGEAR         | N      | MVP  |
 
 ## Back-office
 
 Pendiente hasta que se redacten las tareas del rol. Hipótesis a validar:
 
+### Clientes y pólizas
+
+`back-office/clientes-y-polizas/` · caso 57
+
 | #   | Caso de uso                                              | Origen | Fase |
 | --- | -------------------------------------------------------- | ------ | ---- |
 | 57  | Cargar o corregir clientes y pólizas en nombre de un PAS | N      | ?    |
-| 58  | Actualizar pagos a medida que entran[ACTUALIZAR]         | N      | ?    |
-| 59  | Seguir siniestros de la red [?AMPLIO]                    | N      | ?    |
+
+### Pagos
+
+`back-office/pagos/` · caso 58
+
+| #   | Caso de uso                                      | Origen | Fase |
+| --- | ------------------------------------------------ | ------ | ---- |
+| 58  | Actualizar pagos a medida que entran[ACTUALIZAR] | N      | ?    |
+
+### Siniestros
+
+`back-office/siniestros/` · caso 59
+
+| #   | Caso de uso                               | Origen | Fase |
+| --- | ----------------------------------------- | ------ | ---- |
+| 59  | Seguir siniestros de la red [?AMPLIO]     | N      | ?    |
 
 ## Entrega final ['HOY COMO EPICS']
+
+### Rúbrica SSN
+
+`rubrica_ssn/` · casos 60–61
 
 | #   | Caso de uso                                                               | Origen | Fase  |
 | --- | ------------------------------------------------------------------------- | ------ | ----- |
 | 60  | Extraer los archivos de cada compañía (emisiones, cobranzas, rendiciones) | N      | Final |
 | 61  | Consolidar y presentar la rúbrica SSN                                     | N      | Final |
-| 62  | Ver oportunidades de cross-selling                                        | N      | Final |
-| 63  | Publicar avisos hacia la red                                              | N      | Final |
-| 64  | Enviar contenido formativo a un PAS                                       | N      | Final |
+
+### Cross-selling
+
+`PAS/cross-selling/` · caso 62
+
+| #   | Caso de uso                        | Origen | Fase  |
+| --- | ---------------------------------- | ------ | ----- |
+| 62  | Ver oportunidades de cross-selling | N      | Final |
+
+### Comunicación a la red
+
+`ADMINISTRATIVO-OWNER/comunicacion/` · casos 63–64
+
+| #   | Caso de uso                         | Origen | Fase  |
+| --- | ----------------------------------- | ------ | ----- |
+| 63  | Publicar avisos hacia la red        | N      | Final |
+| 64  | Enviar contenido formativo a un PAS | N      | Final |
 
 ---
 

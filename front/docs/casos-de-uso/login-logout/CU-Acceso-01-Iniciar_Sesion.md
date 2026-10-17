@@ -13,7 +13,7 @@
 6. El sistema verifica que la cuenta esté activa
 7. El sistema compara la contraseña con la guardada (*ALT CREDENCIALES)
 8. El sistema abre una sesión asociada a ese usuario, a su rol y al alcance de datos de ese rol
-9. El sistema registra el ingreso: usuario, rol, fecha y hora (REF CU 56)
+9. El sistema registra el ingreso EN SUS LOGS: usuario, rol, fecha y hora (REF CU 56)
 10. El sistema abre la pantalla de inicio del rol: el PAS entra a Pendientes; el directivo y el administrativo entran al dashboard de la red (REF CU 45)
 
 *Flujos alternativos*
