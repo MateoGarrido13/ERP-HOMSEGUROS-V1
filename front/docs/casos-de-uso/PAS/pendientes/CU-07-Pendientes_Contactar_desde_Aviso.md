@@ -10,7 +10,7 @@
 3. El sistema muestra el texto, listo para WhatsApp
 4. El PAS confirma el envío
 5. El sistema entrega el texto al canal (*ALT CANAL)
-6. El sistema registra el PAS, el aviso, el canal, la fecha y la hora (REF CU 56) LOG 
+6. El sistema registra el PAS, el aviso, el canal, la fecha y la hora (REF CU 51) LOG 
 7. El aviso sigue en Pendientes, con el mismo estado. Para que desaparezca, el PAS selecciona "Resuelto" (REF CU-06-Pendientes_Resolver_Aviso)
 
 *Flujos alternativos*
@@ -22,7 +22,7 @@
 
 `2. El sistema arma el texto con el nombre del cliente y el nombre del PAS`
 2.1. El aviso es de tipo "Enviar póliza"
-2.2. El sistema arma el texto de la póliza de ese aviso y sigue el envío de la póliza (REF CU-33-Cartera_Enviar_Poliza)
+2.2. El sistema arma el texto de la póliza de ese aviso y sigue el envío de la póliza (REF CU-28-Cartera_Enviar_Poliza)
 2.3. **IR A (3)**
 
 `1.2. El sistema usa el mismo texto y el email del cliente`
@@ -43,11 +43,11 @@
 
 *Reglas de negocio asociadas*
 RN_1: El canal que ofrece el prototipo es WhatsApp, con la acción "Enviar WhatsApp". Mail es el otro canal de este caso.
-RN_2: El texto depende del tipo. Pago rechazado menciona compañía, ramo, medio de pago y que la cobertura está en riesgo. Cumpleaños es el saludo. Cotización enviada menciona el bien, la cobertura, el premio y que no está confirmada. Enviar póliza usa el texto de la póliza (REF CU-33-Cartera_Enviar_Poliza).
+RN_2: El texto depende del tipo. Pago rechazado menciona compañía, ramo, medio de pago y que la cobertura está en riesgo. Cumpleaños es el saludo. Cotización enviada menciona el bien, la cobertura, el premio y que no está confirmada. Enviar póliza usa el texto de la póliza (REF CU-28-Cartera_Enviar_Poliza).
 RN_3: El nombre que firma el mensaje es el del PAS autenticado.
 RN_4: Enviar no marca el aviso como resuelto ni lo edita. Resolver sigue el CU-06-Pendientes_Resolver_Aviso. Editar sigue el CU-06b-Pendientes_Editar_Aviso.
 RN_5: El registro anota el envío confirmado. No anota la respuesta del cliente.
-RN_6: El aviso "Enviar póliza" reutiliza la acción de enviar la póliza (REF CU-33-Cartera_Enviar_Poliza): el mismo texto, la misma hoja de compartir y el mismo registro. En Pendientes el botón dice "Enviar WhatsApp" y el aviso ya trae la póliza. En Cartera el botón dice "Enviar póliza". El envío deja el aviso en Pendientes; resolverlo sigue el CU-06-Pendientes_Resolver_Aviso.
+RN_6: El aviso "Enviar póliza" reutiliza la acción de enviar la póliza (REF CU-28-Cartera_Enviar_Poliza): el mismo texto, la misma hoja de compartir y el mismo registro. En Pendientes el botón dice "Enviar WhatsApp" y el aviso ya trae la póliza. En Cartera el botón dice "Enviar póliza". El envío deja el aviso en Pendientes; resolverlo sigue el CU-06-Pendientes_Resolver_Aviso.
 
 *Supuestos a confirmar*
 SUP_1: Si el PAS puede corregir el texto antes de enviarlo. El prototipo lo muestra ya armado.

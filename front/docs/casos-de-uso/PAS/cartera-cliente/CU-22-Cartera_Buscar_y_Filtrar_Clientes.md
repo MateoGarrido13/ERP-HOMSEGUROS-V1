@@ -1,4 +1,4 @@
-## CU-27-Cartera_Buscar_y_Filtrar_Clientes
+## CU-22-Cartera_Buscar_y_Filtrar_Clientes
 
 *Actor principal:* PAS  
 *Actor secundario:* DB USUARIOS
@@ -14,7 +14,7 @@
 4. El sistema combina la búsqueda y los filtros y muestra la cantidad de clientes encontrados. Solo entran clientes con al menos una póliza vigente
 5. Por cada cliente muestra nombre y apellido o razón social, y de sus pólizas vigentes: ramo, compañía, localidad y número de póliza (*ALT VARIAS POLIZAS)
 6. El PAS selecciona un cliente
-7. El sistema abre su ficha (REF CU-30-Cartera_Ver_Ficha_Cliente)
+7. El sistema abre su ficha (REF CU-25-Cartera_Ver_Ficha_Cliente)
 
 *Flujos alternativos*
 
@@ -40,7 +40,7 @@
 1. El PAS escribe parte del nombre del cliente`
 
 3.1. El PAS selecciona "+"
-3.2. El sistema redirige a Cotizar para sumar una póliza (REF CU-28-Cartera_Dar_de_Alta_Cliente)
+3.2. El sistema redirige a Cotizar para sumar una póliza (REF CU-23-Cartera_Dar_de_Alta_Cliente)
 3.3. **FIN**
 
 `
@@ -66,7 +66,7 @@ RN_4: Un cliente con varias pólizas vigentes aparece una sola vez. Las pólizas
 RN_5: "Limpiar filtros" quita Compañía, Localidad y Ramo. La búsqueda por nombre también debe poder limpiarse.
 RN_6: Un PAS no puede buscar ni abrir clientes asignados a otro PAS.
 RN_7: Hasta que el PAS no hace una primer consulta, los filtros por defecto aparecen en "Todos" y muestra los clientes de su cartera que tienen al menos una póliza vigente.
-RN_8: No se puede incorporar un cliente si no tiene una cobertura o póliza asociada, vigente o no. El control "+" redirige a Cotizar (REF CU-28-Cartera_Dar_de_Alta_Cliente).
+RN_8: No se puede incorporar un cliente si no tiene una cobertura o póliza asociada, vigente o no. El control "+" redirige a Cotizar (REF CU-23-Cartera_Dar_de_Alta_Cliente).
 RN_9: En Cartera solo se exponen las pólizas vigentes. Si el cliente retiró su bien, deja este listado y pasa a Lead (REF CU-08a-Pendientes_Contactar_Lead).
 
 *Supuestos a confirmar*

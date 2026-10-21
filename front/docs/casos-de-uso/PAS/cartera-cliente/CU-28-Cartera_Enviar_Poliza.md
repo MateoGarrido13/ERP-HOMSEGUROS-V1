@@ -1,7 +1,7 @@
-## CU-33-Cartera_Enviar_Poliza
+## CU-28-Cartera_Enviar_Poliza
 *Actor principal:* PAS
 *Actor secundario:* Hoja de compartir del dispositivo y WhatsApp
-*Precondiciones:* El PAS tiene identificada una póliza de un cliente de su cartera. Llega desde el detalle de esa póliza (REF CU-32-Cartera_Ver_Detalle_Poliza) o desde un aviso "Enviar póliza" (REF CU-07-Pendientes_Contactar_desde_Aviso). Hay conexión.
+*Precondiciones:* El PAS tiene identificada una póliza de un cliente de su cartera. Llega desde el detalle de esa póliza (REF CU-27-Cartera_Ver_Detalle_Poliza) o desde un aviso "Enviar póliza" (REF CU-07-Pendientes_Contactar_desde_Aviso). Hay conexión.
 *Disparador:* Compartir la póliza con el cliente
 
 *Flujo principal*
@@ -11,7 +11,7 @@
 4. El PAS selecciona WhatsApp y el destinatario
 5. El PAS confirma el envío (*ALT CANCELAR)
 6. El sistema muestra "Listo para WhatsApp" y deja visible el texto compartido
-7. El sistema registra el PAS, la póliza, el canal, la fecha y la hora de la entrega al canal (REF CU 56)
+7. El sistema registra el PAS, la póliza, el canal, la fecha y la hora de la entrega al canal (REF CU 51)
 
 *Flujos alternativos*
 
@@ -53,8 +53,8 @@ RN_3: La fecha del próximo vencimiento se muestra en formato `dd/mm/aaaa`.
 RN_4: Si el cliente tiene varias pólizas, el botón debe identificar cuál se enviará.
 RN_5: Entregar contenido a la hoja de compartir no permite comprobar que WhatsApp lo haya enviado o que el cliente lo haya recibido.
 RN_6: Enviar la póliza no resuelve automáticamente el aviso "Enviar póliza" (REF CU-06-Pendientes_Resolver_Aviso).
-RN_7: Este caso reutiliza el patrón de compartir de la propuesta, pero la póliza y la propuesta son documentos distintos (REF CU 23).
-RN_8: Enviar la póliza es una sola acción, con dos entradas. En Cartera se dispara desde la póliza (REF CU-32-Cartera_Ver_Detalle_Poliza). En Pendientes se dispara desde el aviso "Enviar póliza" (REF CU-07-Pendientes_Contactar_desde_Aviso). Las dos entradas arman el texto de RN_1, lo entregan a la misma hoja de compartir y registran el mismo evento: PAS, póliza, canal, fecha y hora.
+RN_7: Este caso reutiliza el patrón de compartir de la propuesta, pero la póliza y la propuesta son documentos distintos (REF CU 14).
+RN_8: Enviar la póliza es una sola acción, con dos entradas. En Cartera se dispara desde la póliza (REF CU-27-Cartera_Ver_Detalle_Poliza). En Pendientes se dispara desde el aviso "Enviar póliza" (REF CU-07-Pendientes_Contactar_desde_Aviso). Las dos entradas arman el texto de RN_1, lo entregan a la misma hoja de compartir y registran el mismo evento: PAS, póliza, canal, fecha y hora.
 RN_9: Desde Cartera solo se puede enviar una póliza vigente. Si el cliente retiró su bien, ya no está en la cartera y esta entrada no aplica: el cliente está en Lead (REF CU-08a-Pendientes_Contactar_Lead).
 
 *Supuestos a confirmar*

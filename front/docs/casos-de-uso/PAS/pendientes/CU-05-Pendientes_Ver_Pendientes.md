@@ -13,7 +13,7 @@
 5. Cada lead muestra el origen, el cliente, el ramo, `ULT. FECHA DE MODIFICACION` y los días transcurridos desde esa fecha
 6. El PAS selecciona un aviso (*ALT LEAD)
 7. El sistema muestra la descripción y los datos del aviso: nombre y apellido, tipo de cobertura, fecha de importancia y tipo
-8. Desde el aviso abierto el PAS puede resolverlo (REF CU-06-Pendientes_Resolver_Aviso), editarlo (REF CU-06b-Pendientes_Editar_Aviso) o contactar al cliente (REF CU-07-Pendientes_Contactar_desde_Aviso). Si el tipo es "Enviar póliza", contactar reutiliza el envío de esa póliza (REF CU-33-Cartera_Enviar_Poliza)
+8. Desde el aviso abierto el PAS puede resolverlo (REF CU-06-Pendientes_Resolver_Aviso), editarlo (REF CU-06b-Pendientes_Editar_Aviso) o contactar al cliente (REF CU-07-Pendientes_Contactar_desde_Aviso). Si el tipo es "Enviar póliza", contactar reutiliza el envío de esa póliza (REF CU-28-Cartera_Enviar_Poliza)
 
 *Flujos alternativos*
 

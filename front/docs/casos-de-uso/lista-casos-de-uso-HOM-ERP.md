@@ -18,28 +18,30 @@ Las rutas son relativas a `design/front/docs/casos-de-uso/`. Lo compartido por t
 casos-de-uso/
   transicion-estados-bien.md           Grafo de estados del bien
   login-logout/                 1–4    Acceso, todos los roles
-  rubrica_ssn/                  60–61  Extraer archivos y presentar la rúbrica
+  rubrica_ssn/                  55–56  Extraer archivos y presentar la rúbrica
   PAS/
     pendientes/                 5–8
-    multicotizador/             9–26   Cotización y venta
-    cartera-cliente/            27–34
-    cobranza/                   35–38
-    siniestros/                 39–43
-    comisiones/                 44
-    cross-selling/              62
+    multicotizador/             9–16   Común a masivo y no masivo
+      masivo/                   17–20  Consulta APIs y compara precios (Automotor)
+      no-masivo/                21     Solicitud sin precios (Hogar, AP, ART)
+    cartera-cliente/            22–29
+    cobranza/                   30–33
+    siniestros/                 34–38
+    comisiones/                 39
+    cross-selling/              57
   ADMINISTRATIVO-OWNER/
-    red/                        45–47  Dashboard, rendimiento y cartera por PAS
-    mora/                       48–49
-    comisiones/                 50
-    productores/                51–53  Alta, edición y roles
-    configuracion/              54
-    siniestros/                 55
-    auditoria/                  56
-    comunicacion/               63–64  Avisos a la red y contenido formativo
+    red/                        40–42  Dashboard, rendimiento y cartera por PAS
+    mora/                       43–44
+    comisiones/                 45
+    productores/                46–48  Alta, edición y roles
+    configuracion/              49
+    siniestros/                 50
+    auditoria/                  51
+    comunicacion/               58–59 Avisos a la red y contenido formativo
   back-office/
-    clientes-y-polizas/         57
-    pagos/                      58
-    siniestros/                 59
+    clientes-y-polizas/         52
+    pagos/                      53
+    siniestros/                 54
 ```
 
 ---
@@ -80,136 +82,159 @@ El caso 8 se parte en cuatro archivos, en `PAS/pendientes/`:
 
 ## PAS: cotización y venta
 
-`PAS/multicotizador/` · casos 9–26
+`PAS/multicotizador/` · casos 9–21
 
-| #   | Caso de uso                                                                                                       | Origen | Fase   |
-| --- | ----------------------------------------------------------------------------------------------------------------- | ------ | ------ |
-| 9   | Elegir el ramo a cotizar                                                                                          | P      | MVP    |
-| 10  | Seleccionar un cliente existente o crear uno al cotizar                                                           | A      | MVP    |
-| 11  | Cotizar automotor ingresando patente, CP y uso, info del titular                                                  | P [A]  | MVP    |
-| 12  | Re-cotizar una póliza existente (datos precargados)                                                               | N      | MVP    |
-| 13  | Verificar y completar los datos del vehículo (GNC, 0 km, suma asegurada)                                          | P      | MVP    |
-| 14  | Cargar el vehículo a mano cuando la patente no decodifica                                                         | N [A]  | MVP    |
-| 15  | Comparar cotizaciones de varias compañías a medida que llegan                                                     | P      | MVP    |
-| 16  | Manejar una compañía que falla, demora o rechaza el riesgo                                                        | N      | MVP    |
-| 17  | Ver un estimado mientras responde la compañía (aclarando que no es precio real)[#16]                              | N      | ?[MVP] |
-| 18  | Ver la comisión de cada cotización                                                                                | N      | ?      |
-| 19  | Aplicar un descuento sacrificando puntos de comisión                                                              | N      | ?[MVP] |
-| 20  | Guardar y retomar una cotización en curso([COMO PAS CAMBIAR EL ESTADO])                                           | N      | MVP    |
-| 21  | Elegir una cotización y armar la propuesta                                                                        | P      | MVP    |
-| 22  | Generar el PDF de la propuesta[#21]                                                                               | A      | MVP    |
-| 23  | Enviar la propuesta por WhatsApp                                                                                  | P      | MVP    |
-| 24  | Marcar el resultado de una propuesta (aceptada, rechazada, vencida)[#20]                                          | N      | MVP    |
-| 25  | Registrar la póliza emitida por la compañía (nº de póliza, vigencia, compañía) a partir de una propuesta aceptada | N      | ?[MVP] |
-| 26  | Multocitizador de  de Hogar, Accidentes Personales o ART (flujo de solicitud)                                     | P      | ?      |
+El multicotizador se divide por la forma de cotizar el ramo:
+
+- **Masivo** (`masivo/`): consulta las APIs de las compañías y expone varios precios para comparar. Hoy: Automotor.
+- **No masivo** (`no-masivo/`): no hay precios para comparar; el PAS carga una solicitud y se arma la propuesta. Hoy: Hogar, Accidentes Personales y ART (el prototipo ya los resuelve así).
+- **Común** (raíz de `multicotizador/`): lo que ocurre igual en los dos: elegir ramo, cliente, guardar y retomar, propuesta con PDF, envío y cierre.
+
+Compañías con API directa: Mercantil Andina, Sancor Seguros, Zurich, La Segunda y Allianz. Las particularidades de cada API van en las specs, no en los casos de uso.
+
+La columna "Absorbe" indica el número que tenía el caso en la versión anterior de esta lista.
+
+### Común
+
+`PAS/multicotizador/`
+
+| #   | Caso de uso                                                                                                       | Absorbe    | Origen | Fase   |
+| --- | ----------------------------------------------------------------------------------------------------------------- | ---------- | ------ | ------ |
+| 9   | Elegir el ramo a cotizar                                                                                          | 9          | P      | MVP    |
+| 10  | Seleccionar un cliente existente o crear uno al cotizar                                                           | 10         | A      | MVP    |
+| 11  | Re-cotizar una póliza existente (datos precargados)                                                               | 12         | N      | MVP    |
+| 12  | Guardar y retomar una cotización en curso([COMO PAS CAMBIAR EL ESTADO])                                           | 20         | N      | MVP    |
+| 13  | Armar la propuesta y generar el PDF                                                                               | 21, 22     | P [A]  | MVP    |
+| 14  | Enviar la propuesta por WhatsApp                                                                                  | 23         | P      | MVP    |
+| 15  | Marcar el resultado de una propuesta (aceptada, rechazada, vencida)[#12]                                          | 24         | N      | MVP    |
+| 16  | Registrar la póliza emitida por la compañía (nº de póliza, vigencia, compañía) a partir de una propuesta aceptada | 25         | N      | ?[MVP] |
+
+### Masivo
+
+`PAS/multicotizador/masivo/`
+
+| #   | Caso de uso                                                                                                                                                                      | Absorbe    | Origen | Fase   |
+| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------ | ------ |
+| 17  | Cargar el riesgo automotor: patente, CP, uso, info del titular; verificar y completar los datos del vehículo (GNC, 0 km, suma asegurada), o cargarlo a mano si la patente no decodifica | 11, 13, 14 | P [A]  | MVP    |
+| 18  | Comparar cotizaciones de las compañías a medida que llegan, manejar la que falla, demora o rechaza, y elegir una. Ver un estimado mientras responde la compañía, aclarando que no es precio real [#18, estimado] | 15, 16, 17 | P [A]  | MVP [el estimado es ?] |
+| 19  | Ver la comisión de cada cotización                                                                                                                                               | 18         | N      | ?      |
+| 20  | Aplicar un descuento sacrificando puntos de comisión                                                                                                                             | 19         | N      | ?[MVP] |
+
+### No masivo
+
+`PAS/multicotizador/no-masivo/`
+
+| #   | Caso de uso                                                                                             | Absorbe | Origen | Fase |
+| --- | ------------------------------------------------------------------------------------------------------- | ------- | ------ | ---- |
+| 21  | Cargar la solicitud de Hogar, Accidentes Personales o ART (formulario del riesgo, sin comparar precios) | 26      | P      | ?    |
 
 ## PAS: clientes y cartera
 
-`PAS/cartera-cliente/` · casos 27–34
+`PAS/cartera-cliente/` · casos 22–29
 
 | #   | Caso de uso                                                           | Origen | Fase |
 | --- | --------------------------------------------------------------------- | ------ | ---- |
-| 27  | Buscar y filtrar clientes con póliza vigente (búsqueda por nombre). El "+" suma una póliza | A      | MVP  |
-| 28  | Sumar una póliza con "+" (redirige a cotizar). El cliente entra a la cartera solo con una cobertura o póliza asociada | A      | MVP  |
-| 29  | Editar los datos de un cliente                                        | N      | MVP  |
-| 30  | Ver la ficha del cliente (contacto, pólizas vigentes, propuestas, historial). El "+" suma una póliza | A      | MVP  |
-| 31  | Ver la cartera y su distribución por ramo, solo pólizas vigentes      | P      | MVP  |
-| 32  | Ver el detalle de una póliza vigente                                  | A      | MVP  |
-| 33  | Enviar la póliza al cliente [#REP23]                                  | P      | MVP  |
-| 34  | Cargar pólizas ya existentes (carga inicial de la cartera) [SENSIBLE] | N      | MVP  |
+| 22  | Buscar y filtrar clientes con póliza vigente (búsqueda por nombre). El "+" suma una póliza | A      | MVP  |
+| 23  | Sumar una póliza con "+" (redirige a cotizar). El cliente entra a la cartera solo con una cobertura o póliza asociada | A      | MVP  |
+| 24  | Editar los datos de un cliente                                        | N      | MVP  |
+| 25  | Ver la ficha del cliente (contacto, pólizas vigentes, propuestas, historial). El "+" suma una póliza | A      | MVP  |
+| 26  | Ver la cartera y su distribución por ramo, solo pólizas vigentes      | P      | MVP  |
+| 27  | Ver el detalle de una póliza vigente                                  | A      | MVP  |
+| 28  | Enviar la póliza al cliente [#REP14]                                  | P      | MVP  |
+| 29  | Cargar pólizas ya existentes (carga inicial de la cartera) [SENSIBLE] | N      | MVP  |
 
 ## PAS: cobranza
 
-`PAS/cobranza/` · casos 35–38
+`PAS/cobranza/` · casos 30–33
 
 | # | Caso de uso | Origen | Fase |
 |---|---|---|---|
-| 35 | Ver los morosos de mi cartera | A | MVP |
-| 36 | Crear o actualizar un ticket de pago (X días para el pago, pago rechazado, pagado) | N | MVP |
-| 37 | Guardar la referencia de la factura | N | MVP |
-| 38 | Avisar la mora por WhatsApp y dejar registro de que se avisó | A | MVP |
+| 30 | Ver los morosos de mi cartera | A | MVP |
+| 31 | Crear o actualizar un ticket de pago (X días para el pago, pago rechazado, pagado) | N | MVP |
+| 32 | Guardar la referencia de la factura | N | MVP |
+| 33 | Avisar la mora por WhatsApp y dejar registro de que se avisó | A | MVP |
 [HAY ALGUNA FORMA DE ESTANDARIZAR LOS AVISOS,BAJO EL FLUJO: AVISO->(A) EDITAR EL ESTADO  ->SE GUARDAN CAMBIOS (B) 
 	   -> (B)VISUALIZAR EL DETALLE ->ENVIAR]
 ## PAS: siniestros
 
-`PAS/siniestros/` · casos 39–43
+`PAS/siniestros/` · casos 34–38
 
 | #   | Caso de uso                                                                           | Origen | Fase |
 | --- | ------------------------------------------------------------------------------------- | ------ | ---- |
-| 39  | Ver la lista de siniestros                                                            | P      | MVP  |
-| 40  | Ver el detalle de un siniestro (comentario, contactos)                                | P      | MVP  |
-| 41  | Registrar un siniestro                                                                | N      | MVP  |
-| 42  | Actualizar el ticket (estado, documentación, nº de reclamo, mails, derivación, links) | N      | MVP  |
-| 43  | Cerrar un siniestro                                                                   | N      | MVP  |
+| 34  | Ver la lista de siniestros                                                            | P      | MVP  |
+| 35  | Ver el detalle de un siniestro (comentario, contactos)                                | P      | MVP  |
+| 36  | Registrar un siniestro                                                                | N      | MVP  |
+| 37  | Actualizar el ticket (estado, documentación, nº de reclamo, mails, derivación, links) | N      | MVP  |
+| 38  | Cerrar un siniestro                                                                   | N      | MVP  |
 
 ## PAS: comisiones
 
-`PAS/comisiones/` · caso 44
+`PAS/comisiones/` · caso 39
 
 | # | Caso de uso | Origen | Fase |
 |---|---|---|---|
-| 44 | Ver mis comisiones, ya descontado lo que retiene la organización | N | ? |
+| 39 | Ver mis comisiones, ya descontado lo que retiene la organización | N | ? |
 
 ## Directivo y administrativo: red
 
-`ADMINISTRATIVO-OWNER/red/` · casos 45–47
+`ADMINISTRATIVO-OWNER/red/` · casos 40–42
 
 | #   | Caso de uso                                                                                                | Origen | Fase |
 | --- | ---------------------------------------------------------------------------------------------------------- | ------ | ---- |
-| 45  | Ver el dashboard de la red (KPIs)                                                                          | N      | MVP  |
-| 46  | Ver el rendimiento por PAS                                                                                 | N      | MVP  |
-| 47  | Ver la cartera resumida de cada PAS  Y SU PROPORCION CON INFO (nombre, apellido, póliza, compañía, estado) | N      | MVP  |
+| 40  | Ver el dashboard de la red (KPIs)                                                                          | N      | MVP  |
+| 41  | Ver el rendimiento por PAS                                                                                 | N      | MVP  |
+| 42  | Ver la cartera resumida de cada PAS  Y SU PROPORCION CON INFO (nombre, apellido, póliza, compañía, estado) | N      | MVP  |
 
 ## Directivo y administrativo: mora
 
-`ADMINISTRATIVO-OWNER/mora/` · casos 48–49
+`ADMINISTRATIVO-OWNER/mora/` · casos 43–44
 
 | #   | Caso de uso                                                                                  | Origen | Fase |
 | --- | -------------------------------------------------------------------------------------------- | ------ | ---- |
-| 48  | Ver la mora de la red (fecha de última actualización, plazo de suspensión, importe, filtros) | N      | MVP  |
-| 49  | Actualizar el estado de pago de un cliente (también lo hace el PAS)                          | N      | MVP  |
+| 43  | Ver la mora de la red (fecha de última actualización, plazo de suspensión, importe, filtros) | N      | MVP  |
+| 44  | Actualizar el estado de pago de un cliente (también lo hace el PAS)                          | N      | MVP  |
 
 ## Directivo y administrativo: comisiones
 
-`ADMINISTRATIVO-OWNER/comisiones/` · caso 50
+`ADMINISTRATIVO-OWNER/comisiones/` · caso 45
 
 | #   | Caso de uso                                                                      | Origen | Fase |
 | --- | -------------------------------------------------------------------------------- | ------ | ---- |
-| 50  | Ver comisiones por póliza y compañía, y los descuentos aplicados                 | N      | ?    |
+| 45  | Ver comisiones por póliza y compañía, y los descuentos aplicados                 | N      | ?    |
 
 ## Directivo y administrativo: productores
 
-`ADMINISTRATIVO-OWNER/productores/` · casos 51–53
+`ADMINISTRATIVO-OWNER/productores/` · casos 46–48
 
 | #   | Caso de uso                              | Origen | Fase |
 | --- | ---------------------------------------- | ------ | ---- |
-| 51  | Dar de alta un PAS                       | N      | MVP  |
-| 52  | Editar, suspender o dar de baja a un PAS | N      | MVP  |
-| 53  | Asignar roles y permisos                 | N      | MVP  |
+| 46  | Dar de alta un PAS                       | N      | MVP  |
+| 47  | Editar, suspender o dar de baja a un PAS | N      | MVP  |
+| 48  | Asignar roles y permisos                 | N      | MVP  |
 
 ## Directivo y administrativo: configuración
 
-`ADMINISTRATIVO-OWNER/configuracion/` · caso 54
+`ADMINISTRATIVO-OWNER/configuracion/` · caso 49
 
 | #   | Caso de uso                                            | Origen | Fase |
 | --- | ------------------------------------------------------ | ------ | ---- |
-| 54  | Configurar compañías, ramos y coberturas habilitadas   | N      | ?    |
+| 49  | Configurar compañías, ramos y coberturas habilitadas   | N      | ?    |
 
 ## Directivo y administrativo: siniestros
 
-`ADMINISTRATIVO-OWNER/siniestros/` · caso 55
+`ADMINISTRATIVO-OWNER/siniestros/` · caso 50
 
 | #   | Caso de uso                    | Origen | Fase |
 | --- | ------------------------------ | ------ | ---- |
-| 55  | Consultar siniestros de la red | N      | ?    |
+| 50  | Consultar siniestros de la red | N      | ?    |
 
 ## Directivo y administrativo: auditoría
 
-`ADMINISTRATIVO-OWNER/auditoria/` · caso 56
+`ADMINISTRATIVO-OWNER/auditoria/` · caso 51
 
 | #   | Caso de uso                                                                             | Origen | Fase |
 | --- | --------------------------------------------------------------------------------------- | ------ | ---- |
-| 56  | Consultar el registro de auditoría (quién cambió qué y cuándo) HABRA QUE LOGEAR         | N      | MVP  |
+| 51  | Consultar el registro de auditoría (quién cambió qué y cuándo) HABRA QUE LOGEAR         | N      | MVP  |
 
 ## Back-office
 
@@ -217,72 +242,72 @@ Pendiente hasta que se redacten las tareas del rol. Hipótesis a validar:
 
 ### Clientes y pólizas
 
-`back-office/clientes-y-polizas/` · caso 57
+`back-office/clientes-y-polizas/` · caso 52
 
 | #   | Caso de uso                                              | Origen | Fase |
 | --- | -------------------------------------------------------- | ------ | ---- |
-| 57  | Cargar o corregir clientes y pólizas en nombre de un PAS | N      | ?    |
+| 52  | Cargar o corregir clientes y pólizas en nombre de un PAS | N      | ?    |
 
 ### Pagos
 
-`back-office/pagos/` · caso 58
+`back-office/pagos/` · caso 53
 
 | #   | Caso de uso                                      | Origen | Fase |
 | --- | ------------------------------------------------ | ------ | ---- |
-| 58  | Actualizar pagos a medida que entran[ACTUALIZAR] | N      | ?    |
+| 53  | Actualizar pagos a medida que entran[ACTUALIZAR] | N      | ?    |
 
 ### Siniestros
 
-`back-office/siniestros/` · caso 59
+`back-office/siniestros/` · caso 54
 
 | #   | Caso de uso                               | Origen | Fase |
 | --- | ----------------------------------------- | ------ | ---- |
-| 59  | Seguir siniestros de la red [?AMPLIO]     | N      | ?    |
+| 54  | Seguir siniestros de la red [?AMPLIO]     | N      | ?    |
 
 ## Entrega final ['HOY COMO EPICS']
 
 ### Rúbrica SSN
 
-`rubrica_ssn/` · casos 60–61
+`rubrica_ssn/` · casos 55–56
 
 | #   | Caso de uso                                                               | Origen | Fase  |
 | --- | ------------------------------------------------------------------------- | ------ | ----- |
-| 60  | Extraer los archivos de cada compañía (emisiones, cobranzas, rendiciones) | N      | Final |
-| 61  | Consolidar y presentar la rúbrica SSN                                     | N      | Final |
+| 55  | Extraer los archivos de cada compañía (emisiones, cobranzas, rendiciones) | N      | Final |
+| 56  | Consolidar y presentar la rúbrica SSN                                     | N      | Final |
 
 ### Cross-selling
 
-`PAS/cross-selling/` · caso 62
+`PAS/cross-selling/` · caso 57
 
 | #   | Caso de uso                        | Origen | Fase  |
 | --- | ---------------------------------- | ------ | ----- |
-| 62  | Ver oportunidades de cross-selling | N      | Final |
+| 57  | Ver oportunidades de cross-selling | N      | Final |
 
 ### Comunicación a la red
 
-`ADMINISTRATIVO-OWNER/comunicacion/` · casos 63–64
+`ADMINISTRATIVO-OWNER/comunicacion/` · casos 58–59
 
 | #   | Caso de uso                         | Origen | Fase  |
 | --- | ----------------------------------- | ------ | ----- |
-| 63  | Publicar avisos hacia la red        | N      | Final |
-| 64  | Enviar contenido formativo a un PAS | N      | Final |
+| 58  | Publicar avisos hacia la red        | N      | Final |
+| 59  | Enviar contenido formativo a un PAS | N      | Final |
 
 ---
 
 ## Qué le falta al prototipo
 
-1. **Registro de la póliza emitida** (caso 25). Es el hueco más grande: el flujo va de "Propuesta enviada" a "Cartera" sin ningún paso donde se asiente que la compañía emitió la póliza. La app no emite, es intermediaria, pero sin ese registro la cartera no se llena sola y no se puede calcular la conversión. [SERIA CAMBIAR DE ESTADO (HUECO), OFRECER EL AGREGAR]
-2. **Cliente en Automotor** (casos 10 y 12). El flujo de cotización no tiene un paso para elegir o crear al cliente, ni forma de re-cotizar desde una póliza. El caso 28 no da de alta un cliente suelto: el "+" de Cartera redirige a cotizar, y el cliente se incorpora solo si queda una cobertura o póliza asociada.
-3. **Errores y recuperación al cotizar** (casos 14, 16 y 20) [OPCIONES POR DEFAULT].
-4. **Escritura en vez de solo lectura.** Siniestros, mora y avisos solo se pueden ver. Faltan crear, actualizar y cerrar (casos 6, 36, 41 a 43).
-5. **Todo el lado del Directivo y del administrativo** (casos 45 a 56).
-6. **Piezas transversales**: login, auditoría y carga inicial de pólizas (casos 1, 2, 34 y 56).
+1. **Registro de la póliza emitida** (caso 16). Es el hueco más grande: el flujo va de "Propuesta enviada" a "Cartera" sin ningún paso donde se asiente que la compañía emitió la póliza. La app no emite, es intermediaria, pero sin ese registro la cartera no se llena sola y no se puede calcular la conversión. [SERIA CAMBIAR DE ESTADO (HUECO), OFRECER EL AGREGAR]
+2. **Cliente en Automotor** (casos 10 y 11). El flujo de cotización no tiene un paso para elegir o crear al cliente, ni forma de re-cotizar desde una póliza. El caso 23 no da de alta un cliente suelto: el "+" de Cartera redirige a cotizar, y el cliente se incorpora solo si queda una cobertura o póliza asociada.
+3. **Errores y recuperación al cotizar** (casos 12, 17 y 18) [OPCIONES POR DEFAULT].
+4. **Escritura en vez de solo lectura.** Siniestros, mora y avisos solo se pueden ver. Faltan crear, actualizar y cerrar (casos 6, 31, 36 a 38).
+5. **Todo el lado del Directivo y del administrativo** (casos 40 a 51).
+6. **Piezas transversales**: login, auditoría y carga inicial de pólizas (casos 1, 2, 29 y 51).
 
 ## Decisiones abiertas
 
-- **Ramos del MVP.** El prototipo ya cotiza Hogar, Accidentes y ART, pero el presupuesto es solo Automotor (casos 26).
-- **Registro de la póliza emitida.** La emite la aseguradora; la app solo la asienta. ¿Entra al MVP y qué datos se cargan? (caso 25).[ En la app es un estado, en la aseguradora habra que corroborar si se registran esos datos de un cliente, o implica una nuev acxarga cuando confirma]
-- **Comisiones.** Quién puede aplicar descuentos y qué ve el PAS de su comisión (casos 18, 19, 44 y 50).
-- **Estimado mientras responde la compañía.** Si se incorpora caché, debe quedar claro que es un valor aproximado y no una cotización (caso 17).
-- **Back-office.** Sus tareas las redacta el equipo de dominio (casos 57 a 59).
-- **Sugeridos por mí, a confirmar:** carga inicial de pólizas existentes (34) y registro de auditoría (56; este último sale del requisito de trazabilidad del presupuesto). [excelente y con criterio]
+- **Ramos del MVP.** El prototipo ya cotiza Hogar, Accidentes y ART, pero el presupuesto es solo Automotor (caso 21).
+- **Registro de la póliza emitida.** La emite la aseguradora; la app solo la asienta. ¿Entra al MVP y qué datos se cargan? (caso 16).[ En la app es un estado, en la aseguradora habra que corroborar si se registran esos datos de un cliente, o implica una nuev acxarga cuando confirma]
+- **Comisiones.** Quién puede aplicar descuentos y qué ve el PAS de su comisión (casos 19, 20, 39 y 45).
+- **Estimado mientras responde la compañía.** Si se incorpora caché, debe quedar claro que es un valor aproximado y no una cotización (caso 18).
+- **Back-office.** Sus tareas las redacta el equipo de dominio (casos 52 a 54).
+- **Sugeridos por mí, a confirmar:** carga inicial de pólizas existentes (29) y registro de auditoría (51; este último sale del requisito de trazabilidad del presupuesto). [excelente y con criterio]

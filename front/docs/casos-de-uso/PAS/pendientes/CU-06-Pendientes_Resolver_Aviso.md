@@ -10,7 +10,7 @@
 3. El sistema pide confirmación
 4. El PAS confirma (*ALT CANCELAR)
 5. El sistema saca el aviso de Pendientes
-6. El sistema registra en sus logs el PAS, el aviso, la fecha y la hora (REF CU 56)
+6. El sistema registra en sus logs el PAS, el aviso, la fecha y la hora (REF CU 51)
 
 *Flujos alternativos*
 
@@ -52,4 +52,4 @@ RN_7: El resto de los avisos no se vencen solos. Sin Resuelto, continúan listad
 
 *Supuestos a confirmar*
 SUP_1: Si un aviso resuelto se puede volver a abrir. El prototipo todavía no ofrece Resuelto.
-SUP_2: Si resolver un aviso de pago rechazado también cierra el ticket de cobranza, o son registros distintos (REF CU 36).
+SUP_2: Si resolver un aviso de pago rechazado también cierra el ticket de cobranza, o son registros distintos (REF CU 31).

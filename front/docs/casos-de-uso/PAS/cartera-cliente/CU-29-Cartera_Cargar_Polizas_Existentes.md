@@ -1,4 +1,4 @@
-## CU-34-Cartera_Cargar_Polizas_Existentes
+## CU-29-Cartera_Cargar_Polizas_Existentes
 *Actor principal:* PAS
 *Actor secundario:* Ninguno
 *Precondiciones:* El PAS tiene la sesión abierta (REF CU-01-Acceso_Iniciar_Sesion). Tiene autorización para cargar la cartera y dispone de un archivo en un formato admitido. Hay conexión.
@@ -14,7 +14,7 @@
 7. El PAS revisa la previsualización y confirma la carga (*ALT CANCELAR)
 8. El sistema crea los clientes que no existían solo si la fila trae una cobertura o póliza, vincula los existentes e incorpora las pólizas nuevas sin sobrescribir registros previos (*ALT FILA SIN POLIZA, *ALT RETIRO EL BIEN)
 9. El sistema muestra el resultado de la carga y las filas que no fueron incorporadas. En Cartera quedan expuestas solo las pólizas vigentes de esa carga (*ALT FALLA DE CARGA)
-10. El sistema registra el PAS, la compañía, el archivo, las cantidades procesadas, la fecha y la hora (REF CU 56)
+10. El sistema registra el PAS, la compañía, el archivo, las cantidades procesadas, la fecha y la hora (REF CU 51)
 
 *Flujos alternativos*
 
@@ -59,14 +59,14 @@
 
 *Postcondiciones*
 1. Los clientes quedan en la cartera del PAS solo si la fila les asoció una cobertura o póliza, vigente o no
-2. En la ficha y en la distribución por ramo se exponen únicamente las pólizas vigentes importadas (REF CU-30-Cartera_Ver_Ficha_Cliente, CU-31-Cartera_Ver_Cartera_por_Ramo)
+2. En la ficha y en la distribución por ramo se exponen únicamente las pólizas vigentes importadas (REF CU-25-Cartera_Ver_Ficha_Cliente, CU-26-Cartera_Ver_Cartera_por_Ramo)
 3. Los duplicados no se vuelven a crear ni se sobrescriben
 4. Si el PAS canceló o falló la carga, no quedan registros parciales que impidan reintentar
 5. El resultado queda en el registro de auditoría
 
 *Reglas de negocio asociadas*
 RN_1: La carga inicial registra en el ERP una copia operativa de pólizas ya emitidas. No emite, renueva ni modifica la póliza legal de la aseguradora.
-RN_2: Como mínimo, cada póliza requiere cliente identificable, compañía, ramo, número de póliza y vigencia. Los campos definitivos deben alinearse con el registro de emisión (REF CU 25).
+RN_2: Como mínimo, cada póliza requiere cliente identificable, compañía, ramo, número de póliza y vigencia. Los campos definitivos deben alinearse con el registro de emisión (REF CU 16).
 RN_3: Una póliza de la misma compañía y con el mismo número no puede importarse dos veces.
 RN_4: Un cliente existente se reutiliza; la importación no debe crear otra persona si puede identificarla de forma unívoca.
 RN_5: Ninguna fila se asocia automáticamente cuando hay más de una coincidencia posible.
@@ -78,7 +78,7 @@ RN_10: Después de la carga, Cartera solo expone las pólizas vigentes. Si la fi
 
 *Supuestos a confirmar*
 SUP_1: Si el MVP admite Excel, CSV, archivos propios de cada aseguradora o una integración automática de vuelco.
-SUP_2: Si la carga la realiza el PAS, Back-office en nombre del PAS (REF CU 57) o ambos roles con permisos distintos.
+SUP_2: Si la carga la realiza el PAS, Back-office en nombre del PAS (REF CU 52) o ambos roles con permisos distintos.
 SUP_3: Los campos obligatorios y su formato por ramo, incluidos estado, prima, suma asegurada, próximo cobro, medio de pago y documento de póliza.
 SUP_4: Si se permite importar las filas válidas y dejar las inválidas pendientes, o si cualquier error bloquea el archivo completo.
 SUP_5: Qué dato identifica de manera unívoca a personas humanas y jurídicas cuando el archivo no contiene DNI o CUIT.

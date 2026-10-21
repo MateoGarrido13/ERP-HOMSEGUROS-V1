@@ -1,7 +1,7 @@
-## CU-29-Cartera_Editar_Cliente
+## CU-24-Cartera_Editar_Cliente
 *Actor principal:* PAS
 *Actor secundario:* Ninguno
-*Precondiciones:* El PAS tiene abierta la ficha de un cliente de su cartera (REF CU-30-Cartera_Ver_Ficha_Cliente). Hay conexión.
+*Precondiciones:* El PAS tiene abierta la ficha de un cliente de su cartera (REF CU-25-Cartera_Ver_Ficha_Cliente). Hay conexión.
 *Disparador:* Corregir o actualizar los datos de un cliente
 
 *Flujo principal*
@@ -12,7 +12,7 @@
 5. El sistema valida los campos y verifica que el documento no pertenezca a otro cliente (*ALT DATOS INVALIDOS, *ALT DOCUMENTO DUPLICADO)
 6. El sistema guarda los cambios
 7. El sistema vuelve a mostrar la ficha actualizada
-8. El sistema registra el PAS, el cliente, los campos modificados, la fecha y la hora (REF CU 56)
+8. El sistema registra el PAS, el cliente, los campos modificados, la fecha y la hora (REF CU 51)
 
 *Flujos alternativos*
 
@@ -41,11 +41,11 @@
 *Reglas de negocio asociadas*
 RN_1: Editar un cliente no crea otro registro ni cambia su identificador interno.
 RN_2: El documento, si se informa, no puede quedar asociado a dos clientes.
-RN_3: Este caso modifica datos del cliente. Los datos propios de una póliza no se editan desde este formulario (REF CU-32-Cartera_Ver_Detalle_Poliza).
+RN_3: Este caso modifica datos del cliente. Los datos propios de una póliza no se editan desde este formulario (REF CU-27-Cartera_Ver_Detalle_Poliza).
 RN_4: Un PAS solo puede editar clientes de su cartera.
 RN_5: El registro de auditoría identifica qué campos cambiaron, sin reemplazar el valor histórico.
 RN_6: Editar el cliente no modifica las propuestas ya generadas, porque conservan los datos con los que fueron emitidas.
-RN_7: Este formulario no incorpora un cliente ni le asocia una póliza. Un cliente de la cartera ya tiene al menos una cobertura o póliza asociada, vigente o no (REF CU-28-Cartera_Dar_de_Alta_Cliente).
+RN_7: Este formulario no incorpora un cliente ni le asocia una póliza. Un cliente de la cartera ya tiene al menos una cobertura o póliza asociada, vigente o no (REF CU-23-Cartera_Dar_de_Alta_Cliente).
 RN_8: Editar los datos no cambia qué pólizas se exponen. En Cartera solo se ven las vigentes. Si el cliente retiró su bien, deja la cartera y pasa a Lead (REF CU-08a-Pendientes_Contactar_Lead).
 
 *Supuestos a confirmar*

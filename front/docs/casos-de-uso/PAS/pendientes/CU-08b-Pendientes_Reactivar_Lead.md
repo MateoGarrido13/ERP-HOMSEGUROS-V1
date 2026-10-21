@@ -12,9 +12,9 @@
 5. El PAS selecciona "Activar"
 6. El sistema abre el formulario, con esos campos cargados y editables (REF CU 9)
 7. El PAS ajusta los campos y confirma la contratación (*ALT CANCELAR)
-8. El sistema incorpora al cliente en la cartera, porque volvió a contratar el servicio (REF CU 25, CU 30)
+8. El sistema incorpora al cliente en la cartera, porque volvió a contratar el servicio (REF CU 16, CU 25)
 9. El lead sale de Leads
-10. El sistema registra el PAS, el lead, la fecha y la hora (REF CU 56)
+10. El sistema registra el PAS, el lead, la fecha y la hora (REF CU 51)
 
 *Flujos alternativos*
 
@@ -53,6 +53,6 @@ RN_5: La fecha de la última interacción es `ULT. FECHA DE MODIFICACION`.
 RN_6: Reactivar no es recotizar el lead (REF CU-08d-Pendientes_Convertir_Lead_en_Cotizacion) ni descartarlo (REF CU-08c-Pendientes_Descartar_Lead).
 
 *Supuestos a confirmar*
-SUP_1: Si Activar, además del formulario, registra la póliza emitida (REF CU 25). El prototipo no tiene Reactivar.
+SUP_1: Si Activar, además del formulario, registra la póliza emitida (REF CU 16). El prototipo no tiene Reactivar.
 SUP_2: Si la recotización también cambia el origen del lead.
 SUP_3: Si la descripción que se edita al recotizar es el comentario que el lead ya muestra al abrirlo.

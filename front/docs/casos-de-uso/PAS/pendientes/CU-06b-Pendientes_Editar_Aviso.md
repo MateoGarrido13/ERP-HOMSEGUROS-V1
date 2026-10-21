@@ -12,7 +12,7 @@
 5. El PAS selecciona "Guardar" (*ALT CANCELAR)
 6. El sistema guarda la descripción y la fecha de importancia
 7. El aviso pasa a figurar en el período de su tipo para esa fecha (*ALT PERIODO)
-8. El sistema registra en sus logs el PAS, el aviso, la descripción, la fecha de importancia, la fecha y la hora (REF CU 56)
+8. El sistema registra en sus logs el PAS, el aviso, la descripción, la fecha de importancia, la fecha y la hora (REF CU 51)
 
 *Flujos alternativos*
 
@@ -69,5 +69,5 @@ RN_10: Cumpleaños figura solo el día de su fecha de importancia.
 
 *Supuestos a confirmar*
 SUP_1: Si en Editar también se pueden cambiar el nombre y apellido, el tipo de cobertura o el tipo, o solo la descripción y la fecha de importancia. El prototipo todavía no ofrece Editar.
-SUP_2: Si cambiar la fecha de importancia de un pago rechazado también actualiza el ticket de cobranza, o son registros distintos (REF CU 36).
+SUP_2: Si cambiar la fecha de importancia de un pago rechazado también actualiza el ticket de cobranza, o son registros distintos (REF CU 31).
 SUP_3: Si al cambiar la fecha de un cumpleaños el aviso pasa a figurar ese nuevo día, aunque deje de coincidir con el cumpleaños del cliente.

@@ -10,7 +10,7 @@
 3. El usuario confirma
 4. El sistema invalida la sesión de este dispositivo
 5. El sistema limpia los datos de sesión guardados en el dispositivo
-6. El sistema registra el cierre: usuario, fecha y hora (REF CU 56)
+6. El sistema registra el cierre: usuario, fecha y hora (REF CU 51)
 7. El sistema muestra la pantalla de ingreso, sin el menú de la aplicación (REF CU-01-Acceso_Iniciar_Sesion)
 
 *Flujos alternativos*
@@ -39,4 +39,4 @@ RN_4: El cierre queda en el registro de auditoría.
 *Supuestos a confirmar*
 SUP_1: "Cerrar sesión" vive en Perfil.
 SUP_2: Cerrar sesión en un dispositivo deja abiertas las sesiones de los otros dispositivos de ese usuario.
-SUP_3: Si hay una cotización en curso sin guardar, el sistema avisa que se pierde antes de confirmar el cierre (REF CU 20).
+SUP_3: Si hay una cotización en curso sin guardar, el sistema avisa que se pierde antes de confirmar el cierre (REF CU 12).

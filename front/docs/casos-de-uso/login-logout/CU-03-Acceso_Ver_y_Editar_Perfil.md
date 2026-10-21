@@ -13,7 +13,7 @@
 6. El usuario modifica los campos habilitados
 7. El usuario selecciona "Guardar"
 8. El sistema valida nombre y teléfono (*ALT DATOS)
-9. El sistema guarda los cambios y registra usuario, fecha y hora (REF CU 56)
+9. El sistema guarda los cambios y registra usuario, fecha y hora (REF CU 51)
 10. El sistema vuelve a mostrar el perfil en solo lectura, con los datos nuevos
 11. Si el usuario necesita otra contraseña, selecciona "Cambiar contraseña" (REF CU-02-Acceso_Recuperar_o_Cambiar_Contrasena)
 
@@ -37,7 +37,7 @@
 
 *Reglas de negocio asociadas*
 RN_1: Cada usuario ve y edita su propio perfil. Un PAS no abre el perfil de otro PAS.
-RN_2: Rol, matrícula y organización se muestran y no se editan en este caso. Los asigna la organización (REF CU 51, CU 53).
+RN_2: Rol, matrícula y organización se muestran y no se editan en este caso. Los asigna la organización (REF CU 46, CU 48).
 RN_3: El nombre y el teléfono de contacto los actualiza el propio usuario.
 RN_4: Cancelar la edición no persiste cambios.
 RN_5: El cambio de contraseña no se resuelve en este caso. Sigue el CU-02-Acceso_Recuperar_o_Cambiar_Contrasena.

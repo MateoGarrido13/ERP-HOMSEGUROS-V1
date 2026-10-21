@@ -9,7 +9,7 @@
 2. El PAS selecciona el teléfono para llamar (*ALT WHATSAPP)
 3. El sistema abre la llamada hacia ese número
 4. El sistema actualiza `ULT. FECHA DE MODIFICACION` al día de hoy
-5. El sistema registra el PAS, el lead, el canal, la fecha y la hora (REF CU 56)
+5. El sistema registra el PAS, el lead, el canal, la fecha y la hora (REF CU 51)
 6. El lead sigue en la lista, con el mismo origen
 
 *Flujos alternativos*

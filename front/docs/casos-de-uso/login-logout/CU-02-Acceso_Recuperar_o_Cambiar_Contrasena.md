@@ -1,7 +1,7 @@
 ## CU-02-Acceso_Recuperar_o_Cambiar_Contrasena
 *Actor principal:* Usuario del ERP (PAS, directivo o administrativo)
 *Actor secundario:* Servicio de correo
-*Precondiciones:* La cuenta existe y está activa (REF CU 51, CU 52). Hay conexión. Para recuperar, el usuario no está autenticado. Para cambiar, el usuario tiene la sesión abierta (REF CU-01-Acceso_Iniciar_Sesion).
+*Precondiciones:* La cuenta existe y está activa (REF CU 46, CU 47). Hay conexión. Para recuperar, el usuario no está autenticado. Para cambiar, el usuario tiene la sesión abierta (REF CU-01-Acceso_Iniciar_Sesion).
 *Disparador:* El usuario no recuerda la contraseña, o quiere reemplazarla
 
 *Flujo principal*
@@ -18,7 +18,7 @@
 11. El usuario carga las dos y selecciona "Guardar"
 12. El sistema verifica que coincidan y que la nueva cumpla la política vigente (*ALT CONTRASEÑA NUEVA)
 13. El sistema reemplaza la contraseña, invalida el enlace y deja sin efecto la contraseña anterior
-14. El sistema registra el cambio: usuario, fecha y hora, sin guardar la contraseña (REF CU 56)
+14. El sistema registra el cambio: usuario, fecha y hora, sin guardar la contraseña (REF CU 51)
 15. El sistema vuelve a la pantalla de ingreso (REF CU-01-Acceso_Iniciar_Sesion)
 
 *Flujos alternativos*

@@ -1,7 +1,7 @@
 ## CU-01-Acceso_Iniciar_Sesion
 *Actor principal:* Usuario del ERP (PAS, directivo o administrativo)
 *Actor secundario:* Base de usuarios del ERP
-*Precondiciones:* La organización ya dio de alta la cuenta con email y contraseña (REF CU 51). El usuario no tiene una sesión vigente en este dispositivo. Hay conexión.
+*Precondiciones:* La organización ya dio de alta la cuenta con email y contraseña (REF CU 46). El usuario no tiene una sesión vigente en este dispositivo. Hay conexión.
 *Disparador:* Entrar al ERP
 
 *Flujo principal*
@@ -13,8 +13,8 @@
 6. El sistema verifica que la cuenta esté activa
 7. El sistema compara la contraseña con la guardada (*ALT CREDENCIALES)
 8. El sistema abre una sesión asociada a ese usuario, a su rol y al alcance de datos de ese rol
-9. El sistema registra el ingreso EN SUS LOGS: usuario, rol, fecha y hora (REF CU 56)
-10. El sistema abre la pantalla de inicio del rol: el PAS entra a Pendientes; el directivo y el administrativo entran al dashboard de la red (REF CU 45)
+9. El sistema registra el ingreso EN SUS LOGS: usuario, rol, fecha y hora (REF CU 51)
+10. El sistema abre la pantalla de inicio del rol: el PAS entra a Pendientes; el directivo y el administrativo entran al dashboard de la red (REF CU 40)
 
 *Flujos alternativos*
 
@@ -49,6 +49,6 @@ RN_6: Cada ingreso queda en el registro de auditoría.
 
 *Supuestos a confirmar*
 SUP_1: El PAS aterriza en Pendientes y el directivo/administrativo en el dashboard de la red.
-SUP_2: Quién da de alta la cuenta del directivo y del administrativo. El CU 51 cubre el alta de un PAS.
+SUP_2: Quién da de alta la cuenta del directivo y del administrativo. El CU 46 cubre el alta de un PAS.
 SUP_3: Cuánto dura la sesión y si un mismo usuario puede tener más de una sesión abierta.
 SUP_4: Si hay un tope de intentos fallidos y qué pasa al superarlo.

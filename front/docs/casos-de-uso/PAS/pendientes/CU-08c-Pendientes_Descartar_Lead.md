@@ -9,7 +9,7 @@
 2. El sistema pide confirmación
 3. El PAS confirma (*ALT CANCELAR)
 4. El sistema saca el lead de Leads
-5. El sistema registra el PAS, el lead, la fecha y la hora (REF CU 56)
+5. El sistema registra el PAS, el lead, la fecha y la hora (REF CU 51)
 
 *Flujos alternativos*
 
@@ -32,4 +32,4 @@ RN_4: Un lead descartado no vuelve a la lista por el paso del tiempo.
 *Supuestos a confirmar*
 SUP_1: Si el descarte pide un motivo. El prototipo no tiene esta acción.
 SUP_2: Si un lead descartado se puede recuperar.
-SUP_3: Si el descarte también cierra una cotización en curso asociada a esa persona (REF CU 20, CU 24).
+SUP_3: Si el descarte también cierra una cotización en curso asociada a esa persona (REF CU 12, CU 15).
