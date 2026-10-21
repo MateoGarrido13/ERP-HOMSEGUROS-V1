@@ -115,7 +115,7 @@ La columna "Absorbe" indica el número que tenía el caso en la versión anterio
 
 | #   | Caso de uso                                                                                                                                                                      | Absorbe    | Origen | Fase   |
 | --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------ | ------ |
-| 17  | Cargar el riesgo automotor: patente, CP, uso, info del titular; verificar y completar los datos del vehículo (GNC, 0 km, suma asegurada), o cargarlo a mano si la patente no decodifica | 11, 13, 14 | P [A]  | MVP    |
+| 17  | Cargar el riesgo automotor: patente, CP, uso; verificar y completar los datos del vehículo (GNC, 0 km, suma asegurada), o cargarlo a mano si la patente no decodifica | 11, 13, 14 | P [A]  | MVP    |
 | 18  | Comparar cotizaciones de las compañías a medida que llegan, manejar la que falla, demora o rechaza, y elegir una. Ver un estimado mientras responde la compañía, aclarando que no es precio real [#18, estimado] | 15, 16, 17 | P [A]  | MVP [el estimado es ?] |
 | 19  | Ver la comisión de cada cotización                                                                                                                                               | 18         | N      | ?      |
 | 20  | Aplicar un descuento sacrificando puntos de comisión                                                                                                                             | 19         | N      | ?[MVP] |
