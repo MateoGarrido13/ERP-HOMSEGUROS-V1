@@ -1,58 +1,37 @@
 ## CU-08b-Pendientes_Reactivar_Lead
 *Actor principal:* PAS
 *Actor secundario:* Ninguno
-*Precondiciones:* El PAS tiene abierto un lead de su cartera (REF CU-05-Pendientes_Ver_Pendientes). Hay conexión. El lead tiene una cotización previa, con el formulario que el PAS ya había completado al enviarla.
-*Disparador:* El cliente volvió a contratar
+*Precondiciones:* El PAS tiene abierto un lead (REF CU-05-Pendientes_Ver_Pendientes). Hay conexión. El lead tiene una propuesta ya enviada.
+*Disparador:* Retomar ese lead con la propuesta que ya se envió, sin recotizar
+
+*Corte:* Este caso termina al publicar el aviso Cotización enviada. No carga al cliente en Cartera. Si el cliente confirma, el alta en Cartera la cierra el aviso Cotización enviada (REF CU-05d-Pendientes_Aviso_Cotizacion_Enviada). Con la póliza ya vigente, el aviso Enviar póliza lo cubre CU-05e-Pendientes_Aviso_Enviar_Poliza. Acá no se repiten.
 
 *Flujo principal*
-1. En el lead abierto, el PAS selecciona "Reactivar"
-2. El sistema muestra una previsualización de los datos recabados en ese formulario (*ALT RECOTIZAR)
-3. El PAS los chequea. Puede elegir otra compañía, otro tipo de cobertura u otra alternativa
-4. El PAS edita la previsualización (*ALT SIN EDICION)
-5. El PAS selecciona "Activar"
-6. El sistema abre el formulario, con esos campos cargados y editables (REF CU 9)
-7. El PAS ajusta los campos y confirma la contratación (*ALT CANCELAR)
-8. El sistema incorpora al cliente en la cartera, porque volvió a contratar el servicio (REF CU 16, CU 25)
-9. El lead sale de Leads
-10. El sistema registra el PAS, el lead, la fecha y la hora (REF CU 51)
+1. En el lead, el PAS selecciona "Reactivar"
+2. El sistema muestra la propuesta enviada
+3. El PAS confirma (*ALT CANCELAR)
+4. El sistema publica un aviso en Pendientes, estado Pendiente, tipo Cotización enviada, con el cliente, qué se cotizó y los montos ofrecidos (REF CU-05d-Pendientes_Aviso_Cotizacion_Enviada, TRANSICIONES.md, AVISO COTIZACION ENVIADA)
+5. El lead sale de Leads. No quedan un lead y un aviso a la vez para esa propuesta
+6. El sistema registra el PAS, el lead, el aviso, la fecha y la hora (REF CU 51)
+7. **FIN**
 
 *Flujos alternativos*
 
-`2. El sistema muestra una previsualización de los datos recabados en ese formulario`
-2.1. El PAS envía una recotización
-2.2. El sistema actualiza `ULT. FECHA DE MODIFICACION` al día de hoy. Esa fecha es la de la última interacción (*ALT DESCRIPCION Y FECHA)
-2.3. El lead sigue en Leads y el cliente no vuelve a la cartera
-2.4. **FIN**
-
-`2.2. El sistema actualiza ULT. FECHA DE MODIFICACION al día de hoy`
-2.2.1. El PAS modifica la descripción y la fecha de la última interacción
-2.2.2. El sistema guarda esa descripción y esa fecha
-2.2.3. **IR A (2.3)**
-
-`4. El PAS edita la previsualización`
-4.1. El PAS deja la previsualización como estaba
-4.2. **IR A (5)**
-
-`7. El PAS ajusta los campos y confirma la contratación`
-7.1. El PAS cancela
-7.2. El lead sigue en Leads y el cliente no entra a la cartera
-7.3. **FIN**
+`3. El PAS confirma`
+3.1. El PAS no confirma
+3.2. El lead sigue en Leads. No se publica el aviso
+3.3. **FIN**
 
 *Postcondiciones*
-1. Si activó, el cliente vuelve a la cartera porque contrató de nuevo, y el lead ya no figura en Leads
-2. Si envió una recotización, el lead sigue en Leads. La fecha de la última interacción queda en hoy, o en la fecha que el PAS cargó, junto con la descripción si la modificó
-3. Cancelar no saca el lead ni incorpora al cliente a la cartera
-4. El cambio queda en el registro de auditoría
+1. El seguimiento está en Pendientes como aviso Cotización enviada
+2. El lead ya no figura en Leads
+3. El cliente no entra a Cartera en este caso
+4. Si no confirmó, el lead no cambia
 
 *Reglas de negocio asociadas*
-RN_1: Reactivado significa que el cliente volvió a contratar un servicio y vuelve a la cartera.
-RN_2: Antes de Activar, el PAS ve la previsualización del formulario de la cotización previa y puede editarla: otra compañía, otro tipo de cobertura u otra alternativa.
-RN_3: Activar abre ese formulario con los campos para editar. La previsualización no reemplaza al formulario.
-RN_4: Enviar una recotización no lo pasa a la cartera. Actualiza la fecha de la última interacción, o deja que el PAS modifique la descripción y esa fecha.
-RN_5: La fecha de la última interacción es `ULT. FECHA DE MODIFICACION`.
-RN_6: Reactivar no es recotizar el lead (REF CU-08d-Pendientes_Convertir_Lead_en_Cotizacion) ni descartarlo (REF CU-08c-Pendientes_Descartar_Lead).
-
-*Supuestos a confirmar*
-SUP_1: Si Activar, además del formulario, registra la póliza emitida (REF CU 16). El prototipo no tiene Reactivar.
-SUP_2: Si la recotización también cambia el origen del lead.
-SUP_3: Si la descripción que se edita al recotizar es el comentario que el lead ya muestra al abrirlo.
+RN_1: Reactivar usa la propuesta ya enviada y la publica como aviso. No abre Cotizar y no asigna una póliza vigente.
+RN_2: Recotizar es otra acción: abre Cotizar y, al enviar, también publica Cotización enviada (REF CU-08d-Lead_Enviar_Cotizacion).
+RN_3: La descripción del lead no se cambia acá (REF CU-08e-Pendientes_Editar_Descripcion_Lead).
+RN_4: Descartar saca el lead y no publica este aviso (REF CU-08c-Pendientes_Descartar_Lead).
+RN_5: Si después el cliente confirma esa cotización, el PAS resuelve el aviso con "Dar de alta" y el cliente pasa a Cartera. Ese cierre no se describe acá (REF CU-05d-Pendientes_Aviso_Cotizacion_Enviada).
+RN_6: El aviso Enviar póliza es de una póliza ya vigente. No nace al reactivar. No se describe acá (REF CU-05e-Pendientes_Aviso_Enviar_Poliza).

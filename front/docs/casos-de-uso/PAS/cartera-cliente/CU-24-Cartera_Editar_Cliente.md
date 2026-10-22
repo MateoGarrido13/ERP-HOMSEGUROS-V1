@@ -46,10 +46,10 @@ RN_4: Un PAS solo puede editar clientes de su cartera.
 RN_5: El registro de auditoría identifica qué campos cambiaron, sin reemplazar el valor histórico.
 RN_6: Editar el cliente no modifica las propuestas ya generadas, porque conservan los datos con los que fueron emitidas.
 RN_7: Este formulario no incorpora un cliente ni le asocia una póliza. Un cliente de la cartera ya tiene al menos una cobertura o póliza asociada, vigente o no (REF CU-23-Cartera_Dar_de_Alta_Cliente).
-RN_8: Editar los datos no cambia qué pólizas se exponen. En Cartera solo se ven las vigentes. Si el cliente retiró su bien, deja la cartera y pasa a Lead (REF CU-08a-Pendientes_Contactar_Lead).
+RN_8: Editar los datos no cambia qué pólizas se exponen. En Cartera solo se ven las vigentes. Eliminar una póliza no se hace acá: ese registro pasa a Leads con el detalle del bien asegurado y el cliente sigue en Cartera si le queda otra vigente (REF CU-05-Pendientes_Ver_Pendientes, transicion-estados-bien.md).
 
 *Supuestos a confirmar*
 SUP_1: Qué campos, además de nombre, apellido, email, teléfono, DNI y comentarios, se pueden editar.
 SUP_2: Si cambiar el documento, nombre o razón social requiere confirmación adicional.
-SUP_3: Quién registra que el cliente retiró el bien. Este caso no lo hace: solo corrige datos del cliente.
+SUP_3: Quién registra que se eliminó una póliza. Este caso no lo hace: solo corrige datos del cliente.
 SUP_4: Si los cambios de contacto se propagan a avisos, leads y siniestros abiertos o esos registros conservan una copia histórica.

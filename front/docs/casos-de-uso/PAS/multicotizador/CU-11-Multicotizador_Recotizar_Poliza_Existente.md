@@ -1,4 +1,4 @@
-## CU-11-Multicotizador_Recotizar_Poliza_Existente
+﻿## CU-11-Multicotizador_Recotizar_Poliza_Existente
 *Actor principal:* PAS
 *Actor secundario:* Ninguno
 *Precondiciones:* El PAS tiene abierto el detalle de una póliza vigente de su cartera (REF CU-27-Cartera_Ver_Detalle_Poliza). Hay conexión.
@@ -27,7 +27,7 @@
 
 *Reglas de negocio asociadas*
 RN_1: Recotizar reutiliza el ramo, el cliente y los datos del riesgo que la póliza tenga disponibles; no vuelve a pedir el ramo (REF CU-09) ni el alta del cliente (REF CU-10).
-RN_2: Recotizar solo está disponible desde una póliza vigente de la cartera del PAS (REF CU-27-Cartera_Ver_Detalle_Poliza). Una propuesta pendiente en Lead se recotiza por otro camino (REF CU-08b-Pendientes_Reactivar_Lead, CU-08d-Pendientes_Convertir_Lead_en_Cotizacion).
+RN_2: Recotizar solo está disponible desde una póliza vigente de la cartera del PAS (REF CU-27-Cartera_Ver_Detalle_Poliza). Una propuesta pendiente en Lead se recotiza por otro camino (REF CU-08b-Pendientes_Reactivar_Lead, CU-08d-Lead_Enviar_Cotizacion).
 RN_3: La cotización que se genera es independiente de la póliza de origen. No la reemplaza ni la da de baja.
 RN_4: El cliente de la cotización es el de la póliza de origen y no se puede cambiar dentro de este flujo. Para recotizar a otro cliente, el PAS vuelve a Cartera y repite el caso desde la póliza que corresponda.
 RN_5: El PAS puede modificar cualquier dato precargado del riesgo antes de continuar; el sistema no obliga a cotizar con los mismos valores.

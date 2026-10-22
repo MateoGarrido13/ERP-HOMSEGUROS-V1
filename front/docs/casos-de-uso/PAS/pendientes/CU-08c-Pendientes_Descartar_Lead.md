@@ -20,11 +20,11 @@
 
 *Postcondiciones*
 1. El lead ya no aparece en Leads
-2. El cliente, si existía en la cartera, sigue en la cartera
+2. El cliente sigue almacenado. Si tiene pólizas vigentes, sigue en Cartera. Si no, sigue sin mostrarse ahí y sigue elegible como cliente existente
 3. El descarte queda en el registro de auditoría
 
 *Reglas de negocio asociadas*
-RN_1: Descartar saca el lead de la lista. No borra al cliente ni sus pólizas.
+RN_1: Descartar saca el lead de la lista. No borra al cliente ni sus pólizas. Si era el último lugar donde se veía, deja de mostrarse y sigue en la base, elegible como cliente existente (REF CU-10-Multicotizador_Seleccionar_o_Crear_Cliente, transicion-estados-bien.md).
 RN_2: Descartar no inicia una cotización.
 RN_3: Cancelar la confirmación no persiste el descarte.
 RN_4: Un lead descartado no vuelve a la lista por el paso del tiempo.

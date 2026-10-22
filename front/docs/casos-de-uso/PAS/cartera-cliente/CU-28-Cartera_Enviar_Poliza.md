@@ -1,7 +1,7 @@
 ## CU-28-Cartera_Enviar_Poliza
 *Actor principal:* PAS
 *Actor secundario:* Hoja de compartir del dispositivo y WhatsApp
-*Precondiciones:* El PAS tiene identificada una póliza de un cliente de su cartera. Llega desde el detalle de esa póliza (REF CU-27-Cartera_Ver_Detalle_Poliza) o desde un aviso "Enviar póliza" (REF CU-07-Pendientes_Contactar_desde_Aviso). Hay conexión.
+*Precondiciones:* El PAS tiene identificada una póliza de un cliente de su cartera. Llega desde el detalle de esa póliza (REF CU-27-Cartera_Ver_Detalle_Poliza) o desde un aviso "Enviar póliza" (REF CU-05e-Pendientes_Aviso_Enviar_Poliza). Hay conexión.
 *Disparador:* Compartir la póliza con el cliente
 
 *Flujo principal*
@@ -22,11 +22,10 @@
 1.4. **IR A (2)**
 
 `La entrada es el aviso Enviar póliza`
-E.1. El PAS tiene abierto en Pendientes un aviso de tipo "Enviar póliza" (REF CU-05-Pendientes_Ver_Pendientes)
-E.2. El aviso identifica la póliza: cliente, ramo, compañía y próximo vencimiento
-E.3. El PAS selecciona "Enviar WhatsApp" (REF CU-07-Pendientes_Contactar_desde_Aviso)
-E.4. El sistema sigue este caso desde el armado del texto
-E.5. **IR A (2)**
+E.1. El PAS tiene abierto en Pendientes un aviso de tipo "Enviar póliza" (REF CU-05e-Pendientes_Aviso_Enviar_Poliza)
+E.2. El PAS selecciona "Enviar WhatsApp"
+E.3. El sistema abre el chat con la plantilla de RN_1. Esa redirección ya resuelve el aviso y lo saca de la vista
+E.4. **FIN**
 
 `5. El PAS confirma el envío`
 5.1. El PAS cancela la hoja de compartir antes de entregarlo a WhatsApp
@@ -43,7 +42,7 @@ E.5. **IR A (2)**
 *Postcondiciones*
 1. Si se entregó al canal, quedan registrados la póliza, el canal, la fecha y la hora
 2. El texto queda visible para que el PAS pueda revisarlo o copiarlo
-3. Enviar no modifica la póliza, el próximo cobro ni el estado del aviso "Enviar póliza"
+3. Enviar desde Cartera no modifica la póliza ni el próximo cobro. El aviso "Enviar póliza" se cierra desde Pendientes (REF CU-05e-Pendientes_Aviso_Enviar_Poliza)
 4. Si el PAS canceló o el dispositivo falló, no se registra un envío confirmado
 
 *Reglas de negocio asociadas*
@@ -52,10 +51,10 @@ RN_2: El nombre que firma el mensaje es el del PAS autenticado.
 RN_3: La fecha del próximo vencimiento se muestra en formato `dd/mm/aaaa`.
 RN_4: Si el cliente tiene varias pólizas, el botón debe identificar cuál se enviará.
 RN_5: Entregar contenido a la hoja de compartir no permite comprobar que WhatsApp lo haya enviado o que el cliente lo haya recibido.
-RN_6: Enviar la póliza no resuelve automáticamente el aviso "Enviar póliza" (REF CU-06-Pendientes_Resolver_Aviso).
+RN_6: Desde el aviso, "Enviar WhatsApp" resuelve y saca el aviso de la vista (REF CU-05e-Pendientes_Aviso_Enviar_Poliza). Desde Cartera, enviar la póliza no cierra ese aviso.
 RN_7: Este caso reutiliza el patrón de compartir de la propuesta, pero la póliza y la propuesta son documentos distintos (REF CU 14).
-RN_8: Enviar la póliza es una sola acción, con dos entradas. En Cartera se dispara desde la póliza (REF CU-27-Cartera_Ver_Detalle_Poliza). En Pendientes se dispara desde el aviso "Enviar póliza" (REF CU-07-Pendientes_Contactar_desde_Aviso). Las dos entradas arman el texto de RN_1, lo entregan a la misma hoja de compartir y registran el mismo evento: PAS, póliza, canal, fecha y hora.
-RN_9: Desde Cartera solo se puede enviar una póliza vigente. Si el cliente retiró su bien, ya no está en la cartera y esta entrada no aplica: el cliente está en Lead (REF CU-08a-Pendientes_Contactar_Lead).
+RN_8: El texto es el de RN_1 en las dos entradas. En Cartera se dispara desde la póliza (REF CU-27-Cartera_Ver_Detalle_Poliza) y no cierra un aviso. En Pendientes, "Enviar WhatsApp" abre el chat y saca el aviso de la vista (REF CU-05e-Pendientes_Aviso_Enviar_Poliza).
+RN_9: Desde Cartera solo se puede enviar una póliza vigente. Una póliza eliminada no se envía desde acá: ese registro está en Leads. Las otras vigentes del mismo cliente sí se pueden enviar (REF CU-05-Pendientes_Ver_Pendientes, transicion-estados-bien.md).
 
 *Supuestos a confirmar*
 SUP_1: El prototipo actual comparte solo el texto; falta confirmar si debe adjuntar el PDF de la póliza o un enlace autenticado al documento.

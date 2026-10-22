@@ -38,11 +38,11 @@ RN_1: No se puede incorporar un cliente si no tiene una cobertura o póliza asoc
 RN_2: "+" no abre un alta de cliente suelta. Redirige a Cotizar (REF CU 9).
 RN_3: Un cliente existente se reutiliza. No se da de alta de nuevo si el documento ya existe (REF CU 10).
 RN_4: El cliente incorporado pertenece a la cartera del PAS que tiene la sesión.
-RN_5: En Cartera solo se exponen las pólizas vigentes. Si el cliente retiró su bien, deja la cartera y pasa a Lead, con origen "Retiró el bien" (REF CU-08a-Pendientes_Contactar_Lead, CU-05-Pendientes_Ver_Pendientes).
+RN_5: En Cartera solo se exponen las pólizas vigentes. Un automotor nuevo de un cliente que ya tiene vigentes se suma bajo el mismo nombre cuando queda vigente. Eliminar una póliza manda ese registro a Leads, con el detalle del bien que se tenía asegurado, tenga o no otras vigentes (REF CU-05-Pendientes_Ver_Pendientes, transicion-estados-bien.md).
 RN_6: Sumar una póliza con "+" no emite la póliza legal. La asociación operativa sigue el registro de emisión (REF CU 16) o la carga inicial (REF CU-29-Cartera_Cargar_Polizas_Existentes).
 
 *Supuestos a confirmar*
 SUP_1: Si una propuesta enviada ya cuenta como cobertura asociada, o si el cliente se incorpora recién cuando se registra la póliza (REF CU 16).
 SUP_2: Cómo se incorpora una persona jurídica. La cartera del prototipo contiene razones sociales.
-SUP_3: Dónde se consulta un cliente ya incorporado cuya única póliza no está vigente y que no retiró el bien. En Cartera no se expone.
-SUP_4: Quién registra que el cliente retiró el bien: el PAS, la compañía o un estado de la póliza.
+SUP_3: Dónde se consulta un cliente cuya única póliza dejó de estar vigente sin haber sido eliminada. Si se eliminó la última vigente, no se muestra en Cartera, queda el lead de esa póliza y sigue en "Cliente existente" (REF transicion-estados-bien.md, CU-10-Multicotizador_Seleccionar_o_Crear_Cliente).
+SUP_4: Quién registra que se eliminó la póliza: el PAS, la compañía o un estado de la póliza.
