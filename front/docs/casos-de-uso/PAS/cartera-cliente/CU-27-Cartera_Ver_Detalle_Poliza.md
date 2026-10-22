@@ -31,7 +31,7 @@
 
 `1. El PAS abre una póliza`
 1.1. La póliza ya no está vigente, no está disponible o no pertenece a su cartera
-1.2. Si el cliente retiró su bien, el sistema informa que pasó a Lead y no abre la ficha de Cartera (REF CU-08a-Pendientes_Contactar_Lead)
+1.2. Si esa póliza fue eliminada, el sistema informa que ese registro pasó a Leads y no abre su detalle en Cartera. Las otras vigentes del cliente siguen en su ficha (REF CU-05-Pendientes_Ver_Pendientes, transicion-estados-bien.md)
 1.3. En los demás casos, informa que no puede mostrarla y vuelve a la ficha
 1.4. **FIN**
 
@@ -49,10 +49,10 @@ RN_5: Si la póliza tiene documentos, el PAS puede consultarlos sin abandonar el
 RN_6: Ver el detalle no cambia el estado de la póliza ni el de sus cuotas.
 RN_7: El prototipo actual muestra ramo, compañía, número de póliza y próximo cobro dentro de la tarjeta del cliente. La vigencia, el estado, el riesgo y los documentos completan el detalle requerido.
 RN_8: En Cartera este detalle solo se abre para una póliza vigente. Una póliza que no está vigente no se expone desde la ficha ni desde el listado (REF CU-25-Cartera_Ver_Ficha_Cliente, CU-22-Cartera_Buscar_y_Filtrar_Clientes).
-RN_9: Si el cliente retiró su bien, deja la cartera y pasa a Lead. Sus pólizas dejan de tener detalle en Cartera.
+RN_9: Eliminar una póliza cierra su detalle en Cartera y manda ese registro a Leads, con el detalle del bien que se tenía asegurado. Las otras pólizas vigentes del mismo cliente conservan su detalle.
 
 *Supuestos a confirmar*
-SUP_1: Quién actualiza el estado de la póliza y qué estados existen además de vigente. En Cartera solo se expone la vigente. El paso a Lead ocurre cuando el cliente retiró el bien, no por el solo hecho de abrir este detalle.
+SUP_1: Quién actualiza el estado de la póliza y qué estados existen además de vigente. En Cartera solo se expone la vigente. El paso a Lead ocurre al eliminar esa póliza, no por el solo hecho de abrir este detalle.
 SUP_2: Qué campos del riesgo se muestran para Automotor, Hogar, Accidentes Personales y ART.
 SUP_3: Si el detalle incluye prima, suma asegurada, cobertura, cuotas, medio de pago y comisión.
 SUP_4: De dónde se obtiene el PDF de la póliza y qué ocurre si la aseguradora reemplaza el documento por un endoso.

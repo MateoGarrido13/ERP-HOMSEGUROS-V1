@@ -8,24 +8,27 @@ import { SurfaceCard } from "@/components/ui/surface-card"
 interface ShareNoticeProps {
   actionLabel: string
   message: string
+  onShared?: () => void
 }
 
-export function ShareNotice({ actionLabel, message }: ShareNoticeProps) {
+export function ShareNotice({ actionLabel, message, onShared }: ShareNoticeProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   async function onShare() {
     setIsOpen(true)
 
-    if (typeof navigator === "undefined" || !navigator.share) return
-
-    try {
-      await navigator.share({
-        title: "HOM Seguros",
-        text: message,
-      })
-    } catch {
-      setIsOpen(true)
+    if (typeof navigator !== "undefined" && navigator.share) {
+      try {
+        await navigator.share({
+          title: "HOM Seguros",
+          text: message,
+        })
+      } catch {
+        setIsOpen(true)
+      }
     }
+
+    onShared?.()
   }
 
   return (

@@ -56,7 +56,7 @@
 1. El PAS queda viendo los clientes de su cartera, con póliza vigente, que coinciden con la búsqueda y los filtros
 2. Buscar, filtrar o abrir una ficha no modifica clientes ni pólizas
 3. El PAS solo ve clientes de su cartera
-4. Un cliente que retiró su bien no aparece en este listado: está en Lead
+4. Una póliza eliminada no aparece en este listado: ese registro está en Leads. El cliente sigue si le queda otra póliza vigente
 
 *Reglas de negocio asociadas*
 RN_1: Los filtros disponibles son Compañía, Localidad y Ramo. Cada filtro admite una opción o "Todas"/"Todos".
@@ -67,7 +67,7 @@ RN_5: "Limpiar filtros" quita Compañía, Localidad y Ramo. La búsqueda por nom
 RN_6: Un PAS no puede buscar ni abrir clientes asignados a otro PAS.
 RN_7: Hasta que el PAS no hace una primer consulta, los filtros por defecto aparecen en "Todos" y muestra los clientes de su cartera que tienen al menos una póliza vigente.
 RN_8: No se puede incorporar un cliente si no tiene una cobertura o póliza asociada, vigente o no. El control "+" redirige a Cotizar (REF CU-23-Cartera_Dar_de_Alta_Cliente).
-RN_9: En Cartera solo se exponen las pólizas vigentes. Si el cliente retiró su bien, deja este listado y pasa a Lead (REF CU-08a-Pendientes_Contactar_Lead).
+RN_9: En Cartera solo se exponen las pólizas vigentes. Eliminar una póliza manda ese registro a Leads, con el detalle del bien que se tenía asegurado, tenga o no otras vigentes. El cliente sigue en este listado si le queda al menos una. Si era la última, sale de este listado, sus datos siguen guardados y sigue en "Cliente existente" (REF CU-05-Pendientes_Ver_Pendientes, CU-10-Multicotizador_Seleccionar_o_Crear_Cliente, transicion-estados-bien.md).
 
 *Supuestos a confirmar*
 SUP_1: Si la búsqueda por nombre también consulta DNI, CUIT, teléfono y número de póliza.

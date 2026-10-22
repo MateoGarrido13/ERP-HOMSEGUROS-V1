@@ -63,22 +63,23 @@ casos-de-uso/
 
 | #   | Caso de uso                                                                         | Origen | Fase |
 | --- | ----------------------------------------------------------------------------------- | ------ | ---- |
-| 5   | Ver pendientes (avisos y leads)                                                     | P      | MVP  |
-| 6   | Resolver o posponer un aviso [MODIFICAR COMO PAS]                                   | N      | MVP  |
+| 5   | Ver la bandeja de avisos y leads                                                    | P      | MVP  |
+| 8   | Lead: editar descripción, enviar cotización, reactivar o descartar                  | A      | MVP  |
 
-El caso 6 se parte en dos archivos, en `PAS/pendientes/`:
+Avisos, cada uno con su estado:
 
-- `CU-06-Pendientes_Resolver_Aviso` Resolver un aviso
-- `CU-06b-Pendientes_Editar_Aviso` Editar un aviso
-| 7   | Contactar al cliente por WhatsApp/ mail desde un aviso                              | P      | MVP  |
-| 8   | Gestionar un lead (contactar, reactivar, descartar, convertir en cotización) [epic] | A      | MVP  |
+- `CU-05-Pendientes_Ver_Pendientes` Bandeja
+- `CU-05b-Pendientes_Aviso_Cumpleanos`
+- `CU-05c-Pendientes_Aviso_Pago_Rechazado` (*) no confirmado
+- `CU-05d-Pendientes_Aviso_Cotizacion_Enviada`
+- `CU-05e-Pendientes_Aviso_Enviar_Poliza`
 
-El caso 8 se parte en cuatro archivos, en `PAS/pendientes/`:
+Lead:
 
-- `CU-08a-Pendientes_Contactar_Lead` Contactar un lead
-- `CU-08b-Pendientes_Reactivar_Lead` Reactivar un lead
+- `CU-08e-Pendientes_Editar_Descripcion_Lead` Editar la descripción
+- `CU-08d-Lead_Enviar_Cotizacion` Abrir Cotizar con sus datos
+- `CU-08b-Pendientes_Reactivar_Lead` Publicar la propuesta ya enviada como Cotización enviada
 - `CU-08c-Pendientes_Descartar_Lead` Descartar un lead
-- `CU-08d-Pendientes_Convertir_Lead_en_Cotizacion` Convertir un lead en cotización
 
 ## PAS: cotización y venta
 
@@ -166,6 +167,17 @@ La columna "Absorbe" indica el número que tenía el caso en la versión anterio
 | 36  | Registrar un siniestro                                                                | N      | MVP  |
 | 37  | Actualizar el ticket (estado, documentación, nº de reclamo, mails, derivación, links) | N      | MVP  |
 | 38  | Cerrar un siniestro                                                                   | N      | MVP  |
+
+Lo que está en la pantalla:
+
+- `CU-34-Siniestros_Ver_Lista` Lista
+- `CU-35-Siniestros_Ver_Detalle` Comentario y contactos
+
+Definido, con el recorrido de pantalla todavía abierto:
+
+- `CU-36-Siniestros_Registrar` El PAS carga denuncia y adjuntos. Nace en "En gestión", sin número de reclamo ni link.
+- `CU-37-Siniestros_Actualizar_Ticket` Lo actualizan el PAS y el administrativo. El número de reclamo y el link se completan acá. Falta la pantalla del administrativo.
+- `CU-38-Siniestros_Cerrar` Lo cierra el PAS. El estado queda en "Cerrado" y sigue en la lista.
 
 ## PAS: comisiones
 

@@ -19,7 +19,7 @@
 2.4. **IR A (3)**
 
 `La entrada ya trae el ramo`
-R.1. El PAS llegó desde un lead (REF CU-08d-Pendientes_Convertir_Lead_en_Cotizacion, CU-08b-Pendientes_Reactivar_Lead) o desde una póliza a re-cotizar (REF CU 11)
+R.1. El PAS llegó desde un lead (REF CU-08d-Lead_Enviar_Cotizacion) o desde una póliza a re-cotizar (REF CU 11)
 R.2. El lead o la póliza ya identifican el ramo
 R.3. El sistema omite la pantalla "Elegí la cobertura"
 R.4. **IR A (4)**

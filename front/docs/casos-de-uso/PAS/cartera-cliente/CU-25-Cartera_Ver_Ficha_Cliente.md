@@ -18,7 +18,7 @@
 `4. El sistema muestra sus pólizas vigentes`
 4.1. El cliente no tiene pólizas vigentes para exponer
 4.2. El sistema no lista pólizas. Las que no están vigentes quedan fuera de la ficha
-4.3. Si el cliente retiró su bien, no llega a esta ficha: ya salió de la cartera y está en Lead (REF CU-08a-Pendientes_Contactar_Lead)
+4.3. Una póliza eliminada no se lista: ese registro está en Leads, con el detalle del bien que se tenía asegurado. Si le queda otra vigente, la ficha sigue bajo el mismo cliente (REF CU-05-Pendientes_Ver_Pendientes, transicion-estados-bien.md)
 4.4. **IR A (5)**
 
 `5. El sistema muestra sus propuestas`
@@ -59,11 +59,11 @@ RN_3: Cada póliza vigente de la ficha enlaza con su detalle (REF CU-27-Cartera_
 RN_4: Las propuestas conservan su estado: en curso, enviada, aceptada, rechazada o vencida, según corresponda (REF CU 12, CU 15).
 RN_5: Abrir la ficha o desplegar una sección no cuenta como una modificación del cliente.
 RN_6: La ficha no reemplaza el registro de auditoría. Presenta la actividad útil para la gestión del cliente; la auditoría sigue el CU 51.
-RN_7: "+" suma una póliza nueva y redirige a Cotizar con el cliente ya seleccionado (REF CU-23-Cartera_Dar_de_Alta_Cliente).
-RN_8: Si el cliente retiró su bien, deja la cartera y pasa a Lead. La ficha de Cartera deja de exponerlo.
+RN_7: "+" suma una póliza nueva del mismo cliente y redirige a Cotizar con él ya seleccionado. Al quedar vigente, se muestra en esta ficha junto con las que ya tenía (REF CU-23-Cartera_Dar_de_Alta_Cliente, transicion-estados-bien.md).
+RN_8: Eliminar una póliza saca solo ese registro de la ficha y lo manda a Leads, con el detalle del bien que se tenía asegurado. No depende de si tiene otros bienes. Si le queda otra vigente, la ficha sigue. Si era la última, deja de mostrarse en Cartera, sus datos siguen guardados y sigue en "Cliente existente" (REF CU-05-Pendientes_Ver_Pendientes, CU-10-Multicotizador_Seleccionar_o_Crear_Cliente).
 
 *Supuestos a confirmar*
-SUP_1: Qué eventos integran el historial: altas y ediciones, contactos, cotizaciones, propuestas, pólizas, cobranzas y siniestros.
+SUP_1: Qué eventos integran el historial: altas y ediciones, contactos, cotizaciones, propuestas, pólizas, cobranzas y siniestros. La pantalla de siniestros no define ese historial (REF CU-35-Siniestros_Ver_Detalle, SUP_4).
 SUP_2: Si las secciones se muestran juntas, en pestañas o como tarjetas desplegables. El prototipo actual solo despliega pólizas y próximo cobro dentro de Cartera.
 SUP_3: Si el historial de la ficha conserva las pólizas que dejaron de estar vigentes, aunque la sección de pólizas solo liste las vigentes.
 SUP_4: Si deben mostrarse DNI/CUIT, domicilio, localidad, fecha de nacimiento y comentarios en los datos personales.

@@ -42,8 +42,8 @@
 8.3. **IR A (9)**
 
 `8. El sistema crea los clientes que no existían solo si la fila trae una cobertura o póliza`
-8.1. La fila indica que el cliente retiró su bien
-8.2. El sistema no lo deja en Cartera: lo pasa a Lead, con origen "Retiró el bien" (REF CU-08a-Pendientes_Contactar_Lead)
+8.1. La fila indica que esa póliza fue eliminada
+8.2. El sistema no la deja en Cartera: ese registro pasa a Leads, con el detalle del bien que se tenía asegurado. Las otras vigentes del mismo cliente siguen en Cartera (REF CU-05-Pendientes_Ver_Pendientes, transicion-estados-bien.md)
 8.3. **IR A (9)**
 
 `7. El PAS confirma la carga`
@@ -74,7 +74,7 @@ RN_6: El archivo y su previsualización solo son accesibles para el PAS autoriza
 RN_7: Los archivos temporales deben eliminarse al terminar o cancelar la carga, según la política de conservación de datos personales.
 RN_8: Reintentar el mismo archivo no duplica clientes ni pólizas.
 RN_9: No se puede incorporar un cliente si la fila no trae una cobertura o póliza asociada. Esa asociación puede estar vigente o no.
-RN_10: Después de la carga, Cartera solo expone las pólizas vigentes. Si la fila indica que el cliente retiró su bien, pasa a Lead y no aparece en el listado ni en la distribución.
+RN_10: Después de la carga, Cartera solo expone las pólizas vigentes. Si la fila indica que esa póliza fue eliminada, ese registro pasa a Leads con el detalle del bien asegurado. El cliente sigue en el listado y en la distribución si le queda otra vigente.
 
 *Supuestos a confirmar*
 SUP_1: Si el MVP admite Excel, CSV, archivos propios de cada aseguradora o una integración automática de vuelco.

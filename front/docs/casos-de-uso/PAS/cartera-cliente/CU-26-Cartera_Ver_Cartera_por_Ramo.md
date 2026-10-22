@@ -34,11 +34,11 @@ RN_5: Solo se muestran en la leyenda los ramos con al menos una póliza vigente.
 RN_6: El PAS no ve pólizas de la cartera de otro PAS.
 RN_7: La distribución es una consulta; no reemplaza el detalle de cada póliza (REF CU-27-Cartera_Ver_Detalle_Poliza).
 RN_8: En Cartera solo se exponen las pólizas vigentes. Una póliza que no está vigente no entra al total ni a la leyenda.
-RN_9: Si el cliente retiró su bien, pasa a Lead y sus pólizas dejan de integrar esta distribución (REF CU-08a-Pendientes_Contactar_Lead).
+RN_9: Eliminar una póliza la saca de esta distribución y manda ese registro a Leads, con el detalle del bien que se tenía asegurado. Las otras vigentes del mismo cliente siguen contando (REF CU-05-Pendientes_Ver_Pendientes, transicion-estados-bien.md).
 RN_10: "+" no incorpora un cliente suelto. Redirige a Cotizar, y el cliente entra a la cartera solo con una cobertura o póliza asociada, vigente o no (REF CU-23-Cartera_Dar_de_Alta_Cliente).
 
 *Supuestos a confirmar*
 SUP_1: Si el gráfico debe recalcularse al aplicar los filtros de Compañía, Localidad o Ramo. En el prototipo permanece sobre la cartera completa.
-SUP_2: Cómo se registra que el cliente retiró el bien, para que sus pólizas salgan de este gráfico y el cliente pase a Lead.
+SUP_2: Cómo se registra que se eliminó una póliza, para que salga de este gráfico y ese registro pase a Leads.
 SUP_3: Cómo se resuelve el redondeo de porcentajes para que la suma visible sea 100%.
 SUP_4: Si Accidentes Personales integra el gráfico. El prototipo actual solo contiene Automotor, Hogar y ART.
