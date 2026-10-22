@@ -102,3 +102,12 @@ SUP_7: El caso en el que el administrativo borra al cliente de la base no está 
 SUP_8: Si, al usar un cliente existente por DNI duplicado, los datos que el PAS tipeó (email, teléfono) se descartan o se ofrece actualizarlos (REF CU-24-Cartera_Editar_Cliente).
 SUP_9: Si al volver al ramo (1a) la cotización se descarta o conserva el ramo elegido (REF CU 12).
 SUP_10: Orden del flujo. El prototipo pide el cliente después del riesgo; este caso lo pide antes, como en la lista y en los casos de Cartera y Pendientes. Falta validar con el negocio.
+
+### Que se agrego?
+
+- La llegada desde un lead apunta a `CU-08d-Lead_Enviar_Cotizacion`. Se mantiene la llegada desde la recotización de una póliza (REF CU 11), que `main` había sacado del paso 1b.
+- "Elegí el cliente" lista los clientes almacenados del PAS, estén en Cartera, solo en Leads o en ninguna de las dos vistas. Si no hay ninguno almacenado, el PAS pasa a "Nuevo cliente".
+- RN_2: no se da de alta de nuevo un documento que ya existe, aunque Cartera y Leads ya no lo muestren.
+- RN_4: entran los que Cartera ya no muestra, incluidos los que solo figuran en Leads y los que tampoco figuran ahí. Leads es la última vista del PAS; no estar en Leads no los saca de esta lista.
+- RN_9: una vez enviada una cotización, el cliente se conserva en la base hasta que un administrativo lo borre. Ninguna operación del PAS lo elimina.
+- SUP_7: el caso en el que el administrativo borra al cliente no está escrito. Hasta ese borrado, el PAS no puede hacerlo desaparecer.
