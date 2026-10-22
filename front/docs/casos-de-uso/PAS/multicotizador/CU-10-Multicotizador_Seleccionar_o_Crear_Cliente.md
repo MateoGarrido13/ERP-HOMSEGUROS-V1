@@ -24,7 +24,7 @@ Los bloques 1a, 1b y 1c salen del paso 1. El 1a es una decisión del PAS ante la
 1a.4. **FIN**
 
 `1b. El PAS llega con un cliente ya seleccionado`
-1b.1. El PAS llegó desde la ficha de un cliente (REF CU-23-Cartera_Dar_de_Alta_Cliente), desde la re-cotización de una póliza (REF CU 11) o desde un lead cuyo cliente ya está en la cartera (REF CU-08d-Pendientes_Convertir_Lead_en_Cotizacion)
+1b.1. El PAS llegó desde la ficha de un cliente (REF CU-23-Cartera_Dar_de_Alta_Cliente) o desde un lead cuyo cliente ya está en la cartera (REF CU-08d-Pendientes_Convertir_Lead_en_Cotizacion)
 1b.2. El sistema muestra los datos de ese cliente, sin hacer la pregunta del paso 1
 1b.3. El PAS confirma ese cliente (*ALT OTRO CLIENTE)
 1b.4. El sistema asocia ese cliente a la cotización

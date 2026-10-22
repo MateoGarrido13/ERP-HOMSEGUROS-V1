@@ -2,7 +2,7 @@
 
 Puntos donde los casos de uso se contradicen entre sí, contradicen al prototipo o dejan una decisión abierta. Cada uno indica qué reglas (RN) o supuestos (SUP) quedan inconsistentes y qué hay que decidir para que todo cierre.
 
-Estado de los casos al escribir esto: `CU-09` y `CU-10` escritos; el resto del multicotizador, vacío.
+Estado de los casos al escribir esto: `CU-09`, `CU-10`, `CU-11`, `CU-12` y `CU-13` escritos; el resto del multicotizador, vacío.
 
 Rutas relativas a `front/docs/casos-de-uso/PAS/multicotizador/`.
 
@@ -119,7 +119,23 @@ Rutas relativas a `front/docs/casos-de-uso/PAS/multicotizador/`.
 
 ---
 
-## C. Inconsistencias previas en otros documentos
+## C. CU-12 Guardar y retomar cotización
+
+### C1. Cliente nuevo todavía no incorporado: ¿dónde vive la cotización "En curso"?
+**Gravedad: alta. El caso principal de `CU-12` no cubre el escenario más común.**
+
+- `RN_1` de `CU-12` dice que una cotización pasa a "En curso" automáticamente cuando el PAS se va sin terminarla.
+- `CU-12` muestra esa cotización "En curso" en la ficha del cliente (`CU-25`).
+- Pero `RN_5` de `CU-10` (y `RN_5` de `CU-23`) dicen que un cliente nuevo solo se incorpora a la cartera cuando queda asociada una cobertura o póliza. Una cotización "En curso" todavía no es eso.
+- Resultado: si el PAS carga un cliente nuevo y abandona antes de terminar, no hay ficha de cliente donde guardar o mostrar esa cotización (`CU-12` alternativo `3.1`-`3.3`, `SUP_1`).
+
+**El choque:** el camino más habitual para llegar a "En curso" —cliente nuevo, cotización sin terminar— es justo el que el caso no puede resolver con las reglas actuales de incorporación a la cartera (se relaciona con A6).
+
+**Decisión pendiente:** o bien un cliente nuevo se incorpora a la cartera apenas queda una cotización "En curso" (lo que cambiaría `RN_5` de `CU-10` y `CU-23`), o existe un lugar distinto de la ficha de cliente donde vive una cotización "En curso" de alguien que todavía no es cliente de cartera (por ejemplo, junto a los leads de `CU-05`).
+
+---
+
+## D. Inconsistencias previas en otros documentos
 
 - En la lista, el caso 23 se describe como *"Sumar una póliza con '+'"*, pero su archivo se llama `CU-23-Cartera_Dar_de_Alta_Cliente`. Ya estaba así antes de renumerar.
 - El borrador `CU-Multicotizador-01-Cotizar_Automotor.md` sigue en la raíz de `casos-de-uso/`; hay que borrarlo cuando se hayan absorbido sus pasos.
