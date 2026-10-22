@@ -22,8 +22,9 @@ casos-de-uso/
   PAS/
     pendientes/                 5–8
     multicotizador/             9–16   Común a masivo y no masivo
-      masivo/                   17–20  Consulta APIs y compara precios (Automotor)
-      no-masivo/                21     Solicitud sin precios (Hogar, AP, ART)
+      masivo/
+        automotor/              17–20  Variante AUT
+      no-masivo/                21     Solicitud sin precios
     cartera-cliente/            22–29
     cobranza/                   30–33
     siniestros/                 34–38
@@ -94,6 +95,17 @@ Compañías con API directa: Mercantil Andina, Sancor Seguros, Zurich, La Segund
 
 La columna "Absorbe" indica el número que tenía el caso en la versión anterior de esta lista.
 
+### Convención de nombres
+
+El mismo caso de uso puede comportarse distinto según el ramo. Para no repetir números:
+
+- **El número identifica el caso de uso** (qué hace el PAS). Cargar el riesgo es siempre el 17.
+- **El código de ramo identifica la variante** (cómo se comporta): `AUT` Automotor, `HOG` Hogar, `ACP` Accidentes Personales, `ART` ART, `COM` Comercio, `RC` Responsabilidad Civil, `VID` Vida.
+- **Archivo:** `CU-17-AUT-Multicotizador_Cargar_Riesgo.md`. El nombre no lleva el ramo.
+- **Carpeta:** `masivo/<ramo>/` o `no-masivo/<ramo>/`. Los casos comunes a todos los ramos viven en la raíz de `multicotizador/` y no llevan código.
+- **Referencias:** `REF CU 17` es el caso 17 del ramo de la cotización. `REF CU-17-AUT` apunta a la variante concreta. Los casos comunes usan la forma corta.
+- **Cada variante es un CU completo.** Si dos ramos difieren solo en los campos que se cargan, se mantienen en un único archivo y los campos van en las reglas. Si una parte es igual en todos los ramos, se sube a un caso común en lugar de copiarla.
+
 ### Común
 
 `PAS/multicotizador/`
@@ -111,22 +123,28 @@ La columna "Absorbe" indica el número que tenía el caso en la versión anterio
 
 ### Masivo
 
-`PAS/multicotizador/masivo/`
+`PAS/multicotizador/masivo/<ramo>/`
 
-| #   | Caso de uso                                                                                                                                                                      | Absorbe    | Origen | Fase   |
-| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------ | ------ |
-| 17  | Cargar el riesgo automotor: patente, CP, uso; verificar y completar los datos del vehículo (GNC, 0 km, suma asegurada), o cargarlo a mano si la patente no decodifica | 11, 13, 14 | P [A]  | MVP    |
-| 18  | Comparar cotizaciones de las compañías a medida que llegan, manejar la que falla, demora o rechaza, y elegir una. Ver un estimado mientras responde la compañía, aclarando que no es precio real [#18, estimado] | 15, 16, 17 | P [A]  | MVP [el estimado es ?] |
-| 19  | Ver la comisión de cada cotización                                                                                                                                               | 18         | N      | ?      |
-| 20  | Aplicar un descuento sacrificando puntos de comisión                                                                                                                             | 19         | N      | ?[MVP] |
+Una carpeta por ramo. Hoy solo existe `automotor/`.
+
+| #   | Caso de uso                                                                                                                                                                      | Variantes | Absorbe    | Origen | Fase   |
+| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ---------- | ------ | ------ |
+| 17  | Cargar el riesgo a asegurar. En Automotor: patente, CP, uso, info del titular; verificar y completar los datos del vehículo (GNC, 0 km, suma asegurada), o cargarlo a mano si la patente no decodifica | AUT ✓     | 11, 13, 14 | P [A]  | MVP    |
+| 18  | Comparar cotizaciones de las compañías a medida que llegan, manejar la que falla, demora o rechaza, y elegir una. Ver un estimado mientras responde la compañía, aclarando que no es precio real [#18, estimado] | AUT ✓     | 15, 16, 17 | P [A]  | MVP [el estimado es ?] |
+| 19  | Ver la comisión de cada cotización                                                                                                                                               | AUT ✓     | 18         | N      | ?      |
+| 20  | Aplicar un descuento sacrificando puntos de comisión                                                                                                                             | AUT ✓     | 19         | N      | ?[MVP] |
+
+✓ = escrito. Sin marca = archivo creado, sin contenido todavía.
 
 ### No masivo
 
 `PAS/multicotizador/no-masivo/`
 
-| #   | Caso de uso                                                                                             | Absorbe | Origen | Fase |
-| --- | ------------------------------------------------------------------------------------------------------- | ------- | ------ | ---- |
-| 21  | Cargar la solicitud de Hogar, Accidentes Personales o ART (formulario del riesgo, sin comparar precios) | 26      | P      | ?    |
+Todavía sin carpetas por ramo: se arman cuando se desarrolle cada variante.
+
+| #   | Caso de uso                                                                                             | Variantes | Absorbe | Origen | Fase |
+| --- | ------------------------------------------------------------------------------------------------------- | --------- | ------- | ------ | ---- |
+| 21  | Cargar la solicitud de Hogar, Accidentes Personales o ART (formulario del riesgo, sin comparar precios) | HOG, ACP, ART | 26  | P      | ?    |
 
 ## PAS: clientes y cartera
 

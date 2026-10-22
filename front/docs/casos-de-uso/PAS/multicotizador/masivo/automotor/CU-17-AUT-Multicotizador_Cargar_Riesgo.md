@@ -1,4 +1,4 @@
-## CU-17-Multicotizador_Cargar_Riesgo_Automotor
+## CU-17-AUT-Multicotizador_Cargar_Riesgo
 *Actor principal:* PAS
 *Actor secundario:* Ninguno
 *Precondiciones:* El PAS tiene una cotización de Automotor abierta, con el cliente ya asociado (REF CU-10-Multicotizador_Seleccionar_o_Crear_Cliente). Hay conexión.
@@ -11,7 +11,7 @@
 4. El PAS revisa los datos decodificados, los corrige si hace falta, y completa el código postal, el uso (particular o comercial), si tiene GNC, si es 0&nbsp;km y la suma asegurada (*ALT VOLVER)
 5. El PAS selecciona "Comparar cotizaciones"
 6. El sistema valida los campos (*ALT DATOS INVALIDOS)
-7. El sistema guarda los datos del vehículo en la cotización y pasa a comparar las cotizaciones de las compañías (REF CU-18-Multicotizador_Comparar_Cotizaciones)
+7. El sistema guarda los datos del vehículo en la cotización y pasa a comparar las cotizaciones de las compañías (REF CU-18-AUT-Multicotizador_Comparar_Cotizaciones)
 
 *Flujos alternativos*
 
@@ -44,9 +44,9 @@ R.4. **IR A (4)**
 
 *Postcondiciones*
 1. La cotización queda con los datos del vehículo cargados: patente, marca, modelo/línea, año, código postal, uso, GNC, si es 0&nbsp;km y suma asegurada
-2. El sistema pasa a comparar las cotizaciones de las compañías con esos datos (REF CU-18)
+2. El sistema pasa a comparar las cotizaciones de las compañías con esos datos (REF CU-18-AUT)
 3. Si el PAS volvió atrás sin terminar, la cotización conserva el cliente asociado pero no tiene ningún dato del vehículo cargado
-4. No se contactó a ninguna compañía todavía; esa consulta ocurre en el paso siguiente (REF CU-18)
+4. No se contactó a ninguna compañía todavía; esa consulta ocurre en el paso siguiente (REF CU-18-AUT)
 5. El cliente de la cotización no se modifica por cargar el riesgo (REF CU-10)
 
 *Reglas de negocio asociadas*
@@ -57,7 +57,7 @@ RN_4: Si el sistema no logra decodificar el vehículo, el PAS completa marca, mo
 RN_5: Año válido: 4 números, entre 1980 y el año siguiente al actual.
 RN_6: Código postal válido: 4 números.
 RN_7: Suma asegurada válida: un número mayor o igual a $100.000.
-RN_8: Cargar el riesgo no consulta a ninguna compañía ni genera ningún precio; eso ocurre al comparar cotizaciones (REF CU-18).
+RN_8: Cargar el riesgo no consulta a ninguna compañía ni genera ningún precio; eso ocurre al comparar cotizaciones (REF CU-18-AUT).
 RN_9: Si la cotización viene de una recotización (REF CU-11), los datos del vehículo llegan precargados desde la póliza de origen y el PAS puede modificar cualquiera antes de continuar.
 RN_10: Cargar el riesgo no se audita, porque todavía no hay ninguna cotización de precio ni propuesta; la auditoría empieza a partir de generar la propuesta (REF CU-13 RN_4, CU 51).
 
