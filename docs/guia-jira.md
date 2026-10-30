@@ -61,7 +61,7 @@ Se escriben en minúscula y con guiones (salvo el código de CU, que va `CU-XX`)
 | Tipo | Qué indica | Ejemplos | Se usa en |
 |---|---|---|---|
 | Caso de uso | CU del repo que origina la historia | `CU-01`, `CU-04` | Historias |
-| Módulo / área | Sección del ERP a la que pertenece | `acceso`, `multicotizador`, `cartera-cliente` | Historias y tareas |
+| Módulo / área | Sección del ERP a la que pertenece | `acceso`, `pendientes`, `multicotizador`, `cartera-cliente` | Historias y tareas |
 | Naturaleza del trabajo | Qué clase de trabajo es | `spike`, `investigacion`, `arquitectura` | Tareas técnicas |
 | Tema técnico | Tecnología o componente involucrado | `base-de-datos` | Tareas técnicas |
 
