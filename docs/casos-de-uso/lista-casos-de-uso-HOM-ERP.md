@@ -12,7 +12,7 @@ Lista de casos de uso tomando el prototipo (`ERP-HOMSEGUROS-V1`) como fuente de 
 - `Final`: entrega final del presupuesto.
 - `?`: depende de una definición del negocio.
 
-Las rutas son relativas a `design/front/docs/casos-de-uso/`. Lo compartido por todos los roles queda en la raíz. Cada rol tiene su carpeta y, adentro, una subcarpeta por funcionalidad. El archivo de cada caso va suelto en esa subcarpeta.
+Las rutas son relativas a `docs/casos-de-uso/`. Lo compartido por todos los roles queda en la raíz. Cada rol tiene su carpeta y, adentro, una subcarpeta por funcionalidad. El archivo de cada caso va suelto en esa subcarpeta.
 
 ```
 casos-de-uso/

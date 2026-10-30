@@ -24,7 +24,7 @@ Cómo definimos y organizamos el trabajo en Jira.
 
 ## Historias (US)
 
-- **Una historia por caso de uso** de `front/docs/casos-de-uso/`.
+- **Una historia por caso de uso** de `docs/casos-de-uso/`.
 - Tipo de issue: **Historia**.
 - Resumen: acción en infinitivo o sustantivo corto, sin prefijo. Ej.: `Iniciar sesión en el ERP`, `Cerrar sesión`.
 - Etiquetas: ver la sección [Etiquetas](#etiquetas).
@@ -45,7 +45,7 @@ Cómo definimos y organizamos el trabajo en Jira.
 ```
 
 - Los criterios de aceptación salen del flujo principal, alternativos y reglas de negocio del CU.
-- Lo que el CU deja abierto va en **Supuestos a confirmar**, y se mueve a `front/docs/cuestiones-a-resolver.md` si requiere decisión.
+- Lo que el CU deja abierto va en **Supuestos a confirmar**, y se mueve a `docs/cuestiones-a-resolver.md` si requiere decisión.
 
 ### Ejemplos existentes
 

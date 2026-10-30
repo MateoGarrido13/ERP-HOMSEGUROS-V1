@@ -1,4 +1,11 @@
-@AGENTS.md
+## Estructura del repo
+
+- `docs/`: casos de uso, guías, templates y specs. Fuente de verdad funcional.
+- `prototype/`: mockup móvil del flujo PAS (Next.js, datos de ejemplo). Es una referencia visual; no se importa desde `front/` ni `backend/`.
+- `front/`: aplicación real (pendiente).
+- `backend/`: servicios y API (pendiente).
+
+Cada carpeta de código tiene su propio `package.json` y se instala y despliega por separado.
 
 ## Desarrollo spec-driven
 

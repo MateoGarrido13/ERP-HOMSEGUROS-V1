@@ -1,6 +1,6 @@
 <!--
-TEMPLATE DE SPEC. Copiar a front/docs/specs/ERP-<n>-<slug>/spec.md
-Guía: front/docs/guia-spec-driven.md
+TEMPLATE DE SPEC. Copiar a docs/specs/ERP-<n>-<slug>/spec.md
+Guía: docs/guia-spec-driven.md
 
 Instrucciones para quien lo completa (humano o IA):
 - Borrar los módulos opcionales (marcados "[OPCIONAL]") que no apliquen al tema.
@@ -16,7 +16,7 @@ Instrucciones para quien lo completa (humano o IA):
 |---|---|
 | **US** | ERP-XXX · <link a Jira> |
 | **Épica** | <si aplica> |
-| **CU origen** | CU-XX `front/docs/casos-de-uso/.../CU-XX-....md` |
+| **CU origen** | CU-XX `docs/casos-de-uso/.../CU-XX-....md` |
 | **Tipo** | Pantalla/UI · Datos/backend · Integración · Spike |
 | **Estado** | Borrador · En revisión · Aprobada · Reemplazada |
 | **Autor** | <persona + "con IA"> |

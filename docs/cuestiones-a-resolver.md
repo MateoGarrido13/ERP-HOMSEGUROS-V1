@@ -4,7 +4,7 @@ Puntos donde los casos de uso se contradicen entre sí, contradicen al prototipo
 
 Estado de los casos al escribir esto: `CU-09`, `CU-10`, `CU-11`, `CU-12` y `CU-13` escritos; el resto del multicotizador, vacío.
 
-Rutas relativas a `front/docs/casos-de-uso/PAS/multicotizador/`.
+Rutas relativas a `docs/casos-de-uso/PAS/multicotizador/`.
 
 ---
 

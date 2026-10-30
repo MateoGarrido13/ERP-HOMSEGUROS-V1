@@ -1,10 +1,3 @@
-# HOM · prototipo PAS
+# front
 
-Mockup móvil del flujo del productor: cotizar, comparar, propuesta, cartera y cobranzas.
-
-```bash
-npm install
-npm run dev
-```
-
-Abrí [http://localhost:3000](http://localhost:3000). El recorrido arranca en el ingreso.
+Aplicación real del ERP. Pendiente de implementar a partir de las specs en `../docs/specs/`.

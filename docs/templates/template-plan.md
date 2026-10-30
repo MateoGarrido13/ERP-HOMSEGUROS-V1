@@ -1,6 +1,6 @@
 <!--
-TEMPLATE DE PLAN. Copiar a front/docs/specs/ERP-<n>-<slug>/plan.md
-Guía: front/docs/guia-spec-driven.md
+TEMPLATE DE PLAN. Copiar a docs/specs/ERP-<n>-<slug>/plan.md
+Guía: docs/guia-spec-driven.md
 
 Instrucciones para quien lo completa (humano o IA):
 - Solo se escribe con la spec en estado "Aprobada". El plan ejecuta la spec, no la redefine.

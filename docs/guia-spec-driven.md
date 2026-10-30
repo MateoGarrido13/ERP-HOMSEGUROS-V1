@@ -99,7 +99,7 @@ Un spike **no** lleva plan de implementación: su salida es una decisión (que d
 Cada trabajo con spec tiene su carpeta en el repo. Spec y plan juntos:
 
 ```
-front/docs/specs/
+docs/specs/
   ERP-5-iniciar-sesion/
     spec.md
     plan.md
@@ -143,7 +143,7 @@ Solo una spec `Aprobada` habilita la implementación. Si más adelante cambia el
 ## El proceso paso a paso
 
 ### 1. Preparar el contexto (humano)
-- La US existe en Jira con criterios de aceptación y el CU está en `front/docs/casos-de-uso/`.
+- La US existe en Jira con criterios de aceptación y el CU está en `docs/casos-de-uso/`.
 - Decidir si requiere spec y plan (tabla de arriba) y si es por US o por épica.
 - Identificar qué código existente es relevante (pantallas en `src/app`, componentes en `src/components`, mocks en `src/lib`).
 
