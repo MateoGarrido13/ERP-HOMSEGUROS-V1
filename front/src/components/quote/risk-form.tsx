@@ -33,7 +33,8 @@ export function RiskForm({ quote }: RiskFormProps) {
   const [anio, setAnio] = useState(quote.anio)
   const [cp, setCp] = useState(quote.cp)
   const [suma, setSuma] = useState(quote.suma)
-  const [hasGnc, setHasGnc] = useState(decodedRisk.hasGnc)
+  const [hasGnc, setHasGnc] = useState(quote.gnc)
+  const [hasTracking, setHasTracking] = useState(quote.rastreo)
   const [errors, setErrors] = useState<RiskErrors>({})
   const insuredSum = Number(suma)
   const lineOptions = modelLines.includes(modelo) ? modelLines : [modelo, ...modelLines]
@@ -73,6 +74,8 @@ export function RiskForm({ quote }: RiskFormProps) {
         anio,
         cp: postalCode,
         suma,
+        gnc: hasGnc,
+        rastreo: hasTracking,
       }),
     )
   }
@@ -125,6 +128,12 @@ export function RiskForm({ quote }: RiskFormProps) {
           error={errors.cp}
         />
         <Toggle label="GNC" name="gnc" checked={hasGnc} onCheckedChange={setHasGnc} />
+        <Toggle
+          label="Rastreo"
+          name="rastreo"
+          checked={hasTracking}
+          onCheckedChange={setHasTracking}
+        />
         <Toggle label="Nuevo" name="nuevo" checked={isNew} onCheckedChange={setIsNew} />
         <Toggle
           label="Comercial"

@@ -58,27 +58,23 @@ export function TabBar() {
     >
       {items.map((tab) => {
         const isActive = tab.id === activeTab
-        const href =
-          tab.id === "cotizar" && search ? `${tab.href}?${search}` : tab.href
+        const keepAutomotor =
+          tab.id === "cotizar" &&
+          pathname === "/cotizar/automotor" &&
+          Boolean(search)
+        const href = keepAutomotor ? `/cotizar/automotor?${search}` : tab.href
 
         return (
           <Link
             key={tab.id}
             href={href}
             aria-current={isActive ? "page" : undefined}
-            className="flex flex-1 flex-col items-center gap-1"
+            className="flex min-w-0 flex-1 items-center justify-center"
           >
             <span
-              aria-hidden
               className={cn(
-                "size-1.5 rounded-full",
-                isActive ? "bg-primary" : "bg-[#d5d5d5]",
-              )}
-            />
-            <span
-              className={cn(
-                "text-center text-[9px] leading-tight font-normal tracking-wide whitespace-nowrap uppercase",
-                isActive ? "text-primary" : "text-tab",
+                "max-w-full truncate rounded-full px-1.5 py-1 text-center text-[10px] leading-none font-medium",
+                isActive ? "bg-primary text-white" : "text-tab",
               )}
             >
               {tab.label}

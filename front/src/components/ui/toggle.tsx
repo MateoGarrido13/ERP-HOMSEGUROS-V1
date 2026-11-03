@@ -17,7 +17,7 @@ export function Toggle({
 
   return (
     <div className="flex items-center justify-between gap-3">
-      <span id={labelId} className="text-sm font-light text-body">
+      <span id={labelId} className="text-sm font-medium text-slate">
         {label}
       </span>
       <button
@@ -33,7 +33,7 @@ export function Toggle({
         <span
           className={cn(
             "flex h-7 w-12 shrink-0 items-center rounded-full p-0.5 transition-colors",
-            checked ? "bg-primary" : "bg-field",
+            checked ? "bg-primary" : "bg-field-line",
           )}
         >
           <span

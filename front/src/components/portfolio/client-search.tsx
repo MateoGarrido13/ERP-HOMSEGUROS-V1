@@ -6,7 +6,8 @@ import { useQueryStates } from "nuqs"
 import { useSignedName } from "@/components/auth/signed-identity"
 import { ShareNotice } from "@/components/collections/share-notice"
 import { SurfaceCard } from "@/components/ui/surface-card"
-import { SelectField } from "@/components/ui/text-field"
+import { SelectField, TextField } from "@/components/ui/text-field"
+import { BrandButton } from "@/components/ui/brand-button"
 import { formatShortDate } from "@/lib/format"
 import {
   companyLabels,
@@ -22,6 +23,7 @@ import {
   portfolioPolicies,
   ramoIds,
   ramoLabels,
+  type PolicyAdministrator,
   type PortfolioPolicy,
 } from "@/lib/portfolio"
 import { personalizeName } from "@/lib/mock-pas"
@@ -149,18 +151,28 @@ export function ClientSearch() {
                           <p className="mt-0.5 text-[13px] font-light text-body">
                             Póliza {policy.policy}
                           </p>
-                          <p className="mt-1 text-sm font-medium text-ink">
-                            {formatShortDate(policy.nextCharge)}
-                          </p>
+                          {policy.building ? (
+                            <ConsorcioDetail policy={policy} />
+                          ) : (
+                            <p className="mt-1 text-sm font-medium text-ink">
+                              {formatShortDate(policy.nextCharge)}
+                            </p>
+                          )}
                         </div>
-                        <ShareNotice
-                          actionLabel={
-                            client.policies.length > 1
-                              ? `Enviar póliza de ${ramoLabels[policy.ramo]}`
-                              : "Enviar póliza"
-                          }
-                          message={personalizeName(policyShareMessage(policy), name)}
-                        />
+                        {policy.ramo === "consorcio" ? (
+                          <p className="text-[13px] font-light text-body">
+                            El cupón del próximo cobro se envía al administrador desde Pendientes.
+                          </p>
+                        ) : (
+                          <ShareNotice
+                            actionLabel={
+                              client.policies.length > 1
+                                ? `Enviar póliza de ${ramoLabels[policy.ramo]}`
+                                : "Enviar póliza"
+                            }
+                            message={personalizeName(policyShareMessage(policy), name)}
+                          />
+                        )}
                       </div>
                     ))}
                   </div>
@@ -170,6 +182,79 @@ export function ClientSearch() {
           )
         })
       )}
+    </div>
+  )
+}
+
+function ConsorcioDetail({ policy }: { policy: PortfolioPolicy }) {
+  return (
+    <div className="mt-3 flex flex-col gap-3">
+      <div>
+        <p className="text-[11px] font-medium tracking-wide text-muted">EDIFICIO</p>
+        <p className="mt-1 text-sm font-medium text-ink">{policy.building}</p>
+      </div>
+      <div>
+        <p className="text-[11px] font-medium tracking-wide text-muted">VIGENCIA ANUAL</p>
+        <p className="mt-1 text-sm font-medium text-ink">
+          {formatShortDate(policy.vigenciaFrom ?? "")} – {formatShortDate(policy.vigenciaTo ?? "")}
+        </p>
+      </div>
+      <div>
+        <p className="text-[11px] font-medium tracking-wide text-muted">RENOVACIÓN MENSUAL</p>
+        <p className="mt-1 text-sm font-medium text-ink">
+          Próximo cobro {formatShortDate(policy.nextCharge)}
+        </p>
+      </div>
+      <AdministratorContact contact={policy.administrator} />
+    </div>
+  )
+}
+
+function AdministratorContact({ contact }: { contact?: PolicyAdministrator }) {
+  const [name, setName] = useState(contact?.name ?? "")
+  const [phone, setPhone] = useState(contact?.phone ?? "")
+  const [saved, setSaved] = useState(Boolean(contact?.name && contact.phone))
+  const [error, setError] = useState<string>()
+
+  function save() {
+    if (!name.trim() || !phone.trim()) {
+      setSaved(false)
+      setError("Completá el nombre y el teléfono del administrador.")
+      return
+    }
+    setError(undefined)
+    setSaved(true)
+  }
+
+  return (
+    <div className="flex flex-col gap-3">
+      <TextField
+        label="Administrador"
+        name="administrador"
+        value={name}
+        onChange={(event) => {
+          setName(event.target.value)
+          setSaved(false)
+        }}
+        error={error}
+      />
+      <TextField
+        label="Teléfono del administrador"
+        name="telefono-administrador"
+        value={phone}
+        onChange={(event) => {
+          setPhone(event.target.value)
+          setSaved(false)
+        }}
+      />
+      <BrandButton type="button" onClick={save}>
+        {contact ? "Guardar contacto" : "Agregar contacto"}
+      </BrandButton>
+      {saved ? (
+        <p className="text-[13px] font-light text-body">
+          Contacto del administrador guardado en esta póliza.
+        </p>
+      ) : null}
     </div>
   )
 }
@@ -184,6 +269,10 @@ function describePolicies(policies: PortfolioPolicy[]) {
 }
 
 function describePlace(policies: PortfolioPolicy[]) {
+  if (policies.length === 1 && policies[0].building) {
+    return `${policies[0].building} · Póliza ${policies[0].policy}`
+  }
+
   const places = [...new Set(policies.map((policy) => localityLabels[policy.locality]))]
   const place = joinLabels(places)
 

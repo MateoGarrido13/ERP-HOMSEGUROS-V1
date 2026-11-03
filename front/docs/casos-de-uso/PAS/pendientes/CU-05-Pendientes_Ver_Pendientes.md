@@ -13,7 +13,7 @@
 5. Cada lead muestra el origen, el cliente, el ramo, `ULT. FECHA DE MODIFICACION` y los días transcurridos desde esa fecha
 6. El PAS selecciona un aviso (*ALT LEAD)
 7. El sistema muestra los datos del aviso: nombre y apellido, tipo de cobertura, fecha de importancia y tipo. No hay descripción para modificar
-8. Desde el aviso abierto, Resolver y WhatsApp siguen el caso de ese tipo (REF CU-05b-Pendientes_Aviso_Cumpleanos, CU-05c-Pendientes_Aviso_Pago_Rechazado, CU-05d-Pendientes_Aviso_Cotizacion_Enviada, CU-05e-Pendientes_Aviso_Enviar_Poliza)
+8. Desde el aviso abierto, Resolver y WhatsApp siguen el caso de ese tipo (REF CU-05b-Pendientes_Aviso_Cumpleanos, CU-05c-Pendientes_Aviso_Pago_Rechazado, CU-05d-Pendientes_Aviso_Cotizacion_Enviada, CU-05e-Pendientes_Aviso_Enviar_Poliza, CU-05f-Pendientes_Aviso_Enviar_Cupon)
 
 *Flujos alternativos*
 
@@ -50,7 +50,7 @@
 *Reglas de negocio asociadas*   
 RN_1: Un PAS no ve avisos ni leads de otro PAS.  
  RN_2: Un aviso tiene nombre y apellido del cliente, tipo de cobertura (Hogar, Automotor o Integrales), fecha de importancia y tipo.
-RN_3: Los tipos son Pago rechazado (REF CU-05c-Pendientes_Aviso_Pago_Rechazado), Cumpleaños (REF CU-05b-Pendientes_Aviso_Cumpleanos), Cotización enviada (REF CU-05d-Pendientes_Aviso_Cotizacion_Enviada) y Enviar póliza (REF CU-05e-Pendientes_Aviso_Enviar_Poliza). Próxima renovación no está en estas transiciones.
+RN_3: Los tipos son Pago rechazado (REF CU-05c-Pendientes_Aviso_Pago_Rechazado), Cumpleaños (REF CU-05b-Pendientes_Aviso_Cumpleanos), Cotización enviada (REF CU-05d-Pendientes_Aviso_Cotizacion_Enviada), Enviar póliza (REF CU-05e-Pendientes_Aviso_Enviar_Poliza) y Enviar cupón de consorcio (REF CU-05f-Pendientes_Aviso_Enviar_Cupon). Enviar cupón, una vez mandado el mensaje, sigue en la bandeja como Cobro pendiente. Próxima renovación no está en estas transiciones.
 RN_4: La fecha de importancia es el vencimiento del aviso. La fija el tipo de aviso. El PAS no la edita.
 RN_5: La fecha del lead se muestra dd/mm/aaaa. Los días se cuentan desde esa fecha hasta hoy: hoy es "Cargado hoy", un día es "1 día transcurrido" y de ahí en más "N días transcurridos".
 RN_6: Un aviso no tiene descripción editable. La descripción que se edita es la del lead (REF CU-08e-Pendientes_Editar_Descripcion_Lead).

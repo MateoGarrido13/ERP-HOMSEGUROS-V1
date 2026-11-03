@@ -1,5 +1,6 @@
 import { withAsegurado } from "@/lib/asegurado-search"
-import { digitsOnly, formatPesos } from "@/lib/format"
+import { automotorQuoteHref, type AutomotorConsulta } from "@/lib/automotor-consulta"
+import { digitsOnly } from "@/lib/format"
 import type { NoticeQuote } from "@/lib/pendientes"
 
 export interface LeadProposal {
@@ -20,53 +21,11 @@ export interface Lead {
   updatedOn: string
   quotePath: string
   proposal?: LeadProposal
+  automotor?: AutomotorConsulta
 }
 
-const otherBrokerPremium = formatPesos(145000)
-const newCarPremium = formatPesos(210000)
-const nicolasPremium = formatPesos(187900)
-
-export const leads: Lead[] = [
-  {
-    id: "nicolas-cotizacion",
-    holder: "Nicolás Ferreyra",
-    ramo: "Automotor",
-    origin: "Cotización enviada",
-    description: `Se le envió una cotización de terceros completo y optó por otro productor. Anunció que paga ${otherBrokerPremium} por mes. Hoy no tiene póliza vigente.`,
-    phone: "11 5842-7731",
-    phoneHref: "tel:+541158427731",
-    updatedOn: "2026-09-18",
-    quotePath: "/cotizar/automotor",
-    proposal: {
-      good: "Volkswagen Gol Trend",
-      coverage: "Terceros completo",
-      company: "Mercantil Andina",
-      premium: nicolasPremium,
-    },
-  },
-  {
-    id: "elena-retiro",
-    holder: "Elena Varela",
-    ramo: "Hogar",
-    origin: "Retiró el bien",
-    description: "Era clienta de Hogar y retiró la vivienda. Hoy no tiene una póliza vigente.",
-    phone: "11 4790-2264",
-    phoneHref: "tel:+541147902264",
-    updatedOn: "2026-08-20",
-    quotePath: "/cotizar/hogar",
-  },
-  {
-    id: "julian-retiro",
-    holder: "Julián Paz",
-    ramo: "Automotor",
-    origin: "Retiró el bien",
-    description: `Era cliente de Automotor y vendió el vehículo. Anunció que el seguro del auto nuevo lo paga en ${newCarPremium} por mes con otro productor. Hoy no tiene póliza vigente.`,
-    phone: "11 5128-9044",
-    phoneHref: "tel:+541151289044",
-    updatedOn: "2026-09-28",
-    quotePath: "/cotizar/automotor",
-  },
-]
+/** Los leads de automotor se leen de PostgreSQL (cotizaciones Mercantil), no de este arreglo. */
+export const leads: Lead[] = []
 
 export function leadCountLabel(count: number) {
   return count === 1 ? "1 lead" : `${count} leads`
@@ -84,10 +43,17 @@ export function phoneHrefOf(phone: string) {
   return digits ? `tel:+54${digits}` : ""
 }
 
+export function leadCanRecotizar(lead: Lead) {
+  return lead.origin === "Cotización enviada" && Boolean(lead.automotor)
+}
+
 export function leadQuoteHref(lead: Lead) {
   const [nombre = "", ...rest] = lead.holder.split(" ")
+  const path = lead.automotor
+    ? automotorQuoteHref(lead.quotePath, lead.automotor)
+    : lead.quotePath
 
-  return withAsegurado(lead.quotePath, {
+  return withAsegurado(path, {
     nombre,
     apellido: rest.join(" "),
     telefono: digitsOnly(lead.phone),
@@ -124,5 +90,6 @@ export function rejectedQuoteLead(input: {
     updatedOn: input.updatedOn,
     quotePath: quotePathFor(input.ramo),
     proposal: quote,
+    automotor: quote?.automotor,
   }
 }

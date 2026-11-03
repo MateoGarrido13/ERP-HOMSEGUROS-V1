@@ -73,6 +73,7 @@ Avisos, cada uno con su estado:
 - `CU-05c-Pendientes_Aviso_Pago_Rechazado` (*) no confirmado
 - `CU-05d-Pendientes_Aviso_Cotizacion_Enviada`
 - `CU-05e-Pendientes_Aviso_Enviar_Poliza`
+- `CU-05f-Pendientes_Aviso_Enviar_Cupon` Consorcio: cupón al administrador; al enviarlo queda en Cobro pendiente
 
 Lead:
 

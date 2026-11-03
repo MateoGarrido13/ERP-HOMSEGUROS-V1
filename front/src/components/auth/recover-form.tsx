@@ -1,20 +1,17 @@
 "use client"
 
-import { useQueryState } from "nuqs"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useState, type FormEvent } from "react"
 
+import { AuthLead, AuthScreen, AuthTitle } from "@/components/auth/auth-screen"
 import { useSession } from "@/components/auth/session-provider"
-import { TextLink } from "@/components/auth/text-link"
 import { BrandButton } from "@/components/ui/brand-button"
-import { ScreenBody } from "@/components/ui/screen-body"
-import { ScreenTitle } from "@/components/ui/screen-title"
 import { TextField } from "@/components/ui/text-field"
-import { recoveryNotice } from "@/lib/access"
 
 export function RecoverForm() {
+  const router = useRouter()
   const { askRecovery } = useSession()
-  const [enviado, setEnviado] = useQueryState("enviado")
-  const [notice, setNotice] = useState("")
   const [email, setEmail] = useState("")
   const [emailError, setEmailError] = useState<string>()
 
@@ -23,36 +20,43 @@ export function RecoverForm() {
     const result = askRecovery(email)
     setEmailError(result.emailError ?? undefined)
     if (result.emailError) return
-    setNotice(result.notice)
-    void setEnviado("1")
+    router.push(`/recuperar/correo?email=${encodeURIComponent(email.trim())}`)
   }
 
   return (
-    <form noValidate onSubmit={onSubmit} className="flex flex-1 flex-col">
-      <ScreenBody>
-        <ScreenTitle className="text-[26px]">Olvidé mi contraseña</ScreenTitle>
-        <p className="text-sm font-light text-body">
-          Ingresá el email de la cuenta. El aviso es el mismo si el email no está registrado.
-        </p>
+    <form
+      method="post"
+      action="/recuperar"
+      noValidate
+      onSubmit={onSubmit}
+      className="flex min-h-full flex-1 flex-col"
+    >
+      <AuthScreen backHref="/">
+        <div className="flex flex-col gap-2">
+          <AuthTitle>Recuperar contraseña</AuthTitle>
+          <AuthLead>
+            Ingresá tu email y te enviaremos un enlace para crear una nueva contraseña.
+          </AuthLead>
+        </div>
         <TextField
+          variant="portal"
           label="Email"
           name="email"
           type="email"
           autoComplete="email"
           autoCapitalize="none"
+          placeholder="nombre@correo.com"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           error={emailError}
         />
-        {enviado === "1" ? (
-          <p role="status" className="text-sm font-light text-body">
-            {notice || recoveryNotice}
-          </p>
-        ) : null}
-        <BrandButton type="submit">Enviar</BrandButton>
-        {enviado === "1" ? <TextLink href="/recuperar/correo">Abrir el correo</TextLink> : null}
-        <TextLink href="/">Volver al ingreso</TextLink>
-      </ScreenBody>
+        <BrandButton type="submit" variant="portal">
+          Enviar enlace
+        </BrandButton>
+        <Link href="/" className="text-center text-sm font-medium text-portal-deep">
+          Volver a iniciar sesión
+        </Link>
+      </AuthScreen>
     </form>
   )
 }

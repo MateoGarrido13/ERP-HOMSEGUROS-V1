@@ -95,13 +95,9 @@ export function ProfileScreen() {
             </dl>
           </SurfaceCard>
           <BrandButton type="submit">Guardar</BrandButton>
-          <button
-            type="button"
-            onClick={cancelEdit}
-            className="text-center text-sm font-medium text-secondary"
-          >
+          <BrandButton type="button" variant="outline" onClick={cancelEdit}>
             Cancelar
-          </button>
+          </BrandButton>
         </form>
       ) : (
         <>
@@ -130,22 +126,23 @@ export function ProfileScreen() {
               <p className="text-sm font-medium text-ink">
                 ¿Cerrar la sesión en este dispositivo?
               </p>
-              <BrandButton type="button" className="mt-3" onClick={confirmLogout}>
+              <BrandButton type="button" variant="danger" className="mt-3" onClick={confirmLogout}>
                 Cerrar sesión
               </BrandButton>
-              <button
+              <BrandButton
                 type="button"
+                variant="outline"
+                className="mt-3"
                 onClick={() => setConfirmingLogout(false)}
-                className="mt-3 w-full text-center text-sm font-medium text-secondary"
               >
                 Cancelar
-              </button>
+              </BrandButton>
             </SurfaceCard>
           ) : (
             <button
               type="button"
               onClick={() => setConfirmingLogout(true)}
-              className="text-center text-sm font-medium text-secondary"
+              className="text-center text-sm font-medium text-danger"
             >
               Cerrar sesión
             </button>

@@ -15,7 +15,7 @@ export function TextLink({
   return (
     <Link
       href={href}
-      className={cn("block text-center text-sm font-medium text-secondary", className)}
+      className={cn("block text-center text-sm font-medium text-primary", className)}
     >
       {children}
     </Link>

@@ -71,6 +71,9 @@ export function PendingBoard({
               {notice.status === "esperando-respuesta" ? (
                 <p className="mt-2 text-[13px] font-medium text-teal-deep">{waitingLabel}</p>
               ) : null}
+              {notice.status === "cobro-pendiente" ? (
+                <p className="mt-2 text-[13px] font-light text-body">{message}</p>
+              ) : null}
             </SurfaceCard>
             {isOpen ? (
               <NoticeDetail
@@ -148,6 +151,19 @@ function NoticeDetail({ notice, message, onResolve, onWhatsapp }: NoticeDetailPr
               <DetailField label="PREMIO">{notice.quote.premium} por mes</DetailField>
             </>
           ) : null}
+          {notice.type === "enviar-cupon" && notice.policy ? (
+            <>
+              <DetailField label="EDIFICIO">{notice.policy.building}</DetailField>
+              <DetailField label="PÓLIZA">
+                {notice.policy.number} · {notice.policy.company}
+              </DetailField>
+              <DetailField label="VIGENCIA ANUAL">
+                {formatShortDate(notice.policy.vigenciaFrom ?? "")} –{" "}
+                {formatShortDate(notice.policy.vigenciaTo ?? "")}
+              </DetailField>
+              <DetailField label="ADMINISTRADOR">{notice.policy.administrator}</DetailField>
+            </>
+          ) : null}
         </div>
       </SurfaceCard>
       {resolving ? (
@@ -191,18 +207,30 @@ function NoticeDetail({ notice, message, onResolve, onWhatsapp }: NoticeDetailPr
         </ConfirmCard>
       ) : (
         <div className="flex flex-col gap-2.5">
-          <BrandButton
-            type="button"
-            onClick={() => {
-              setChoiceError(undefined)
-              setResolving(true)
-            }}
-          >
-            Resolver
-          </BrandButton>
+          {notice.type === "enviar-cupon" ? null : (
+            <BrandButton
+              type="button"
+              onClick={() => {
+                setChoiceError(undefined)
+                setResolving(true)
+              }}
+            >
+              Resolver
+            </BrandButton>
+          )}
+          {notice.status === "cobro-pendiente" ? (
+            <p className="text-[13px] font-light text-body">
+              El cupón ya se envió al administrador. El aviso sigue en Pendientes, en Cobro
+              pendiente.
+            </p>
+          ) : null}
           {notice.phone ? (
             <ShareNotice
-              actionLabel={pendingWhatsappLabel}
+              actionLabel={
+                notice.type === "enviar-cupon" && notice.status === "pendiente"
+                  ? "Enviar cupón al administrador"
+                  : pendingWhatsappLabel
+              }
               message={message}
               onShared={onWhatsapp}
             />
@@ -211,7 +239,7 @@ function NoticeDetail({ notice, message, onResolve, onWhatsapp }: NoticeDetailPr
               <BrandButton type="button" variant="whatsapp" disabled>
                 {pendingWhatsappLabel}
               </BrandButton>
-              <p className="text-xs text-secondary">Este cliente no tiene teléfono.</p>
+              <p className="text-xs text-danger">Este cliente no tiene teléfono.</p>
             </>
           )}
         </div>
@@ -232,6 +260,9 @@ function resolveTitle(notice: PendingNotice) {
   }
   if (notice.type === "enviar-poliza") {
     return "¿Resolvés el aviso de enviar póliza?"
+  }
+  if (notice.type === "enviar-cupon") {
+    return "El cupón queda en Cobro pendiente."
   }
   return "¿Resolvés el aviso de cumpleaños?"
 }

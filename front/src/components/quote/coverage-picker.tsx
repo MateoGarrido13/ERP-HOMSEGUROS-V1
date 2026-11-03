@@ -31,22 +31,22 @@ const upcoming: CoverageOption[] = [
 ]
 
 const tileClass =
-  "flex h-full min-h-[118px] w-full flex-col items-center justify-center gap-2.5 rounded-[20px] border border-line bg-white px-2 py-3.5 text-center"
+  "flex h-full min-h-[118px] w-full flex-col items-center justify-center gap-2.5 rounded-xl border border-line bg-white px-2 py-3.5 text-center"
 
 function CoverageFace({ icon: Icon, label }: CoverageOption) {
   return (
     <>
-      <span className="flex size-11 items-center justify-center rounded-full bg-wash text-teal">
+      <span className="flex size-11 items-center justify-center rounded-full bg-mint text-primary">
         <Icon className="size-6" />
       </span>
-      <span className="text-[13px] leading-4 font-medium text-secondary">{label}</span>
+      <span className="text-[13px] leading-4 font-medium text-title">{label}</span>
     </>
   )
 }
 
 const activeTileClass = cn(
   tileClass,
-  "transition-colors hover:border-[#605be5] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+  "transition-colors hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
 )
 
 export function CoveragePicker({

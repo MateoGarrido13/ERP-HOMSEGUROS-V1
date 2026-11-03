@@ -8,6 +8,7 @@ export interface Account {
   role: Role
   license: string
   organization: string
+  verified?: boolean
 }
 
 export type PublicAccount = Omit<Account, "password">
@@ -51,7 +52,7 @@ export const recoveryNotice =
   "Si el email está registrado, va a llegar un mensaje para elegir una contraseña nueva."
 
 const STORAGE_KEY = "hom-access-v1"
-const RECOVERY_TTL_MS = 24 * 60 * 60 * 1000
+const RECOVERY_TTL_MS = 30 * 60 * 1000
 
 export const seedAccounts: Account[] = [
   {
@@ -209,23 +210,22 @@ function withAudit(state: AccessState, account: Account, action: AuditRecord["ac
   ]
 }
 
-export function authenticate(
-  state: AccessState,
-  email: string,
-  password: string,
-  now = new Date(),
-): LoginResult {
-  const emailError = emailFieldError(email)
-  if (emailError) return { state, emailError }
-  if (!password) return { state, passwordError: "Completá la contraseña." }
-
-  const account = findUser(state, email)
-  if (!account || account.password !== password) {
-    return { state, formError: "Email o contraseña incorrectos." }
+export function openSession(state: AccessState, email: string, now = new Date()): LoginResult {
+  const normalized = normalizeEmail(email)
+  const account: Account = {
+    email: normalized,
+    password: "",
+    name: normalized,
+    phone: "",
+    role: "pas",
+    license: "",
+    organization: "HOM Profesionales en Seguros",
+    verified: true,
   }
-
+  const users = [...state.users.filter((item) => item.email !== normalized), account]
   const next: AccessState = {
     ...state,
+    users,
     session: { email: account.email, startedAt: now.toISOString() },
     audit: withAudit(state, account, "ingreso", now),
   }
@@ -403,7 +403,8 @@ export function loadState(): AccessState {
       recovery: parsed.recovery ?? null,
       audit: parsed.audit,
     }
-    if (state.session && !findUser(state, state.session.email)) {
+    const signedIn = state.session ? findUser(state, state.session.email) : undefined
+    if (state.session && !signedIn?.verified) {
       return { ...state, session: null }
     }
     return state

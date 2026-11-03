@@ -12,7 +12,8 @@ import { BrandButton, BrandButtonLink } from "@/components/ui/brand-button"
 import { SurfaceCard } from "@/components/ui/surface-card"
 import { TextArea } from "@/components/ui/text-field"
 import { elapsedDays, formatElapsedDays, formatShortDate } from "@/lib/format"
-import { leadQuoteHref, type Lead } from "@/lib/leads"
+import { useLabels } from "@/lib/quote-search"
+import { leadCanRecotizar, leadQuoteHref, type Lead } from "@/lib/leads"
 
 interface LeadBoardProps {
   leads: Lead[]
@@ -33,7 +34,15 @@ export function LeadBoard({
   onReactivate,
   onDiscard,
 }: LeadBoardProps) {
-  if (leads.length === 0) return null
+  if (leads.length === 0) {
+    return (
+      <SurfaceCard>
+        <p className="text-sm font-light text-body">
+          No hay leads. Las cotizaciones de automotor enviadas a Mercantil Andina aparecen acá.
+        </p>
+      </SurfaceCard>
+    )
+  }
 
   return (
     <>
@@ -152,6 +161,24 @@ function LeadDetail({
   return (
     <SurfaceCard>
       <DetailField label="DESCRIPCIÓN">{lead.description}</DetailField>
+      {lead.automotor ? (
+        <div className="mt-4">
+          <DetailField label="DATOS PARA COTIZAR">
+            <p>
+              {lead.automotor.marca} {lead.automotor.modelo} · {lead.automotor.anio}
+            </p>
+            <p className="mt-1">Patente {lead.automotor.patente}</p>
+            <p className="mt-1">
+              {lead.automotor.localidad} · CP {lead.automotor.cp}
+            </p>
+            <p className="mt-1">
+              Uso {useLabels[lead.automotor.uso].toLowerCase()}
+              {lead.automotor.gnc ? " · con GNC" : " · sin GNC"}
+              {lead.automotor.rastreo ? " · con rastreo" : " · sin rastreo"}
+            </p>
+          </DetailField>
+        </div>
+      ) : null}
       {lead.phone ? (
         <div className="mt-4">
           <p className="text-[11px] font-medium tracking-wide text-muted">TELÉFONO</p>
@@ -172,7 +199,9 @@ function LeadDetail({
         >
           Editar
         </TextAction>
-        <BrandButtonLink href={leadQuoteHref(lead)}>Enviar cotización</BrandButtonLink>
+        <BrandButtonLink href={leadQuoteHref(lead)}>
+          {leadCanRecotizar(lead) ? "Recotizar" : "Enviar cotización"}
+        </BrandButtonLink>
         {lead.proposal ? (
           <BrandButton type="button" onClick={() => setAction("reactivate")}>
             Reactivar
@@ -181,7 +210,7 @@ function LeadDetail({
         <button
           type="button"
           onClick={() => setAction("discard")}
-          className="text-center text-sm font-medium text-secondary"
+          className="text-center text-sm font-medium text-danger"
         >
           Descartar
         </button>

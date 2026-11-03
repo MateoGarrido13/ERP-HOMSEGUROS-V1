@@ -49,7 +49,7 @@ export function ChangePasswordForm() {
         <ScreenTitle className="text-[26px]">Cambiar contraseña</ScreenTitle>
         <p className="text-sm font-light text-body">{passwordPolicyHint}</p>
         {formError ? (
-          <p role="alert" className="text-sm text-secondary">
+          <p role="alert" className="text-sm text-danger">
             {formError}
           </p>
         ) : null}

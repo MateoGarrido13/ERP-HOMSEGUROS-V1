@@ -15,7 +15,7 @@ export function ScreenTitle({
 }: ScreenTitleProps) {
   if (size === "document") {
     return (
-      <h1 className={cn("font-sans text-lg font-bold text-ink", className)}>
+      <h1 className={cn("font-sans text-lg font-semibold text-title", className)}>
         {children}
       </h1>
     )
@@ -24,7 +24,7 @@ export function ScreenTitle({
   return (
     <h1
       className={cn(
-        "font-display text-[26px] leading-normal font-bold text-black",
+        "font-sans text-[22px] leading-tight font-semibold tracking-tight text-title",
         className,
       )}
     >

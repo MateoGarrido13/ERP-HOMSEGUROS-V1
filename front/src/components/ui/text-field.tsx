@@ -10,33 +10,52 @@ import { cn } from "@/lib/cn"
 interface FieldShellProps {
   label: string
   error?: string
+  hint?: string
   children: ReactNode
 }
 
-function FieldShell({ label, error, children }: FieldShellProps) {
+function FieldShell({ label, error, hint, children }: FieldShellProps) {
   return (
     <label className="flex w-full flex-col gap-1.5">
-      <span className="text-sm font-light text-body">{label}</span>
+      <span className="text-sm font-medium text-slate">{label}</span>
       {children}
-      {error ? <span className="text-xs text-secondary">{error}</span> : null}
+      {error ? (
+        <span className="text-xs text-danger">{error}</span>
+      ) : hint ? (
+        <span className="text-xs text-hint">{hint}</span>
+      ) : null}
     </label>
   )
 }
 
 const fieldClass =
-  "w-full rounded-[6px] border border-field bg-white px-3 py-2.5 text-sm font-normal text-field-text outline-none focus:border-primary"
+  "h-10 w-full rounded-lg border border-field bg-white px-3 text-sm text-title outline-none placeholder:text-placeholder focus:border-focus disabled:border-transparent disabled:bg-disabled disabled:text-placeholder"
 
 interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
   error?: string
+  hint?: string
+  variant?: "default" | "portal"
 }
 
-export function TextField({ label, error, className, id, ...props }: TextFieldProps) {
+export function TextField({
+  label,
+  error,
+  hint,
+  variant: _variant = "default",
+  className,
+  id,
+  ...props
+}: TextFieldProps) {
   return (
-    <FieldShell label={label} error={error}>
+    <FieldShell label={label} error={error} hint={hint}>
       <input
         id={id ?? props.name}
-        className={cn(fieldClass, error && "border-primary", className)}
+        className={cn(
+          fieldClass,
+          error && "border-danger-strong focus:border-danger-strong",
+          className,
+        )}
         {...props}
       />
     </FieldShell>
@@ -54,7 +73,12 @@ export function TextArea({ label, error, className, id, ...props }: TextAreaProp
       <textarea
         id={id ?? props.name}
         rows={3}
-        className={cn(fieldClass, "resize-none", error && "border-primary", className)}
+        className={cn(
+          fieldClass,
+          "h-auto resize-none py-2.5",
+          error && "border-danger-strong focus:border-danger-strong",
+          className,
+        )}
         {...props}
       />
     </FieldShell>
@@ -79,7 +103,12 @@ export function SelectField({
       <span className="relative block">
         <select
           id={id ?? props.name}
-          className={cn(fieldClass, "appearance-none pr-8", error && "border-primary", className)}
+          className={cn(
+            fieldClass,
+            "appearance-none pr-8",
+            error && "border-danger-strong focus:border-danger-strong",
+            className,
+          )}
           {...props}
         >
           {children}

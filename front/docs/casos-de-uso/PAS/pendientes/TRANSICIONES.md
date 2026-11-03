@@ -20,6 +20,10 @@ AVISO COTIZACION ENVIADA:
 
 2.b (El cliente rechaza la porpuesta) El PAS selecciona 'Resolver','Lead'. Se le solicita una descripcion al PAS sobre porque el cliente rechazo la propuesta (campo opcional), EL aviso pasa a mostrarse en Lead, con datos cliente, que queria asegurar, que montos se le ofecieron, fecha que respondio negativamente(que paso de PENDIENTES A Lead)
 
+AVISO ENVIAR CUPON (CONSORCIO):
+1.(La compañía ya emitió la póliza de vigencia anual) APARECE AVISO COMO 'PENDIENTE', tipo "Enviar cupón". Muestra el edificio, el ramo Consorcio, la póliza y la fecha del próximo cobro mensual. El contacto del administrador está en el detalle de esa póliza vigente, en Cartera.
+2.(El PAS envía el cupón por WhatsApp al administrador) El aviso NO sale de Pendientes. Queda el mensaje de esa póliza, asociada al edificio, en estado 'COBRO PENDIENTE'. Ejemplo: edificio "TORRES IV", póliza 330418.
+
 AVISO ENVIAR POLIZA:
 1.(5 dias antes del proximo vencimiento), El aviso es cargado en 'PENDIENTES', muestra nombre y apellido del cliente , tipo de poliza y en que compania, la fecha de vencimiento de la poliza (o del cupon a pagar)
 2.el PAS seleccione 'RESOLVER'-->'CONFIRMAR' o 'ENVIAR WHATSAPP' con el template del mensaje, el aviso deja de mostrarse en la vista
