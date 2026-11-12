@@ -2,140 +2,85 @@
 
 Puntos donde los casos de uso se contradicen entre sí, contradicen al prototipo o dejan una decisión abierta. Cada uno indica qué reglas (RN) o supuestos (SUP) quedan inconsistentes y qué hay que decidir para que todo cierre.
 
-Estado de los casos al escribir esto: `CU-09`, `CU-10`, `CU-11`, `CU-12` y `CU-13` escritos; el resto del multicotizador, vacío.
+Estado (iteración 1): escritos CU-09…21. Decisiones de consistencia de la iteración 1 están en «Resuelto». Lo que sigue abierto no bloquea el gate DoR.
 
 Rutas relativas a `front/docs/casos-de-uso/PAS/multicotizador/`.
 
 ---
 
+## Resuelto (iteración 1)
+
+### A1. Orden: cliente antes del riesgo
+**Canónico:** ramo (CU-09) → cliente (CU-10) → riesgo (CU-17 / CU-17b) → comparar (CU-18).  
+El prototipo (`/cotizar/riesgo` → `/cotizar/asegurado`) queda desalineado; no es fuente de verdad.  
+CU-10 `RN_8` cita CU-17 / CU-17b, no CU-18.
+
+### A2. Unicidad del documento
+**Canónico:** un asegurado está asociado a un solo PAS a la vez. El documento es único en la red.  
+Si el PAS B informa un DNI de un cliente del PAS A, el sistema avisa que ya está asociado a otro productor, **sin mostrar ficha ni datos**, y no permite cotizarlo.
+
+### A6. Cuándo entra a Cartera
+**Canónico:** al enviar la propuesta (CU-14) el cliente se persiste con `activa=false` (no se muestra en Cartera).  
+«Resolver → Dar de alta / Aceptar» en Pendientes **es CU-16**: nº de póliza, vigencia, compañía, y `activa=true`. Una propuesta enviada no alcanza para figurar en Cartera.
+
+### B1 / B2. Ramos y masivo
+**Canónico iteración 1:** habilitados Automotor, Hogar, Consorcio y Comercio, **solo contra compañías con API de cotización**. Masivo = hay API de precio.  
+Fuera: AP, ART, y cualquier ramo sin API (CU-21). Walking skeleton cubre los cuatro ramos habilitados.
+
+### C1. Cotización «En curso»
+**Canónico iteración 1:** solo vive en la sesión. Si el PAS sale o cierra, se pierde. CU-12 persistido queda fuera de la iteración salvo retomar en la misma sesión.
+
+### D. Nombre CU-23 y legado
+El caso 23 se titula **Sumar una póliza con "+"**. El archivo se conserva como `CU-23-Cartera_Dar_de_Alta_Cliente.md`.  
+El borrador `CU-Multicotizador-01` y el template duplicado están en `casos-de-uso/_legado/` (no canónicos).
+
+### Prototipo vs canónico (Phase 0)
+
+Lista única de desvíos del Next: [`specs/as-built-prototipo-iteracion-1.md`](../../specs/as-built-prototipo-iteracion-1.md). No reabre A1/B2. CU-18 ya no es stub.
+
+---
+
 ## A. CU-10 Seleccionar o crear cliente
 
-### A1. ¿El cliente se elige antes o después de cargar el riesgo?
-**Gravedad: alta. Afecta la estructura de varios casos.**
-
-| Fuente | Orden que plantea |
-|---|---|
-| Lista de CU (casos 9, 10, 11 originales) | Ramo → cliente → cotizar |
-| `CU-23` (pasos 4 y 5) y `CU-08d` (pasos 4 y 5) | Primero el cliente, después "sigue la cotización del ramo" |
-| Prototipo (`/cotizar/riesgo` → `/cotizar/asegurado` → `/cotizar/comparar`) | Ramo → riesgo → cliente |
-| Borrador viejo `CU-Multicotizador-01` | Patente y riesgo primero; el cliente al final (pasos 7 y 8) |
-
-**Hoy `CU-10` está escrito con el cliente primero** (ver `SUP_10`).
-
-**Qué cambia según la decisión**
-- Cliente **primero**: el paso 7 de `CU-10` abre la carga del riesgo (`CU-17`); el alternativo `1a` vuelve a elegir ramo; `CU-09` paso 4 termina en `CU-10`.
-- Cliente **después**: la precondición de `CU-10` exige el riesgo cargado; `1a` vuelve a la carga del riesgo; `CU-09` paso 4 abre la carga del riesgo.
-- En ambos casos hay que ajustar el `CU-17`, que todavía no se escribió.
-
-**Arrastre sobre las reglas:** `RN_8` de `CU-10` todavía cita `CU 18` como paso siguiente, que era cierto con el orden del prototipo. Con cliente primero, el paso siguiente es `CU 17`.
-
-**Decisión pendiente:** elegir un orden y alinear prototipo y casos de uso.
-
----
-
-### A2. Unicidad del documento: ¿en la cartera del PAS o en toda la red?
-**Gravedad: media.**
-
-- `RN_2` dice: *"No se da de alta de nuevo si el documento ya existe"*, sin acotar dónde.
-- El alternativo `5b.1` dice: *"El DNI corresponde a un cliente de la cartera del PAS"*.
-- `SUP_3` pregunta por clientes de otro PAS de la red.
-- Mismo punto en `CU-23` (`RN_3`) y en `CU-24` (`RN_2`).
-
-**Ejemplo del problema:** Martín tiene un cliente con DNI X. Laura, otra PAS, carga una cotización a esa persona con el mismo DNI. Con `5b.1` no se detecta y quedan dos clientes. Con `RN_2` leída de forma amplia, sí se detectaría.
-
-**Decisión pendiente:** el documento es único **por PAS** o **en toda la red**. Una vez decidido, `RN_2`, `5b.1`, `SUP_3` y los equivalentes de `CU-23` y `CU-24` deben decir lo mismo.
-
----
-
 ### A3. ¿El caso es igual para todos los ramos?
-**Gravedad: media.**
-
-- `RN_8` dice: *"Este caso es el mismo para todos los ramos."*
-- `SUP_5` dice que el formulario pide nombre y apellido y no contempla personas jurídicas.
-- Una ART la contrata una empresa (razón social y CUIT), no una persona.
-- El prototipo hace pasar a ART por el formulario de persona física.
-
-**Decisión pendiente:** definir cómo se carga un cliente que es una empresa, o aclarar en `RN_8` que hoy solo aplica a personas físicas. Está relacionado con A5 (el DNI como dato).
-
----
+**Gravedad: media.** Abierto (no bloquea DoR). Personas jurídicas vs formulario de nombre y apellido. Relacionado con A5.
 
 ### A4. Cliente existente sin email o teléfono
-**Gravedad: alta.**
-
-- `RN_3` marca email y teléfono como obligatorios para un cliente nuevo.
-- `RN_6` dice que este caso **no modifica** a un cliente existente.
-- El prototipo, al elegir un cliente existente, solo trae nombre y apellido (`SUP_2`).
-- El envío de la propuesta necesita email o teléfono (`CU-14`).
-
-**El choque:** si un cliente existente no tiene esos datos y este caso no puede editarlo, el PAS no puede enviarle la propuesta. Y no se sabe si todo cliente de la cartera tiene esos datos (la carga inicial de `CU-29` podría no exigirlos).
-
-**Decisión pendiente:** o bien email y teléfono son obligatorios para todo cliente de la cartera, o este caso permite completarlos, lo que obligaría a cambiar `RN_6`.
-
----
+**Gravedad: alta.** Abierto (no bloquea DoR). `RN_3` vs `RN_6` vs envío CU-14.
 
 ### A5. DNI opcional, pero quizás obligatorio para cotizar
-**Gravedad: media.**
-
-- `RN_3` dice que el DNI es opcional.
-- `SUP_1` advierte que las APIs de las compañías podrían exigir el documento para cotizar.
-- La detección de duplicados (A2) solo funciona si el DNI se informa.
-
-**Decisión pendiente:** saber qué exigen las compañías (Mercantil Andina, Sancor, Zurich, La Segunda, Allianz). Si lo exigen, el DNI pasa a obligatorio en los ramos masivos y se resuelve parte de A2.
-
----
-
-### A6. ¿Cuándo entra un cliente nuevo a la cartera?
-**Gravedad: media.**
-
-- `RN_5` de `CU-10` y `CU-23` dicen: el cliente entra solo si queda asociada una cobertura o póliza.
-- El borrador viejo decía: si la cotización era para un usuario nuevo, se lo registra en la base.
-- `CU-23` `SUP_1` pregunta si una propuesta **enviada** ya cuenta como cobertura asociada, o si hay que esperar a que se registre la póliza (`CU-16`).
-
-**Decisión pendiente:** en qué evento exacto se incorpora el cliente (propuesta enviada, propuesta aceptada o póliza registrada).
+**Gravedad: media.** Abierto: qué exigen las APIs (Mercantil Andina, Sancor, Zurich, La Segunda, Allianz y las que cubran Hogar/Consorcio/Comercio).
 
 ---
 
 ## B. CU-09 y estructura del multicotizador
 
-### B1. Criterio de masivo contra no masivo
-- La carpeta `no-masivo/` hoy contiene el caso 21 (Hogar, Accidentes Personales y ART) por lo que hace el **prototipo**, no por dominio.
-- Por dominio, Hogar suele ser masivo (tarifa estándar, varias compañías) y ART no.
-- `CU-09` `SUP_1` y la regla `RN_5` dependen de esto.
-
-**Decisión pendiente:** clasificar por **dominio** o por **lo que el MVP puede cotizar hoy por API**. Afecta el nombre de las carpetas y el caso 21.
-
-### B2. Ramos habilitados en el MVP
-- El presupuesto contempla solo Automotor.
-- El prototipo habilita también Hogar, Accidentes Personales y ART.
-- `CU-09` `RN_3` y `SUP_2` lo reflejan.
-
-**Decisión pendiente:** qué ramos aparecen habilitados en el MVP.
-
 ### B3. Qué pasa al volver al selector de ramo
-- `CU-10` `1a` vuelve a "Elegí la cobertura" (`SUP_9`).
-- `CU-09` `SUP_5` pregunta qué pasa con los datos de una cotización en curso si se cambia de ramo.
-
-**Decisión pendiente:** si al volver se descarta la cotización o se conserva el ramo (se relaciona con `CU-12`).
+Abierto. Relacionado con CU-12 (solo sesión en iteración 1): al volver se descarta lo no enviado.
 
 ---
 
 ## C. CU-12 Guardar y retomar cotización
 
-### C1. Cliente nuevo todavía no incorporado: ¿dónde vive la cotización "En curso"?
-**Gravedad: alta. El caso principal de `CU-12` no cubre el escenario más común.**
-
-- `RN_1` de `CU-12` dice que una cotización pasa a "En curso" automáticamente cuando el PAS se va sin terminarla.
-- `CU-12` muestra esa cotización "En curso" en la ficha del cliente (`CU-25`).
-- Pero `RN_5` de `CU-10` (y `RN_5` de `CU-23`) dicen que un cliente nuevo solo se incorpora a la cartera cuando queda asociada una cobertura o póliza. Una cotización "En curso" todavía no es eso.
-- Resultado: si el PAS carga un cliente nuevo y abandona antes de terminar, no hay ficha de cliente donde guardar o mostrar esa cotización (`CU-12` alternativo `3.1`-`3.3`, `SUP_1`).
-
-**El choque:** el camino más habitual para llegar a "En curso" —cliente nuevo, cotización sin terminar— es justo el que el caso no puede resolver con las reglas actuales de incorporación a la cartera (se relaciona con A6).
-
-**Decisión pendiente:** o bien un cliente nuevo se incorpora a la cartera apenas queda una cotización "En curso" (lo que cambiaría `RN_5` de `CU-10` y `CU-23`), o existe un lugar distinto de la ficha de cliente donde vive una cotización "En curso" de alguien que todavía no es cliente de cartera (por ejemplo, junto a los leads de `CU-05`).
+Diferido a una iteración posterior (persistencia). En iteración 1 no hay listado de «En curso» fuera de la sesión.
 
 ---
 
-## D. Inconsistencias previas en otros documentos
+## Abierto de producto (no DoR)
 
-- En la lista, el caso 23 se describe como *"Sumar una póliza con '+'"*, pero su archivo se llama `CU-23-Cartera_Dar_de_Alta_Cliente`. Ya estaba así antes de renumerar.
-- El borrador `CU-Multicotizador-01-Cotizar_Automotor.md` sigue en la raíz de `casos-de-uso/`; hay que borrarlo cuando se hayan absorbido sus pasos.
+- Estimado / caché mientras responde la compañía (CU-18): diferido; si se muestra, debe decir que no es precio real.
+- Campos exactos del formulario de riesgo Hogar / Consorcio / Comercio: van en specs de adapter, no en el CU (ver CU-17b).
+
+### Tipos de documento (`tipos_documento` / AFIP)
+Catálogo en `sql/schema/schema.sql` y `TIPOS_DOCUMENTO.md`. `asegurado` usa `tipo_documento_sigla` + `numero_documento`. El `codigo_afip` queda para integraciones futuras. Pendiente: alinear `usuario.dni` del productor con el mismo modelo.
+
+### Formularios Consorcio y Comercio + columnas en `schema.sql`
+**Pendiente.** No implementar todavía. El prototipo no tiene `/cotizar/consorcio` ni `/cotizar/comercio`.
+
+- `poliza_consorcio` y `poliza_comercio` ya existen (heredan de `poliza`, FK a `inmueble`).
+- Consorcio hoy solo tiene edificio y administrador (detalle de cartera del mock).
+- Comercio no tiene campos de riesgo extra.
+- Al existir esos formularios: capturar sus campos (omitir Datos de envío) y **reflejarlos en esas tablas** (y en `inmueble` si aplica). Hasta entonces no inventar columnas. REF CU-17b SUP_4, `sql/schema/schema.sql`.
+
+- CU-19/20 comisiones: fuera de iteración 1.
+- Ticket de cobranza CU-31: fuera; el aviso CU-05c sí entra.

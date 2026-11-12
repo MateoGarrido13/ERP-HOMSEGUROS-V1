@@ -40,7 +40,7 @@
 
 *Reglas de negocio asociadas*
 RN_1: Editar un cliente no crea otro registro ni cambia su identificador interno.
-RN_2: El documento, si se informa, no puede quedar asociado a dos clientes.
+RN_2: El documento, si se informa, no puede quedar asociado a dos clientes en la red (REF CU-10 RN_2: un asegurado ↔ un PAS). Si el DNI ya es de otro productor, se avisa sin mostrar datos y no se guarda.
 RN_3: Este caso modifica datos del cliente. Los datos propios de una póliza no se editan desde este formulario (REF CU-27-Cartera_Ver_Detalle_Poliza).
 RN_4: Un PAS solo puede editar clientes de su cartera.
 RN_5: El registro de auditoría identifica qué campos cambiaron, sin reemplazar el valor histórico.

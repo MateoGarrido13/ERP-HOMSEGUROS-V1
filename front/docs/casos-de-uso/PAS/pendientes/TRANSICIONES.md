@@ -6,7 +6,7 @@ AVISO CUMPLEANOS:
 2.a(HORARIO DENTRO DEL DIA DEL CUMPLEANOS) EL PAS ENVIA WHATSAPP/ Toca en 'Resolver' y 'Confirmar' el aviso "se resuelve"(se registra en auditoria 'Resuleto por el PAS')
 2.b(00:00hs del dia siguiente) EL PAS no envio el mensaje pero el aviso "se resuelve automaticamnete"(se registra en auditoria 'Resuleto por Vencimiento')
 
-AVISO PAGO RECHAZADO: ESTE CASO LO DOCUMENTAREMOS CON '(*)ATENCION:no confirmado' falta charlarlo con el cliente
+AVISO PAGO RECHAZADO: In-scope de iteración 1 como aviso de Pendientes. El ticket de cobranza (CU-31) es otro registro y queda fuera.
 1.(Lo carga la administrativa, registra pago rechazado) APARECE AVISO COMO 'PENDIENTE'
 2. El PAS Selecciona 'Resolver' o 'Enviar Whatsapp' ENVIANDO EL MENSAJE POR WHATSAPP AL CLIENTE, pasara a 'Esperando respuesta cliente', este paso supone que se envio el mensaje 
 3. El PAS SELECCIONA 'RESOLVER' y 'Confirmar', asi el aviso deja de visualizarse en pendientes  (se registra en auditoria 'Resuleto por el PAS'), este paso supone que el cliente pago y respondio el mensaje 
@@ -14,9 +14,9 @@ AVISO PAGO RECHAZADO: ESTE CASO LO DOCUMENTAREMOS CON '(*)ATENCION:no confirmado
 
 
 AVISO COTIZACION ENVIADA:
-1.(EL PAS GENERO UNA COTIZACION Y envio su PDF por Whatsapp, en  la seccion 'COTIZAR'), automaticamente el seleccionar 'Generar pdf y enviar'-->'Enviar'--> se registra a ese cliente en 'PENDIENTES' con este aviso. El mismo aviso nace si el PAS reactiva un lead que ya tenía propuesta enviada (REF CU-08b-Pendientes_Reactivar_Lead); el lead sale de Leads. El alta en Cartera no es de este paso: es 2.a.
+1.(EL PAS GENERO UNA COTIZACION Y envio su PDF por Whatsapp, en  la seccion 'COTIZAR'), automaticamente el seleccionar 'Generar pdf y enviar'-->'Enviar'--> se registra a ese cliente en 'PENDIENTES' con este aviso y el cliente queda persistido con activa=false (no se muestra en Cartera). El mismo aviso nace si el PAS reactiva un lead que ya tenía propuesta enviada (REF CU-08b-Pendientes_Reactivar_Lead); el lead sale de Leads.
 
-2.a (El cliente confirma la cotizacion y se lo da de alta en una compania),EL pas selecciona 'Resolver', 'Dar de alta'. El aviso ya no se mostrara en pendientes y se lo empieza a considerar a ese cliente en 'CARTERA', implica modificaciones en la BD para cambiar el estado de ese cliente, se lo asocia a un codigo de productor.
+2.a (El cliente confirma y la compañía emitió): el PAS selecciona 'Resolver', 'Dar de alta'. Ese paso ES CU-16: carga nº de póliza, vigencia y compañía, pasa activa=true y el cliente entra a CARTERA. El aviso sale de Pendientes.
 
 2.b (El cliente rechaza la porpuesta) El PAS selecciona 'Resolver','Lead'. Se le solicita una descripcion al PAS sobre porque el cliente rechazo la propuesta (campo opcional), EL aviso pasa a mostrarse en Lead, con datos cliente, que queria asegurar, que montos se le ofecieron, fecha que respondio negativamente(que paso de PENDIENTES A Lead)
 

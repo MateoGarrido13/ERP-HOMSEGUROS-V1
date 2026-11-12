@@ -2,7 +2,7 @@
 
 Escenario de los casos CU-09, CU-10 (cliente nuevo), CU-17 y la emisión que hoy hace el adaptador de Mercantil. El productor ya inició sesión (CU-01). Esta vista termina cuando ve las coberturas cotizadas. Armar el PDF y enviarlo es otro escenario (CU-13, CU-14).
 
-El asegurado nuevo queda asociado a la cotización. No entra en la cartera: eso ocurre solo si después queda una cobertura o una póliza (CU-10, CU-23).
+El asegurado nuevo queda asociado a la cotización. Al enviar la propuesta se persiste con `activa=false`. Entra a Cartera (`activa=true`) en CU-16 desde Pendientes, no al cotizar. Orden: ramo → cliente → riesgo (el prototipo riesgo→cliente queda desalineado).
 
 ## Participantes
 

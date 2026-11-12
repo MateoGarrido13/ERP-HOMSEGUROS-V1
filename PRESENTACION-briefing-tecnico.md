@@ -27,10 +27,10 @@ El sistema de registro de la **póliza legal** vive en la compañía. El nuestro
 | Actor | Relación con el sistema |
 |---|---|
 | **Luciani (broker / organizador)** | Cliente pagador. Habilita red, negocia condiciones/override, necesita visibilidad de cartera agregada. Nivel exacto en la cadena comercial: **abierto**. |
-| **PAS (usuario final)** | Independiente matriculado. Asesora, vende, denuncia. Hoy también ejecuta back-office. Si el producto suma pantallas, no hay adopción. |
-| **Asegurado / tomador** | No opera el ERP. Consume canal (póliza, cuota, denuncia) si existe. |
-| **Aseguradora** | Upstream. Cotiza/emite/cobra/liquida. No es usuario. |
-| **SSN** | Constraint, no actor de UI. |
+| **PAS (usuario final)** | Independiente matriculado.Cotiza,ingresa nuevos clientes, responde 'pendientes'. Hoy también ejecuta back-office. Si el producto suma pantallas, no hay adopción. |
+| **Asegurado / tomador** | No opera el ERP. Sera el destinatario final de las cotizaciones, mensajes de feliz cumpleanos, avisos de pagos rechazados.
+| **Aseguradora** | Upstream. Cotiza/emite/cobra/liquida. No es usuario. Cada una desarrolla su API para que nuestro sistema sea un hub de integracion |
+| **SSN** | Constraint, no actor de UI. Sera en futuras features el suistema destinatario de la 'Rubrica-SSN'|
 
 ### Procesos de la empresa (ciclo)
 

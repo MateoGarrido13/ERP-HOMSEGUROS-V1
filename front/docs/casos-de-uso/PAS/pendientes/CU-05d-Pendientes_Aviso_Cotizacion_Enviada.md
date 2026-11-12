@@ -11,9 +11,9 @@
 4. El aviso muestra el cliente, qué se cotizó y los montos ofrecidos
 5. El PAS abre el aviso en Pendientes (REF CU-05-Pendientes_Ver_Pendientes)
 6. El cliente confirma la cotización. El PAS selecciona "Resolver" y elige "Dar de alta" (*ALT RECHAZA, *ALT WHATSAPP, *ALT CANCELAR)
-7. El PAS confirma
-8. El sistema saca el aviso de Pendientes e incorpora al cliente en Cartera, asociado al código de ese PAS (REF CU-16-Multicotizador_Registrar_Poliza_Emitida)
-9. El sistema registra el PAS, el aviso, el alta, la fecha y la hora (REF CU 51)
+7. El PAS confirma y el sistema abre el registro de la póliza emitida (REF CU-16): número, vigencia, compañía
+8. Al confirmar CU-16, el sistema saca el aviso de Pendientes, pasa el cliente a `activa=true` y lo muestra en Cartera
+9. El sistema registra el PAS, el aviso, el alta, la póliza, la fecha y la hora (REF CU 51)
 
 *Flujos alternativos*
 
@@ -51,7 +51,7 @@
 
 *Postcondiciones*
 1. Enviar la cotización desde Cotizar deja el aviso en Pendientes. No crea un lead
-2. "Dar de alta" confirmado saca el aviso y pasa al cliente a Cartera
+2. "Dar de alta" confirmado es CU-16: asienta la póliza, saca el aviso y pasa al cliente a Cartera (`activa=true`)
 3. "Lead" confirmado saca el aviso y lo muestra en Lead, con la fecha de esa respuesta
 4. "Enviar WhatsApp" desde el aviso no lo saca de la vista
 5. Cancelar la confirmación no cambia el estado
@@ -61,10 +61,10 @@ RN_1: El aviso nace al enviar desde Cotizar, o al reactivar un lead con propuest
 RN_2: "Enviar WhatsApp" del aviso abre el chat con la plantilla y, para el sistema, ya es un envío. No lo saca de Pendientes ni lo pasa a Lead.
 RN_3: La plantilla de seguimiento es: "Hola {primer nombre}, soy {PAS} de HOM Seguros. Te escribo por la cotización de {bien}. Te ofrecimos {cobertura} en {compañía} por {premio} por mes y todavía no la confirmaste. ¿La avanzamos?"
 RN_4: "Resolver" abre la elección del estado siguiente: "Dar de alta" o "Lead". Confirmar aplica esa elección. No confirmar no produce efecto.
-RN_5: "Dar de alta" cambia el estado del cliente a Cartera y lo asocia al código del PAS. No es solo ocultar el aviso.
+RN_5: "Dar de alta" es el mismo paso que CU-16. Carga nº de póliza, vigencia y compañía, pasa `activa=true` y asocia el cliente al código del PAS. No es solo ocultar el aviso.
 RN_6: El comentario del rechazo es opcional y es el único que se adjunta desde un aviso. Pasa a ser la descripción del lead. Después se edita en el lead, no en el aviso (REF CU-08e-Pendientes_Editar_Descripcion_Lead). La fecha del lead es la del pase de Pendientes a Lead.
 RN_7: El aviso no se vence solo. Sigue en Pendientes hasta "Dar de alta" o "Lead".
 RN_8: Si el aviso sale de un lead, por envío o por reactivar, no quedan los dos a la vez. El lead sale de Leads y el seguimiento queda en este aviso (REF CU-08d-Lead_Enviar_Cotizacion, CU-08b-Pendientes_Reactivar_Lead).
 
 *Supuestos a confirmar*
-SUP_1: Qué datos del alta en la compañía se cargan en ese paso, además del pase a Cartera (REF CU-16-Multicotizador_Registrar_Poliza_Emitida).
+SUP_1: Resuelto en lo mínimo. Este paso carga número de póliza, vigencia y compañía (REF CU-16 RN_3). Datos extra de prima/cuotas: ver CU-16 SUP_2. El prototipo solo saca el aviso y un flash, sin formulario CU-16 (REF `specs/as-built-prototipo-iteracion-1.md`).

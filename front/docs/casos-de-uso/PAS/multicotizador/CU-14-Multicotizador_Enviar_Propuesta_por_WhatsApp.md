@@ -12,7 +12,7 @@
 5. El PAS elige WhatsApp y selecciona el contacto o número del cliente
 6. El PAS confirma el envío desde WhatsApp
 7. El sistema marca la propuesta como "Enviada", con fecha y hora
-8. El sistema muestra la confirmación de envío y ofrece volver a la cartera (REF CU-15-Multicotizador_Marcar_Resultado_de_Propuesta)
+8. El sistema persiste al cliente con `activa=false` si todavía no estaba en Cartera, publica el aviso Cotización enviada (REF CU-05d) y muestra la confirmación. El seguimiento sigue en Pendientes, no en Cartera (REF CU-16)
 
 *Flujos alternativos*
 
@@ -41,6 +41,7 @@
 2. Si el PAS canceló el selector para compartir o no pudo completar el envío, la propuesta sigue en estado "Generada" (REF CU-13)
 3. El PDF y los datos de la cotización no se modifican por el envío
 4. No se contactó a ninguna compañía ni se emitió ninguna póliza
+5. El cliente nuevo queda persistido con `activa=false` y no se muestra en Cartera
 
 *Reglas de negocio asociadas*
 RN_1: Solo se puede enviar una propuesta que ya está "Generada" (REF CU-13). No existe un envío sin PDF generado.
@@ -49,6 +50,7 @@ RN_3: El mensaje predefinido es fijo, con el nombre del cliente cuando está dis
 RN_4: El sistema no puede confirmar que el cliente recibió o abrió el mensaje; "Enviada" refleja que el PAS completó el paso de compartir desde su dispositivo, no una confirmación de entrega.
 RN_5: Esta acción se audita: cotización, PAS y fecha de envío (REF CU 51).
 RN_6: Una propuesta puede reenviarse más de una vez; cada envío repite este caso sin generar una propuesta nueva.
+RN_7: El primer envío persiste al cliente nuevo con `activa=false`. No lo muestra en Cartera. El alta visible es CU-16 desde Pendientes. El prototipo ofrece «Ver cartera» en `/cotizar/enviado` (desalineado; REF `specs/as-built-prototipo-iteracion-1.md`).
 
 *Supuestos a confirmar*
 SUP_1: Si el PDF se adjunta al mensaje de WhatsApp o si el PAS lo adjunta a mano desde su dispositivo. El prototipo comparte el texto del mensaje y no adjunta el PDF.

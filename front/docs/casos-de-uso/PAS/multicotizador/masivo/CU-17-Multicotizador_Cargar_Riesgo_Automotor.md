@@ -65,6 +65,6 @@ RN_10: Cargar el riesgo no se audita, porque todavía no hay ninguna cotización
 SUP_1: Si la decodificación de la patente es un servicio real (por ejemplo, contra un padrón de vehículos) o si por ahora queda simulada con un vehículo fijo, como hoy en el prototipo.
 SUP_2: Si el PAS puede cambiar la patente después de decodificar sin perder el resto de lo cargado, o si cambiar la patente reinicia el formulario del vehículo.
 SUP_3: Si hay otros datos del riesgo que todavía no están en el prototipo y que las compañías podrían exigir para cotizar (por ejemplo, antigüedad de la licencia del conductor principal).
-SUP_4: Orden del flujo: el prototipo hoy pide primero la patente y el vehículo, y el cliente después (`/cotizar/automotor` → `/cotizar/riesgo` → `/cotizar/asegurado`), mientras que este caso asume el cliente ya asociado antes de cargar el riesgo, como quedó definido en CU-10. Falta alinear el prototipo con esa decisión (REF `cuestiones-a-resolver.md`, punto A1).
+SUP_4: Resuelto. Orden canónico: cliente antes del riesgo (REF CU-10, cuestiones A1). El prototipo vigente va de `/cotizar/automotor` a comparar sin CU-10 (REF `specs/as-built-prototipo-iteracion-1.md`).
 SUP_5: Si el código postal se usa para algo más que completar el formulario (por ejemplo, para que las compañías coticen con una tarifa regional) o si solo queda guardado como dato del vehículo.
 SUP_6: Si "uso comercial" de este caso es la misma pregunta que el uso que hoy pide el prototipo al ingresar la patente, o si son dos campos distintos que terminan duplicados.

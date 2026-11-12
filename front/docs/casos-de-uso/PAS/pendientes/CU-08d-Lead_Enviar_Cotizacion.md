@@ -26,6 +26,6 @@
 
 *Reglas de negocio asociadas*
 RN_1: Esta acción redirige a Cotizar con los datos del lead. No asigna una póliza vigente.
-RN_2: Reactivar no abre Cotizar: publica Pendientes como Cotización enviada con la propuesta ya enviada (REF CU-08b-Pendientes_Reactivar_Lead). La póliza vigente se asigna después, si el cliente confirma, al resolver ese aviso con "Dar de alta" (REF CU-05d-Pendientes_Aviso_Cotizacion_Enviada).
+RN_2: Reactivar no abre Cotizar: publica Pendientes como Cotización enviada con la propuesta ya enviada (REF CU-08b). La póliza vigente se asigna después con "Dar de alta", que es CU-16 (REF CU-05d).
 RN_3: Editar la descripción no abre Cotizar (REF CU-08e-Pendientes_Editar_Descripcion_Lead).
 RN_4: Un cliente que ya existe se reutiliza (REF CU 10).
