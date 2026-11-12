@@ -62,7 +62,7 @@ export function ProposalDocument({ quote }: ProposalDocumentProps) {
               <p className="text-base font-medium text-ink">
                 {alternative.name} · {alternative.coverage}
               </p>
-              <p className="mt-1 font-display text-[22px] font-bold text-ink">
+              <p className="mt-1 font-sans text-[22px] font-semibold tracking-tight text-title">
                 {formatPesos(alternative.monthly)}
               </p>
             </SurfaceCard>

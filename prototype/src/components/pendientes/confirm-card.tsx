@@ -43,7 +43,7 @@ export function CancelButton({
     <button
       type="button"
       onClick={onClick}
-      className="mt-3 w-full text-center text-sm font-medium text-secondary"
+      className="mt-3 flex h-10 w-full items-center justify-center rounded-full border border-field-line bg-white text-sm font-medium text-title"
     >
       {children}
     </button>

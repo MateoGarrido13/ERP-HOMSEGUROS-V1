@@ -23,7 +23,7 @@ export function RamoChart({ shares, total }: RamoChartProps) {
             <circle cx="80" cy="80" r="46" className="fill-white" />
           </svg>
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-            <span className="font-display text-2xl font-bold text-ink">{total}</span>
+            <span className="font-sans text-2xl font-semibold tracking-tight text-title">{total}</span>
             <span className="text-[11px] font-light text-muted">pólizas</span>
           </div>
         </div>

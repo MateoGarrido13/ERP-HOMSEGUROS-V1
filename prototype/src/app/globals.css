@@ -1,24 +1,41 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #181f27;
-  --hom-color-primary: #ff9f1c;
-  --hom-color-primary-soft: #f8af37;
-  --hom-color-secondary: #110229;
-  --hom-color-text: #181f27;
-  --hom-color-body: #343c46;
-  --hom-color-muted: #4f4f67;
-  --hom-color-teal: #10c0c0;
-  --hom-color-teal-deep: #2090a0;
-  --hom-color-ink: #001020;
-  --hom-color-wash: #e7f7f6;
-  --hom-color-line: #e8e8e8;
-  --hom-color-field: #d7daea;
-  --hom-color-field-text: #555555;
-  --hom-color-tab: #b6b6b6;
+  --background: #f5f5f5;
+  --foreground: #0b0f14;
+  --hom-color-primary: #0f7f86;
+  --hom-color-primary-soft: #e8f8f6;
+  --hom-color-primary-deep: #0c6570;
+  --hom-color-focus: #1fc1c1;
+  --hom-color-secondary: #0b0f14;
+  --hom-color-text: #0b0f14;
+  --hom-color-body: #3c4858;
+  --hom-color-muted: #6b7481;
+  --hom-color-teal: #0f7f86;
+  --hom-color-teal-deep: #0c6570;
+  --hom-color-ink: #0b0f14;
+  --hom-color-wash: #f5f5f5;
+  --hom-color-line: #e4e7ec;
+  --hom-color-field: #9aa3af;
+  --hom-color-field-text: #3c4858;
+  --hom-color-tab: #98a0a8;
   --hom-color-whatsapp: #25d366;
-  --hom-color-accent: #23a455;
+  --hom-color-accent: #1f7a45;
+  --hom-color-portal: #0f7f86;
+  --hom-color-portal-deep: #0c6570;
+  --hom-color-link: #0c6570;
+  --hom-color-title: #0b0f14;
+  --hom-color-slate: #3c4858;
+  --hom-color-hint: #566170;
+  --hom-color-placeholder: #98a0a8;
+  --hom-color-danger: #a83535;
+  --hom-color-danger-line: #f0a0a0;
+  --hom-color-danger-strong: #c62828;
+  --hom-color-danger-wash: #fdecec;
+  --hom-color-mint: #e8f8f6;
+  --hom-color-field-line: #c5ccd4;
+  --hom-color-stage: #f5f5f5;
+  --hom-color-disabled: #eef0f3;
 }
 
 @theme inline {
@@ -26,6 +43,8 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--hom-color-primary);
   --color-primary-soft: var(--hom-color-primary-soft);
+  --color-primary-deep: var(--hom-color-primary-deep);
+  --color-focus: var(--hom-color-focus);
   --color-secondary: var(--hom-color-secondary);
   --color-ink: var(--hom-color-text);
   --color-body: var(--hom-color-body);
@@ -40,14 +59,30 @@
   --color-tab: var(--hom-color-tab);
   --color-whatsapp: var(--hom-color-whatsapp);
   --color-accent: var(--hom-color-accent);
+  --color-portal: var(--hom-color-portal);
+  --color-portal-deep: var(--hom-color-portal-deep);
+  --color-link: var(--hom-color-link);
+  --color-title: var(--hom-color-title);
+  --color-slate: var(--hom-color-slate);
+  --color-hint: var(--hom-color-hint);
+  --color-placeholder: var(--hom-color-placeholder);
+  --color-danger: var(--hom-color-danger);
+  --color-danger-line: var(--hom-color-danger-line);
+  --color-danger-strong: var(--hom-color-danger-strong);
+  --color-danger-wash: var(--hom-color-danger-wash);
+  --color-mint: var(--hom-color-mint);
+  --color-field-line: var(--hom-color-field-line);
+  --color-stage: var(--hom-color-stage);
+  --color-disabled: var(--hom-color-disabled);
   --font-sans: var(--font-inter), "Inter", sans-serif;
-  --font-display: var(--font-dm), "DM Sans", Arial, sans-serif;
-  --radius-pill: 50px;
-  --radius-field: 6px;
+  --font-display: var(--font-inter), "Inter", sans-serif;
+  --radius-pill: 999px;
+  --radius-field: 8px;
+  --radius-card: 12px;
 }
 
 body {
-  background: var(--hom-color-wash);
+  background: var(--hom-color-stage);
   color: var(--hom-color-text);
   font-family: var(--font-sans);
 }

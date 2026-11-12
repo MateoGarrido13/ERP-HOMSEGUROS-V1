@@ -56,7 +56,7 @@
 RN_1: La ficha reúne contacto, pólizas vigentes, propuestas e historial del mismo cliente.
 RN_2: No se puede incorporar un cliente si no tiene una cobertura o póliza asociada, vigente o no. En la ficha solo se exponen las pólizas vigentes (REF CU-23-Cartera_Dar_de_Alta_Cliente).
 RN_3: Cada póliza vigente de la ficha enlaza con su detalle (REF CU-27-Cartera_Ver_Detalle_Poliza).
-RN_4: Las propuestas conservan su estado: en curso, enviada, aceptada, rechazada o vencida, según corresponda (REF CU 12, CU 15).
+RN_4: Las propuestas en ficha son las de un cliente ya en Cartera (`activa=true`). Estados: enviada, aceptada, rechazada o vencida (REF CU 15). «En curso» no se persiste en iteración 1 (REF CU-12).
 RN_5: Abrir la ficha o desplegar una sección no cuenta como una modificación del cliente.
 RN_6: La ficha no reemplaza el registro de auditoría. Presenta la actividad útil para la gestión del cliente; la auditoría sigue el CU 51.
 RN_7: "+" suma una póliza nueva del mismo cliente y redirige a Cotizar con él ya seleccionado. Al quedar vigente, se muestra en esta ficha junto con las que ya tenía (REF CU-23-Cartera_Dar_de_Alta_Cliente, transicion-estados-bien.md).

@@ -10,7 +10,7 @@ export default async function CotizarPage({
 
   return (
     <CoveragePicker
-      automotorHref={quoteHref("/cotizar/automotor", quote)}
+      automotorHref={quoteHref("/cotizar/automotor", quote, { cotizacion: "" })}
       hogarHref="/cotizar/hogar"
       accidentesHref="/cotizar/accidentes"
       artHref="/cotizar/art"

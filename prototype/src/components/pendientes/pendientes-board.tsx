@@ -6,21 +6,26 @@ import { LeadBoard } from "@/components/pendientes/lead-board"
 import { PendingBoard } from "@/components/pendientes/pending-board"
 import { SurfaceCard } from "@/components/ui/surface-card"
 import { isoDate } from "@/lib/format"
-import { leadCountLabel, leads as seedLeads, rejectedQuoteLead, type Lead } from "@/lib/leads"
+import { leadCountLabel, type Lead } from "@/lib/leads"
 import {
   avisoCountLabel,
   pendingNotices,
   quoteNoticeFromLead,
   whatsappClosesNotice,
+  whatsappMarksCobroPendiente,
   whatsappWaitsForClient,
   type PendingNotice,
 } from "@/lib/pendientes"
 
-export function PendientesBoard() {
+interface PendientesBoardProps {
+  initialLeads: Lead[]
+}
+
+export function PendientesBoard({ initialLeads }: PendientesBoardProps) {
   const [notices, setNotices] = useState<PendingNotice[]>(() =>
     pendingNotices.map((notice) => ({ ...notice })),
   )
-  const [leads, setLeads] = useState<Lead[]>(() => seedLeads.map((lead) => ({ ...lead })))
+  const [leads, setLeads] = useState<Lead[]>(initialLeads)
   const [openNoticeId, setOpenNoticeId] = useState<string | null>(null)
   const [openLeadId, setOpenLeadId] = useState<string | null>(null)
   const [flash, setFlash] = useState<string | null>(null)
@@ -60,19 +65,8 @@ export function PendientesBoard() {
     }
 
     if (notice.type === "cotizacion-enviada" && quote?.next === "lead") {
-      const lead = rejectedQuoteLead({
-        noticeId: notice.id,
-        holder: notice.holder,
-        ramo: notice.coverage,
-        phone: notice.phone,
-        quote: notice.quote,
-        comment: quote.comment,
-        updatedOn: isoDate(),
-      })
-      setLeads((current) => [lead, ...current])
       removeNotice(notice.id)
-      setOpenLeadId(lead.id)
-      setFlash(null)
+      setFlash("Los leads de automotor salen de las cotizaciones reales de Mercantil Andina.")
       return
     }
 
@@ -85,8 +79,20 @@ export function PendientesBoard() {
     removeNotice(notice.id)
   }
 
+  function markCobroPendiente(id: string) {
+    setNotices((current) =>
+      current.map((item) =>
+        item.id === id ? { ...item, status: "cobro-pendiente", pill: "cargando" } : item,
+      ),
+    )
+  }
+
   function shareNotice(notice: PendingNotice) {
     if (!notice.phone) return
+    if (whatsappMarksCobroPendiente(notice)) {
+      markCobroPendiente(notice.id)
+      return
+    }
     if (whatsappWaitsForClient(notice)) {
       waitForClient(notice.id)
       return
@@ -108,17 +114,27 @@ export function PendientesBoard() {
       holder: lead.holder,
       ramo: lead.ramo,
       phone: lead.phone || null,
-      quote: lead.proposal,
+      quote: lead.proposal
+        ? { ...lead.proposal, automotor: lead.automotor }
+        : undefined,
       dueOn: isoDate(),
     })
-    setLeads((current) => current.filter((item) => item.id !== lead.id))
     setNotices((current) => [notice, ...current])
     setOpenLeadId(null)
     setOpenNoticeId(notice.id)
     setFlash(null)
   }
 
-  function discardLead(id: string) {
+  async function discardLead(id: string) {
+    const response = await fetch(`/api/cotizaciones/automotor/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status: "discarded" }),
+    })
+    if (!response.ok) {
+      setFlash("No se pudo descartar el lead.")
+      return
+    }
     setLeads((current) => current.filter((item) => item.id !== id))
     setOpenLeadId(null)
   }
@@ -139,7 +155,9 @@ export function PendientesBoard() {
         onWhatsapp={shareNotice}
       />
       <section className="mt-4 flex flex-col gap-2.5">
-        <h2 className="font-display text-[22px] leading-normal font-bold text-black">Leads</h2>
+        <h2 className="font-sans text-[22px] leading-tight font-semibold tracking-tight text-title">
+          Leads
+        </h2>
         <p className="text-[13px] font-light text-body">{leadCountLabel(leads.length)}</p>
         <LeadBoard
           leads={leads}

@@ -1,3 +1,4 @@
+import type { AutomotorConsulta } from "@/lib/automotor-consulta"
 import { formatPesos, formatShortDate } from "@/lib/format"
 
 export const pendingWhatsappLabel = "Enviar WhatsApp"
@@ -8,17 +9,21 @@ export const noticeTypes = [
   "cumpleanos",
   "cotizacion-enviada",
   "enviar-poliza",
+  "enviar-cupon",
 ] as const
 
 export type NoticeType = (typeof noticeTypes)[number]
-export type NoticeStatus = "pendiente" | "esperando-respuesta"
+export type NoticeStatus = "pendiente" | "esperando-respuesta" | "cobro-pendiente"
 
 export const noticeTypeLabels: Record<NoticeType, string> = {
   "pago-rechazado": "Pago rechazado",
   cumpleanos: "Cumpleaños",
   "cotizacion-enviada": "Cotización enviada",
   "enviar-poliza": "Enviar póliza",
+  "enviar-cupon": "Enviar cupón",
 }
+
+export const cobroPendienteLabel = "Cobro pendiente"
 
 export interface NoticeCoverage {
   ramo: string
@@ -30,6 +35,7 @@ export interface NoticeQuote {
   coverage: string
   company: string
   premium: string
+  automotor?: AutomotorConsulta
 }
 
 export interface NoticePayment {
@@ -44,6 +50,11 @@ export interface NoticePolicy {
   ramo: string
   company: string
   dueOn: string
+  number?: string
+  building?: string
+  vigenciaFrom?: string
+  vigenciaTo?: string
+  administrator?: string
 }
 
 export interface PendingNotice {
@@ -134,6 +145,28 @@ export const pendingNotices: PendingNotice[] = [
       dueOn: "2026-10-26",
     },
   },
+  {
+    id: "torres-iv-cupon",
+    type: "enviar-cupon",
+    status: "pendiente",
+    holder: "TORRES IV",
+    coverage: "Consorcio",
+    dueOn: "2026-11-10",
+    phone: "11 5033-2218",
+    tone: "mint",
+    pill: "gestion",
+    coverages: [{ ramo: "Consorcio", company: "Mercantil Andina" }],
+    policy: {
+      ramo: "Consorcio",
+      company: "Mercantil Andina",
+      dueOn: "2026-11-10",
+      number: "330418",
+      building: "TORRES IV",
+      vigenciaFrom: "2026-05-20",
+      vigenciaTo: "2027-05-20",
+      administrator: "Marta López",
+    },
+  },
 ]
 
 export function avisoCountLabel(count: number) {
@@ -141,6 +174,7 @@ export function avisoCountLabel(count: number) {
 }
 
 export function noticeLabel(notice: PendingNotice) {
+  if (notice.status === "cobro-pendiente") return cobroPendienteLabel
   return noticeTypeLabels[notice.type]
 }
 
@@ -175,11 +209,21 @@ export function noticeWhatsappMessage(notice: PendingNotice, pasName: string) {
     return `Hola ${name}, soy ${pasName} de HOM Seguros. Te envío la póliza de ${policy.ramo} de ${policy.company}. Estás al día y el próximo vencimiento es el ${formatShortDate(policy.dueOn)}, por débito automático.`
   }
 
+  if (notice.type === "enviar-cupon" && notice.policy) {
+    const policy = notice.policy
+    const admin = firstNameOf(policy.administrator ?? notice.holder)
+    return `Hola ${admin}, soy ${pasName} de HOM Seguros. Te envío el cupón del próximo cobro del edificio ${policy.building}, póliza ${policy.number} de ${policy.company}. El vencimiento es el ${formatShortDate(policy.dueOn)}.`
+  }
+
   return `Hola ${name}, soy ${pasName} de HOM Seguros.`
 }
 
 export function whatsappClosesNotice(notice: PendingNotice) {
   return notice.type === "cumpleanos" || notice.type === "enviar-poliza"
+}
+
+export function whatsappMarksCobroPendiente(notice: PendingNotice) {
+  return notice.type === "enviar-cupon" && notice.status === "pendiente"
 }
 
 export function whatsappWaitsForClient(notice: PendingNotice) {

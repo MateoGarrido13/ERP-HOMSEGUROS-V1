@@ -12,21 +12,50 @@ import { formatPesos } from "@/lib/format"
 import { offers, pickFeatured } from "@/lib/mock-pas"
 import { quoteHref, type CompanyId, type QuoteSearch } from "@/lib/quote-search"
 import { cn } from "@/lib/cn"
+import type { CotizacionPlanView, CotizacionView } from "@/services/mercantil/types"
 
 interface CompareBoardProps {
   quote: QuoteSearch
+  mercantil?: CotizacionView | null
 }
 
-export function CompareBoard({ quote }: CompareBoardProps) {
+function mercantilMonthly(mercantil: CotizacionView) {
+  const preferred =
+    mercantil.planes.find((plan) => plan.producto === "M BASICA") ??
+    mercantil.planes.find((plan) => plan.costo > 0)
+  return preferred?.costo ?? 0
+}
+
+function MercantilPlanList({ planes }: { planes: CotizacionPlanView[] }) {
+  if (planes.length === 0) return null
+
+  return (
+    <ul className="mt-3 flex flex-col gap-1.5">
+      {planes.map((plan) => (
+        <li
+          key={plan.numero}
+          className="flex items-start justify-between gap-3 text-xs leading-4 text-body"
+        >
+          <span className="font-light">{plan.texto || plan.producto}</span>
+          <span className="shrink-0 font-medium text-title">{formatPesos(plan.costo)}</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+export function CompareBoard({ quote, mercantil = null }: CompareBoardProps) {
   const router = useRouter()
-  const [isMercantilReady, setIsMercantilReady] = useState(false)
-  const [selected, setSelected] = useState<CompanyId[]>(["sancor"])
+  const hasLiveMercantil = Boolean(mercantil?.planes.length)
+  const [isMercantilReady, setIsMercantilReady] = useState(hasLiveMercantil)
+  const [selected, setSelected] = useState<CompanyId[]>(hasLiveMercantil ? ["mercantil"] : ["sancor"])
   const featured = pickFeatured(selected)
 
   useEffect(() => {
+    if (hasLiveMercantil) return
     const timer = window.setTimeout(() => setIsMercantilReady(true), 1600)
     return () => window.clearTimeout(timer)
-  }, [])
+  }, [hasLiveMercantil])
 
   function toggle(id: CompanyId) {
     setSelected((current) =>
@@ -80,14 +109,21 @@ export function CompareBoard({ quote }: CompareBoardProps) {
                 ALTERNATIVA
               </p>
             ) : null}
-            <p className="mt-2 font-display text-2xl leading-none font-bold text-ink">
-              {isWaiting ? "—" : `${formatPesos(offer.monthly)} / mes`}
+            <p className="mt-2 font-sans text-2xl leading-none font-semibold tracking-tight text-title">
+              {isWaiting
+                ? "—"
+                : `${formatPesos(offer.id === "mercantil" && mercantil ? mercantilMonthly(mercantil) : offer.monthly)} / mes`}
             </p>
             <p className="mt-2 text-xs font-light text-muted">
               {isWaiting
                 ? "Esperando al middleware…"
-                : "Prima comercial + recargos + impuestos"}
+                : offer.id === "mercantil" && mercantil
+                  ? `${mercantil.vehiculoNombre} · ${mercantil.localidadNombre}`
+                  : "Prima comercial + recargos + impuestos"}
             </p>
+            {offer.id === "mercantil" && mercantil ? (
+              <MercantilPlanList planes={mercantil.planes} />
+            ) : null}
           </SurfaceCard>
         )
 

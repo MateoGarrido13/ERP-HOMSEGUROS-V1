@@ -90,6 +90,7 @@ export const decodedRisk = {
   referenceSum: 18400000,
   localityByPostalCode: {
     "1640": "Vicente López",
+    "7000": "Tandil",
   } as Record<string, string>,
 }
 

@@ -5,19 +5,21 @@ import { producer } from "@/lib/mock-pas"
 import type { CompanyId } from "@/lib/quote-search"
 import { companyIds } from "@/lib/quote-search"
 
-export const ramoIds = ["automotor", "hogar", "art"] as const
+export const ramoIds = ["automotor", "hogar", "art", "consorcio"] as const
 export type RamoId = (typeof ramoIds)[number]
 
 export const ramoLabels: Record<RamoId, string> = {
   automotor: "Automotor",
   hogar: "Hogar",
   art: "ART",
+  consorcio: "Consorcio",
 }
 
 export const ramoColors: Record<RamoId, string> = {
   automotor: "#10c0c0",
   hogar: "#ff9f1c",
   art: "#110229",
+  consorcio: "#5c6bc0",
 }
 
 export const companyLabels: Record<CompanyId, string> = {
@@ -44,6 +46,11 @@ export const localityLabels: Record<LocalityId, string> = {
   tigre: "Tigre",
 }
 
+export interface PolicyAdministrator {
+  name: string
+  phone: string
+}
+
 export interface PortfolioPolicy {
   id: string
   holderId: string
@@ -53,6 +60,10 @@ export interface PortfolioPolicy {
   ramo: RamoId
   policy: string
   nextCharge: string
+  building?: string
+  vigenciaFrom?: string
+  vigenciaTo?: string
+  administrator?: PolicyAdministrator
 }
 
 export interface PortfolioClient {
@@ -171,6 +182,23 @@ export const portfolioPolicies: PortfolioPolicy[] = [
     ramo: "art",
     policy: "452014",
     nextCharge: "2026-11-28",
+  },
+  {
+    id: "torres-iv",
+    holderId: "torres-iv",
+    holder: "Consorcio Torres IV",
+    company: "mercantil",
+    locality: "vicente-lopez",
+    ramo: "consorcio",
+    policy: "330418",
+    nextCharge: "2026-11-10",
+    building: "TORRES IV",
+    vigenciaFrom: "2026-05-20",
+    vigenciaTo: "2027-05-20",
+    administrator: {
+      name: "Marta López",
+      phone: "11 5033-2218",
+    },
   },
 ]
 

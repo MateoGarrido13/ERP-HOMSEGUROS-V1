@@ -8,6 +8,8 @@ import {
   type inferParserType,
 } from "nuqs/server"
 
+import { adquisicionPercents, descuentoPercents } from "@/lib/adquisicion"
+
 export const companyIds = ["sancor", "mercantil", "allianz"] as const
 export const useIds = ["particular", "comercial"] as const
 
@@ -24,6 +26,12 @@ export const quoteParsers = {
   suma: parseAsString.withDefault("18400000"),
   marca: parseAsString.withDefault(""),
   modelo: parseAsString.withDefault(""),
+  localidad: parseAsString.withDefault(""),
+  gnc: parseAsBoolean.withDefault(false),
+  rastreo: parseAsBoolean.withDefault(false),
+  adquisicion: parseAsStringLiteral(adquisicionPercents).withDefault("10"),
+  descuento: parseAsStringLiteral(descuentoPercents).withDefault("10"),
+  cotizacion: parseAsString.withDefault(""),
   nuevo: parseAsBoolean.withDefault(false),
   compania: parseAsStringLiteral(companyIds).withDefault("sancor"),
   alternativas: parseAsArrayOf(parseAsStringLiteral(companyIds)).withDefault([]),

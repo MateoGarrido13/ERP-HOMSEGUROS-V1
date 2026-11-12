@@ -1,0 +1,8 @@
+El formato de la matrícula oficial de un Productor Asesor de Seguros (PAS) emitida por la Superintendencia de Seguros de la Nación (SSN) en Argentina es simple y estandarizado:
+
+* **Tipo de caracteres:** Es estrictamente **numérico**. No es alfanumérico (no contiene letras).
+* **Guiones o separadores:** **No lleva guiones**, puntos, espacios ni caracteres especiales. Se expresa como un número entero continuo.
+* **Longitud para Personas Físicas (PAS individual):** Varía únicamente por la antigüedad (es un número secuencial histórico). Los productores más antiguos pueden tener 4 dígitos, el grueso del mercado actual tiene **5 dígitos** (ej. `74251`), y las altas más recientes ya han superado los **6 dígitos** (ej. `102345`).
+* **Longitud para Personas Jurídicas (Sociedades de Productores):** Cuando un broker se constituye legalmente como sociedad (ej. SRL o SA) y se inscribe en la SSN, recibe una matrícula societaria distinta. Esta numeración es independiente y suele ser más corta, típicamente de **3 o 4 dígitos** (ej. `854` o `1245`).
+
+> **Implicancia para la Base de Datos del ERP:** En el esquema relacional, el campo `matricula_ssn` debe modelarse preferentemente como un `VARCHAR` con una restricción (Regex `^[0-9]+$`) o un `INT`, permitiendo una longitud máxima de 6 a 8 caracteres para asegurar la escalabilidad. En el *frontend*, el formulario de carga (Data Entry) no debe aplicar ninguna máscara visual con guiones (input mask), simplemente debe bloquear el ingreso de letras.

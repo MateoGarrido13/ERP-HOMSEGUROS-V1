@@ -11,20 +11,22 @@ import {
 } from "react"
 
 import {
-  authenticate,
   changePassword,
   currentAccount,
+  emailFieldError,
   endSession,
   homeForRole,
   initialState,
   isAuthPath,
   isPasPath,
   loadState,
+  openSession,
   requestRecovery,
   resetWithToken,
   saveState,
   updateProfile,
   type AccessState,
+  type LoginResult,
   type PublicAccount,
   type RecoveryRecord,
 } from "@/lib/access"
@@ -33,7 +35,7 @@ interface SessionContextValue {
   ready: boolean
   account: PublicAccount | null
   recovery: RecoveryRecord | null
-  login: (email: string, password: string) => ReturnType<typeof authenticate>
+  login: (email: string, password: string, remember: boolean) => Promise<LoginResult>
   logout: () => void
   askRecovery: (email: string) => ReturnType<typeof requestRecovery>
   saveNewPassword: (
@@ -50,6 +52,19 @@ interface SessionContextValue {
 }
 
 const SessionContext = createContext<SessionContextValue | null>(null)
+const EPHEMERAL_SESSION_KEY = "hom-access-session"
+
+function readEphemeralSession(): AccessState["session"] {
+  const raw = window.sessionStorage.getItem(EPHEMERAL_SESSION_KEY)
+  if (!raw) return null
+  try {
+    const session = JSON.parse(raw) as AccessState["session"]
+    if (!session || typeof session.email !== "string") return null
+    return session
+  } catch {
+    return null
+  }
+}
 
 export function useSession() {
   const value = useContext(SessionContext)
@@ -61,17 +76,35 @@ export function useSession() {
 
 export function SessionProvider({ children }: { children: ReactNode }) {
   const stateRef = useRef<AccessState>(initialState())
+  const rememberRef = useRef(true)
   const [state, setState] = useState<AccessState | null>(null)
 
   useEffect(() => {
     const loaded = loadState()
+    if (!loaded.session) {
+      const ephemeral = readEphemeralSession()
+      if (ephemeral) {
+        loaded.session = ephemeral
+        rememberRef.current = false
+      }
+    }
     stateRef.current = loaded
     setState(loaded)
   }, [])
 
   function commit(next: AccessState) {
     stateRef.current = next
-    saveState(next)
+    if (rememberRef.current) {
+      saveState(next)
+      window.sessionStorage.removeItem(EPHEMERAL_SESSION_KEY)
+    } else {
+      saveState({ ...next, session: null })
+      if (next.session) {
+        window.sessionStorage.setItem(EPHEMERAL_SESSION_KEY, JSON.stringify(next.session))
+      } else {
+        window.sessionStorage.removeItem(EPHEMERAL_SESSION_KEY)
+      }
+    }
     setState(next)
   }
 
@@ -79,9 +112,37 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     ready: state !== null,
     account: state ? currentAccount(state) : null,
     recovery: state?.recovery ?? null,
-    login(email, password) {
-      const result = authenticate(stateRef.current, email, password)
-      if (result.account) commit(result.state)
+    async login(email, password, remember) {
+      const emailError = emailFieldError(email)
+      if (emailError) return { state: stateRef.current, emailError }
+      if (!password) return { state: stateRef.current, passwordError: "Completá la contraseña." }
+
+      let response: Response
+      try {
+        response = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: email.trim(), password }),
+        })
+      } catch {
+        return {
+          state: stateRef.current,
+          formError: "No se pudo verificar el usuario. Intentá de nuevo.",
+        }
+      }
+
+      const body = (await response.json().catch(() => null)) as { email?: string; message?: string } | null
+      if (!response.ok || typeof body?.email !== "string") {
+        return {
+          state: stateRef.current,
+          formError: body?.message || "Email o contraseña incorrectos.",
+          passwordError: response.status === 401 ? "Contraseña incorrecta" : undefined,
+        }
+      }
+
+      const result = openSession(stateRef.current, body.email)
+      rememberRef.current = remember
+      commit(result.state)
       return result
     },
     logout() {

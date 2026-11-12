@@ -4,9 +4,9 @@ import { cn } from "@/lib/cn"
 
 const tones = {
   plain: "border-line bg-white",
-  mint: "border-[#b7e4e2] bg-wash",
-  alert: "border-[#f3d7a1] bg-[#fff8ee]",
-  ok: "border-[#b7e3c8] bg-[#f4fbf7]",
+  mint: "border-[#b7e0dc] bg-mint",
+  alert: "border-[#f0c36a] bg-white",
+  ok: "border-[#9dcfb4] bg-white",
 }
 
 interface SurfaceCardProps {
@@ -25,7 +25,7 @@ export function SurfaceCard({
   expanded,
 }: SurfaceCardProps) {
   const classes = cn(
-    "w-full rounded-[6px] border p-4",
+    "w-full rounded-xl border p-4",
     tones[tone],
     onClick && "cursor-pointer text-left",
     className,

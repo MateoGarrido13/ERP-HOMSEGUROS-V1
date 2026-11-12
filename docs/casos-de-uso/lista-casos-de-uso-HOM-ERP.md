@@ -23,8 +23,9 @@ casos-de-uso/
     pendientes/                 5–8
     multicotizador/             9–16   Común a masivo y no masivo
       masivo/
-        automotor/              17–20  Variante AUT
-      no-masivo/                21     Solicitud sin precios
+        automotor/              17–20  Variante AUT: consulta APIs y compara precios
+                                17b    Riesgo de Hogar, Consorcio y Comercio (iteración 1, solo con API)
+      no-masivo/                21     Solicitud sin API (fuera de iteración 1)
     cartera-cliente/            22–29
     cobranza/                   30–33
     siniestros/                 34–38
@@ -71,9 +72,10 @@ Avisos, cada uno con su estado:
 
 - `CU-05-Pendientes_Ver_Pendientes` Bandeja
 - `CU-05b-Pendientes_Aviso_Cumpleanos`
-- `CU-05c-Pendientes_Aviso_Pago_Rechazado` (*) no confirmado
+- `CU-05c-Pendientes_Aviso_Pago_Rechazado` aviso in-scope; ticket CU-31 fuera
 - `CU-05d-Pendientes_Aviso_Cotizacion_Enviada`
 - `CU-05e-Pendientes_Aviso_Enviar_Poliza`
+- `CU-05f-Pendientes_Aviso_Enviar_Cupon` Consorcio: cupón al administrador; al enviarlo queda en Cobro pendiente
 
 Lead:
 
@@ -88,8 +90,8 @@ Lead:
 
 El multicotizador se divide por la forma de cotizar el ramo:
 
-- **Masivo** (`masivo/`): consulta las APIs de las compañías y expone varios precios para comparar. Hoy: Automotor.
-- **No masivo** (`no-masivo/`): no hay precios para comparar; el PAS carga una solicitud y se arma la propuesta. Hoy: Hogar, Accidentes Personales y ART (el prototipo ya los resuelve así).
+- **Masivo** (`masivo/`): consulta las APIs de las compañías y expone varios precios para comparar. Iteración 1: Automotor (CU-17), Hogar/Consorcio/Comercio (CU-17b), solo compañías con API.
+- **No masivo** (`no-masivo/`): no hay API de precio; el PAS carga una solicitud. Fuera de iteración 1 (CU-21: AP/ART y ramos sin API). El prototipo que manda Hogar a solicitud queda desalineado.
 - **Común** (raíz de `multicotizador/`): lo que ocurre igual en los dos: elegir ramo, cliente, guardar y retomar, propuesta con PDF, envío y cierre.
 
 Compañías con API directa: Mercantil Andina, Sancor Seguros, Zurich, La Segunda y Allianz. Las particularidades de cada API van en las specs, no en los casos de uso.
@@ -116,24 +118,25 @@ El mismo caso de uso puede comportarse distinto según el ramo. Para no repetir 
 | 9   | Elegir el ramo a cotizar                                                                                          | 9          | P      | MVP    |
 | 10  | Seleccionar un cliente existente o crear uno al cotizar                                                           | 10         | A      | MVP    |
 | 11  | Re-cotizar una póliza existente (datos precargados)                                                               | 12         | N      | MVP    |
-| 12  | Guardar y retomar una cotización en curso([COMO PAS CAMBIAR EL ESTADO])                                           | 20         | N      | MVP    |
+| 12  | Guardar y retomar una cotización en curso (iteración 1: solo sesión; no se persiste)                              | 20         | N      | MVP [persistir: fuera] |
 | 13  | Armar la propuesta y generar el PDF                                                                               | 21, 22     | P [A]  | MVP    |
 | 14  | Enviar la propuesta por WhatsApp                                                                                  | 23         | P      | MVP    |
 | 15  | Marcar el resultado de una propuesta (aceptada, rechazada, vencida)[#12]                                          | 24         | N      | MVP    |
-| 16  | Registrar la póliza emitida por la compañía (nº de póliza, vigencia, compañía) a partir de una propuesta aceptada | 25         | N      | ?[MVP] |
+| 16  | Registrar la póliza emitida y el primer endoso (Dar de alta en Pendientes: nº, vigencia, compañía, cobro; `activa=true`) | 25         | N      | MVP    |
 
 ### Masivo
 
 `PAS/multicotizador/masivo/<ramo>/`
 
-Una carpeta por ramo. Hoy solo existe `automotor/`.
+Una carpeta por ramo. Hoy solo existe `automotor/`; el CU-17b (Hogar, Consorcio y Comercio) vive ahí hasta que haya carpetas por ramo. El CU-18 multirramo (versión de Mateo) está en `masivo/CU-18-Multicotizador_Comparar_Cotizaciones.md`; el de la variante AUT, en `masivo/automotor/`.
 
-| #   | Caso de uso                                                                                                                                                                      | Variantes | Absorbe    | Origen | Fase   |
-| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ---------- | ------ | ------ |
-| 17  | Cargar el riesgo a asegurar. En Automotor: patente, CP, uso, info del titular; verificar y completar los datos del vehículo (GNC, 0 km, suma asegurada), o cargarlo a mano si la patente no decodifica | AUT ✓     | 11, 13, 14 | P [A]  | MVP    |
-| 18  | Comparar cotizaciones de las compañías a medida que llegan, manejar la que falla, demora o rechaza, y elegir una. Ver un estimado mientras responde la compañía, aclarando que no es precio real [#18, estimado] | AUT ✓     | 15, 16, 17 | P [A]  | MVP [el estimado es ?] |
-| 19  | Ver la comisión de cada cotización                                                                                                                                               | AUT ✓     | 18         | N      | ?      |
-| 20  | Aplicar un descuento sacrificando puntos de comisión                                                                                                                             | AUT ✓     | 19         | N      | ?[MVP] |
+| #   | Caso de uso | Variantes | Absorbe | Origen | Fase |
+| --- | --- | --- | --- | --- | --- |
+| 17  | Cargar el riesgo a asegurar. En Automotor: patente, CP, uso, info del titular; verificar y completar los datos del vehículo (GNC, 0 km, suma asegurada), o cargarlo a mano si la patente no decodifica | AUT ✓ | 11, 13, 14 | P [A] | MVP |
+| 17b | Cargar el riesgo de Hogar, Consorcio o Comercio (campos según API; patrón de CU-17) | HOG, CON, COM | — | N | MVP |
+| 18  | Comparar cotizaciones de las compañías a medida que llegan, manejar la que falla, demora o rechaza, y elegir una. El estimado/caché queda diferido; si se muestra, no es precio real (en la variante AUT: ver un estimado mientras responde la compañía, aclarando que no es precio real [#18, estimado]) | AUT ✓ | 15, 16, 17 | P [A] | MVP [estimado diferido; en AUT el estimado es ?] |
+| 19  | Ver la comisión de cada cotización | AUT ✓ | 18 | N | ? |
+| 20  | Aplicar un descuento sacrificando puntos de comisión | AUT ✓ | 19 | N | ?[MVP] |
 
 ✓ = escrito. Sin marca = archivo creado, sin contenido todavía.
 
@@ -143,9 +146,9 @@ Una carpeta por ramo. Hoy solo existe `automotor/`.
 
 Todavía sin carpetas por ramo: se arman cuando se desarrolle cada variante.
 
-| #   | Caso de uso                                                                                             | Variantes | Absorbe | Origen | Fase |
-| --- | ------------------------------------------------------------------------------------------------------- | --------- | ------- | ------ | ---- |
-| 21  | Cargar la solicitud de Hogar, Accidentes Personales o ART (formulario del riesgo, sin comparar precios) | HOG, ACP, ART | 26  | P      | ?    |
+| #   | Caso de uso | Variantes | Absorbe | Origen | Fase |
+| --- | --- | --- | --- | --- | --- |
+| 21  | Cargar la solicitud sin API (AP, ART u otros sin cotización). Fuera de iteración 1 | ACP, ART | 26 | P | ? |
 
 ## PAS: clientes y cartera
 
@@ -326,8 +329,8 @@ Pendiente hasta que se redacten las tareas del rol. Hipótesis a validar:
 
 ## Qué le falta al prototipo
 
-1. **Registro de la póliza emitida** (caso 16). Es el hueco más grande: el flujo va de "Propuesta enviada" a "Cartera" sin ningún paso donde se asiente que la compañía emitió la póliza. La app no emite, es intermediaria, pero sin ese registro la cartera no se llena sola y no se puede calcular la conversión. [SERIA CAMBIAR DE ESTADO (HUECO), OFRECER EL AGREGAR]
-2. **Cliente en Automotor** (casos 10 y 11). El flujo de cotización no tiene un paso para elegir o crear al cliente, ni forma de re-cotizar desde una póliza. El caso 23 no da de alta un cliente suelto: el "+" de Cartera redirige a cotizar, y el cliente se incorpora solo si queda una cobertura o póliza asociada.
+1. **Registro de la póliza emitida** (caso 16). Documentado: «Dar de alta» en Pendientes es CU-16. El prototipo todavía no tiene esa pantalla.
+2. **Cliente en Automotor** (casos 10 y 11). Los CU ya piden cliente antes del riesgo; el prototipo sigue riesgo→cliente. El caso 23 suma póliza con "+"; el cliente se muestra en Cartera al CU-16 (`activa=true`).
 3. **Errores y recuperación al cotizar** (casos 12, 17 y 18) [OPCIONES POR DEFAULT].
 4. **Escritura en vez de solo lectura.** Siniestros, mora y avisos solo se pueden ver. Faltan crear, actualizar y cerrar (casos 6, 31, 36 a 38).
 5. **Todo el lado del Directivo y del administrativo** (casos 40 a 51).
@@ -335,9 +338,11 @@ Pendiente hasta que se redacten las tareas del rol. Hipótesis a validar:
 
 ## Decisiones abiertas
 
-- **Ramos del MVP.** El prototipo ya cotiza Hogar, Accidentes y ART, pero el presupuesto es solo Automotor (caso 21).
-- **Registro de la póliza emitida.** La emite la aseguradora; la app solo la asienta. ¿Entra al MVP y qué datos se cargan? (caso 16).[ En la app es un estado, en la aseguradora habra que corroborar si se registran esos datos de un cliente, o implica una nuev acxarga cuando confirma]
-- **Comisiones.** Quién puede aplicar descuentos y qué ve el PAS de su comisión (casos 19, 20, 39 y 45).
-- **Estimado mientras responde la compañía.** Si se incorpora caché, debe quedar claro que es un valor aproximado y no una cotización (caso 18).
+Cerradas en iteración 1 (detalle en `cuestiones-a-resolver.md` «Resuelto»): orden cliente→riesgo; unicidad DNI en la red; alta a Cartera = CU-16 desde Pendientes (`activa`); ramos Auto/Hogar/Consorcio/Comercio con API; CU-05c como aviso; CU-12 solo sesión.
+
+- **Comisiones.** Quién puede aplicar descuentos y qué ve el PAS de su comisión (casos 19, 20, 39 y 45). Fuera de iteración 1.
+- **Estimado mientras responde la compañía.** Diferido. Si se incorpora, debe quedar claro que no es precio real (caso 18).
 - **Back-office.** Sus tareas las redacta el equipo de dominio (casos 52 a 54).
-- **Sugeridos por mí, a confirmar:** carga inicial de pólizas existentes (29) y registro de auditoría (51; este último sale del requisito de trazabilidad del presupuesto). [excelente y con criterio]
+- **Campos de riesgo Hogar/Consorcio/Comercio.** Specs de adapter (CU-17b SUP_1).
+- **Formularios Consorcio y Comercio + DB.** Pendiente: no hay rutas de cotización; al implementarlos, reflejar campos en `poliza_consorcio` / `poliza_comercio` (REF `cuestiones-a-resolver.md`). No inventar columnas antes.
+- **Sugeridos, a confirmar:** carga inicial de pólizas existentes (29) y registro de auditoría (51).

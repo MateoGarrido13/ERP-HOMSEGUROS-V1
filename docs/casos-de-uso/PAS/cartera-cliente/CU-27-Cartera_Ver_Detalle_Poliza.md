@@ -50,6 +50,8 @@ RN_6: Ver el detalle no cambia el estado de la póliza ni el de sus cuotas.
 RN_7: El prototipo actual muestra ramo, compañía, número de póliza y próximo cobro dentro de la tarjeta del cliente. La vigencia, el estado, el riesgo y los documentos completan el detalle requerido.
 RN_8: En Cartera este detalle solo se abre para una póliza vigente. Una póliza que no está vigente no se expone desde la ficha ni desde el listado (REF CU-25-Cartera_Ver_Ficha_Cliente, CU-22-Cartera_Buscar_y_Filtrar_Clientes).
 RN_9: Eliminar una póliza cierra su detalle en Cartera y manda ese registro a Leads, con el detalle del bien que se tenía asegurado. Las otras pólizas vigentes del mismo cliente conservan su detalle.
+RN_10: En Consorcio la póliza se emite con vigencia anual. El próximo cobro es la renovación mensual del cupón. El detalle muestra el edificio, la vigencia desde-hasta y la fecha de ese cupón.
+RN_11: El contacto del administrador se agrega en este detalle: nombre y teléfono. Es el destinatario del cupón (REF CU-05f-Pendientes_Aviso_Enviar_Cupon). En el ejemplo, el edificio es TORRES IV.
 
 *Supuestos a confirmar*
 SUP_1: Quién actualiza el estado de la póliza y qué estados existen además de vigente. En Cartera solo se expone la vigente. El paso a Lead ocurre al eliminar esa póliza, no por el solo hecho de abrir este detalle.

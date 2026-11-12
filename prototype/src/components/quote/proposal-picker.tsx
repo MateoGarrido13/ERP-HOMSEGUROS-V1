@@ -21,7 +21,7 @@ export function ProposalPicker({ quote }: ProposalPickerProps) {
         <p className="mt-1 text-base font-medium text-ink">
           {featured.name} · {featured.coverage}
         </p>
-        <p className="mt-1 font-display text-[26px] font-bold text-ink">
+        <p className="mt-1 font-sans text-[26px] font-semibold tracking-tight text-title">
           {formatPesos(featured.monthly)}
         </p>
         <p className="mt-2 text-xs font-light text-muted">
@@ -36,7 +36,7 @@ export function ProposalPicker({ quote }: ProposalPickerProps) {
           <p className="mt-1 text-base font-medium text-ink">
             {offer.name} · {offer.coverage}
           </p>
-          <p className="mt-1 font-display text-[22px] font-bold text-ink">
+          <p className="mt-1 font-sans text-[22px] font-semibold tracking-tight text-title">
             {formatPesos(offer.monthly)}
           </p>
         </SurfaceCard>

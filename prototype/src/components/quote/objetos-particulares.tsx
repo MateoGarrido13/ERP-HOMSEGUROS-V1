@@ -69,7 +69,7 @@ function ItemDropzone({
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={foto.previewUrl} alt="" className="size-12 rounded-[6px] object-cover" />
               ) : (
-                <span className="flex size-12 items-center justify-center rounded-[6px] bg-wash text-[10px] text-muted">
+                <span className="flex size-12 items-center justify-center rounded-lg bg-stage text-[10px] text-muted">
                   IMG
                 </span>
               )}
@@ -102,8 +102,8 @@ function ItemDropzone({
             onChange(addFotos(fotos, event.dataTransfer.files))
           }}
           className={cn(
-            "flex h-14 cursor-pointer items-center justify-center rounded-[6px] border border-dashed px-3 text-center text-xs font-light text-muted",
-            isOver ? "border-primary bg-[#fff8ee]" : "border-field bg-white",
+            "flex h-14 cursor-pointer items-center justify-center rounded-lg border border-dashed px-3 text-center text-xs text-hint",
+            isOver ? "border-primary bg-mint" : "border-field bg-white",
           )}
         >
           <input
@@ -250,7 +250,7 @@ export function ObjetosParticulares({ items, errors, onChange }: ObjetosParticul
             <article
               key={item.id}
               id={`objeto-${item.id}`}
-              className="flex items-start justify-between gap-3 rounded-[6px] border border-line px-3 py-2.5"
+              className="flex items-start justify-between gap-3 rounded-lg border border-line bg-white px-3 py-2.5"
             >
               <p className="text-sm font-medium text-ink">{objetoResumen(item)}</p>
               <div className="flex shrink-0 gap-3">
@@ -277,7 +277,7 @@ export function ObjetosParticulares({ items, errors, onChange }: ObjetosParticul
           <article
             key={item.id}
             id={`objeto-${item.id}`}
-            className="flex flex-col gap-3 rounded-[6px] border border-line p-3"
+            className="flex flex-col gap-3 rounded-xl border border-line bg-white p-3"
           >
             <div className="flex items-center justify-between gap-3">
               <p className="text-sm font-medium text-ink">{objetoTipoLabels[item.tipo]}</p>
@@ -297,7 +297,7 @@ export function ObjetosParticulares({ items, errors, onChange }: ObjetosParticul
             <button
               type="button"
               onClick={() => confirm(item)}
-              className="flex w-full items-center justify-center rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-white"
+              className="flex h-10 w-full items-center justify-center rounded-full bg-primary px-5 text-sm font-medium text-white hover:bg-primary-deep"
             >
               Confirmar
             </button>
@@ -311,7 +311,7 @@ export function ObjetosParticulares({ items, errors, onChange }: ObjetosParticul
               key={tipo}
               type="button"
               onClick={() => add(tipo)}
-              className="rounded-[6px] border border-field bg-white px-3 py-2.5 text-sm font-normal text-field-text"
+              className="rounded-lg border border-field bg-white px-3 py-2.5 text-sm font-medium text-title"
             >
               {objetoTipoLabels[tipo]}
             </button>
@@ -321,7 +321,7 @@ export function ObjetosParticulares({ items, errors, onChange }: ObjetosParticul
       <button
         type="button"
         onClick={() => setIsPicking((current) => !current)}
-        className="flex w-full items-center justify-center rounded-full border border-primary px-6 py-2.5 text-sm font-medium text-secondary"
+        className="flex h-10 w-full items-center justify-center rounded-full border border-field-line bg-white px-5 text-sm font-medium text-title"
       >
         {isPicking ? "Cancelar" : "+ ítem"}
       </button>

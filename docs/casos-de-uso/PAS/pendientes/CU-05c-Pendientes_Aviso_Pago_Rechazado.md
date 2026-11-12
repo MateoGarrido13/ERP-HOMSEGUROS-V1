@@ -1,5 +1,5 @@
 ## CU-05c-Pendientes_Aviso_Pago_Rechazado
-(*) Atención: no confirmado. Falta charlarlo con el cliente. (REF TRANSICIONES.md, AVISO PAGO RECHAZADO)
+Aviso de Pendientes in-scope de iteración 1. El ticket de cobranza (CU-31) sigue fuera: cerrar este aviso no implica cerrar un ticket de pago. (REF TRANSICIONES.md, AVISO PAGO RECHAZADO)
 
 *Actor principal:* PAS
 *Actor secundario:* Administrativo, WhatsApp
@@ -55,7 +55,7 @@
 5. Cancelar una confirmación no cambia el estado
 
 *Reglas de negocio asociadas*
-RN_1: (*) Este caso no está confirmado con el cliente.
+RN_1: Este aviso forma parte de Pendientes en la iteración 1. No crea ni cierra el ticket de cobranza (CU-31, fuera de iteración).
 RN_2: "Enviar WhatsApp" abre el chat con la plantilla y esa redirección ya cuenta como envío. No saca el aviso de la vista. "Resolver" sin confirmar no cambia el estado.
 RN_3: La plantilla es: "Hola {primer nombre}, soy {PAS} de HOM Seguros. El débito automático de la cuota {n} de tu póliza {compañía} de {ramo} fue rechazado. La cobertura está en riesgo. ¿Coordinamos el pago?"
 RN_4: El primer "Resolver" confirmado y el WhatsApp llevan al mismo estado: "Esperando respuesta cliente".
@@ -66,4 +66,4 @@ RN_8: Este aviso no pasa a Lead.
 
 *Supuestos a confirmar*
 SUP_1: (*) Si el cambio de estado del cliente, sin acción del PAS, saca el aviso o solo lo deja listo para el segundo "Resolver".
-SUP_2: (*) Si el cierre también cierra el ticket de cobranza, o son registros distintos (REF CU 31).
+SUP_2: Resuelto. El aviso y el ticket de cobranza (CU-31) son registros distintos. Cerrar el aviso no cierra el ticket.
