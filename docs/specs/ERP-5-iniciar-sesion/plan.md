@@ -31,23 +31,23 @@ Este plan construye también los cimientos compartidos de la épica (tipos, esqu
   - **Cubre:** soporte de verificación de CA-2, CA-3
   - **Verificación:** `npm run test` corre y pasa con un test vacío de ejemplo.
 
-- [ ] **T-2 – Definir tipos de dominio**
+- [x] **T-2 – Definir tipos de dominio**
   - **Qué:** `Rol`, `Usuario`, `UsuarioPublico`, `AccionAuditoria`, `RegistroAuditoria`, resultado del proveedor.
   - **Archivos:** `front/src/lib/auth/types.ts` (nuevo)
   - **Depende de:** —
   - **Cubre:** CA-4, CA-5 (épica)
   - **Verificación:** `npx tsc --noEmit` sin errores.
 
-- [ ] **T-3 – Portar validaciones**
+- [x] **T-3 – Portar validaciones**
   - **Qué:** `emailFieldError`, `phoneFieldError`, `passwordPolicyError`, `inicioDelRol(rol)`, normalización de email, con los mensajes de la spec.
   - **Archivos:** `front/src/lib/auth/validation.ts` (nuevo), `front/src/lib/auth/validation.test.ts` (nuevo)
   - **Depende de:** T-1, T-2
   - **Cubre:** CA-2
   - **Verificación:** los tests cubren vacío, formato inválido, válido y mayúsculas, comparados con `prototype/src/lib/access.ts`.
 
-- [ ] **T-4 – Levantar Supabase local y migrar el esquema**
+- [x] **T-4 – Levantar Supabase local y migrar el esquema**
   - **Qué:** `supabase init` en la raíz del repo; portar `sql/schema/schema.sql` a `supabase/migrations/<timestamp>_init.sql` con los ajustes de la épica 4.3 para la tabla `usuario` (`id uuid` referenciando `auth.users.id` con `on delete cascade`, sin columna `password`) y sumar la tabla `auditoria`. La reconciliación de ambos esquemas ya está decidida (PA-8 de la épica, resuelta 2026-11-13): `usuario.id` pasa a `uuid`, se borra `password`, políticas RLS contra `auth.uid()`. `supabase/seed.sql` con las tres cuentas de ejemplo de `prototype/src/lib/access.ts`, creadas como usuarios reales de Supabase Auth (vía `supabase.auth.admin.createUser` en un script de seed, no SQL directo contra `auth.users`) y su fila correspondiente en `usuario`.
-  - **Archivos:** `supabase/config.toml` (nuevo), `supabase/migrations/<timestamp>_init.sql` (nuevo, portado de `sql/schema/schema.sql`), `supabase/seed.sql` o `supabase/seed.ts` (nuevo)
+  - **Archivos:** `supabase/config.toml`, `supabase/migrations/20261113023206_schema_actual.sql` (ya existían antes de esta sesión), `supabase/migrations/20261113023300_reconciliar_usuario_con_auth.sql` (nuevo), `front/scripts/seed-supabase.mjs` (nuevo, no `supabase/seed.sql`/`.ts` — ver bitácora)
   - **Depende de:** —
   - **Cubre:** CA-4, CA-5 (épica)
   - **Verificación:** `supabase start` levanta Postgres, Auth y Studio en Docker sin error; `supabase db reset` aplica la migración y el seed; en Studio (`http://localhost:54323`) se ven las 3 cuentas en Authentication y sus filas en `usuario`.
@@ -155,3 +155,7 @@ Este plan construye también los cimientos compartidos de la épica (tipos, esqu
 | 2026-11-13 | Antes de empezar | Spec de ERP-5 y de la épica pasan a `Aprobada`; se resuelven los supuestos/preguntas abiertas que bloqueaban (PA-8) o condicionaban el plan (SUP-6, PA-6). T-1 deja de ser condicional. |
 | 2026-11-13 | Revisión del plan | Se corrige inconsistencia: spec ERP-5 §4.1 mencionaba `createSession`, que no existe (la sesión la abre `signIn` de Supabase). Se actualiza T-4 y la tabla de riesgos (§5) para sacar la referencia a PA-8 como bloqueo, ya resuelto. |
 | 2026-11-13 | T-1 | Vitest agregado (`front/vitest.config.mts`, script `test`); `npm run test` corre y pasa. Se detectó una vulnerabilidad crítica preexistente en `next@16.3.8` (RCE no autenticado en la API de optimización de imágenes vía SVG, GHSA-2464-fhr4-w9xw), no relacionada con esta tarea — queda pendiente de evaluar upgrade. `front/src/lib/sanity.test.ts` es un test placeholder; se borra cuando T-3 agregue tests reales. |
+| 2026-11-13 | T-2 | Tipos creados en `front/src/lib/auth/types.ts` (`Rol`, `EstadoUsuario`, `Usuario`, `UsuarioPublico`, `AccionAuditoria`, `RegistroAuditoria`, `ResultadoSignIn`). `UsuarioPublico` se definió sin `organizacion` ni `estado` (datos de alcance/auditoría internos, no de identidad); es una decisión de forma de tipos, no una regla de negocio. `npx tsc --noEmit` sin errores. |
+| 2026-11-13 | T-3 | Validaciones portadas en `front/src/lib/auth/validation.ts` (`emailFieldError`, `phoneFieldError`, `passwordPolicyError`, `inicioDelRol`, `normalizarEmail`), idénticas a `prototype/src/lib/access.ts`. 12 tests en `validation.test.ts`, todos pasan. Se borró el placeholder `sanity.test.ts` de T-1. `npx tsc --noEmit` sin errores. |
+| 2026-11-13 | T-4 (frenada) | `supabase init` y la migración base (copia literal de `sql/schema/schema.sql`) ya estaban hechos antes de esta sesión. Al armar la migración de reconciliación (PA-8) se encontró que `usuario.matricula` (épica) y `productor.matricula_ssn` (cartera) se superponen, y que `apellido`/`dni` de cartera no están en el modelo 4.3 de la épica. Se agrega PA-9 en la spec de la épica. T-4 queda frenada hasta que se resuelva; no se escribió ningún `.sql` nuevo. |
+| 2026-11-13 | T-4 (completa) | PA-9 resuelto (ver spec de la épica). Migración `20261113023300_reconciliar_usuario_con_auth.sql`: `usuario.id`→uuid con FK a `auth.users`, se borra `password`, se agregan `telefono`/`rol`/`organizacion`/`estado`, sin `matricula`; `productor.id` y `asegurado.id_productor`→uuid; política RLS de `usuario` pasa a `auth.uid()`; se crea `auditoria` (sin acceso por RLS); se recrean 11 políticas de SELECT que dependían de `current_productor_id()` (ahora devuelve uuid) con el mismo cuerpo que tenían. Verificado con `supabase db reset` contra la instancia local (ya estaba corriendo) y revisión de `\\d` por `psql` dentro del contenedor. El seed quedó en `front/scripts/seed-supabase.mjs` (no `supabase/seed.sql`/`.ts`): necesita `@supabase/supabase-js` para llamar a `auth.admin.createUser`, y ese paquete solo se resuelve desde `front/node_modules` (los módulos de `supabase/` no tienen su propio `package.json`). Se agregó `@supabase/supabase-js` y `ws` como dependencias de `front/` (Node 20 no tiene `WebSocket` global, lo pide el cliente de Realtime de supabase-js aunque no se use; **riesgo para T-5**: el provider del servidor puede pegar con lo mismo). Corrida con `node --env-file=.env.local scripts/seed-supabase.mjs` desde `front/`: las 3 cuentas quedaron creadas en `auth.users` (confirmadas) y en `usuario`/`productor`, matrícula solo en la fila de `productor` del PAS. |
