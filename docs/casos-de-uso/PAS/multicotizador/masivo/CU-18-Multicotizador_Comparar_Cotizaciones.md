@@ -1,4 +1,7 @@
 ## CU-18-Multicotizador_Comparar_Cotizaciones
+
+> **Supuesto teórico, no canónico.** Esta es la versión multirramo (Automotor, Hogar, Consorcio y Comercio en un solo caso), escrita antes de separar por ramo. Se conserva como hipótesis: el flujo real cambia entre ramos (riesgo, coberturas, compañías con API). El caso vigente es la variante por ramo: `automotor/CU-18-AUT-Multicotizador_Comparar_Cotizaciones.md`. Cuando se desarrollen Hogar, Consorcio y Comercio, cada uno tendrá su variante y este texto sirve de punto de partida.
+
 *Actor principal:* PAS
 *Actor secundario:* APIs de las compañías (hub)
 *Precondiciones:* El PAS tiene una cotización abierta con cliente asociado (REF CU-10) y riesgo cargado: Automotor (REF CU-17) o Hogar, Consorcio o Comercio (REF CU-17b). Hay conexión.

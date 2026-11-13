@@ -45,6 +45,6 @@ RN_6: Sumar una póliza con "+" no emite la póliza legal. La visibilidad en Car
 
 *Supuestos a confirmar*
 SUP_1: Resuelto. La propuesta enviada no muestra al cliente en Cartera. La incorporación visible es CU-16 (`activa=true`).
-SUP_2: Cómo se incorpora una persona jurídica. La cartera del prototipo contiene razones sociales.
+SUP_2: Resuelto. Una persona jurídica se carga en el flujo de cotización con tipo de documento CUIT y un campo "Razón social" (REF CU-10 RN_3, cuestiones A3). La cartera del prototipo ya contiene razones sociales.
 SUP_3: Dónde se consulta un cliente cuya única póliza dejó de estar vigente sin haber sido eliminada. Si se eliminó la última vigente, no se muestra en Cartera, queda el lead de esa póliza y sigue en "Cliente existente" (REF transicion-estados-bien.md, CU-10-Multicotizador_Seleccionar_o_Crear_Cliente).
 SUP_4: Quién registra que se eliminó la póliza: el PAS, la compañía o un estado de la póliza.

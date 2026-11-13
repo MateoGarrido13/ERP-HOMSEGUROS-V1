@@ -42,21 +42,26 @@ Lista única de desvíos del Next: [`specs/as-built-prototipo-iteracion-1.md`](s
 
 ## A. CU-10 Seleccionar o crear cliente
 
-### A3. ¿El caso es igual para todos los ramos?
-**Gravedad: media.** Abierto (no bloquea DoR). Personas jurídicas vs formulario de nombre y apellido. Relacionado con A5.
+### A3. Personas jurídicas vs formulario de nombre y apellido
+**Resuelto (iteración 1).** El PAS puede cotizar a personas jurídicas (Consorcio y Comercio lo exigen). Si el tipo de documento es CUIT, el formulario muestra un solo campo «Razón social»; si no, nombre y apellido. En el esquema la razón social se guarda en `apellido` (ver comentario en `sql/schema/schema.sql`). Escrito en CU-10 `RN_3` y `SUP_5`.
+Alineados CU-23, CU-24 y la validación de longitud por tipo de documento (DNI 7–8, CUIT 11). El tipo de documento se fija al crear al cliente y no se edita (CU-24 `RN_9`). Depende en parte de A5 (si el documento pasa a ser obligatorio).
 
 ### A4. Cliente existente sin email o teléfono
-**Gravedad: alta.** Abierto (no bloquea DoR). `RN_3` vs `RN_6` vs envío CU-14.
+**Resuelto (iteración 1).** Un cliente existente al que le falta email o teléfono se puede cotizar igual. Este caso no lo completa: los datos de un cliente solo se editan en Cartera (CU-24). El faltante se resuelve al enviar la propuesta (CU-14: sin teléfono, el PAS elige el contacto a mano en WhatsApp). Completar datos en medio de la cotización queda para una iteración posterior. Escrito en CU-10 `RN_6` y `SUP_2`.
+
+### A6b. CU-24 Editar cliente: tipo de documento y propagación
+**Resuelto (iteración 1).** El tipo de documento no se edita desde CU-24: el PAS solicita el cambio y lo autoriza un administrativo (el caso de esa solicitud queda por escribir, CU-24 `SUP_5`). **Diferido:** no se escribe en la iteración 1; va junto con los casos del rol administrativo (CU-52 y relacionados). Mientras tanto se asume (por confirmar) que el administrativo corrige el tipo directamente, fuera del flujo del PAS. Cambiar el número de documento pide confirmación. Email y teléfono se propagan a lo abierto; lo cerrado conserva copia histórica. Escrito en CU-24 `RN_9`, `RN_10` y `RN_11`.
 
 ### A5. DNI opcional, pero quizás obligatorio para cotizar
-**Gravedad: media.** Abierto: qué exigen las APIs (Mercantil Andina, Sancor, Zurich, La Segunda, Allianz y las que cubran Hogar/Consorcio/Comercio).
+**Resuelto (iteración 1): el documento (tipo y número) es obligatorio** al crear un cliente. Garantiza la unicidad en la red (A2), que sin documento no se puede verificar. Escrito en CU-10 `RN_3` y CU-24 `RN_2`. CU-29 (carga masiva) alineado: cada fila debe traer tipo y número de documento; sin documento es fila con error (CU-29 `RN_2` y `SUP_5`). Pendiente: confirmar con cada API qué exigen (puede pedir más datos del titular, CU-10 `SUP_1`) y si los archivos de las aseguradoras traen el documento. Lo que quedó abierto: qué exigen las APIs (Mercantil Andina, Sancor, Zurich, La Segunda, Allianz y las que cubran Hogar/Consorcio/Comercio).
 
 ---
 
 ## B. CU-09 y estructura del multicotizador
 
 ### B3. Qué pasa al volver al selector de ramo
-Abierto. Relacionado con CU-12 (solo sesión en iteración 1): al volver se descarta lo no enviado.
+**Resuelto (iteración 1).** Al volver al selector se descarta la cotización en curso no enviada (ramo, cliente y riesgo); al elegir un ramo se empieza de cero. Coherente con C1 (la cotización solo vive en la sesión) y con «una cotización, un ramo» (CU-09 `RN_4`). Escrito en CU-09 `SUP_5` y CU-10 `1a.3` y `SUP_9`. Conservar la cotización al volver es CU-12, diferido.
+Ramo ya definido por un lead o una póliza (CU-09 `SUP_6`): resuelto. No se puede cambiar; «Volver» lleva al origen (Pendientes o ficha) y descarta lo no enviado. Para otro ramo se empieza una cotización nueva. Por confirmar: si existe un lead sin ramo definido.
 
 ---
 
@@ -72,7 +77,9 @@ Diferido a una iteración posterior (persistencia). En iteración 1 no hay lista
 - Campos exactos del formulario de riesgo Hogar / Consorcio / Comercio: van en specs de adapter, no en el CU (ver CU-17b).
 
 ### Tipos de documento (`tipos_documento` / AFIP)
-Catálogo en `sql/schema/schema.sql` y `TIPOS_DOCUMENTO.md`. `asegurado` usa `tipo_documento_sigla` + `numero_documento`. El `codigo_afip` queda para integraciones futuras. Pendiente: alinear `usuario.dni` del productor con el mismo modelo.
+Catálogo en `sql/schema/schema.sql` y `TIPOS_DOCUMENTO.md`. `asegurado` usa `tipo_documento_sigla` + `numero_documento`. El `codigo_afip` queda para integraciones futuras.
+
+**Productor (`usuario.dni`): resuelto en lo funcional (iteración 1).** Un productor puede ser persona jurídica con CUIT. Por eso `usuario` debe usar el mismo modelo que `asegurado`: `tipo_documento_sigla` + `numero_documento` (texto), con validación por tipo (DNI 7–8, CUIT 11), y no `dni INTEGER` (un CUIT de 11 dígitos no entra en un entero de 32 bits). Así también se pueden comparar los documentos de ambas tablas cuando el productor figura como asegurado en su propia cartera. Pendiente: el cambio en `sql/schema/schema.sql` (no hecho; la base de datos sigue sin definir, spike ERP-9) y revisar el alta de productor en CU-01/CU-49 si pide DNI.
 
 ### Formularios Consorcio y Comercio + columnas en `schema.sql`
 **Pendiente.** No implementar todavía. El prototipo no tiene `/cotizar/consorcio` ni `/cotizar/comercio`.

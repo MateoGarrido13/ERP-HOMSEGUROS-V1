@@ -128,7 +128,7 @@ El mismo caso de uso puede comportarse distinto según el ramo. Para no repetir 
 
 `PAS/multicotizador/masivo/<ramo>/`
 
-Una carpeta por ramo. Hoy solo existe `automotor/`; el CU-17b (Hogar, Consorcio y Comercio) vive ahí hasta que haya carpetas por ramo. El CU-18 multirramo (versión de Mateo) está en `masivo/CU-18-Multicotizador_Comparar_Cotizaciones.md`; el de la variante AUT, en `masivo/automotor/`.
+Una carpeta por ramo. Hoy solo existe `automotor/`; el CU-17b (Hogar, Consorcio y Comercio) vive ahí hasta que haya carpetas por ramo. El CU-18 vigente es la variante AUT (`masivo/automotor/`). Existe además un CU-18 multirramo (versión de Mateo, `masivo/CU-18-Multicotizador_Comparar_Cotizaciones.md`) conservado como supuesto teórico: el flujo cambia entre ramos.
 
 | #   | Caso de uso | Variantes | Absorbe | Origen | Fase |
 | --- | --- | --- | --- | --- | --- |

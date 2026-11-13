@@ -25,13 +25,13 @@
 4.4. **IR A (3)**
 
 `6. El sistema muestra las filas con errores`
-6.1. Una o más filas tienen datos obligatorios vacíos o inválidos
+6.1. Una o más filas tienen datos obligatorios vacíos o inválidos, incluido el tipo o el número de documento del cliente (REF RN_2)
 6.2. El sistema identifica la fila y el motivo
 6.3. El PAS descarga el detalle, corrige el archivo y vuelve a adjuntarlo
 6.4. **IR A (3)**
 
 `6. El sistema muestra una coincidencia ambigua`
-6.1. Una persona del archivo podría corresponder a más de un cliente o no tiene un identificador suficiente
+6.1. Una persona del archivo podría corresponder a más de un cliente
 6.2. El sistema no decide la asociación automáticamente
 6.3. El PAS selecciona el cliente correcto o indica que debe crearse uno nuevo
 6.4. **IR A (6)**
@@ -66,7 +66,7 @@
 
 *Reglas de negocio asociadas*
 RN_1: La carga inicial registra en el ERP una copia operativa de pólizas ya emitidas. No emite, renueva ni modifica la póliza legal de la aseguradora.
-RN_2: Como mínimo, cada póliza requiere cliente identificable, compañía, ramo, número de póliza y vigencia. Los campos definitivos deben alinearse con el registro de emisión (REF CU 16).
+RN_2: Como mínimo, cada póliza requiere cliente identificado por tipo y número de documento (obligatorio, REF CU-10 RN_3 y cuestiones A5), compañía, ramo, número de póliza y vigencia. Los campos definitivos deben alinearse con el registro de emisión (REF CU 16).
 RN_3: Una póliza de la misma compañía y con el mismo número no puede importarse dos veces.
 RN_4: Un cliente existente se reutiliza; la importación no debe crear otra persona si puede identificarla de forma unívoca.
 RN_5: Ninguna fila se asocia automáticamente cuando hay más de una coincidencia posible.
@@ -81,5 +81,5 @@ SUP_1: Si el MVP admite Excel, CSV, archivos propios de cada aseguradora o una i
 SUP_2: Si la carga la realiza el PAS, Back-office en nombre del PAS (REF CU 52) o ambos roles con permisos distintos.
 SUP_3: Los campos obligatorios y su formato por ramo, incluidos estado, prima, suma asegurada, próximo cobro, medio de pago y documento de póliza.
 SUP_4: Si se permite importar las filas válidas y dejar las inválidas pendientes, o si cualquier error bloquea el archivo completo.
-SUP_5: Qué dato identifica de manera unívoca a personas humanas y jurídicas cuando el archivo no contiene DNI o CUIT.
+SUP_5: Resuelto para iteración 1 (REF cuestiones A5). Cada fila debe traer tipo y número de documento (DNI, CUIT, etc.); una fila sin documento es una fila con error y no se incorpora. Así se garantiza la unicidad en la red (REF CU-10 RN_2). Por confirmar: si los archivos de las aseguradoras suelen traer el documento.
 SUP_6: El límite de tamaño y cantidad de filas, y si las cargas grandes se procesan en segundo plano.

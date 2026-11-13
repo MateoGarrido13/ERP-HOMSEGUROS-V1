@@ -61,7 +61,7 @@ Compañero de transiciones (no es un CU): `PAS/pendientes/TRANSICIONES.md`.
 | CU-16 | `PAS/multicotizador/CU-16-Multicotizador_Registrar_Poliza_Emitida.md` | presente |
 | CU-17 | `PAS/multicotizador/masivo/CU-17-Multicotizador_Cargar_Riesgo_Automotor.md` | presente |
 | CU-17b | `PAS/multicotizador/masivo/CU-17b-Multicotizador_Cargar_Riesgo_Hogar_Consorcio_Comercio.md` | presente |
-| CU-18 | `PAS/multicotizador/masivo/CU-18-Multicotizador_Comparar_Cotizaciones.md` | presente |
+| CU-18 | `PAS/multicotizador/masivo/automotor/CU-18-AUT-Multicotizador_Comparar_Cotizaciones.md` | presente (vigente). Multirramo teórico: `masivo/CU-18-Multicotizador_Comparar_Cotizaciones.md` |
 
 ### `F-cartera`
 
