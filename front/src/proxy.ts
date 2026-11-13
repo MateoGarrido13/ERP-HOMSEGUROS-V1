@@ -28,5 +28,8 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  // Además de _next/static, _next/image y favicon.ico: cualquier archivo
+  // estático de public/ (ej. hom-logo.png) — si no, el proxy lo redirige a
+  // / como a cualquier ruta protegida sin cookie, y rompe <Image>/<img>.
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)"],
 };
