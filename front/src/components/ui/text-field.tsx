@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes } from "react";
+import { forwardRef, type InputHTMLAttributes } from "react";
 
 import { cn } from "../../lib/cn";
 
@@ -11,12 +11,21 @@ interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   hint?: string;
 }
 
-export function TextField({ label, error, hint, className, id, ...props }: TextFieldProps) {
+export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function TextField(
+  { label, error, hint, className, id, ...props },
+  ref,
+) {
+  const inputId = id ?? props.name;
+  const messageId = error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined;
+
   return (
     <label className="flex w-full flex-col gap-1.5">
       <span className="text-[13px] font-medium text-slate">{label}</span>
       <input
-        id={id ?? props.name}
+        ref={ref}
+        id={inputId}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={messageId}
         className={cn(
           fieldClass,
           error && "border-danger-strong focus:border-danger-strong",
@@ -25,10 +34,14 @@ export function TextField({ label, error, hint, className, id, ...props }: TextF
         {...props}
       />
       {error ? (
-        <span className="text-xs text-danger">{error}</span>
+        <span id={messageId} className="text-xs text-danger">
+          {error}
+        </span>
       ) : hint ? (
-        <span className="text-xs text-hint">{hint}</span>
+        <span id={messageId} className="text-xs text-hint">
+          {hint}
+        </span>
       ) : null}
     </label>
   );
-}
+});

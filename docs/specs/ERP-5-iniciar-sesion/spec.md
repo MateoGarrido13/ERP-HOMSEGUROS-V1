@@ -110,16 +110,16 @@ Errores: { emailError?, passwordError?, formError? }
 
 ## 7. Criterios de aceptación verificables
 
-- [ ] CA-1: `/` muestra `EMAIL` y `CONTRASEÑA` y no muestra el menú de la aplicación.
-- [ ] CA-2: Con email vacío o sin formato, o contraseña vacía, se marca el campo y el proveedor no recibe la llamada.
-- [ ] CA-3: Con email no registrado y con contraseña incorrecta se muestra exactamente "Email o contraseña incorrectos." en ambos casos.
-- [ ] CA-4: Una cuenta suspendida con credenciales correctas no obtiene sesión y ve el mismo mensaje del CA-3.
-- [ ] CA-5: Con credenciales válidas de un PAS se llega a `/pendientes`; con las de directivo o administrativo, a `/red`.
-- [ ] CA-6: Tras un ingreso exitoso existe una fila de auditoría `ingreso` con usuario, rol y fecha/hora.
-- [ ] CA-7: Con sesión vigente, abrir `/` redirige al inicio del rol sin pedir contraseña.
-- [ ] CA-8: La pantalla no ofrece ninguna opción de crear cuenta.
-- [ ] CA-9: La contraseña no aparece en la URL, ni en el HTML devuelto tras un error, ni en la auditoría.
-- [ ] CA-10: Con "Recordarme" destildado, la cookie de sesión no tiene `Max-Age`/`Expires` (se borra al cerrar el navegador); tildado, usa la duración default de Supabase.
+- [x] CA-1: `/` muestra `EMAIL` y `CONTRASEÑA` y no muestra el menú de la aplicación. → *verificado en el navegador (T-9/T-11).*
+- [x] CA-2: Con email vacío o sin formato, o contraseña vacía, se marca el campo y el proveedor no recibe la llamada. → *verificado en el navegador (envío vacío) y con los 12 tests de `validation.test.ts` (T-3).*
+- [x] CA-3: Con email no registrado y con contraseña incorrecta se muestra exactamente "Email o contraseña incorrectos." en ambos casos. → *verificado en el navegador y contra la API (T-5/T-11).*
+- [x] CA-4: Una cuenta suspendida con credenciales correctas no obtiene sesión y ve el mismo mensaje del CA-3. → *verificado contra la instancia local suspendiendo una cuenta de prueba (T-5).*
+- [x] CA-5: Con credenciales válidas de un PAS se llega a `/pendientes`; con las de directivo o administrativo, a `/red`. → *verificado en el navegador con las 2 cuentas de ejemplo (T-11).*
+- [x] CA-6: Tras un ingreso exitoso existe una fila de auditoría `ingreso` con usuario, rol y fecha/hora. → *verificado consultando `auditoria` tras un login real por el formulario (T-11).*
+- [x] CA-7: Con sesión vigente, abrir `/` redirige al inicio del rol sin pedir contraseña. → *verificado en el navegador (T-11).*
+- [x] CA-8: La pantalla no ofrece ninguna opción de crear cuenta. → *verificado visualmente; no hay ningún enlace ni control de alta en la pantalla.*
+- [x] CA-9: La contraseña no aparece en la URL, ni en el HTML devuelto tras un error, ni en la auditoría. → *el ingreso es un Server Action (POST, no query string); el campo contraseña no es controlado y queda vacío tras un error; `auditoria` no tiene columna de contraseña (T-4).*
+- [x] CA-10: Con "Recordarme" destildado, la cookie de sesión no tiene `Max-Age`/`Expires` (se borra al cerrar el navegador); tildado, usa la duración default de Supabase. → *verificado inspeccionando el header `Set-Cookie` contra la instancia local, en ambos casos.*
 
 ## 8. Decisiones descartadas
 
@@ -148,3 +148,4 @@ Errores: { emailError?, passwordError?, formError? }
 | 2026-11-13 | Se resuelven SUP-1, SUP-2, PA-1 y PA-2. Estado pasa a `Aprobada`. | Revisión de spec previa a implementar | |
 | 2026-11-13 | Corrección en 4.1 paso 5: se quita la referencia a `createSession` (no existe tal método; la sesión la abre `signIn` directamente, según la épica 4.4). | Inconsistencia detectada en revisión del plan | |
 | 2026-11-13 | Se contrasta T-9 (ya implementada) contra Figma, no solo el prototipo. Se corrigen tipografía (DM Sans, no Inter) y colores en los componentes base. Se agrega el checkbox "Recordarme" (RN-6, CA-10, contrato de `iniciarSesion` y de `AuthProvider.signIn`). Se descarta mostrar un texto específico bajo el campo contraseña en el error de credenciales, por contradecir RN-1. | Figma es la fuente de verdad del diseño; no se había revisado hasta ahora | |
+| 2026-11-13 | Las 12 tareas del plan (T-1 a T-12) quedan implementadas y verificadas; se marcan CA-1 a CA-10. Queda pendiente la validación final del plan (§6: PR) y el merge. | Cierre de la implementación de ERP-5 en esta sesión | |

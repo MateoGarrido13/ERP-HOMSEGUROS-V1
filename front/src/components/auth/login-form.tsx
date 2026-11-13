@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 
 import { iniciarSesion, type EstadoIniciarSesion } from "../../app/(publico)/actions";
 import { BrandButton } from "../ui/brand-button";
@@ -17,17 +17,37 @@ export function LoginForm() {
   // ese reset, la contraseña se deja sin controlar (así se borra siempre).
   const [email, setEmail] = useState("");
 
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const alertRef = useRef<HTMLParagraphElement>(null);
+
+  // Foco al primer campo con error (T-12); si el error es general (sin
+  // campo asociado), el foco va al aviso para que no quede perdido para
+  // quien navega con teclado o lector de pantalla.
+  useEffect(() => {
+    if (estado.emailError) {
+      emailRef.current?.focus();
+    } else if (estado.passwordError) {
+      passwordRef.current?.focus();
+    } else if (estado.formError) {
+      alertRef.current?.focus();
+    }
+  }, [estado]);
+
   return (
     <form action={action} className="flex flex-col gap-5">
       {estado.formError ? (
         <p
+          ref={alertRef}
           role="alert"
-          className="rounded-xl border border-danger-border bg-danger-bg px-3 py-2.5 text-sm text-danger"
+          tabIndex={-1}
+          className="rounded-xl border border-danger-border bg-danger-bg px-3 py-2.5 text-sm text-danger outline-none"
         >
           {estado.formError}
         </p>
       ) : null}
       <TextField
+        ref={emailRef}
         label="Email"
         name="email"
         type="email"
@@ -38,6 +58,7 @@ export function LoginForm() {
         error={estado.emailError}
       />
       <TextField
+        ref={passwordRef}
         label="Contraseña"
         name="password"
         type="password"
