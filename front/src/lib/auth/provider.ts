@@ -16,7 +16,7 @@ export interface SesionValidada {
 // base): la única implementación que lo hace es ./provider.supabase.ts.
 // Cambiar de proveedor no debería requerir tocar páginas ni Server Actions.
 export interface AuthProvider {
-  signIn(email: string, password: string): Promise<ResultadoSignIn>;
+  signIn(email: string, password: string, recordar?: boolean): Promise<ResultadoSignIn>;
   validateSession(): Promise<SesionValidada | null>;
   destroySession(): Promise<void>;
   requestPasswordReset(email: string): Promise<ResultadoRequestReset>;

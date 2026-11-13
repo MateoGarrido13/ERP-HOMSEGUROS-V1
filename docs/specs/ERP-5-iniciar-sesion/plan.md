@@ -84,7 +84,7 @@ Este plan construye también los cimientos compartidos de la épica (tipos, esqu
 
 ### Fase 3 – Interfaz
 
-- [ ] **T-9 – Componentes base de UI**
+- [x] **T-9 – Componentes base de UI**
   - **Qué:** `TextField`, `BrandButton`, `SurfaceCard`, `ScreenTitle`, portados del prototipo con Tailwind v4 (sin importar desde `prototype/`; copiar y adaptar). Copiar `hom-logo.png` a `front/public/`.
   - **Archivos:** `front/src/components/ui/*` (nuevos), `front/public/hom-logo.png` (nuevo)
   - **Depende de:** —
@@ -99,11 +99,11 @@ Este plan construye también los cimientos compartidos de la épica (tipos, esqu
   - **Verificación:** `npm run build` pasa; el menú de PAS y el de directivo difieren; `/red` con sesión de PAS redirige a `/pendientes`.
 
 - [ ] **T-11 – Pantalla y acción de ingreso**
-  - **Qué:** formulario con `useActionState`; acción `iniciarSesion` según spec 4.1; redirección por rol; si hay sesión, `/` redirige.
+  - **Qué:** formulario con `useActionState`, según Figma (nodos "PAS · Login" / "PAS · Login · error"): título y subtítulo centrados, checkbox "Recordarme" (sin tildar por defecto), link "¿Olvidaste tu contraseña?" a `/recuperar`; acción `iniciarSesion` según spec 4.1, pasa `recordar` a `AuthProvider.signIn`; redirección por rol; si hay sesión, `/` redirige.
   - **Archivos:** `front/src/app/(publico)/page.tsx` (reemplaza `front/src/app/page.tsx`), `front/src/app/(publico)/actions.ts`, `front/src/components/auth/login-form.tsx`
   - **Depende de:** T-3, T-5, T-6, T-7, T-10
-  - **Cubre:** CA-1 a CA-9
-  - **Verificación:** recorrido manual de los 9 CA con las cuentas de ejemplo; contraseña ausente de la URL y del HTML tras error.
+  - **Cubre:** CA-1 a CA-10
+  - **Verificación:** recorrido manual de los 10 CA con las cuentas de ejemplo; contraseña ausente de la URL y del HTML tras error; comparación visual con Figma.
 
 ### Fase 4 – Pulido
 
@@ -127,6 +127,7 @@ Este plan construye también los cimientos compartidos de la épica (tipos, esqu
 | CA-7 | T-8, T-11 |
 | CA-8 | T-11 |
 | CA-9 | T-11 |
+| CA-10 | T-5, T-11 |
 | CA-1 a CA-6 de la épica | T-2, T-4, T-6, T-7, T-8, T-10 |
 
 ## 5. Riesgos y puntos de atención
@@ -163,3 +164,5 @@ Este plan construye también los cimientos compartidos de la épica (tipos, esqu
 | 2026-11-13 | T-6 | `session.ts` (`getAuthUser`, wrapper fino sobre `supabase.auth.getUser()`) + `dal.ts` (`verifySession` y `getSessionOptional`, ambos con `cache` de React, cruzando con `usuario.rol`/`estado`). Se agregó el paquete `server-only` (recomendado por la guía de Next.js para este patrón de DAL). Verificado con rutas temporales (creadas y borradas en esta tarea) contra la instancia local: sin cookie → `getSessionOptional` da `null` y `verifySession` redirige a `/` (307); con cookie de una cuenta válida → ambos devuelven `{usuarioId, rol}`; suspendiendo la cuenta a mano con la sesión ya abierta → `getSessionOptional` da `null` y `verifySession` redirige a `/` **y** destruye la cookie (`Set-Cookie ...Max-Age=0`, confirmado). `tsc`, `lint` y `test` sin errores. |
 | 2026-11-13 | T-7 | `front/src/lib/audit/index.ts`: `registrarAuditoria(usuarioId, rol, accion)`, wrapper sobre `AuditoriaRepoSupabase` (ya la única implementación). Verificado con una ruta temporal (creada y borrada en esta tarea): `signIn` + `registrarAuditoria('ingreso')` con la cuenta de Laura dejó una fila real en `auditoria` con `usuario_id`, `rol`, `accion` y `ocurrido_en`; la tabla no tiene columna de contraseña (confirmado con `\\d auditoria`). `tsc`, `lint` y `test` sin errores. |
 | 2026-11-13 | T-8 | `front/src/proxy.ts`: chequeo optimista por presencia de cookie `sb-*-auth-token` (sin validarla contra Supabase); rutas públicas (`/`, `/recuperar`, `/recuperar/nueva`) pasan siempre; el resto redirige a `/` sin esa cookie. No infiere el rol (no hay claim propio en el JWT): en `/` con cookie no redirige, eso lo hace la página (T-11), como permite el propio punto 1 de "Qué". `matcher` excluye `_next/static`, `_next/image` y `favicon.ico`. Verificado con `npm run dev`: `/perfil` y `/pendientes` sin cookie → 307 a `/`; `/` sin cookie → 200; con una cookie real (vía ruta temporal de login, creada y borrada) `/perfil` ya no redirige (da 404 porque la página no existe aún) y `/` sigue en 200 sin redirigir. `npm run build` compila y lista el proxy (`ƒ Proxy (Middleware)`). |
+| 2026-11-13 | T-9 | `front/src/components/ui/` (`TextField`, `BrandButton`, `SurfaceCard`, `ScreenTitle`), portados del prototipo y recortados a lo que usa ERP-5: `TextField` sin `TextArea`/`SelectField` ni el prop `variant` (ya estaba sin usar en el original); `BrandButton` solo variantes `primary`/`outline`; `SurfaceCard` sin `tone` ni modo clickeable; `ScreenTitle` sin el tamaño `document`. Se agregó `front/src/lib/cn.ts` (clsx + tailwind-merge) y los tokens de color de `prototype/src/app/globals.css` a `front/src/app/globals.css` (el subconjunto que usan estos 4 componentes). `front/public/hom-logo.png` copiado. Paquetes nuevos: `clsx`, `tailwind-merge`, `class-variance-authority`. Verificado visualmente con una página y una regla de proxy temporales (creadas y borradas en esta tarea): los 4 componentes se ven con los mismos colores/tipografía que el prototipo (screenshot tomado). `tsc`, `lint` y `test` sin errores. |
+| 2026-11-13 | Revisión contra Figma | T-9 se había hecho mirando solo el prototipo; a pedido explícito, se contrasta contra Figma (fileKey `dqM3vmFc3i8F3FyKIqiXvD`, nodos "PAS · Login" y "PAS · Login · error"). Se corrigen tipografía (DM Sans, no Inter) y varios colores en `globals.css`/`screen-title.tsx`/`text-field.tsx`. Se detectan dos cosas que la spec no contemplaba: un checkbox "Recordarme" (se decide implementarlo, RN-6/CA-10 nuevas) y un texto específico bajo el campo contraseña en el error de credenciales (se decide NO implementarlo, por contradecir RN-1). Specs actualizadas (ver su propio historial). Se reabren T-5 y T-6 para el cambio de `recordar`: `AuthProvider.signIn(email, password, recordar = true)`; `front/src/lib/supabase/server.ts` (`createClient({ recordar })`) saca `maxAge`/`expires` de las cookies que escribe cuando `recordar = false` (preservando `maxAge: 0`, que es el borrado explícito de `signOut`). Verificado con una ruta temporal: `recordar:true` → `Set-Cookie` con `Max-Age`/`Expires`; `recordar:false` → sin ninguno de los dos; cuenta suspendida con `recordar:false` → `Max-Age=0` (borrado) sigue andando. `tsc`, `lint` y `test` sin errores. |

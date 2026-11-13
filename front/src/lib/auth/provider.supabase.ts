@@ -27,8 +27,8 @@ function nombreCompleto(fila: FilaUsuario) {
 }
 
 export class AuthProviderSupabase implements AuthProvider {
-  async signIn(email: string, password: string): Promise<ResultadoSignIn> {
-    const supabase = await createClient();
+  async signIn(email: string, password: string, recordar = true): Promise<ResultadoSignIn> {
+    const supabase = await createClient({ recordar });
     const normalizado = normalizarEmail(email);
 
     const { data, error } = await supabase.auth.signInWithPassword({
