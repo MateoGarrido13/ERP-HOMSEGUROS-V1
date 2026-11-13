@@ -1,0 +1,34 @@
+[2026-10-30T09:02:46.068Z] cotizar_automotor HTTP 400 POST /api/cotizaciones/automotor
+mensaje: Esa combinación de adquisición y descuento no está habilitada.
+contexto: {"patente":"AD 456 EF","cp":"7000","localidad":"Tandil","marca":"Chevrolet","modelo":"Corsa Classic","anio":"2010","comision":25,"bonificacion":10}
+
+[2026-10-30T09:09:37.500Z] cotizar_automotor HTTP 400 POST /api/cotizaciones/automotor
+mensaje: Esa combinación de adquisición y descuento no está habilitada.
+contexto: {"patente":"AD 456 EF","cp":"7000","localidad":"Tandil","marca":"Chevrolet","modelo":"Corsa Classic","anio":"2010","comision":25,"bonificacion":10}
+request: {"patente":"AD 456 EF","cp":"7000","localidad":"Tandil","marca":"Chevrolet","modelo":"Corsa Classic","anio":"2010","comision":25,"bonificacion":10}
+
+[2026-10-30T09:19:01.467Z] mercantil_http HTTP 400 POST /credenciales/v2/
+mensaje: Mercantil respondió 400
+request: {"grant_type":"password","client_id":"api-clientes-login","password":"[redacted]"}
+response: {"error":"invalid_grant","error_description":"Invalid user credentials"}
+
+[2026-10-30T09:19:01.468Z] cotizar_automotor HTTP 400 POST /api/cotizaciones/automotor
+mensaje: Mercantil respondió 400
+contexto: {"patente":"AD 456 EF","cp":"7000","localidad":"Tandil","marca":"Chevrolet","modelo":"Corsa Classic 1.6","anio":"2010"}
+request: {"patente":"AD 456 EF","cp":"7000","localidad":"Tandil","marca":"Chevrolet","modelo":"Corsa Classic 1.6","anio":"2010"}
+
+[2026-10-30T09:30:58.605Z] cotizar_automotor HTTP 400 POST /api/cotizaciones/automotor
+mensaje: Ingresá la localidad.
+contexto: {"patente":"NSY122","cp":"1184","marca":"Renault","modelo":"Clio Mio","anio":"2014"}
+request: {"patente":"NSY122","cp":"1184","marca":"Renault","modelo":"Clio Mio","anio":"2014"}
+
+[2026-10-30T09:51:30.860Z] cotizar_automotor HTTP 400 POST /api/cotizaciones/automotor
+mensaje: No encontramos ese vehículo en InfoAuto para el año indicado.
+contexto: {"patente":"KSK634","cp":"1164","localidad":"CABA CABILLITO","marca":"Cherry","modelo":"Cronos 1.3","anio":"2016","comision":10,"bonificacion":10}
+request: {"patente":"KSK634","cp":"1164","localidad":"CABA CABILLITO","marca":"Cherry","modelo":"Cronos 1.3","anio":"2016","comision":10,"bonificacion":10}
+
+[2026-10-30T09:53:00.086Z] cotizar_automotor HTTP 400 POST /api/cotizaciones/automotor
+mensaje: No encontramos ese vehículo en InfoAuto para el año indicado.
+contexto: {"patente":"KSK634","cp":"1164","localidad":"CABA CABILLITO","marca":"Cherry","modelo":"Cronos 1.3","anio":"2011","comision":10,"bonificacion":10}
+request: {"patente":"KSK634","cp":"1164","localidad":"CABA CABILLITO","marca":"Cherry","modelo":"Cronos 1.3","anio":"2011","comision":10,"bonificacion":10}
+

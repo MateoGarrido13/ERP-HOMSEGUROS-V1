@@ -71,7 +71,7 @@ Ejemplos en uso:
 |---|---|
 | ERP-5 Iniciar sesión en el ERP | `CU-01`, `acceso` |
 | ERP-8 Cerrar sesión | `CU-04`, `acceso` |
-| ERP-9 [Spike] Investigar y definir la base de datos | `arquitectura`, `base-de-datos`, `investigacion`, `spike` |
+| ERP-9 [Spike] Investigar y definir la base de datos | **Cerrado** → [ADR-004](ADRs/ADR-004.md). `arquitectura`, `base-de-datos` |
 
 Reglas:
 - Las subtareas no llevan etiquetas: el tipo de trabajo va en el prefijo del nombre (`[Diseño]`, `[Dev]`, `[QA]`, ver [Subtareas](#subtareas)).

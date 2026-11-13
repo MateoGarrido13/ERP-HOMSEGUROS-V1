@@ -10,7 +10,9 @@ Cada carpeta de código tiene su propio `package.json` y se instala y despliega 
 ## Stack
 
 - **Front: Next.js** (versión instalada en `front/package.json`). Esta versión tiene cambios respecto de lo que conoce el modelo (por ejemplo, `middleware` ahora es `proxy`): antes de escribir código de Next, leer la guía correspondiente en `front/node_modules/next/dist/docs/`.
-- **Base de datos: sin definir.** Candidata: Supabase (PostgreSQL). La decisión es el spike ERP-9. Mientras no se cierre, el código accede a datos solo a través de las interfaces de `front/src/lib/` y no importa ningún SDK de base de datos fuera de la implementación de esa interfaz. No asumir Supabase en specs ni código como hecho; marcarlo como supuesto.
+- **Plataforma: Supabase** (PostgreSQL, Auth, Edge Functions). Cierra el spike ERP-9. Decisión: [`docs/ADRs/ADR-004.md`](docs/ADRs/ADR-004.md).
+- **Hub de aseguradoras:** Edge Functions (TypeScript/Deno), módulo de integraciones aislado (ACL + Aggregator, timeout 4 s). Go solo si ese Aggregator con circuit breaker se vuelve un cuello **medido**.
+- **Acceso a datos en `front/`:** solo a través de las interfaces de `front/src/lib/`. No importar el SDK de Supabase (ni otro cliente de base) fuera de la implementación de esa interfaz. El prototipo no se importa.
 
 ## Diseño
 

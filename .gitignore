@@ -1,2 +1,4 @@
 .gga 
 .env
+# Local AI runtime state
+.atl/

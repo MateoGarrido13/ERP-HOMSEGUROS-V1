@@ -4,18 +4,19 @@ Sistema de registro operativo de una red de intermediación de seguros. No es la
 
 Los casos de uso y la documentación vigente están en `docs/`, relativa a la raíz de este repositorio (`design/`). Índice: `docs/casos-de-uso/lista-casos-de-uso-HOM-ERP.md`. Cualquier agente que abra `design/` resuelve esa ruta desde aquí.
 
-No hay un registro de arquitectura adoptado. Existen borradores sin cerrar y sin reflejo único en el código: `borrador_arquitectura_diseno_software.md`, `asesoramiento_diseno.md` y la sección «Arquitectura (v1)» de `PRESENTACION-briefing-tecnico.md`. No usarlos como decisión vigente.
+Arquitectura adoptada: [ADR-002](docs/ADRs/ADR-002.md) (Aggregator + ACL), [ADR-003](docs/ADRs/ADR-003.md) (Circuit Breaker, **diferido**) y [ADR-004](docs/ADRs/ADR-004.md) (Supabase + Edge Functions). No usar como vigente los borradores `borrador_arquitectura_diseno_software.md`, `asesoramiento_diseno.md` ni la sección «Arquitectura (v1)» de `PRESENTACION-briefing-tecnico.md`.
 
 ## Stack
 
-`prototype/` es un prototipo en Next.js. Sirve solo para validar requerimientos con el cliente. No es el stack de implementación.
+`prototype/` es un prototipo en Next.js. Sirve solo para validar requerimientos con el cliente. No es el stack de implementación. Plataforma: Supabase (cierra ERP-9; [ADR-004](docs/ADRs/ADR-004.md)).
 
 | Capa | Tecnología |
 | --- | --- |
-| Base de datos | Relacional, PostgreSQL |
-| Lógica de negocio | Go |
-| Presentación | Next.js, Templ |
-| Scripts | JavaScript |
+| Base de datos | PostgreSQL vía Supabase |
+| Autenticación | Supabase Auth (detrás de las interfaces de `front/src/lib/`) |
+| Hub de aseguradoras | Supabase Edge Functions (TypeScript/Deno): ACL + Aggregator, timeout 4 s |
+| Presentación | Next.js en `front/` |
+| Aggregator en Go | Solo si el fan-out concurrente a N compañías con circuit breaker es un cuello **medido**, no anticipado |
 
 ## Funcionalidades
 
@@ -55,6 +56,23 @@ No está completa.
 - Siguen abiertas `docs/cuestiones-a-resolver.md` y la sección «Decisiones abiertas» del índice.
 - `prototype/AGENTS.md` es el stub que regenera Next. Este archivo, en la raíz, es el que lee `gga`.
 
+## Skills de proyecto (hub Edge)
+
+Cadena de implementación: `docs/PLAN_ESTILO_ARQUITECTONICO/`. Una skill por sesión. El paso 01 no carga skill.
+
+| Skill | Cuándo |
+| --- | --- |
+| `canonical-types` | Contratos en `_shared/types.ts` |
+| `edge-http-handler` | Validación HTTP de `cotizar/handler.ts` |
+| `domain-service-supabase` | `ServicioCotizacion` |
+| `fanout-orchestrator` | Fan-out 4 s + `Promise.allSettled` |
+| `provider-acl` | Un mapper ACL por sesión |
+| `resilience-http` | Esqueleto CB (sin trip) o `HttpClient` |
+| `walking-skeleton-e2e` | Stub in-memory + POST `/cotizar` 200 |
+| `deno-contract-tests` | `Deno.test` de contrato ACL |
+
+Ruta: `skills/<nombre>/SKILL.md`. Borradores: `docs/PLAN_ESTILO_ARQUITECTONICO/skills-draft/`.
+
 ## Revisión
 
-Un cambio no cumple si trata un borrador como arquitectura vigente, si presenta los dos esquemas como un solo modelo, si afirma que la documentación está completa, o si toma el prototipo de `front/` como el stack de implementación.
+Un cambio no cumple si trata un borrador como arquitectura vigente, si ignora ADR-002/003/004, si presenta los dos esquemas como un solo modelo, si afirma que la documentación está completa, si toma `prototype/` como el stack de implementación, o si trata Go como el runtime actual del hub.

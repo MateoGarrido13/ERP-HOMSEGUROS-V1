@@ -1,0 +1,216 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2614" height="979" viewBox="0 0 2614 979" font-family="Arial, Helvetica, sans-serif" role="img" aria-labelledby="t d" xmlns:c2pa="http://c2pa.org/manifest">
+<title id="t">Vista de componentes y conectores: consulta multi-proveedor con ACL y Circuit Breaker</title>
+<desc id="d">CLIENT -&gt; ROUTER: HTTPS síncrono; ROUTER -&gt; HANDLER1: despacho interno; HANDLER1 -&gt; SVC1: llamada servicio; SVC1 -&gt; DB: SQL síncrono; SVC1 -&gt; ORQ1: llamada servicio; ORQ1 -&gt; ACL_S1_P1: paralelo síncrono; ORQ1 -&gt; ACL_S1_P2: paralelo síncrono; ACL_S1_P1 -&gt; CB_P1: llamada traducida; ACL_S1_P2 -&gt; CB_P2: llamada traducida; CB_P1 -&gt; HTTP_P1: controla cliente; CB_P2 -&gt; HTTP_P2: controla cliente; HTTP_P1 -&gt; API_P1: HTTPS/REST síncrono; HTTP_P2 -&gt; API_P2: HTTPS/REST síncrono</desc>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
+<rect width="2614" height="979" fill="#ffffff"/>
+<text x="1307.0" y="42" font-size="18" text-anchor="middle" font-weight="bold" fill="#111">Vista de componentes y conectores: consulta multi-proveedor con ACL y Circuit Breaker</text>
+<rect x="15" y="59" width="2584.0" height="169" fill="#eafffe" stroke="#5fd8e8" stroke-width="2"/>
+<text x="30" y="83" font-size="14" text-anchor="start" font-weight="bold" fill="#111">Leyenda Visual</text>
+<path d="M180,131 H280" fill="none" stroke="#222222" stroke-width="1.5" marker-end="url(#ar)"/>
+<text x="230.3" y="177" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">Llamada sincrónica</text>
+<path d="M611,131 H711" fill="none" stroke="#222222" stroke-width="1.5" stroke-dasharray="6 5" marker-end="url(#ar)"/>
+<text x="661.0" y="177" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">Llamada sincrónica en paralelo (fan-out)</text>
+<path d="M1042,131 H1142" fill="none" stroke="#222222" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text x="1091.7" y="177" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">Comunicación bidireccional (request / response)</text>
+<rect x="1477.3" y="110" width="90" height="42" fill="#fff" stroke="#222222" stroke-width="1.5"/>
+<text x="1522.3" y="177" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">Componente de software</text>
+<path d="M1913.0,117.0 v28 a40.0,9 0 0 0 80,0 v-28 a40.0,9 0 0 0 -80,0 z" fill="#fff" stroke="#222222" stroke-width="1.5"/>
+<ellipse cx="1953.0" cy="117.0" rx="40.0" ry="9" fill="#fff" stroke="#222222" stroke-width="1.5"/>
+<text x="1953.0" y="177" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">Base de datos relacional (única, compartida)</text>
+<rect x="2256.7" y="107" width="46" height="50" fill="#f2f2f2" stroke="#888888" stroke-width="2.2"/>
+<rect x="2265.7" y="122" width="28" height="20" fill="#fff" stroke="#222222" stroke-width="1"/>
+<rect x="2308.7" y="107" width="46" height="50" fill="#fbf0ff" stroke="#8a7be0" stroke-width="2.2"/>
+<rect x="2317.7" y="122" width="28" height="20" fill="#fff" stroke="#222222" stroke-width="1"/>
+<rect x="2360.7" y="107" width="46" height="50" fill="#eef4ff" stroke="#6c8ee8" stroke-width="2.2"/>
+<rect x="2369.7" y="122" width="28" height="20" fill="#fff" stroke="#222222" stroke-width="1"/>
+<rect x="2412.7" y="107" width="46" height="50" fill="#ecfdf9" stroke="#5fd3c4" stroke-width="2.2"/>
+<rect x="2421.7" y="122" width="28" height="20" fill="#fff" stroke="#222222" stroke-width="1"/>
+<rect x="2464.7" y="107" width="46" height="50" fill="#fff6e8" stroke="#f0a64a" stroke-width="2.2"/>
+<rect x="2473.7" y="122" width="28" height="20" fill="#fff" stroke="#222222" stroke-width="1"/>
+<text x="2383.7" y="177" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">Lila = frontera interna · Azul = acceso · Verde = servicios/negocio</text>
+<text x="2383.7" y="190" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">· Naranja = datos · Amarillo = integración / resiliencia · Gris =</text>
+<text x="2383.7" y="203" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">externos</text>
+<g id="group-ExtEntrada" data-kind="external">
+<rect x="36.0" y="522.0" width="222.0" height="135.0" fill="#f2f2f2" stroke="#888888" stroke-width="2.5"/>
+<text x="50.0" y="542.0" font-size="12" text-anchor="start" font-weight="bold" fill="#111">Externo (Entrada)</text>
+</g>
+<g id="group-Sistema" data-kind="internal">
+<rect x="290.0" y="264.0" width="2014.0" height="679.0" fill="#fbf0ff" stroke="#8a7be0" stroke-width="2.5"/>
+<text x="304.0" y="284.0" font-size="12" text-anchor="start" font-weight="bold" fill="#111">Frontera del Sistema</text>
+</g>
+<g id="group-ExtProveedores" data-kind="external">
+<rect x="2356.0" y="332.0" width="222.0" height="515.0" fill="#f2f2f2" stroke="#888888" stroke-width="2.5"/>
+<text x="2370.0" y="352.0" font-size="12" text-anchor="start" font-weight="bold" fill="#111">Proveedores Externos</text>
+</g>
+<g id="group-TierAcceso" data-kind="tier_blue">
+<rect x="316.0" y="522.0" width="482.0" height="135.0" fill="#eef4ff" stroke="#6c8ee8" stroke-width="2"/>
+<text x="330.0" y="542.0" font-size="12" text-anchor="start" font-weight="bold" fill="#111">Capa de Acceso</text>
+</g>
+<g id="group-TierServicios" data-kind="tier_teal">
+<rect x="856.0" y="522.0" width="522.0" height="135.0" fill="#ecfdf9" stroke="#5fd3c4" stroke-width="2"/>
+<text x="870.0" y="542.0" font-size="12" text-anchor="start" font-weight="bold" fill="#111">Capa de Servicios</text>
+</g>
+<g id="group-TierDatos" data-kind="tier_orange">
+<rect x="856.0" y="782.0" width="222.0" height="135.0" fill="#fff6e8" stroke="#f0a64a" stroke-width="2"/>
+<text x="870.0" y="802.0" font-size="12" text-anchor="start" font-weight="bold" fill="#111">Datos</text>
+</g>
+<g id="group-TierACL" data-kind="tier_yellow">
+<rect x="1456.0" y="317.0" width="222.0" height="530.0" fill="#fffbe6" stroke="#d8b72e" stroke-width="2"/>
+<text x="1470.0" y="337.0" font-size="12" text-anchor="start" font-weight="bold" fill="#111">Anti-Corruption Layer</text>
+<text x="1470.0" y="352.0" font-size="12" text-anchor="start" font-weight="bold" fill="#111">(par Servicio × Proveedor)</text>
+</g>
+<g id="group-TierCB" data-kind="tier_yellow">
+<rect x="1756.0" y="317.0" width="222.0" height="530.0" fill="#fffbe6" stroke="#d8b72e" stroke-width="2"/>
+<text x="1770.0" y="337.0" font-size="12" text-anchor="start" font-weight="bold" fill="#111">Circuit Breaker</text>
+<text x="1770.0" y="352.0" font-size="12" text-anchor="start" font-weight="bold" fill="#111">(compartido por proveedor)</text>
+</g>
+<g id="group-TierHTTP" data-kind="tier_blue">
+<rect x="2056.0" y="317.0" width="222.0" height="530.0" fill="#eef4ff" stroke="#6c8ee8" stroke-width="2"/>
+<text x="2070.0" y="337.0" font-size="12" text-anchor="start" font-weight="bold" fill="#111">Cliente HTTP</text>
+<text x="2070.0" y="352.0" font-size="12" text-anchor="start" font-weight="bold" fill="#111">(controlado por CB)</text>
+</g>
+<g id="edge-CLIENT-ROUTER" data-style="solid">
+<path d="M232.0,603.0 L342.0,603.0" fill="none" stroke="#222222" stroke-width="1.5" marker-end="url(#ar)"/>
+</g>
+<g id="edge-ROUTER-HANDLER1" data-style="solid">
+<path d="M512.0,603.0 L602.0,603.0" fill="none" stroke="#222222" stroke-width="1.5" marker-end="url(#ar)"/>
+</g>
+<g id="edge-HANDLER1-SVC1" data-style="solid">
+<path d="M772.0,603.0 L882.0,603.0" fill="none" stroke="#222222" stroke-width="1.5" marker-end="url(#ar)"/>
+</g>
+<g id="edge-SVC1-DB" data-style="solid">
+<path d="M967.0,631.0 L967.0,835.0" fill="none" stroke="#222222" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+</g>
+<g id="edge-SVC1-ORQ1" data-style="solid">
+<path d="M1052.0,603.0 L1182.0,603.0" fill="none" stroke="#222222" stroke-width="1.5" marker-end="url(#ar)"/>
+</g>
+<g id="edge-ORQ1-ACL_S1_P1" data-style="dotted">
+<path d="M1352.0,594.0 L1378.0,594.0 L1378.0,413.0 L1482.0,413.0" fill="none" stroke="#222222" stroke-width="1.5" stroke-dasharray="6 5" marker-end="url(#ar)"/>
+</g>
+<g id="edge-ORQ1-ACL_S1_P2" data-style="dotted">
+<path d="M1352.0,612.0 L1378.0,612.0 L1378.0,793.0 L1482.0,793.0" fill="none" stroke="#222222" stroke-width="1.5" stroke-dasharray="6 5" marker-end="url(#ar)"/>
+</g>
+<g id="edge-ACL_S1_P1-CB_P1" data-style="solid">
+<path d="M1652.0,413.0 L1782.0,413.0" fill="none" stroke="#222222" stroke-width="1.5" marker-end="url(#ar)"/>
+</g>
+<g id="edge-ACL_S1_P2-CB_P2" data-style="solid">
+<path d="M1652.0,793.0 L1782.0,793.0" fill="none" stroke="#222222" stroke-width="1.5" marker-end="url(#ar)"/>
+</g>
+<g id="edge-CB_P1-HTTP_P1" data-style="solid">
+<path d="M1952.0,413.0 L2082.0,413.0" fill="none" stroke="#222222" stroke-width="1.5" marker-end="url(#ar)"/>
+</g>
+<g id="edge-CB_P2-HTTP_P2" data-style="solid">
+<path d="M1952.0,793.0 L2082.0,793.0" fill="none" stroke="#222222" stroke-width="1.5" marker-end="url(#ar)"/>
+</g>
+<g id="edge-HTTP_P1-API_P1" data-style="solid">
+<path d="M2252.0,413.0 L2382.0,413.0" fill="none" stroke="#222222" stroke-width="1.5" marker-end="url(#ar)"/>
+</g>
+<g id="edge-HTTP_P2-API_P2" data-style="solid">
+<path d="M2252.0,793.0 L2382.0,793.0" fill="none" stroke="#222222" stroke-width="1.5" marker-end="url(#ar)"/>
+</g>
+<g id="node-CLIENT" data-kind="component">
+<rect x="62.0" y="575.0" width="170" height="56" fill="#fff" stroke="#222222" stroke-width="1.5"/>
+<text x="147.0" y="607.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">Cliente Web</text>
+</g>
+<g id="node-ROUTER" data-kind="component">
+<rect x="342.0" y="575.0" width="170" height="56" fill="#fff" stroke="#222222" stroke-width="1.5"/>
+<text x="427.0" y="599.5" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">Router /</text>
+<text x="427.0" y="614.5" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">Multiplexor HTTP</text>
+</g>
+<g id="node-HANDLER1" data-kind="component">
+<rect x="602.0" y="575.0" width="170" height="56" fill="#fff" stroke="#222222" stroke-width="1.5"/>
+<text x="687.0" y="607.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">Handler 1</text>
+</g>
+<g id="node-SVC1" data-kind="component">
+<rect x="882.0" y="575.0" width="170" height="56" fill="#fff" stroke="#222222" stroke-width="1.5"/>
+<text x="967.0" y="607.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">Servicio 1</text>
+</g>
+<g id="node-DB" data-kind="cylinder">
+<path d="M882.0,846.0 v34 a85.0,11 0 0 0 170,0 v-34 a85.0,11 0 0 0 -170,0 z" fill="#fff" stroke="#222222" stroke-width="1.5"/>
+<ellipse cx="967.0" cy="846.0" rx="85.0" ry="11" fill="#fff" stroke="#222222" stroke-width="1.5"/>
+<text x="967.0" y="864.5" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">Base de Datos</text>
+<text x="967.0" y="879.5" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">Relacional</text>
+</g>
+<g id="node-ORQ1" data-kind="component">
+<rect x="1182.0" y="575.0" width="170" height="56" fill="#fff" stroke="#222222" stroke-width="1.5"/>
+<text x="1267.0" y="599.5" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">Intermediario /</text>
+<text x="1267.0" y="614.5" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">Orquestador 1</text>
+</g>
+<g id="node-ACL_S1_P1" data-kind="component">
+<rect x="1482.0" y="385.0" width="170" height="56" fill="#fff" stroke="#222222" stroke-width="1.5"/>
+<text x="1567.0" y="409.5" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">ACL</text>
+<text x="1567.0" y="424.5" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">S1 × Prov1</text>
+</g>
+<g id="node-ACL_S1_P2" data-kind="component">
+<rect x="1482.0" y="765.0" width="170" height="56" fill="#fff" stroke="#222222" stroke-width="1.5"/>
+<text x="1567.0" y="789.5" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">ACL</text>
+<text x="1567.0" y="804.5" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">S1 × Prov2</text>
+</g>
+<g id="node-CB_P1" data-kind="component">
+<rect x="1782.0" y="385.0" width="170" height="56" fill="#fff" stroke="#222222" stroke-width="1.5"/>
+<text x="1867.0" y="409.5" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">Circuit Breaker</text>
+<text x="1867.0" y="424.5" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">Prov1</text>
+</g>
+<g id="node-CB_P2" data-kind="component">
+<rect x="1782.0" y="765.0" width="170" height="56" fill="#fff" stroke="#222222" stroke-width="1.5"/>
+<text x="1867.0" y="789.5" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">Circuit Breaker</text>
+<text x="1867.0" y="804.5" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">Prov2</text>
+</g>
+<g id="node-HTTP_P1" data-kind="component">
+<rect x="2082.0" y="385.0" width="170" height="56" fill="#fff" stroke="#222222" stroke-width="1.5"/>
+<text x="2167.0" y="409.5" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">Cliente HTTP</text>
+<text x="2167.0" y="424.5" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">Prov1</text>
+</g>
+<g id="node-HTTP_P2" data-kind="component">
+<rect x="2082.0" y="765.0" width="170" height="56" fill="#fff" stroke="#222222" stroke-width="1.5"/>
+<text x="2167.0" y="789.5" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">Cliente HTTP</text>
+<text x="2167.0" y="804.5" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">Prov2</text>
+</g>
+<g id="node-API_P1" data-kind="component">
+<rect x="2382.0" y="385.0" width="170" height="56" fill="#fff" stroke="#222222" stroke-width="1.5"/>
+<text x="2467.0" y="417.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">API Proveedor 1</text>
+</g>
+<g id="node-API_P2" data-kind="component">
+<rect x="2382.0" y="765.0" width="170" height="56" fill="#fff" stroke="#222222" stroke-width="1.5"/>
+<text x="2467.0" y="797.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#111">API Proveedor 2</text>
+</g>
+<rect x="257.2" y="586.0" width="59.6" height="34" fill="#e6e6e6" stroke="#bdbdbd" stroke-width="1"/>
+<text x="287.0" y="600.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">HTTPS</text>
+<text x="287.0" y="614.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">síncrono</text>
+<rect x="527.2" y="586.0" width="59.6" height="34" fill="#e6e6e6" stroke="#bdbdbd" stroke-width="1"/>
+<text x="557.0" y="600.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">despacho</text>
+<text x="557.0" y="614.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">interno</text>
+<rect x="797.2" y="586.0" width="59.6" height="34" fill="#e6e6e6" stroke="#bdbdbd" stroke-width="1"/>
+<text x="827.0" y="600.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">llamada</text>
+<text x="827.0" y="614.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">servicio</text>
+<rect x="937.2" y="716.0" width="59.6" height="34" fill="#e6e6e6" stroke="#bdbdbd" stroke-width="1"/>
+<text x="967.0" y="730.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">SQL</text>
+<text x="967.0" y="744.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">síncrono</text>
+<rect x="1087.2" y="586.0" width="59.6" height="34" fill="#e6e6e6" stroke="#bdbdbd" stroke-width="1"/>
+<text x="1117.0" y="600.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">llamada</text>
+<text x="1117.0" y="614.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">servicio</text>
+<rect x="1348.2" y="486.5" width="59.6" height="34" fill="#e6e6e6" stroke="#bdbdbd" stroke-width="1"/>
+<text x="1378.0" y="500.5" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">paralelo</text>
+<text x="1378.0" y="514.5" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">síncrono</text>
+<rect x="1348.2" y="685.5" width="59.6" height="34" fill="#e6e6e6" stroke="#bdbdbd" stroke-width="1"/>
+<text x="1378.0" y="699.5" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">paralelo</text>
+<text x="1378.0" y="713.5" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">síncrono</text>
+<rect x="1684.3" y="396.0" width="65.3" height="34" fill="#e6e6e6" stroke="#bdbdbd" stroke-width="1"/>
+<text x="1717.0" y="410.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">llamada</text>
+<text x="1717.0" y="424.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">traducida</text>
+<rect x="1684.3" y="776.0" width="65.3" height="34" fill="#e6e6e6" stroke="#bdbdbd" stroke-width="1"/>
+<text x="1717.0" y="790.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">llamada</text>
+<text x="1717.0" y="804.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">traducida</text>
+<rect x="1987.2" y="396.0" width="59.6" height="34" fill="#e6e6e6" stroke="#bdbdbd" stroke-width="1"/>
+<text x="2017.0" y="410.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">controla</text>
+<text x="2017.0" y="424.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">cliente</text>
+<rect x="1987.2" y="776.0" width="59.6" height="34" fill="#e6e6e6" stroke="#bdbdbd" stroke-width="1"/>
+<text x="2017.0" y="790.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">controla</text>
+<text x="2017.0" y="804.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">cliente</text>
+<rect x="2281.5" y="396.0" width="71.0" height="34" fill="#e6e6e6" stroke="#bdbdbd" stroke-width="1"/>
+<text x="2317.0" y="410.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">HTTPS/REST</text>
+<text x="2317.0" y="424.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">síncrono</text>
+<rect x="2281.5" y="776.0" width="71.0" height="34" fill="#e6e6e6" stroke="#bdbdbd" stroke-width="1"/>
+<text x="2317.0" y="790.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">HTTPS/REST</text>
+<text x="2317.0" y="804.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#111">síncrono</text>
+<metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTplMTZkZmRjZC1kMjYzLTQ2NjUtYTRkMi0yOGY2ODhiZWY2MmYAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaG9JdSiQMRn+L8+ZZufYb0YAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDo4MWI2ZmIxMi0yYWY4LTQ4NjQtYWI4Yy04YjQzZTgwNzE1NzJscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNohJ4tQErudpbct+WnJ3uiiQAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggunk9m8lKdQ6muU2b8hUZ1HXyNPlmhGtGBlNhdE6ARU6kZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaG0jnQuCBXbgNavSJ4ii5OYAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRMAAAAAAAAAAAAAAAAZGhhc2hYIKQQKmDv7XqyWl/YQHSVMsnWOPPEmJtDId4Y7fZLhYRAZG5hbWVuanVtYmYgbWFuaWZlc3RqZXhjbHVzaW9uc4GiZXN0YXJ0GUf0Zmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOmUxNmRmZGNkLWQyNjMtNDY2NS1hNGQyLTI4ZjY4OGJlZjYyZi9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjFmZDVjZDNiLWZlMDEtNGQ2Ni04YWU1LTk2YzhmNTFjNjBmOHJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCC6eT2byUp1Dqa5TZvyFRnUdfI0+WaEa0YGU2F0ToBFTqJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggzlD6+EEN4B7t1jKJOAq21NbgdfhuVFeeQzGDzMWIY6eiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggq1Y3QKd+XrRsjVT6W4EhUntFdYxIqoRd7BowNRcvxoJ0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQL6+byRpwjyz+phz0GWG/a5XWmNSImnMw0ZLlTDf5n2ObErdwoX8EA7eEEFt0FIPpuZ7bISpywSRljQ1Zq5tFwc=</c2pa:manifest></metadata></svg>

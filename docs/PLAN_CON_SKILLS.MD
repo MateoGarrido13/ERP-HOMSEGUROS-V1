@@ -7,7 +7,7 @@ Especificación de la primera iteración Spec-Driven Development (SDD) del ERP H
 1. Cerrar el **gate de documentación (DoR)** de esta iteración.
 2. Escribir specs del **walking skeleton** (lead → cotizar ramo con API → propuesta → CU-16 desde Pendientes → cartera).
 3. Congelar cada artefacto (`status: approved`) antes de la fase siguiente.
-4. Implementar solo con stack de [`AGENTS.md`](../AGENTS.md): PostgreSQL, Go, presentación Next.js/Templ. El prototipo `prototype/` es referencia UX, no implementación final.
+4. Implementar solo con el stack de [`AGENTS.md`](../AGENTS.md) (Supabase, Edge Functions TS para el hub, Next.js en `front/`; Go solo si el Aggregator es un cuello **medido**). El prototipo `prototype/` es referencia UX, no implementación final.
 
 ## 1. Identidad de la iteración
 
@@ -143,7 +143,7 @@ Reglas globales:
 | Fase | Entregable | Skills / mecanismo |
 | --- | --- | --- |
 | 0. Aterrizaje | Inventario verificado desde `docs/casos-de-uso/` (no recrear índice vacío); nota as-built mínima de rutas del prototipo para los 3 slices | `uc-indexer` (propuesta: enriquecer índice existente); `as-built-documenter` (propuesta, solo lectura); `cognitive-doc-design` |
-| 1. Gobernanza | Constitución alineada a `AGENTS.md` (PostgreSQL, Go, Next/Templ); NFR mínimos del hub (timeouts multi-carrier, idempotencia adapter, datos en AR, trazas de acceso donde aplique) | `constitution-guard` (propuesta); NFR en `specs/nfr.md` |
+| 1. Gobernanza | Constitución alineada a `AGENTS.md` (Supabase, Edge Functions TS para el hub, Next.js en `front/`; Go solo si el Aggregator es un cuello medido); NFR mínimos del hub (timeouts multi-carrier, idempotencia adapter, datos en AR, trazas de acceso donde aplique) | `constitution-guard` (propuesta); NFR en `specs/nfr.md` |
 | 2. Specify | Spec por feature + Gherkin desde flujos/alternos de CU (cada escenario cita ID de CU); UI-spec solo pantallas del skeleton | `spec-author`, `spec-auditor`, `ui-spec-author` (propuestas) |
 | 3. Plan técnico | Contratos del hub (puertos cotizar/comparar), tipos de dominio, frontera de esquemas; ADRs solo si hay decisión **nueva** | `arch-designer` (propuesta); `adr-logger` (propuesta). No copiar Arquitectura v1 como ADR |
 | 4. Tasks + implementación | Tasks atómicas → TDD; una tarea a la vez; drift check antes de commit/PR | `task-planner`, `tdd-implementer`, `drift-checker` (propuestas); ODD / `work-unit-commits` cuando aplique |
