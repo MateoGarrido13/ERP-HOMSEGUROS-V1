@@ -1,0 +1,482 @@
+{
+    "id": 598004327,
+    "rama": 5,
+    "localidad": {
+        "id": 20512,
+        "nombre": "TANDIL",
+        "provincia": "BUENOS AIRES",
+        "codigo_postal": 7000
+    },
+    "vehiculo": {
+        "id": 119912,
+        "nombre": "FIAT PALIO 1.4 3P FIRE ELX",
+        "anio": 2007,
+        "valor": 7425000,
+        "uso": 1,
+        "gnc": false,
+        "infoauto": 170499,
+        "rastreo": 0
+    },
+    "suma_asegurada": 7425000,
+    "iva": 5,
+    "ajuste_suma": 0,
+    "desglose": true,
+    "periodo": 1,
+    "cuotas": 1,
+    "comision": 10,
+    "bonificacion": 10,
+    "bonificacion_extraordinaria": 0,
+    "productor": {
+        "id": 83645,
+        "nombre": "OTAÑO MORENO,HORTENSIA MARIA"
+    },
+    "cantidad": 7,
+    "resultado": [
+        {
+            "numero": 0,
+            "puntaje": 0,
+            "producto": "A",
+            "texto": "A - RESPONSABILIDAD CIVIL LIMITADA",
+            "titulo": "A",
+            "descripcion": "A - RESPONSABILIDAD CIVIL LIMITADA",
+            "costo": 32800.87,
+            "cantidad_cuotas": 1,
+            "desglose": {
+                "total": {
+                    "prima": 18682.11,
+                    "iva": 5541.58,
+                    "sellados": 316.66,
+                    "premio": 32800.87,
+                    "gasto_produccion": 2802.32,
+                    "gasto_explotacion": 4904.05,
+                    "recargo_financiero": 0,
+                    "impuestos_internos": 0,
+                    "tasa_ssn": 158.33,
+                    "servicios_sociales": 131.94,
+                    "percepcion_iibb": 0,
+                    "percepcion_iva": 0,
+                    "acrecimiento_iva": 0,
+                    "otros_impuestos": 263.88,
+                    "cuota": 0
+                },
+                "cuotas": [
+                    {
+                        "prima": 18682.11,
+                        "iva": 5541.58,
+                        "sellados": 316.66,
+                        "premio": 32800.87,
+                        "gasto_produccion": 2802.32,
+                        "gasto_explotacion": 4904.05,
+                        "recargo_financiero": 0,
+                        "impuestos_internos": 0,
+                        "tasa_ssn": 158.33,
+                        "servicios_sociales": 131.94,
+                        "percepcion_iibb": 0,
+                        "percepcion_iva": 0,
+                        "acrecimiento_iva": 0,
+                        "otros_impuestos": 263.88,
+                        "cuota": 1
+                    }
+                ]
+            },
+            "error": "",
+            "franquicia": 0,
+            "codigo_producto": 800,
+            "adicional": {
+                "granizo": false
+            },
+            "inspeccion": {
+                "opciones": [
+                    {
+                        "id": null,
+                        "descripcion": null
+                    }
+                ]
+            }
+        },
+        {
+            "numero": 1,
+            "puntaje": 0,
+            "producto": "B",
+            "texto": "B  - R.C.L.- INCENDIO, ROBO Y ACCIDENTE TOTAL",
+            "titulo": "B",
+            "descripcion": "B  - R.C.L.- INCENDIO, ROBO Y ACCIDENTE TOTAL",
+            "costo": 47536.65,
+            "cantidad_cuotas": 1,
+            "desglose": {
+                "total": {
+                    "prima": 30112.98,
+                    "iva": 8031.13,
+                    "sellados": 458.92,
+                    "premio": 47536.65,
+                    "gasto_produccion": 4516.95,
+                    "gasto_explotacion": 3613.56,
+                    "recargo_financiero": 0,
+                    "impuestos_internos": 0,
+                    "tasa_ssn": 229.46,
+                    "servicios_sociales": 191.22,
+                    "percepcion_iibb": 0,
+                    "percepcion_iva": 0,
+                    "acrecimiento_iva": 0,
+                    "otros_impuestos": 382.43,
+                    "cuota": 0
+                },
+                "cuotas": [
+                    {
+                        "prima": 30112.98,
+                        "iva": 8031.13,
+                        "sellados": 458.92,
+                        "premio": 47536.65,
+                        "gasto_produccion": 4516.95,
+                        "gasto_explotacion": 3613.56,
+                        "recargo_financiero": 0,
+                        "impuestos_internos": 0,
+                        "tasa_ssn": 229.46,
+                        "servicios_sociales": 191.22,
+                        "percepcion_iibb": 0,
+                        "percepcion_iva": 0,
+                        "acrecimiento_iva": 0,
+                        "otros_impuestos": 382.43,
+                        "cuota": 1
+                    }
+                ]
+            },
+            "error": "",
+            "franquicia": 0,
+            "codigo_producto": 925,
+            "adicional": {
+                "granizo": false
+            },
+            "inspeccion": {
+                "opciones": [
+                    {
+                        "id": null,
+                        "descripcion": null
+                    }
+                ]
+            }
+        },
+        {
+            "numero": 2,
+            "puntaje": 0,
+            "producto": "B0",
+            "texto": "B0 - R.C.L.- ROBO/HURTO TOTAL",
+            "titulo": "B0",
+            "descripcion": "B0 - R.C.L.- ROBO/HURTO TOTAL",
+            "costo": 35329.48,
+            "cantidad_cuotas": 1,
+            "desglose": {
+                "total": {
+                    "prima": 22380.12,
+                    "iva": 5968.78,
+                    "sellados": 341.07,
+                    "premio": 35329.48,
+                    "gasto_produccion": 3357.02,
+                    "gasto_explotacion": 2685.61,
+                    "recargo_financiero": 0,
+                    "impuestos_internos": 0,
+                    "tasa_ssn": 170.54,
+                    "servicios_sociales": 142.11,
+                    "percepcion_iibb": 0,
+                    "percepcion_iva": 0,
+                    "acrecimiento_iva": 0,
+                    "otros_impuestos": 284.23,
+                    "cuota": 0
+                },
+                "cuotas": [
+                    {
+                        "prima": 22380.12,
+                        "iva": 5968.78,
+                        "sellados": 341.07,
+                        "premio": 35329.48,
+                        "gasto_produccion": 3357.02,
+                        "gasto_explotacion": 2685.61,
+                        "recargo_financiero": 0,
+                        "impuestos_internos": 0,
+                        "tasa_ssn": 170.54,
+                        "servicios_sociales": 142.11,
+                        "percepcion_iibb": 0,
+                        "percepcion_iva": 0,
+                        "acrecimiento_iva": 0,
+                        "otros_impuestos": 284.23,
+                        "cuota": 1
+                    }
+                ]
+            },
+            "error": "",
+            "franquicia": 0,
+            "codigo_producto": 922,
+            "adicional": {
+                "granizo": false
+            },
+            "inspeccion": {
+                "opciones": [
+                    {
+                        "id": null,
+                        "descripcion": null
+                    }
+                ]
+            }
+        },
+        {
+            "numero": 3,
+            "puntaje": 0,
+            "producto": "B1",
+            "texto": "B1 - R.C.L.- INCENDIO TOTAL Y ROBO/HURTO TOTAL",
+            "titulo": "B1",
+            "descripcion": "B1 - R.C.L.- INCENDIO TOTAL Y ROBO/HURTO TOTAL",
+            "costo": 42301.95,
+            "cantidad_cuotas": 1,
+            "desglose": {
+                "total": {
+                    "prima": 26796.96,
+                    "iva": 7146.75,
+                    "sellados": 408.39,
+                    "premio": 42301.95,
+                    "gasto_produccion": 4019.54,
+                    "gasto_explotacion": 3215.64,
+                    "recargo_financiero": 0,
+                    "impuestos_internos": 0,
+                    "tasa_ssn": 204.19,
+                    "servicios_sociales": 170.16,
+                    "percepcion_iibb": 0,
+                    "percepcion_iva": 0,
+                    "acrecimiento_iva": 0,
+                    "otros_impuestos": 340.32,
+                    "cuota": 0
+                },
+                "cuotas": [
+                    {
+                        "prima": 26796.96,
+                        "iva": 7146.75,
+                        "sellados": 408.39,
+                        "premio": 42301.95,
+                        "gasto_produccion": 4019.54,
+                        "gasto_explotacion": 3215.64,
+                        "recargo_financiero": 0,
+                        "impuestos_internos": 0,
+                        "tasa_ssn": 204.19,
+                        "servicios_sociales": 170.16,
+                        "percepcion_iibb": 0,
+                        "percepcion_iva": 0,
+                        "acrecimiento_iva": 0,
+                        "otros_impuestos": 340.32,
+                        "cuota": 1
+                    }
+                ]
+            },
+            "error": "",
+            "franquicia": 0,
+            "codigo_producto": 923,
+            "adicional": {
+                "granizo": false
+            },
+            "inspeccion": {
+                "opciones": [
+                    {
+                        "id": null,
+                        "descripcion": null
+                    }
+                ]
+            }
+        },
+        {
+            "numero": 4,
+            "puntaje": 0,
+            "producto": "B3",
+            "texto": "B3 - R.C.L.- INCENDIO TOTAL Y PARCIAL",
+            "titulo": "B3",
+            "descripcion": "B3 - R.C.L.- INCENDIO TOTAL Y PARCIAL",
+            "costo": 36805.11,
+            "cantidad_cuotas": 1,
+            "desglose": {
+                "total": {
+                    "prima": 23314.88,
+                    "iva": 6218.08,
+                    "sellados": 355.32,
+                    "premio": 36805.11,
+                    "gasto_produccion": 3497.23,
+                    "gasto_explotacion": 2797.79,
+                    "recargo_financiero": 0,
+                    "impuestos_internos": 0,
+                    "tasa_ssn": 177.66,
+                    "servicios_sociales": 148.05,
+                    "percepcion_iibb": 0,
+                    "percepcion_iva": 0,
+                    "acrecimiento_iva": 0,
+                    "otros_impuestos": 296.1,
+                    "cuota": 0
+                },
+                "cuotas": [
+                    {
+                        "prima": 23314.88,
+                        "iva": 6218.08,
+                        "sellados": 355.32,
+                        "premio": 36805.11,
+                        "gasto_produccion": 3497.23,
+                        "gasto_explotacion": 2797.79,
+                        "recargo_financiero": 0,
+                        "impuestos_internos": 0,
+                        "tasa_ssn": 177.66,
+                        "servicios_sociales": 148.05,
+                        "percepcion_iibb": 0,
+                        "percepcion_iva": 0,
+                        "acrecimiento_iva": 0,
+                        "otros_impuestos": 296.1,
+                        "cuota": 1
+                    }
+                ]
+            },
+            "error": "",
+            "franquicia": 0,
+            "codigo_producto": 921,
+            "adicional": {
+                "granizo": false
+            },
+            "inspeccion": {
+                "opciones": [
+                    {
+                        "id": null,
+                        "descripcion": null
+                    }
+                ]
+            }
+        },
+        {
+            "numero": 5,
+            "puntaje": 0,
+            "producto": "M BASICA",
+            "texto": "M BASICA - RCL, INC Y ROBO TOT Y PAR, ACC.TOT",
+            "titulo": "M BASICA",
+            "descripcion": "M BASICA - RCL, INC Y ROBO TOT Y PAR, ACC.TOT",
+            "costo": 52052.45,
+            "cantidad_cuotas": 1,
+            "desglose": {
+                "total": {
+                    "prima": 32973.6,
+                    "iva": 8794.06,
+                    "sellados": 502.52,
+                    "premio": 52052.45,
+                    "gasto_produccion": 4946.04,
+                    "gasto_explotacion": 3956.83,
+                    "recargo_financiero": 0,
+                    "impuestos_internos": 0,
+                    "tasa_ssn": 251.26,
+                    "servicios_sociales": 209.38,
+                    "percepcion_iibb": 0,
+                    "percepcion_iva": 0,
+                    "acrecimiento_iva": 0,
+                    "otros_impuestos": 418.76,
+                    "cuota": 0
+                },
+                "cuotas": [
+                    {
+                        "prima": 32973.6,
+                        "iva": 8794.06,
+                        "sellados": 502.52,
+                        "premio": 52052.45,
+                        "gasto_produccion": 4946.04,
+                        "gasto_explotacion": 3956.83,
+                        "recargo_financiero": 0,
+                        "impuestos_internos": 0,
+                        "tasa_ssn": 251.26,
+                        "servicios_sociales": 209.38,
+                        "percepcion_iibb": 0,
+                        "percepcion_iva": 0,
+                        "acrecimiento_iva": 0,
+                        "otros_impuestos": 418.76,
+                        "cuota": 1
+                    }
+                ]
+            },
+            "error": "",
+            "franquicia": 0,
+            "codigo_producto": 977,
+            "adicional": {
+                "granizo": false
+            },
+            "inspeccion": {
+                "opciones": [
+                    {
+                        "id": null,
+                        "descripcion": null
+                    }
+                ]
+            }
+        },
+        {
+            "numero": 6,
+            "puntaje": 0,
+            "producto": "M PLUS",
+            "texto": "M PLUS - RCL, INC Y  ROBO TOT Y PARCIAL, ACC.TOTAL",
+            "titulo": "M PLUS",
+            "descripcion": "M PLUS - RCL, INC Y  ROBO TOT Y PARCIAL, ACC.TOTAL",
+            "costo": 58066.38,
+            "cantidad_cuotas": 1,
+            "desglose": {
+                "total": {
+                    "prima": 36783.23,
+                    "iva": 9810.09,
+                    "sellados": 560.58,
+                    "premio": 58066.38,
+                    "gasto_produccion": 5517.48,
+                    "gasto_explotacion": 4413.99,
+                    "recargo_financiero": 0,
+                    "impuestos_internos": 0,
+                    "tasa_ssn": 280.29,
+                    "servicios_sociales": 233.57,
+                    "percepcion_iibb": 0,
+                    "percepcion_iva": 0,
+                    "acrecimiento_iva": 0,
+                    "otros_impuestos": 467.15,
+                    "cuota": 0
+                },
+                "cuotas": [
+                    {
+                        "prima": 36783.23,
+                        "iva": 9810.09,
+                        "sellados": 560.58,
+                        "premio": 58066.38,
+                        "gasto_produccion": 5517.48,
+                        "gasto_explotacion": 4413.99,
+                        "recargo_financiero": 0,
+                        "impuestos_internos": 0,
+                        "tasa_ssn": 280.29,
+                        "servicios_sociales": 233.57,
+                        "percepcion_iibb": 0,
+                        "percepcion_iva": 0,
+                        "acrecimiento_iva": 0,
+                        "otros_impuestos": 467.15,
+                        "cuota": 1
+                    }
+                ]
+            },
+            "error": "",
+            "franquicia": 0,
+            "codigo_producto": 976,
+            "adicional": {
+                "granizo": false
+            },
+            "inspeccion": {
+                "opciones": [
+                    {
+                        "id": null,
+                        "descripcion": null
+                    }
+                ]
+            }
+        }
+    ],
+    "guardar": true,
+    "advertencia": {
+        "codigo": "",
+        "descripcion": "",
+        "detalle": []
+    },
+    "fecha_cotizacion": "2026-10-30T00:00Z",
+    "pago": {
+        "tipo_pago": "C",
+        "canal": null,
+        "codigo": null
+    }
+}

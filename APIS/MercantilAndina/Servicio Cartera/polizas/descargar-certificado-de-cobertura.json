@@ -1,0 +1,42 @@
+{
+  "source": "ma-postman-collection",
+  "sourcePath": "POLIZAS/Descargar certificado de cobertura",
+  "name": "Descargar certificado de cobertura",
+  "method": "GET",
+  "url": "https://apidev.mercantilandina.com.ar/polizas/v1/516504898/0/certificado",
+  "path": [
+    "polizas",
+    "v1",
+    "516504898",
+    "0",
+    "certificado"
+  ],
+  "headers": [
+    {
+      "key": "Authorization",
+      "value": "Bearer {{api.token}}"
+    },
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Ocp-Apim-Subscription-Key",
+      "value": "{{api.key}}"
+    }
+  ],
+  "query": [],
+  "description": "Obtiene una URL para descargar una copia de póliza.",
+  "body": null,
+  "exampleResponses": [
+    {
+      "name": "Descargar certificado de cobertura",
+      "code": 200,
+      "status": "OK",
+      "body": {
+        "url": "https://servicios.qamercantilandina.com.ar/descarga/t/DRvl____1ZNDvWsNgSF38FWeszaifj548WcbY77kGeqE3hmHDsTc5RbRvEo6Qsid_qBV_qLBySetiWgaFBQ8MH2tDDz6Gq_p?nomFile=COBERTURA[20260424134445347552].PDF"
+      }
+    }
+  ],
+  "tests": []
+}

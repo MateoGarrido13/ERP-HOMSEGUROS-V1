@@ -1,0 +1,57 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "TokenIntrospection-V2",
+        "version": "1.0.0",
+        "description": "Servicio parar autenticaci\u00f3n de token de usuario generado en auht0"
+    },
+    "schemes": [
+        "https"
+    ],
+    "security": [
+        {
+            "clientIdHeader": []
+        }
+    ],
+    "securityDefinitions": {
+        "clientIdHeader": {
+            "type": "apiKey",
+            "name": "gss_apiclient_id",
+            "in": "header"
+        }
+    },
+    "paths": {
+        "/v2/security/auth0/token/validate": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "success"
+                    }
+                }
+            }
+        }
+    },
+    "parameters": {
+        "app_client": {
+            "name": "app_client",
+            "required": false,
+            "in": "header",
+            "type": "string"
+        }
+    },
+    "host": "external-pre-api.gruposancorseguros.com",
+    "basePath": "/apissa/pre-catalog"
+}

@@ -1,0 +1,56 @@
+{
+  "source": "ma-postman-collection",
+  "sourcePath": "POLIZAS/Obtener movimientos de póliza",
+  "name": "Obtener movimientos de póliza",
+  "method": "GET",
+  "url": "https://apidev.mercantilandina.com.ar/polizas/v1/516504898",
+  "path": [
+    "polizas",
+    "v1",
+    "516504898"
+  ],
+  "headers": [
+    {
+      "key": "Authorization",
+      "value": "Bearer {{api.token}}"
+    },
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Ocp-Apim-Subscription-Key",
+      "value": "{{api.key}}"
+    }
+  ],
+  "query": [],
+  "description": "Consulta el estado de una solicitud",
+  "body": null,
+  "exampleResponses": [
+    {
+      "name": "Obtener movimientos de póliza",
+      "code": 200,
+      "status": "OK",
+      "body": {
+        "poliza": 516504898,
+        "offset": 0,
+        "limit": 20,
+        "cantidad": 1,
+        "total": 1,
+        "datos": [
+          {
+            "poliza": 516504898,
+            "endoso": 0,
+            "emitido": "2026-04-24",
+            "tipo": "NUEVA",
+            "desde": "2026-04-24",
+            "hasta": "2026-05-24",
+            "moneda": "ARS",
+            "premio": 80297.75
+          }
+        ]
+      }
+    }
+  ],
+  "tests": []
+}

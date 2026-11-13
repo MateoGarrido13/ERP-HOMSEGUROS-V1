@@ -1,0 +1,644 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "description": "servicio para Emitir Garant\u00eda Extendida",
+        "title": "Emisi\u00f3n - Riesgos Varios - Garant\u00eda Extendida"
+    },
+    "paths": {
+        "/policies/serveralRisk/warrantyextended": {
+            "post": {
+                "operationId": "Emite p\u00f3lizas del ramo 'Riesgos Varios'",
+                "responses": {
+                    "200": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/singlePolicyResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Parametros de entrada invalidos/mal escritos.",
+                        "schema": {
+                            "$ref": "#/definitions/Message"
+                        }
+                    },
+                    "401": {
+                        "description": "Authentication.",
+                        "schema": {
+                            "$ref": "#/definitions/Message"
+                        }
+                    },
+                    "403": {
+                        "description": "Authorization.",
+                        "schema": {
+                            "$ref": "#/definitions/Message"
+                        }
+                    },
+                    "415": {
+                        "description": "Faltan parametros de entrada obligatorios.",
+                        "schema": {
+                            "$ref": "#/definitions/Message"
+                        }
+                    },
+                    "422": {
+                        "description": "Parametros de entrada con valores incorrectos.",
+                        "schema": {
+                            "$ref": "#/definitions/Message"
+                        }
+                    },
+                    "500": {
+                        "description": "No response from Backend.",
+                        "schema": {
+                            "$ref": "#/definitions/Message"
+                        }
+                    },
+                    "504": {
+                        "description": "TimeOut from server.",
+                        "schema": {
+                            "$ref": "#/definitions/Message"
+                        }
+                    }
+                },
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "description": "Operaci\u00f3n para crear una p\u00f3liza.",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/singlePolicy"
+                        },
+                        "description": "body",
+                        "required": true
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "description": "Token de Usuario.",
+                        "required": true
+                    },
+                    {
+                        "name": "TransactionId",
+                        "in": "header",
+                        "type": "string"
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "branchDataCollection": {
+            "type": "object",
+            "properties": {
+                "warrantyMonths": {
+                    "type": "integer",
+                    "description": "Meses Garantia Oficial",
+                    "example": 12
+                },
+                "severalRiskItems": {
+                    "type": "array",
+                    "properties": {
+                        "dataSeveralRiskType": {
+                            "type": "object",
+                            "properties": {
+                                "amount": {
+                                    "type": "number",
+                                    "format": "decimal",
+                                    "description": "suma asegurada",
+                                    "example": 300000
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "description": "descripcion del bien",
+                                    "example": "Microondas 20lts"
+                                },
+                                "currency": {
+                                    "type": "string",
+                                    "description": "moneda (siempre es pesos)",
+                                    "example": "Pesos"
+                                },
+                                "category": {
+                                    "type": "integer",
+                                    "description": "categoria del bien asegurado",
+                                    "example": 92
+                                },
+                                "group": {
+                                    "type": "integer",
+                                    "description": "grupo del bien asegurado",
+                                    "example": 34
+                                },
+                                "serie": {
+                                    "type": "string",
+                                    "description": "n\u00famero de serie del bien",
+                                    "example": 334487120
+                                }
+                            },
+                            "required": [
+                                "amount",
+                                "category",
+                                "group"
+                            ]
+                        }
+                    }
+                }
+            },
+            "required": [
+                "warrantyMonths"
+            ]
+        },
+        "singlePolicy": {
+            "type": "object",
+            "properties": {
+                "producerNumber": {
+                    "type": "integer",
+                    "description": "Nro. de Productor",
+                    "example": 233951
+                },
+                "organizerNumber": {
+                    "type": "integer",
+                    "description": "Nro. de Organizador",
+                    "example": 152472
+                },
+                "statisticCodeIds": {
+                    "type": "integer",
+                    "description": "C\u00f3d. / Grupo Estad\u00edstico",
+                    "example": 3681
+                },
+                "certificateData": {
+                    "type": "object",
+                    "properties": {
+                        "startEffectiveDate": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2025-12-01T00:00:00.000Z"
+                        },
+                        "paymentPeriodicity": {
+                            "type": "integer",
+                            "description": "Periodo de pago (5:Anual / 6:Unico / 7:Mensual)",
+                            "example": 7
+                        },
+                        "policyQuotas": {
+                            "type": "integer",
+                            "description": "Tipo de cuotas (0:Anual / 1:Mensual)",
+                            "example": 1
+                        },
+                        "clients": {
+                            "type": "array",
+                            "description": "Datos del Cliente Asegurado",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "key": {
+                                        "type": "string",
+                                        "description": "Tipo de Rol del Cliente",
+                                        "example": 2,
+                                        "enum": [
+                                            "1 Tomador",
+                                            "2 Asegurado",
+                                            "7 Asegurado Adicional",
+                                            "15 Acreedor Hipotecario",
+                                            "16 Acreedor Prendario",
+                                            "17 Beneficiario",
+                                            "18 Beneficiario de Asistencia",
+                                            "46 Beneficiario de Subrogaci\u00f3n",
+                                            "111 Asegurado Titular P\u00f3liza de AP"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "object",
+                                        "description": "Etiqueta de Datos particulares del Cliente",
+                                        "properties": {
+                                            "documentType": {
+                                                "type": "string",
+                                                "description": "Tipo de Documento",
+                                                "example": "D",
+                                                "enum": [
+                                                    "D - DNI",
+                                                    "C - LC",
+                                                    "L - LE",
+                                                    "I - CI",
+                                                    "J - CUIT"
+                                                ]
+                                            },
+                                            "documentNumber": {
+                                                "type": "integer",
+                                                "description": "N\u00famero de Documento",
+                                                "example": 4538294
+                                            },
+                                            "firstName": {
+                                                "type": "string",
+                                                "description": "Nombre/s del Cliente",
+                                                "example": "Maria"
+                                            },
+                                            "lastName": {
+                                                "type": "string",
+                                                "description": "Apellido del Cliente",
+                                                "example": "Perez"
+                                            },
+                                            "genderId": {
+                                                "type": "integer",
+                                                "description": "G\u00e9nero del Cliente",
+                                                "example": 1,
+                                                "enum": [
+                                                    "1 Masculino",
+                                                    "2 Femenino",
+                                                    "3 No binario"
+                                                ]
+                                            },
+                                            "birthDate": {
+                                                "description": "Fecha de Nacimiento",
+                                                "example": "30/08/1980"
+                                            },
+                                            "locationData": {
+                                                "type": "object",
+                                                "description": "Direcci\u00f3n actual",
+                                                "properties": {
+                                                    "cityId": {
+                                                        "type": "integer",
+                                                        "description": "Codigo de Ciudad",
+                                                        "example": 30001
+                                                    },
+                                                    "zipCode": {
+                                                        "type": "integer",
+                                                        "description": "Codigo Postal",
+                                                        "example": 1000
+                                                    },
+                                                    "street": {
+                                                        "type": "string",
+                                                        "description": "Nombre de la calle",
+                                                        "example": "calle prueba"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "cityId",
+                                                    "zipCode"
+                                                ]
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "description": "Direcci\u00f3n de e-mail",
+                                                "example": "prueba@sancorseguros.com"
+                                            },
+                                            "areaCode": {
+                                                "type": "integer",
+                                                "description": "C\u00f3d. de \u00c1rea (Tel\u00e9fono)",
+                                                "example": 54
+                                            },
+                                            "phoneNumber": {
+                                                "type": "integer",
+                                                "description": "Nro. de Tel\u00e9fono",
+                                                "example": 76582930
+                                            }
+                                        },
+                                        "required": [
+                                            "documentType",
+                                            "documentNumber",
+                                            "firstName",
+                                            "lastName",
+                                            "genderId",
+                                            "birthDate",
+                                            "locationData",
+                                            "email",
+                                            "areaCode",
+                                            "phoneNumber"
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "personRoleCode": {
+                            "type": "string",
+                            "description": "Tipo de Rol del Cliente",
+                            "example": 2,
+                            "enum": [
+                                "1 Tomador",
+                                "2 Asegurado",
+                                "7 Asegurado Adicional",
+                                "15 Acreedor Hipotecario",
+                                "16 Acreedor Prendario",
+                                "17 Beneficiario",
+                                "18 Beneficiario de Asistencia",
+                                "46 Beneficiario de Subrogaci\u00f3n",
+                                "111 Asegurado Titular P\u00f3liza de AP"
+                            ]
+                        },
+                        "branchData": {
+                            "$ref": "#/definitions/branchDataCollection"
+                        },
+                        "covers": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "coverageCode": {
+                                        "type": "integer",
+                                        "example": 4
+                                    },
+                                    "discountPercentage": {
+                                        "type": "integer",
+                                        "example": 80
+                                    },
+                                    "discountType": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "warrantyMonths": {
+                                        "type": "integer",
+                                        "description": "Meses de vigencia de la cobertura",
+                                        "example": 24
+                                    }
+                                },
+                                "required": [
+                                    "coverageCode",
+                                    "coverageInsuredSum",
+                                    "warrantyMonths"
+                                ]
+                            }
+                        },
+                        "insuredGoods": {
+                            "type": "object",
+                            "properties": {
+                                "insurableGoodGroupId": {
+                                    "type": "string",
+                                    "description": "ID Bien asegurado",
+                                    "example": 10
+                                },
+                                "insurableGoodAmount": {
+                                    "type": "string",
+                                    "description": "Monto asegurado",
+                                    "example": 500000
+                                },
+                                "insurableGoodCategory": {
+                                    "type": "integer",
+                                    "description": "categoria del bien asegurado",
+                                    "example": 92
+                                },
+                                "insurableGoodSerie": {
+                                    "type": "integer",
+                                    "description": "n\u00famero de serie del bien asegurado",
+                                    "example": 123412
+                                },
+                                "insurableGoodDescription": {
+                                    "type": "string",
+                                    "description": "descripcion del bien asegurado",
+                                    "example": "Samsung S20"
+                                }
+                            },
+                            "required": [
+                                "insurableGoodGroupId",
+                                "insuredGoodAmount",
+                                "insurableGoodCategory",
+                                "insurableGoodSerie"
+                            ]
+                        },
+                        "invoiceData": {
+                            "type": "object",
+                            "description": "Dato Facturacion",
+                            "properties": {
+                                "invoiceNumber": {
+                                    "type": "string",
+                                    "description": "Nro. de Factura",
+                                    "example": 6544444
+                                }
+                            }
+                        },
+                        "paymentMethodCode": {
+                            "type": "integer",
+                            "example": 2,
+                            "enum": [
+                                "0 Efectivo",
+                                "1 Cuenta Bancaria",
+                                "2 Tarjeta de Credito",
+                                "4 Cuenta Bancaria"
+                            ],
+                            "description": "Tipo de pago"
+                        },
+                        "debitData": {
+                            "type": "object",
+                            "description": "M\u00e9todo de pago",
+                            "properties": {
+                                "cbuAccount": {
+                                    "type": "string",
+                                    "description": "N\u00famero de CBU (Enviar solo si el tipo de pago fue 4)"
+                                },
+                                "creditCardToValidityDate": {
+                                    "type": "string",
+                                    "description": "Fecha de Expiraci\u00f3n de tarjeta de credito (YYYY/MM)",
+                                    "example": "2034-08"
+                                },
+                                "creditCardBrand": {
+                                    "type": "string",
+                                    "description": "Cod. Marca de la Tarjeta de Credito",
+                                    "example": 12,
+                                    "enum": [
+                                        "1- Cabal",
+                                        "5- Visa",
+                                        "7- Favacard",
+                                        "9- American Express",
+                                        "12- Naranja",
+                                        "16- Diners Club",
+                                        "18- Naranja Visa",
+                                        "20- Cordobesa - Mastercard",
+                                        "23- TDF - Tierra del Fuego",
+                                        "45- Mastercard Nueva",
+                                        "57- ELEBAR",
+                                        "70- Cencosud Mastercard"
+                                    ]
+                                },
+                                "creditCardNumber": {
+                                    "type": "string",
+                                    "description": "Nro. de la Tarjeta de Credito",
+                                    "example": 5895621226187649
+                                },
+                                "accountNumber": {
+                                    "type": "string",
+                                    "description": "Nro. de Cuenta de D\u00e9bito",
+                                    "example": "2-304566-0"
+                                },
+                                "accountTypeId": {
+                                    "type": "string",
+                                    "description": "Tipo de Cuenta de D\u00e9bito",
+                                    "example": 2,
+                                    "enum": [
+                                        "1 Caja de ahorro",
+                                        "2 Cuenta Corriente"
+                                    ]
+                                },
+                                "bankAgencyCode": {
+                                    "type": "string",
+                                    "description": "C\u00f3d. de Agencia/Sucursal de D\u00e9bito",
+                                    "example": 24
+                                },
+                                "bankCode": {
+                                    "type": "string",
+                                    "description": "C\u00f3d. de Banco",
+                                    "example": 1
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "paymentPeriodicity",
+                        "startEffectiveDate"
+                    ]
+                }
+            },
+            "required": [
+                "organizerNumber",
+                "producerNumber",
+                "statisticCodeIds"
+            ]
+        },
+        "policy": {
+            "type": "object",
+            "properties": {
+                "branchOfficeNumber": {
+                    "type": "integer"
+                },
+                "certificateNumber": {
+                    "type": "integer"
+                },
+                "errors": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "errorMessage": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "managementNumber": {
+                    "type": "string"
+                },
+                "managementStatusName": {
+                    "type": "string"
+                },
+                "officialNumber": {
+                    "type": "integer"
+                },
+                "receipt": {
+                    "type": "object",
+                    "properties": {
+                        "detail": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "receiptDescription": {
+                                        "type": "string"
+                                    },
+                                    "issueTransactionPremium": {
+                                        "type": "integer",
+                                        "format": "decimal"
+                                    },
+                                    "quotaAmount": {
+                                        "type": "integer",
+                                        "format": "decimal"
+                                    }
+                                }
+                            }
+                        },
+                        "receiptNumber": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "referenceNumber": {
+                    "type": "integer"
+                }
+            }
+        },
+        "singlePolicyResponse": {
+            "type": "object",
+            "properties": {
+                "policy": {
+                    "$ref": "#/definitions/policy"
+                },
+                "paging": {
+                    "$ref": "#/definitions/paging"
+                },
+                "message": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Message"
+                    }
+                }
+            }
+        },
+        "Message": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "text": {
+                    "type": "string"
+                },
+                "help": {
+                    "type": "string"
+                }
+            }
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "paging": {
+            "type": "object",
+            "properties": {
+                "offset": {
+                    "type": "integer"
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Messages": {
+            "type": "object",
+            "properties": {
+                "messages": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Message"
+                    }
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "clientID": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "gss_apiclient_id"
+        }
+    },
+    "security": [
+        {
+            "clientID": []
+        }
+    ],
+    "schemes": [
+        "https"
+    ],
+    "host": "external-pre-api.gruposancorseguros.com",
+    "basePath": "/apissa/pre-catalog"
+}

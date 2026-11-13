@@ -1,0 +1,49 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "GetAuthESB",
+        "version": "1.0.0",
+        "description": "Servicio para generaci\u00f3n de token de Auth0 con las respectivas credenciales y repositorio."
+    },
+    "basePath": "/apissa/pre-catalog/security/generate",
+    "paths": {
+        "/authorization/esb": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "consumes": [],
+                "produces": []
+            },
+            "parameters": [
+                {
+                    "name": "Authorization",
+                    "required": true,
+                    "in": "header",
+                    "type": "string"
+                }
+            ]
+        }
+    },
+    "securityDefinitions": {
+        "clientID": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "gss_apiclient_id"
+        }
+    },
+    "security": [
+        {
+            "clientID": []
+        }
+    ],
+    "schemes": [
+        "https"
+    ],
+    "host": "external-pre-api.gruposancorseguros.com"
+}

@@ -1,0 +1,51 @@
+/*
+	Todas las reglas que son SÓLO para Internet Explorer, van en este CSS.
+*/
+
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+
+	.icono-auto{background:url(../img/icono-polizas/Auto.svg) center / contain no-repeat;} /* MASCARA */
+	.icono-moto{background: url(../img/icono-polizas/Moto.svg) center / contain no-repeat;}
+	.icono-agro{background:url(../img/icono-polizas/Granizo.svg) center / contain no-repeat;}
+	.icono-incendio{background:url(../img/icono-polizas/Incendio.svg) center / contain no-repeat;}
+	.icono-accidentes{background:url(../img/icono-polizas/Accidentes-personales.svg) center / contain no-repeat;}
+	.icono-cristales{background:url(../img/icono-polizas/Cristales.svg) center / contain no-repeat;}
+	.icono-robo{background:url(../img/icono-polizas/Robo.svg) center / contain no-repeat;}
+	.icono-embarcacion{background:url(../img/icono-polizas/Embarcacion.svg) center / contain no-repeat;}
+	.icono-respcivil{background:url(../img/icono-polizas/Resp-Civil.svg) center / contain no-repeat;}
+	.icono-ganado{background:url(../img/icono-polizas/Ganado.svg) center / contain no-repeat;}
+	.icono-transporte{background:url(../img/icono-polizas/Transporte.svg) center / contain no-repeat;}
+	.icono-caucion{background:url(../img/icono-polizas/Caucion.svg) center / contain no-repeat;}
+	.icono-segurotecnico{background:url(../img/icono-polizas/Seguro-Tecnico.svg) center / contain no-repeat;}
+	.icono-electronicos{background:url(../img/icono-polizas/Electronico.svg) center / contain no-repeat;}
+	.icono-aeronavegacion{background:url(../img/icono-polizas/Aero-navegacion.svg) center / contain no-repeat;}
+	.icono-hogar{background:url(../img/icono-polizas/Hogar.svg) center / contain no-repeat;}
+	.icono-comercio{background:url(../img/icono-polizas/Comercio.svg) center / contain no-repeat;}
+	.icono-consorcio{background:url(../img/icono-polizas/Consorcio.svg) center / contain no-repeat;}
+	.icono-riesgosvarios{background:url(../img/icono-polizas/Riesgos-varios.svg) center / contain no-repeat;}
+	.icono-creditos{background:url(../img/icono-polizas/Creditos.svg) center / contain no-repeat;}
+	.icono-vidaindividual{background:url(../img/icono-polizas/Vida-individual.svg) center / contain no-repeat;}
+	.icono-vidacolectivo{background:url(../img/icono-polizas/Vida-colectivo.svg) center / contain no-repeat;}
+	.icono-vidaobligatorio{background:url(../img/icono-polizas/Vida-obligatorio.svg) center / contain no-repeat;}
+	.icono-sepelio{background:url(../img/icono-polizas/Sepelio.svg) center / contain no-repeat;}
+	
+	.icono-camioneta{background:url(../img/icono-polizas/Camioneta.svg) center / contain no-repeat;}
+	.icono-camion{background:url(../img/icono-polizas/Camion.svg) center / contain no-repeat;}
+	.icono-semitraccion{background:url(../img/icono-polizas/Semi-traccion.svg) center / contain no-repeat;}
+	.icono-acoplado{background:url(../img/icono-polizas/Acoplado.svg) center / contain no-repeat;}
+	.icono-acopladorural{background:url(../img/icono-polizas/Acoplado-rural.svg) center / contain no-repeat;}
+	.icono-casarodante{background:url(../img/icono-polizas/Casa-rodante.svg) center / contain no-repeat;}
+	.icono-trailer{background:url(../img/icono-polizas/Trailer.svg) center / contain no-repeat;}
+	.icono-maquinarural{background:url(../img/icono-polizas/Cosechadora.svg) center / contain no-repeat;}
+	.icono-tractor{background:url(../img/icono-polizas/Tractor.svg) center / contain no-repeat;}
+	.icono-colectivo{background:url(../img/icono-polizas/Colectivo.svg) center / contain no-repeat;}
+	.icono-cuatriciclo{background:url(../img/icono-polizas/Cuatriciclo.svg) center / contain no-repeat;}
+	.icono-implemento{background:url(../img/icono-polizas/Implemento-rural.svg) center / contain no-repeat;}
+	.icono-scooter{background:url(../img/icono-polizas/Scooter.svg) center / contain no-repeat;}
+	.icono-flota{background:url(../img/icono-polizas/Flota.svg) center / contain no-repeat;}
+	
+	.listado_polizas .listado_compuesto.listado .izq .icono,
+	.listado_siniestros .listado_compuesto.listado .item .icono{background-color:rgba(0,0,0,0)!important; opacity: 0.2!important}
+
+}

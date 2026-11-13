@@ -1,0 +1,42 @@
+{
+  "source": "ma-postman-collection",
+  "sourcePath": "POLIZAS/Descargar cupón",
+  "name": "Descargar cupón",
+  "method": "GET",
+  "url": "https://apidev.mercantilandina.com.ar/polizas/v1/516504898/0/cupon",
+  "path": [
+    "polizas",
+    "v1",
+    "516504898",
+    "0",
+    "cupon"
+  ],
+  "headers": [
+    {
+      "key": "Authorization",
+      "value": "Bearer {{api.token}}"
+    },
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Ocp-Apim-Subscription-Key",
+      "value": "{{api.key}}"
+    }
+  ],
+  "query": [],
+  "description": "Obtiene una URL para descargar una copia de póliza.",
+  "body": null,
+  "exampleResponses": [
+    {
+      "name": "Descargar cupón",
+      "code": 200,
+      "status": "OK",
+      "body": {
+        "url": "https://servicios.qamercantilandina.com.ar/descarga/t/Db5C____1ZO0.1V6vS54ciMaaaQQqKtp_up_U8oN6M6BqWwfwkHACGyiL5iY9OKheJkqtpBe8b1XpOkjruZfRT0oYS7Rb203?nomFile=CUPONES[20260424134617524763].PDF"
+      }
+    }
+  ],
+  "tests": []
+}

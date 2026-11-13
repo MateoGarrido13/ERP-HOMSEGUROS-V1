@@ -1,0 +1,66 @@
+{
+  "source": "ma-postman-collection",
+  "sourcePath": "POLIZAS/Obtener bienes de póliza auto",
+  "name": "Obtener bienes de póliza auto",
+  "method": "GET",
+  "url": "https://apidev.mercantilandina.com.ar/polizas/v1/516504898/0/bienes",
+  "path": [
+    "polizas",
+    "v1",
+    "516504898",
+    "0",
+    "bienes"
+  ],
+  "headers": [
+    {
+      "key": "Authorization",
+      "value": "Bearer {{api.token}}"
+    },
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Ocp-Apim-Subscription-Key",
+      "value": "{{api.key}}"
+    }
+  ],
+  "query": [],
+  "description": "Consulta el estado de una solicitud",
+  "body": null,
+  "exampleResponses": [
+    {
+      "name": "Obtener bienes de póliza",
+      "code": 200,
+      "status": "OK",
+      "body": {
+        "poliza": 516504898,
+        "endoso": 0,
+        "offset": 0,
+        "limit": 20,
+        "cantidad": 1,
+        "total": 1,
+        "datos": [
+          {
+            "id": 1,
+            "descripcion": "CHEVROLET SPIN 1.8 LT 5 AS 2013 AT123CC",
+            "cobertura": "A  - RESPONSABILIDAD CIVIL LIMITADA",
+            "domicilio": "",
+            "localidad": {
+              "id": 20206,
+              "postal": 1862,
+              "nombre": "GUERNICA",
+              "provincia": "BUENOS AIRES"
+            },
+            "desde": "2026-04-24",
+            "hasta": "2026-05-24",
+            "suma": 0,
+            "premio": 80297.75,
+            "estado": "ACTIVO"
+          }
+        ]
+      }
+    }
+  ],
+  "tests": []
+}

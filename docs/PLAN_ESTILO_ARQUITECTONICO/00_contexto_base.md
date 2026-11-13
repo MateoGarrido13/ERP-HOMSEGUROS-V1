@@ -44,34 +44,41 @@ Cada paso (01–10) corre en una **sesión nueva**.
 
 No apiles skills. No implementes el paso siguiente.
 
-## Modelo canónico interno (DatosVehiculo → CotizacionCanonica)
+## Modelo canónico interno (ramo → CotizacionCanonica)
 
 ```typescript
 // Entrada canónica
 interface SolicitudCotizacion {
-  vehiculo: {
-    marca: string;
-    modelo: string;
-    anio: number;
-    patente: string;
-  };
+  ramo: "automotor" | "hogar";
   conductor: {
     dni: string;
     fechaNacimiento: string; // ISO 8601
   };
   coberturaDeseada: "terceros" | "terceros_completo" | "todo_riesgo";
+  vehiculo?: {
+    marca: string;
+    modelo: string;
+    anio: number;
+    patente: string;
+  };
+  inmueble?: {
+    direccion: string;
+    tipoPropiedad: "casa" | "departamento" | "consorcio" | "comercio";
+    anioConstruccion?: number;
+  };
 }
 
-// Salida canónica (una por proveedor)
+// Salida canónica (uno o más planes por proveedor)
 interface CotizacionCanonica {
   proveedorId: string;
-  prima: number;          // en ARS
+  prima: number;          // en ARS; 0 si "No disponible" (mockeado)
   moneda: "ARS" | "USD";
-  cobertura: string;      // descripción normalizada
+  cobertura: string;      // descripción normalizada del plan
   vigenciaDesde: string;  // ISO 8601
   vigenciaHasta: string;
   urlDetalle?: string;
-  error?: string;         // presente si el proveedor falló
+  error?: string;         // presente si el proveedor falló o es "No disponible"
+  estimado: boolean;      // true si es stub/mock/esqueleto; false si es aseguradora real
 }
 ```
 

@@ -1,0 +1,141 @@
+{
+  "source": "ma-postman-collection",
+  "sourcePath": "ASEGURADOS/Crear cliente",
+  "name": "Crear cliente",
+  "method": "POST",
+  "url": "https://apidev.mercantilandina.com.ar/clientes/v1/",
+  "path": [
+    "clientes",
+    "v1",
+    ""
+  ],
+  "headers": [
+    {
+      "key": "Authorization",
+      "value": "Bearer {{api.token}}"
+    },
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Ocp-Apim-Subscription-Key",
+      "value": "{{api.key}}"
+    }
+  ],
+  "query": [],
+  "description": "",
+  "body": {
+    "persona": "FISICA",
+    "apellido": "Perez",
+    "nombre": "Juan",
+    "contacto": "Perez Juan",
+    "sexo": "M",
+    "tipoDocumento": "4",
+    "dni": 25568668,
+    "cuil": 20255686683,
+    "cuit": 0,
+    "nacimiento": "1975-11-30",
+    "telefono1": "1143214321",
+    "email": "juanP@cliente.com",
+    "distribucionDigital": true,
+    "localidad": {
+      "id": 91425,
+      "postal": 5603,
+      "nombre": "RAMA CAIDA",
+      "provincia": "MZA"
+    },
+    "calle": "JJ Valle",
+    "numero": "673",
+    "departamento": "",
+    "barrio": "",
+    "actividad": {
+      "id": 130,
+      "nombre": "EMPLEADO"
+    },
+    "iva": {
+      "inscripcion": {
+        "id": 5,
+        "nombre": "consumidor final"
+      },
+      "retencion": false,
+      "percepcion": false
+    },
+    "ingresosBrutos": {
+      "inscripcion": {
+        "id": 0,
+        "nombre": "No inscripto"
+      },
+      "retencion": false,
+      "percepcion": false
+    }
+  },
+  "exampleResponses": [
+    {
+      "name": "Crear cliente",
+      "code": 200,
+      "status": "OK",
+      "body": {
+        "id": 3439964,
+        "persona": "FISICA",
+        "tipoDocumento": "4",
+        "cuit": 0,
+        "cuil": 20255686683,
+        "dni": 25568668,
+        "sexo": "M",
+        "apellido": "Perez",
+        "nombre": "Juan",
+        "razonSocial": "Perez Juan",
+        "calle": "JJ Valle",
+        "numero": 673,
+        "departamento": "",
+        "barrio": "",
+        "localidad": {
+          "id": 91425,
+          "postal": 5603,
+          "nombre": "RAMA CAIDA",
+          "provincia": "MZA"
+        },
+        "telefono1": "1143214321",
+        "telefono2": "",
+        "email": "juanP@cliente.com",
+        "nacimiento": "1975-11-30",
+        "contacto": "Perez Juan",
+        "empresa": "",
+        "puesto": "",
+        "actividad": {
+          "id": 130,
+          "nombre": "EMPLEADO"
+        },
+        "iva": {
+          "inscripcion": {
+            "id": 5,
+            "nombre": "consumidor final"
+          },
+          "retencion": false,
+          "percepcion": false
+        },
+        "ingresosBrutos": {
+          "inscripcion": {
+            "id": 0,
+            "nombre": "No inscripto"
+          },
+          "retencion": false,
+          "percepcion": false
+        },
+        "nacionalidad": {
+          "id": 0,
+          "nombre": ""
+        },
+        "estadoCivil": {
+          "id": "",
+          "nombre": ""
+        },
+        "cuenta": 9699908,
+        "estado": "REVISAR",
+        "distribucionDigital": true
+      }
+    }
+  ],
+  "tests": []
+}

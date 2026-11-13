@@ -1,0 +1,39 @@
+.calendarDivClass{
+	background:#ffffff;
+	border:solid 2px #333333;
+	font-family:Arial,Tahoma,Verdana !important;
+}
+.calendarDivClass img{
+	width:20px;
+}
+.calendarDivClass table{
+	border-collapse:collaspse;
+	border-spacing: 0px;	
+}
+.hatsCalendarCloseBar td{
+	text-align:right;
+}
+.month, .year, .dayOfWeek{
+	background:#00358e;
+	text-align:center;
+	color:#ffffff;
+	padding:2px;
+}
+.day, .focusDay, .focusDefaultDay{
+	text-align:center;
+}
+.day a, .focusDay a, .focusDefaultDay a{
+	font-family: Arial,Tahoma,Verdana !important;
+	font-weight:bold;
+	display:block;
+	padding:3px;
+}
+.day a:hover, .focusDay a, .focusDefaultDay a:hover{
+	background:#00358e;
+	color:#ffffff;
+}
+.focusDefaultDay a{
+	border:solid 1px #00358e;
+	background:#efeef3;
+	color:#000000;
+}

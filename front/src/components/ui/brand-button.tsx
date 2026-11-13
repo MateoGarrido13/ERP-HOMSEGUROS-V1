@@ -11,6 +11,7 @@ export const brandButtonClass = cva(
         primary: "bg-primary text-white hover:bg-primary-deep focus-visible:outline-primary",
         outline:
           "border border-field-line bg-white text-title hover:bg-stage focus-visible:outline-primary disabled:border-transparent",
+        danger: "bg-danger-strong text-white hover:bg-danger focus-visible:outline-danger",
       },
     },
     defaultVariants: {

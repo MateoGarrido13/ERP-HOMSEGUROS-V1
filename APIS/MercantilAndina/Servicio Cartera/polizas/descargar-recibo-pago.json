@@ -1,0 +1,43 @@
+{
+  "source": "ma-postman-collection",
+  "sourcePath": "POLIZAS/Descargar recibo pago",
+  "name": "Descargar recibo pago",
+  "method": "GET",
+  "url": "https://apidev.mercantilandina.com.ar/polizas/v1/64274022/0/recibos/1",
+  "path": [
+    "polizas",
+    "v1",
+    "64274022",
+    "0",
+    "recibos",
+    "1"
+  ],
+  "headers": [
+    {
+      "key": "Authorization",
+      "value": "Bearer {{api.token}}"
+    },
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Ocp-Apim-Subscription-Key",
+      "value": "{{api.key}}"
+    }
+  ],
+  "query": [],
+  "description": "Obtiene una URL para descargar una copia de póliza.",
+  "body": null,
+  "exampleResponses": [
+    {
+      "name": "Descargar recibo pago",
+      "code": 200,
+      "status": "OK",
+      "body": {
+        "url": "https://servicios.qamercantilandina.com.ar/descarga/t/DXCQ____1ZM0_ld7arukiNxsTFOystrnsS0we7cGZ2t9422fQuLYhxoSXJHaPy0YjraQoMoaiL6AYcXgkgjIitdRgV3O8Q.T?nomFile=TIKET_ASEG[20260424135825378032].PDF"
+      }
+    }
+  ],
+  "tests": []
+}

@@ -17,7 +17,7 @@ Genera los siguientes archivos exactamente como se indica. No agregues lógica t
 Debe exportar:
 - `SolicitudCotizacion` (interfaz, copiada del contexto base)
 - `CotizacionCanonica` (interfaz, copiada del contexto base)
-- `IProveedorACL` (interfaz con un único método: `cotizar(solicitud: SolicitudCotizacion, signal: AbortSignal): Promise<CotizacionCanonica>`)
+- `IProveedorACL` (interfaz con un único método: `cotizar(solicitud: SolicitudCotizacion, signal: AbortSignal): Promise<CotizacionCanonica[]>`)
 - `ICircuitBreaker` (interfaz con métodos: `isOpen(): boolean`, `recordSuccess(): void`, `recordFailure(): void`)
 - `AppError` (clase que extiende `Error` con campo `code: string`)
 
@@ -58,21 +58,27 @@ Debe exportar:
   - constructor recibe `proveedores: IProveedorACL[]`
   - método `cotizarEnParalelo(solicitud: SolicitudCotizacion): Promise<CotizacionCanonica[]>` — esqueleto con `// TODO`
 
-### 8. `supabase/functions/cotizar/acl/mappers/sancor.ts`
+### 8. `supabase/functions/cotizar/acl/mappers/prov_sancor_seguros.ts`
 Debe exportar:
-- `SancorACL` (clase que implementa `IProveedorACL`)
+- `ProvSancorSegurosACL` (clase que implementa `IProveedorACL`)
   - constructor recibe `httpClient: HttpClient`
   - `cotizar(...)` — esqueleto con `// TODO`
   - `toProveedorRequest(solicitud: SolicitudCotizacion): unknown` — privado, esqueleto
   - `toCanonical(raw: unknown): CotizacionCanonica` — privado, esqueleto
 
-### 9. `supabase/functions/cotizar/acl/mappers/zurich.ts`
-Mismo esqueleto que `sancor.ts` pero con nombre `ZurichACL`. Sin compartir código con Sancor.
+### 9. `supabase/functions/cotizar/acl/mappers/prov_mercantil_andina.ts`
+Mismo esqueleto que `prov_sancor_seguros.ts` pero con nombre `ProvMercantilAndinaACL`. Sin compartir código con Prov_Sancor_Seguros.
+
+### 10. `supabase/functions/cotizar/acl/mappers/prov_zurich.ts`
+Mismo esqueleto que `prov_sancor_seguros.ts` pero con nombre `ProvZurichACL`. Mockeado (no hay API real integrada todavía): `cotizar` devuelve un solo `CotizacionCanonica` con `proveedorId: "prov_zurich"`, `prima: 0`, `cobertura: "No disponible"`, `error: "No disponible"`, `estimado: true`. Sin compartir código con otros mappers.
+
+### 11. `supabase/functions/cotizar/acl/mappers/prov_allianz.ts`
+Mismo esqueleto que `prov_sancor_seguros.ts` pero con nombre `ProvAllianzACL`. Mockeado (no hay API real integrada todavía): `cotizar` devuelve un solo `CotizacionCanonica` con `proveedorId: "prov_allianz"`, `prima: 0`, `cobertura: "No disponible"`, `error: "No disponible"`, `estimado: true`. Sin compartir código con otros mappers.
 
 ---
 
 ## Output esperado
-Nueve archivos TypeScript, uno por bloque. Cada archivo:
+Once archivos TypeScript, uno por bloque. Cada archivo:
 - tiene su import de tipos desde `../_shared/types.ts` (o ruta relativa correcta)
 - compila sin errores con `deno check` (podés suponer que los imports de Supabase se resuelven)
 - no tiene lógica real, solo estructura

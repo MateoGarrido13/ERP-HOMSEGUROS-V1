@@ -1,0 +1,42 @@
+{
+  "source": "ma-postman-collection",
+  "sourcePath": "POLIZAS/Descargar póliza productor",
+  "name": "Descargar póliza productor",
+  "method": "GET",
+  "url": "https://apidev.mercantilandina.com.ar/polizas/v1/516504898/0/productor",
+  "path": [
+    "polizas",
+    "v1",
+    "516504898",
+    "0",
+    "productor"
+  ],
+  "headers": [
+    {
+      "key": "Authorization",
+      "value": "Bearer {{api.token}}"
+    },
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Ocp-Apim-Subscription-Key",
+      "value": "{{api.key}}"
+    }
+  ],
+  "query": [],
+  "description": "Obtiene una URL para descargar una copia de póliza.",
+  "body": null,
+  "exampleResponses": [
+    {
+      "name": "Descargar póliza productor",
+      "code": 200,
+      "status": "OK",
+      "body": {
+        "url": "https://servicios.qamercantilandina.com.ar/descarga/t/DWuV____1ZPPoeKhKeMjFTXiItoHQ.CWTPwlpLwCxRNy1bcQq2WKuhb5zGZsf120lQFYFC92vGH2DKqjoanusol86n9sh9gO?nomFile=ANEXO[20260424135202687111].PDF"
+      }
+    }
+  ],
+  "tests": []
+}

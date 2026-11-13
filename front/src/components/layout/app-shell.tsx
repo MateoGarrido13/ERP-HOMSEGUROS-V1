@@ -10,10 +10,16 @@ interface MenuItem {
 
 // Épica 4.2: el menú depende del rol (PAS vs directivo/administrativo) y
 // solo muestra ítems cuyas pantallas ya existen. Hoy eso es nada más que
-// Pendientes (PAS) y Red (directivo/administrativo); el resto (Cotizar,
-// Cartera, Siniestros, Perfil) se agrega cuando existan esas pantallas.
-const MENU_PAS: MenuItem[] = [{ href: "/pendientes", label: "Pendientes" }];
-const MENU_RED: MenuItem[] = [{ href: "/red", label: "Red" }];
+// Pendientes (PAS), Red (directivo/administrativo) y Perfil (todos).
+// Cotizar, Cartera y Siniestros se agregan cuando existan esas pantallas.
+const MENU_PAS: MenuItem[] = [
+  { href: "/pendientes", label: "Pendientes" },
+  { href: "/perfil", label: "Perfil" },
+];
+const MENU_RED: MenuItem[] = [
+  { href: "/red", label: "Red" },
+  { href: "/perfil", label: "Perfil" },
+];
 
 export function AppShell({ rol, children }: { rol: Rol; children: ReactNode }) {
   const items = rol === "pas" ? MENU_PAS : MENU_RED;

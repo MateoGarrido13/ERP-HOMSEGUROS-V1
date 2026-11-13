@@ -1,0 +1,641 @@
+{
+  "source": "ma-postman-collection",
+  "sourcePath": "CARTERA/Cobranzas",
+  "name": "Cobranzas",
+  "method": "GET",
+  "url": "https://apidev.mercantilandina.com.ar/cartera/v1/cobranzas?page=1&size=20&cuenta=87139&desde=2024-05-01&hasta=2024-05-20",
+  "path": [
+    "cartera",
+    "v1",
+    "cobranzas"
+  ],
+  "headers": [
+    {
+      "key": "Authorization",
+      "value": "Bearer {{api.token}}"
+    },
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Ocp-Apim-Subscription-Key",
+      "value": "{{api.key}}"
+    }
+  ],
+  "query": [
+    {
+      "key": "page",
+      "value": "1",
+      "disabled": false
+    },
+    {
+      "key": "size",
+      "value": "20",
+      "disabled": false
+    },
+    {
+      "key": "cuenta",
+      "value": "87139",
+      "disabled": false
+    },
+    {
+      "key": "desde",
+      "value": "2024-05-01",
+      "disabled": false
+    },
+    {
+      "key": "hasta",
+      "value": "2024-05-20",
+      "disabled": false
+    },
+    {
+      "key": "rama",
+      "value": "5",
+      "disabled": true
+    },
+    {
+      "key": "grupo",
+      "value": "30154",
+      "disabled": true
+    }
+  ],
+  "description": "Obtener listado de polizas",
+  "body": null,
+  "exampleResponses": [
+    {
+      "name": "Cobranzas",
+      "code": 200,
+      "status": "OK",
+      "body": {
+        "tamaño": 20,
+        "total_paginas": 19,
+        "pagina_actual": 1,
+        "total_elementos": 370,
+        "datos": [
+          {
+            "rama": 23,
+            "poliza": 1308801,
+            "endoso": 6,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": 5100.81,
+              "premio": 5177.32,
+              "tipo_cambio": null,
+              "comision_agente": -255.04,
+              "comision_cobranza": 0
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": 1297,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": null,
+            "fecha_rechazo": null,
+            "tipo_nota": "D",
+            "motivo_rechazo": null
+          },
+          {
+            "rama": 5,
+            "poliza": 14544462,
+            "endoso": 7,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": 11916.87,
+              "premio": 20087.32,
+              "tipo_cambio": null,
+              "comision_agente": -2383.37,
+              "comision_cobranza": -401.75
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": 1297,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": null,
+            "fecha_rechazo": null,
+            "tipo_nota": "D",
+            "motivo_rechazo": null
+          },
+          {
+            "rama": 5,
+            "poliza": 14514556,
+            "endoso": 8,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": 26350.46,
+              "premio": 44416.86,
+              "tipo_cambio": null,
+              "comision_agente": -5270.09,
+              "comision_cobranza": -888.34
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": 1297,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": null,
+            "fecha_rechazo": null,
+            "tipo_nota": "D",
+            "motivo_rechazo": null
+          },
+          {
+            "rama": 5,
+            "poliza": 14667275,
+            "endoso": 6,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": 69744.41,
+              "premio": 117562.56,
+              "tipo_cambio": null,
+              "comision_agente": -13948.88,
+              "comision_cobranza": -2351.25
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": 1297,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": null,
+            "fecha_rechazo": null,
+            "tipo_nota": "D",
+            "motivo_rechazo": null
+          },
+          {
+            "rama": 5,
+            "poliza": 14771604,
+            "endoso": 4,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": 17236.76,
+              "premio": 29054.63,
+              "tipo_cambio": null,
+              "comision_agente": -3447.35,
+              "comision_cobranza": -581.09
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": 1297,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": null,
+            "fecha_rechazo": null,
+            "tipo_nota": "D",
+            "motivo_rechazo": null
+          },
+          {
+            "rama": 5,
+            "poliza": 14920500,
+            "endoso": 2,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": 17160.66,
+              "premio": 28926.36,
+              "tipo_cambio": null,
+              "comision_agente": -3432.13,
+              "comision_cobranza": -578.53
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": 1297,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": null,
+            "fecha_rechazo": null,
+            "tipo_nota": "D",
+            "motivo_rechazo": null
+          },
+          {
+            "rama": 5,
+            "poliza": 14462203,
+            "endoso": 9,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": 20402.23,
+              "premio": 34390.41,
+              "tipo_cambio": null,
+              "comision_agente": -4080.45,
+              "comision_cobranza": -687.81
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": 1297,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": null,
+            "fecha_rechazo": null,
+            "tipo_nota": "D",
+            "motivo_rechazo": null
+          },
+          {
+            "rama": 5,
+            "poliza": 14594566,
+            "endoso": 7,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": 18391.67,
+              "premio": 31001.37,
+              "tipo_cambio": null,
+              "comision_agente": -3678.33,
+              "comision_cobranza": -620.03
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": 1297,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": null,
+            "fecha_rechazo": null,
+            "tipo_nota": "D",
+            "motivo_rechazo": null
+          },
+          {
+            "rama": 5,
+            "poliza": 14789907,
+            "endoso": 4,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": 32708.76,
+              "premio": 55134.53,
+              "tipo_cambio": null,
+              "comision_agente": -6541.75,
+              "comision_cobranza": -1102.69
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": 1297,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": null,
+            "fecha_rechazo": null,
+            "tipo_nota": "D",
+            "motivo_rechazo": null
+          },
+          {
+            "rama": 5,
+            "poliza": 14872472,
+            "endoso": 3,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": 13585.88,
+              "premio": 22900.63,
+              "tipo_cambio": null,
+              "comision_agente": -2717.18,
+              "comision_cobranza": -458.01
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": 1297,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": null,
+            "fecha_rechazo": null,
+            "tipo_nota": "D",
+            "motivo_rechazo": null
+          },
+          {
+            "rama": 5,
+            "poliza": 14877815,
+            "endoso": 3,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": 8318.22,
+              "premio": 12934.84,
+              "tipo_cambio": null,
+              "comision_agente": -1663.64,
+              "comision_cobranza": -258.7
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": 1297,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": null,
+            "fecha_rechazo": null,
+            "tipo_nota": "D",
+            "motivo_rechazo": null
+          },
+          {
+            "rama": 5,
+            "poliza": 14884052,
+            "endoso": 3,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": 57656.94,
+              "premio": 97187.7,
+              "tipo_cambio": null,
+              "comision_agente": -11531.39,
+              "comision_cobranza": -2915.63
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": 1297,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": null,
+            "fecha_rechazo": null,
+            "tipo_nota": "D",
+            "motivo_rechazo": null
+          },
+          {
+            "rama": 5,
+            "poliza": 14885358,
+            "endoso": 3,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": 10853.8,
+              "premio": 14177.23,
+              "tipo_cambio": null,
+              "comision_agente": -2170.76,
+              "comision_cobranza": -283.54
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": 1297,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": null,
+            "fecha_rechazo": null,
+            "tipo_nota": "D",
+            "motivo_rechazo": null
+          },
+          {
+            "rama": 5,
+            "poliza": 14926211,
+            "endoso": 1,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": 25543.5,
+              "premio": 43056.64,
+              "tipo_cambio": null,
+              "comision_agente": -5108.7,
+              "comision_cobranza": -861.13
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": 1297,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": null,
+            "fecha_rechazo": null,
+            "tipo_nota": "D",
+            "motivo_rechazo": null
+          },
+          {
+            "rama": 5,
+            "poliza": 14946565,
+            "endoso": 1,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": 23538.57,
+              "premio": 39677.08,
+              "tipo_cambio": null,
+              "comision_agente": -4707.71,
+              "comision_cobranza": -793.54
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": 1297,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": null,
+            "fecha_rechazo": null,
+            "tipo_nota": "D",
+            "motivo_rechazo": null
+          },
+          {
+            "rama": 5,
+            "poliza": 15084625,
+            "endoso": 0,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": 19622.27,
+              "premio": 33075.7,
+              "tipo_cambio": null,
+              "comision_agente": -3924.45,
+              "comision_cobranza": -661.51
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": 1297,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": null,
+            "fecha_rechazo": null,
+            "tipo_nota": "D",
+            "motivo_rechazo": null
+          },
+          {
+            "rama": 5,
+            "poliza": 15084790,
+            "endoso": 0,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": 24791.95,
+              "premio": 41789.81,
+              "tipo_cambio": null,
+              "comision_agente": -4958.39,
+              "comision_cobranza": -835.8
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": 1297,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": null,
+            "fecha_rechazo": null,
+            "tipo_nota": "D",
+            "motivo_rechazo": null
+          },
+          {
+            "rama": 9,
+            "poliza": 1428928,
+            "endoso": 0,
+            "cuota": 10,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": 79.02,
+              "premio": 221,
+              "tipo_cambio": null,
+              "comision_agente": -9.48,
+              "comision_cobranza": -4.42
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": 1297,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": null,
+            "fecha_rechazo": null,
+            "tipo_nota": "D",
+            "motivo_rechazo": null
+          },
+          {
+            "rama": 9,
+            "poliza": 1428928,
+            "endoso": 1,
+            "cuota": 6,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": 287.63,
+              "premio": 622,
+              "tipo_cambio": null,
+              "comision_agente": -34.52,
+              "comision_cobranza": -12.44
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": 1297,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": null,
+            "fecha_rechazo": null,
+            "tipo_nota": "D",
+            "motivo_rechazo": null
+          },
+          {
+            "rama": 16,
+            "poliza": 3035789,
+            "endoso": 1,
+            "cuota": 3,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": 2074.52,
+              "premio": 4046,
+              "tipo_cambio": null,
+              "comision_agente": -518.63,
+              "comision_cobranza": -80.92
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": 1297,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": null,
+            "fecha_rechazo": null,
+            "tipo_nota": "D",
+            "motivo_rechazo": null
+          }
+        ]
+      }
+    }
+  ],
+  "tests": []
+}

@@ -1,0 +1,77 @@
+{
+  "source": "ma-postman-collection",
+  "sourcePath": "POLIZAS/Obtener riesgos de póliza auto",
+  "name": "Obtener riesgos de póliza auto",
+  "method": "GET",
+  "url": "https://apidev.mercantilandina.com.ar/polizas/v1/516504898/0/1/riesgo/auto",
+  "path": [
+    "polizas",
+    "v1",
+    "516504898",
+    "0",
+    "1",
+    "riesgo",
+    "auto"
+  ],
+  "headers": [
+    {
+      "key": "Authorization",
+      "value": "Bearer {{api.token}}"
+    },
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Ocp-Apim-Subscription-Key",
+      "value": "{{api.key}}"
+    }
+  ],
+  "query": [],
+  "description": "Consulta el estado de una solicitud",
+  "body": null,
+  "exampleResponses": [
+    {
+      "name": "Obtener riesgos de póliza auto",
+      "code": 200,
+      "status": "OK",
+      "body": {
+        "poliza": 516504898,
+        "orden": 0,
+        "item": 1,
+        "nombre": "CHEVROLET SPIN 1.8 LT 5 AS 2013 (AT123CC) A  - RESPONSABILIDAD CIVIL LIMITADA",
+        "rama": 5,
+        "subrama": 1,
+        "suma": 0,
+        "prima": 46391.36,
+        "primarc": 46391.36,
+        "primaca": 0,
+        "motor": "10DBS10030321",
+        "chasis": "8AD2AKFWU7G068123",
+        "dominio": "AT123CC",
+        "marca": "CHEVROLET SPIN 1.8 LT 5 AS",
+        "modelo": 2013,
+        "tipoveh": 1,
+        "tipo": "AUTOMOVIL",
+        "tipocar": 3,
+        "carroceria": "CAMIONETA RURAL",
+        "catveh": 1,
+        "categoria": "SIN CATEGORIA",
+        "tipouso": 1,
+        "uso": "PARTICULAR",
+        "cobtrc": 8,
+        "cobtca": 0,
+        "cobertura": "A  - RESPONSABILIDAD CIVIL LIMITADA",
+        "cobibr": 0,
+        "asistencia": "0)No Posee",
+        "titular": "",
+        "acreedor": "CREDICUOTAS CONSUMO S.A..",
+        "vigencia": "de las 12 hs del 24.04.2026 a las 12 hs del 24.05.2026",
+        "ubicacion": "GUERNICA (1862) - B A",
+        "zona": 3,
+        "recupero": "NO corresponde Rastreo Satelital a cargo de Ma.  No corresponde instalar"
+      }
+    }
+  ],
+  "tests": []
+}

@@ -1,0 +1,172 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Api Consulta de Grupos y Categor\u00edas de Bienes Asegurados",
+        "description": "servicio para obtener valores de bienes asegurados: grupos / categorias.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://external-pre-api.gruposancorseguros.com/apissa/pre-catalog/insuredGoods/warranty/extended"
+        }
+    ],
+    "paths": {
+        "/properties/groups": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "statisticCode",
+                        "in": "query",
+                        "description": "codgio de Grupo Estadistico.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "groups": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number"
+                                                    },
+                                                    "description": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "example": "{\"groups\":[{\"id\":4,\"description\":\"COMPUTACION\"},{\"id\":10,\"description\":\"OTROS\"},{\"id\":13,\"description\":\"L\u00cdNEA BLANCA\"},{\"id\":16,\"description\":\"CELULARES\"}]}"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "description": "Listado de grupo de bienes."
+        },
+        "/properties/categories": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "groupId",
+                        "in": "query",
+                        "description": "Id de grupo de bien.",
+                        "required": true,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 10
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "categories": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number"
+                                                    },
+                                                    "description": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "example": "{\"categories\":[{\"id\":91,\"description\":\"M\u00e1quinas de coser\"},{\"id\":92,\"description\":\"Multigimnasio\"},{\"id\":93,\"description\":\"GPS\"},{\"id\":115,\"description\":\"Caminador\"},{\"id\":116,\"description\":\"Nebulizador\"},{\"id\":117,\"description\":\"Balanza\"},{\"id\":118,\"description\":\"Smart watch\"},{\"id\":120,\"description\":\"Instrumentos musicales\"},{\"id\":121,\"description\":\"Baterias para autos\"},{\"id\":122,\"description\":\"Bicicletas\"},{\"id\":123,\"description\":\"Carritos bebe\"},{\"id\":124,\"description\":\"Tensiometro\"},{\"id\":125,\"description\":\"Destructoras de papel\"},{\"id\":126,\"description\":\"Fabripastas\"},{\"id\":127,\"description\":\"Equipo de pintura\"},{\"id\":128,\"description\":\"Compresores\"},{\"id\":129,\"description\":\"Selfies sticks\"},{\"id\":130,\"description\":\"Valijas\"},{\"id\":131,\"description\":\"Soportes LCD/LED\"},{\"id\":132,\"description\":\"Colchones\"},{\"id\":118,\"description\":\"Smart watch\"},{\"id\":120,\"description\":\"Instrumentos musicales\"},{\"id\":121,\"description\":\"Baterias para autos\"},{\"id\":122,\"description\":\"Bicicletas\"},{\"id\":123,\"description\":\"Carritos bebe\"},{\"id\":124,\"description\":\"Tensiometro\"},{\"id\":125,\"description\":\"Destructoras de papel\"},{\"id\":126,\"description\":\"Fabripastas\"},{\"id\":127,\"description\":\"Equipo de pintura\"},{\"id\":128,\"description\":\"Compresores\"},{\"id\":129,\"description\":\"Selfies sticks\"},{\"id\":130,\"description\":\"Valijas\"},{\"id\":131,\"description\":\"Soportes LCD/LED\"},{\"id\":132,\"description\":\"Colchones\"}]}"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "description": "Listado de categorias de bienes."
+        },
+        "/properties/ids": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "groupId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            },
+            "description": "Listado de bienes."
+        }
+    },
+    "components": {
+        "schemas": [],
+        "securitySchemes": {
+            "clientID": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "gss_apiclient_id"
+            }
+        }
+    },
+    "security": [
+        {
+            "clientID": []
+        },
+        []
+    ]
+}

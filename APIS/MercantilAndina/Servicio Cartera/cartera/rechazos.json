@@ -1,0 +1,578 @@
+{
+  "source": "ma-postman-collection",
+  "sourcePath": "CARTERA/Rechazos",
+  "name": "Rechazos",
+  "method": "GET",
+  "url": "https://apidev.mercantilandina.com.ar/cartera/v1/rechazos?size=50&page=1&cuenta=87139&desde=2025-01-01&hasta=2025-01-30",
+  "path": [
+    "cartera",
+    "v1",
+    "rechazos"
+  ],
+  "headers": [
+    {
+      "key": "Authorization",
+      "value": "Bearer {{api.token}}"
+    },
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Ocp-Apim-Subscription-Key",
+      "value": "{{api.key}}"
+    }
+  ],
+  "query": [
+    {
+      "key": "size",
+      "value": "50",
+      "disabled": false
+    },
+    {
+      "key": "page",
+      "value": "1",
+      "disabled": false
+    },
+    {
+      "key": "cuenta",
+      "value": "87139",
+      "disabled": false
+    },
+    {
+      "key": "desde",
+      "value": "2025-01-01",
+      "disabled": false
+    },
+    {
+      "key": "hasta",
+      "value": "2025-01-30",
+      "disabled": false
+    },
+    {
+      "key": "rama",
+      "value": "5",
+      "disabled": true
+    }
+  ],
+  "description": "Obtener listado de polizas",
+  "body": null,
+  "exampleResponses": [
+    {
+      "name": "Rechazos",
+      "code": 200,
+      "status": "OK",
+      "body": {
+        "tamaño": 50,
+        "total_paginas": 1,
+        "pagina_actual": 1,
+        "total_elementos": 16,
+        "datos": [
+          {
+            "rama": null,
+            "poliza": 514985352,
+            "endoso": 9,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": null,
+              "premio": 60001.92,
+              "tipo_cambio": null,
+              "comision_agente": null,
+              "comision_cobranza": null
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": null,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": {
+              "codigo": 1,
+              "nombre": "VISA"
+            },
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": "2025-01-05",
+            "fecha_rechazo": "2025-01-16",
+            "tipo_nota": null,
+            "motivo_rechazo": {
+              "codigo": 5059,
+              "descripcion": "NUMERO DE TARJETA INCORRECTO"
+            }
+          },
+          {
+            "rama": null,
+            "poliza": 515023714,
+            "endoso": 8,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": null,
+              "premio": 74745.43,
+              "tipo_cambio": null,
+              "comision_agente": null,
+              "comision_cobranza": null
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": null,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": "2024-12-21",
+            "fecha_rechazo": "2025-01-08",
+            "tipo_nota": null,
+            "motivo_rechazo": {
+              "codigo": 7010,
+              "descripcion": "R10 FALTA DE FONDOS"
+            }
+          },
+          {
+            "rama": null,
+            "poliza": 515596324,
+            "endoso": 0,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": null,
+              "premio": 42017.51,
+              "tipo_cambio": null,
+              "comision_agente": null,
+              "comision_cobranza": null
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": null,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": {
+              "codigo": 1,
+              "nombre": "VISA"
+            },
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": "2024-12-19",
+            "fecha_rechazo": "2025-01-02",
+            "tipo_nota": null,
+            "motivo_rechazo": {
+              "codigo": 7075,
+              "descripcion": "R75 FECHA INVALIDA"
+            }
+          },
+          {
+            "rama": null,
+            "poliza": 514946565,
+            "endoso": 9,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": null,
+              "premio": 66685.28,
+              "tipo_cambio": null,
+              "comision_agente": null,
+              "comision_cobranza": null
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": null,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": "2024-12-18",
+            "fecha_rechazo": "2025-01-08",
+            "tipo_nota": null,
+            "motivo_rechazo": {
+              "codigo": 7010,
+              "descripcion": "R10 FALTA DE FONDOS"
+            }
+          },
+          {
+            "rama": null,
+            "poliza": 514926211,
+            "endoso": 9,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": null,
+              "premio": 73220.38,
+              "tipo_cambio": null,
+              "comision_agente": null,
+              "comision_cobranza": null
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": null,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": "2024-12-11",
+            "fecha_rechazo": "2025-01-08",
+            "tipo_nota": null,
+            "motivo_rechazo": {
+              "codigo": 7010,
+              "descripcion": "R10 FALTA DE FONDOS"
+            }
+          },
+          {
+            "rama": null,
+            "poliza": 514985863,
+            "endoso": 8,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": null,
+              "premio": 164631.04,
+              "tipo_cambio": null,
+              "comision_agente": null,
+              "comision_cobranza": null
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": null,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": "2024-12-06",
+            "fecha_rechazo": "2025-01-08",
+            "tipo_nota": null,
+            "motivo_rechazo": {
+              "codigo": 7010,
+              "descripcion": "R10 FALTA DE FONDOS"
+            }
+          },
+          {
+            "rama": null,
+            "poliza": 515404421,
+            "endoso": 2,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": null,
+              "premio": 62236.65,
+              "tipo_cambio": null,
+              "comision_agente": null,
+              "comision_cobranza": null
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": null,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": "2024-12-06",
+            "fecha_rechazo": "2025-01-08",
+            "tipo_nota": null,
+            "motivo_rechazo": {
+              "codigo": 7010,
+              "descripcion": "R10 FALTA DE FONDOS"
+            }
+          },
+          {
+            "rama": null,
+            "poliza": 515404421,
+            "endoso": 2,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": null,
+              "premio": 62236.65,
+              "tipo_cambio": null,
+              "comision_agente": null,
+              "comision_cobranza": null
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": null,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": "2024-12-06",
+            "fecha_rechazo": "2025-01-15",
+            "tipo_nota": null,
+            "motivo_rechazo": {
+              "codigo": 7010,
+              "descripcion": "R10 FALTA DE FONDOS"
+            }
+          },
+          {
+            "rama": null,
+            "poliza": 514843286,
+            "endoso": 11,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": null,
+              "premio": 67168.68,
+              "tipo_cambio": null,
+              "comision_agente": null,
+              "comision_cobranza": null
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": null,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": "2024-12-04",
+            "fecha_rechazo": "2025-01-08",
+            "tipo_nota": null,
+            "motivo_rechazo": {
+              "codigo": 7010,
+              "descripcion": "R10 FALTA DE FONDOS"
+            }
+          },
+          {
+            "rama": null,
+            "poliza": 515119086,
+            "endoso": 6,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": null,
+              "premio": 83001.57,
+              "tipo_cambio": null,
+              "comision_agente": null,
+              "comision_cobranza": null
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": null,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": "2024-12-03",
+            "fecha_rechazo": "2025-01-08",
+            "tipo_nota": null,
+            "motivo_rechazo": {
+              "codigo": 7010,
+              "descripcion": "R10 FALTA DE FONDOS"
+            }
+          },
+          {
+            "rama": null,
+            "poliza": 515119086,
+            "endoso": 6,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": null,
+              "premio": 83001.57,
+              "tipo_cambio": null,
+              "comision_agente": null,
+              "comision_cobranza": null
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": null,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": "2024-12-03",
+            "fecha_rechazo": "2025-01-15",
+            "tipo_nota": null,
+            "motivo_rechazo": {
+              "codigo": 7010,
+              "descripcion": "R10 FALTA DE FONDOS"
+            }
+          },
+          {
+            "rama": null,
+            "poliza": 514977183,
+            "endoso": 8,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": null,
+              "premio": 59082.81,
+              "tipo_cambio": null,
+              "comision_agente": null,
+              "comision_cobranza": null
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": null,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": "2024-12-01",
+            "fecha_rechazo": "2025-01-08",
+            "tipo_nota": null,
+            "motivo_rechazo": {
+              "codigo": 7010,
+              "descripcion": "R10 FALTA DE FONDOS"
+            }
+          },
+          {
+            "rama": null,
+            "poliza": 514977183,
+            "endoso": 8,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": null,
+              "premio": 59082.81,
+              "tipo_cambio": null,
+              "comision_agente": null,
+              "comision_cobranza": null
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": null,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": "2024-12-01",
+            "fecha_rechazo": "2025-01-15",
+            "tipo_nota": null,
+            "motivo_rechazo": {
+              "codigo": 7010,
+              "descripcion": "R10 FALTA DE FONDOS"
+            }
+          },
+          {
+            "rama": null,
+            "poliza": 515107126,
+            "endoso": 6,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": null,
+              "premio": 65845.25,
+              "tipo_cambio": null,
+              "comision_agente": null,
+              "comision_cobranza": null
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": null,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": "2024-11-28",
+            "fecha_rechazo": "2025-01-08",
+            "tipo_nota": null,
+            "motivo_rechazo": {
+              "codigo": 7010,
+              "descripcion": "R10 FALTA DE FONDOS"
+            }
+          },
+          {
+            "rama": null,
+            "poliza": 514960258,
+            "endoso": 8,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": null,
+              "premio": 67596.99,
+              "tipo_cambio": null,
+              "comision_agente": null,
+              "comision_cobranza": null
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": null,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": "2024-11-25",
+            "fecha_rechazo": "2025-01-08",
+            "tipo_nota": null,
+            "motivo_rechazo": {
+              "codigo": 7010,
+              "descripcion": "R10 FALTA DE FONDOS"
+            }
+          },
+          {
+            "rama": null,
+            "poliza": 514884317,
+            "endoso": 9,
+            "cuota": 1,
+            "canal": null,
+            "costo": {
+              "moneda": "ARS",
+              "prima": null,
+              "premio": 145708.82,
+              "tipo_cambio": null,
+              "comision_agente": null,
+              "comision_cobranza": null
+            },
+            "productor": {
+              "nombre": "LOS CERROS DIRECTO MDP",
+              "matricula": null,
+              "cuenta": 87139
+            },
+            "movimiento": null,
+            "tarjeta": null,
+            "fecha_cobranza": null,
+            "fecha_convenio": null,
+            "fecha_vencimiento": "2024-11-23",
+            "fecha_rechazo": "2025-01-08",
+            "tipo_nota": null,
+            "motivo_rechazo": {
+              "codigo": 7010,
+              "descripcion": "R10 FALTA DE FONDOS"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "tests": []
+}

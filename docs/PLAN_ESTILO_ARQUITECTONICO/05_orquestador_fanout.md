@@ -18,9 +18,10 @@ Completá **solo** `supabase/functions/cotizar/orquestador.ts`.
 3. Llama `proveedor.cotizar(solicitud, controller.signal)` para **cada** `IProveedorACL` del constructor
 4. Espera con `Promise.allSettled` — **nunca** `Promise.all`
 5. Mapea cada resultado:
-   - `fulfilled` → la `CotizacionCanonica` devuelta
-   - `rejected` → `CotizacionCanonica` con `prima: 0`, `error` = mensaje, `proveedorId` si se puede inferir; si no, `"desconocido"`
-6. En `finally`, `clearTimeout` del timer
+   - `fulfilled` → el array `CotizacionCanonica[]` devuelto por el proveedor (uno o más planes)
+   - `rejected` → un solo `CotizacionCanonica` con `prima: 0`, `error` = mensaje, `proveedorId` si se puede inferir; si no, `"desconocido"`, `estimado: true`
+6. Aplana (flat) todos los arrays en un solo `CotizacionCanonica[]`
+7. En `finally`, `clearTimeout` del timer
 
 El orquestador no importa HTTP, CB ni mappers. Timeout global de fan-out: 4 segundos (ADR-004).
 

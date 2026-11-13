@@ -1,0 +1,122 @@
+{
+  "source": "ma-postman-collection",
+  "sourcePath": "POLIZAS/Consultar póliza",
+  "name": "Consultar póliza",
+  "method": "GET",
+  "url": "https://apidev.mercantilandina.com.ar/polizas/v1/516504898/0",
+  "path": [
+    "polizas",
+    "v1",
+    "516504898",
+    "0"
+  ],
+  "headers": [
+    {
+      "key": "Authorization",
+      "value": "Bearer {{api.token}}"
+    },
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Ocp-Apim-Subscription-Key",
+      "value": "{{api.key}}"
+    }
+  ],
+  "query": [],
+  "description": "Consulta el estado de una solicitud",
+  "body": null,
+  "exampleResponses": [
+    {
+      "name": "Consultar póliza",
+      "code": 200,
+      "status": "OK",
+      "body": {
+        "poliza": 516504898,
+        "endoso": 0,
+        "rama": {
+          "id": 5,
+          "nombre": "AUTOMOTORES"
+        },
+        "tipo": "NUEVA",
+        "motivo": "",
+        "referencia": 516504898,
+        "solicitud": 594387218,
+        "anterior": 0,
+        "desde": "2026-04-24",
+        "hasta": "2026-05-24",
+        "fin": "2027-04-24",
+        "emitido": "2026-04-24",
+        "digital": true,
+        "periodo": 1,
+        "cuotas": 1,
+        "pago": "CONVENIO",
+        "bien": "Auto: CHEVROLET SPIN 1.8 LT 2013 A  - RESPONSABILIDAD CIVIL LIMITADA",
+        "suma": 0,
+        "cobertura": "A  - RESPONSABILIDAD CIVIL LIMITADA",
+        "tomador": {
+          "id": 2878241,
+          "nombre": "SCHAFFER AUGUSTO PABLO",
+          "dni": 25568661,
+          "cuit": 0,
+          "sexo": "M",
+          "domicilio": "Juan Jose Valle 761 ",
+          "localidad": {
+            "id": 14703,
+            "postal": 7600,
+            "nombre": "MAR DEL PLATA",
+            "provincia": "BUENOS AIRES"
+          },
+          "iva": {
+            "inscripcion": {
+              "id": 5,
+              "nombre": "Consumidor Final"
+            },
+            "retencion": false,
+            "percepcion": false
+          }
+        },
+        "productor": {
+          "id": 87139,
+          "nombre": "LOS CERROS DIRECTO MDP"
+        },
+        "grupo": {
+          "id": 10074,
+          "nombre": "LOS CERROS DIRECTAS"
+        },
+        "subunidad": {
+          "id": 338,
+          "nombre": "MAR DEL PLATA"
+        },
+        "ejecutivo": "",
+        "cobranza": "RODRIGV",
+        "canal": "",
+        "costo": {
+          "moneda": "ARS",
+          "premio": 80297.75,
+          "prima": 46391.36,
+          "primaRC": 46391.36,
+          "primaCasco": 0,
+          "derechoEmision": 11249.9,
+          "recargoAdministrativo": 6958.7,
+          "recargoFinanciero": 0,
+          "iva": 13565.99,
+          "impuestosInternos": 0,
+          "tasaSSN": 387.6,
+          "serviciosSociales": 323,
+          "sellos": 775.2,
+          "percepcionIIBB": 0,
+          "percepcionIva": 0,
+          "otrosImpuestos": 646,
+          "bonificacion": 9
+        },
+        "creo": "SCHAFTST",
+        "creado": "2026-04-24T12:22:53-0300",
+        "recibo": 0,
+        "solicitudAnulacion": false
+      }
+    }
+  ],
+  "tests": []
+}

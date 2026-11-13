@@ -1,0 +1,422 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Cotizaci\u00f3n - Riesgos Varios - Garantia Extendida",
+        "description": "servicio para Cotizar Garant\u00eda Extendida",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://external-pre-api.gruposancorseguros.com/apissa/pre-catalog"
+        }
+    ],
+    "paths": {
+        "/quotation/serveralRisk/warrantyextended": {
+            "post": {
+                "description": "Servicio para cotizar garantia extendida.",
+                "operationId": "Cotiza p\u00f3lizas del ramo 'Riesgos Varios'",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "organizerNumber",
+                                    "producerNumber",
+                                    "statisticCodeIds",
+                                    "startEffectiveDate",
+                                    "locationRisk",
+                                    "clients",
+                                    "extendedWarrantyData"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "organizerNumber": {
+                                        "type": "string",
+                                        "description": "C\u00f3digo de Organizador",
+                                        "example": 204992
+                                    },
+                                    "producerNumber": {
+                                        "type": "integer",
+                                        "description": "Codigo de productor",
+                                        "example": 204992
+                                    },
+                                    "statisticCodeIds": {
+                                        "type": "integer",
+                                        "description": "Grupo estad\u00edstico",
+                                        "example": 240
+                                    },
+                                    "startEffectiveDate": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "description": "Fecha de inicio vigencia.",
+                                        "example": "2024-03-19"
+                                    },
+                                    "locationRisk": {
+                                        "type": "object",
+                                        "description": "Datos localidad.",
+                                        "required": [
+                                            "zipCode",
+                                            "cityId"
+                                        ],
+                                        "properties": {
+                                            "cityId": {
+                                                "type": "integer",
+                                                "description": "Id de ciudad",
+                                                "example": 11890
+                                            },
+                                            "zipCode": {
+                                                "type": "integer",
+                                                "description": "C\u00f3digo postal",
+                                                "example": 5521
+                                            }
+                                        }
+                                    },
+                                    "clients": {
+                                        "type": "object",
+                                        "description": "Datos de cliente",
+                                        "properties": {
+                                            "documentNumber": {
+                                                "type": "integer",
+                                                "description": "Numero Documento",
+                                                "example": 42055099
+                                            },
+                                            "documentType": {
+                                                "type": "string",
+                                                "description": "Tipo documento",
+                                                "example": "D",
+                                                "enum": [
+                                                    "D - DNI",
+                                                    "C - LC",
+                                                    "L - LE",
+                                                    "I - CI",
+                                                    "J - CUIT"
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "documentNumber",
+                                            "documentType"
+                                        ]
+                                    },
+                                    "paymentFrecuencyId": {
+                                        "type": "integer",
+                                        "description": "ID de frecuencia de pago",
+                                        "enum": [
+                                            "5 - Mensual",
+                                            "7 - Cuota",
+                                            "6 - Pago \u00fanico"
+                                        ],
+                                        "example": 5
+                                    },
+                                    "quota": {
+                                        "type": "integer",
+                                        "description": "numero de cuotas",
+                                        "example": 0
+                                    },
+                                    "extendedWarrantyData": {
+                                        "type": "object",
+                                        "required": [
+                                            "groupCode",
+                                            "categoryCode",
+                                            "factoryWarrantyMonths",
+                                            "covers"
+                                        ],
+                                        "properties": {
+                                            "groupCode": {
+                                                "type": "integer",
+                                                "description": "grupo",
+                                                "example": 1
+                                            },
+                                            "categoryCode": {
+                                                "type": "integer",
+                                                "description": "categoria",
+                                                "example": 4
+                                            },
+                                            "factoryWarrantyMonths": {
+                                                "type": "integer",
+                                                "description": "meses de cobertura de fabrica",
+                                                "example": 5
+                                            },
+                                            "covers": {
+                                                "type": "array",
+                                                "properties": {
+                                                    "coverData": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "warrantyMonths",
+                                                            "coverCode",
+                                                            "insuredSum"
+                                                        ],
+                                                        "properties": {
+                                                            "warrantyMonths": {
+                                                                "type": "integer",
+                                                                "description": "meses de cobertura",
+                                                                "example": 2
+                                                            },
+                                                            "coverCode": {
+                                                                "type": "integer",
+                                                                "description": "codigo cobertura",
+                                                                "example": 45
+                                                            },
+                                                            "insuredSum": {
+                                                                "type": "number",
+                                                                "description": "Suma asegurada",
+                                                                "example": 30000
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/warrantyextendedResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Parametros de entrada invalidos/mal escritos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authentication.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Authorization.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    },
+                    "415": {
+                        "description": "Faltan parametros de entrada obligatorios.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Parametros de entrada con valores incorrectos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "No response from Backend.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    },
+                    "504": {
+                        "description": "TimeOut from server.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "$ref": "#/components/parameters/Authorization"
+                }
+            ]
+        }
+    },
+    "components": {
+        "schemas": {
+            "result": {
+                "type": "object",
+                "properties": {
+                    "capital": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "detail": {
+                        "type": "string"
+                    },
+                    "detailint": {
+                        "type": "integer"
+                    },
+                    "premiumMonthly": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "premium": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "detailType": {
+                        "type": "string"
+                    }
+                }
+            },
+            "plans": {
+                "type": "object",
+                "properties": {
+                    "pricingId": {
+                        "type": "integer"
+                    },
+                    "premiumMonthly": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "results": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/result"
+                        }
+                    }
+                }
+            },
+            "warrantyextendedResponse": {
+                "type": "object",
+                "properties": {
+                    "messages": {
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "type": "string"
+                            },
+                            "code": {
+                                "type": "string"
+                            },
+                            "text": {
+                                "type": "string"
+                            },
+                            "help": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "quotationId": {
+                                "type": "integer"
+                            },
+                            "relationQuotationId": {
+                                "type": "integer"
+                            },
+                            "plans": {
+                                "$ref": "#/components/schemas/plans"
+                            }
+                        }
+                    }
+                }
+            },
+            "Message": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "text": {
+                        "type": "string"
+                    },
+                    "help": {
+                        "type": "string"
+                    }
+                }
+            },
+            "paging": {
+                "type": "object",
+                "properties": {
+                    "offset": {
+                        "type": "integer"
+                    },
+                    "limit": {
+                        "type": "integer"
+                    },
+                    "total": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "Messages": {
+                "type": "object",
+                "properties": {
+                    "messages": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Message"
+                        }
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "client_id": {
+                "type": "apiKey",
+                "name": "gss_apiclient_id",
+                "in": "header"
+            }
+        },
+        "parameters": {
+            "Authorization": {
+                "schema": {
+                    "example": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjNVQzJlMm15VU5LOVF1Z3NibDFwM",
+                    "type": "string"
+                },
+                "name": "Authorization",
+                "in": "header",
+                "required": true
+            }
+        }
+    },
+    "security": [
+        {
+            "client_id": []
+        }
+    ]
+}

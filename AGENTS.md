@@ -56,6 +56,20 @@ No está completa.
 - Siguen abiertas `docs/cuestiones-a-resolver.md` y la sección «Decisiones abiertas» del índice.
 - `prototype/AGENTS.md` es el stub que regenera Next. Este archivo, en la raíz, es el que lee `gga`.
 
+## Ruta de implementación autorizada
+
+**Todos los cambios y la implementación de la cadena de prompts `docs/PLAN_ESTILO_ARQUITECTONICO/` (pasos 01→10) se efectúan sobre la raíz de este repositorio:**
+
+```
+/home/mateo/Documentos/MIGRACION_ERP/ERP ASEGURADORA/implementacion
+```
+
+**Bajo ninguna circunstancia sobre `prototype/`.**
+
+- `prototype/` es un prototipo en Next.js que sirve solo para validar requerimientos con el cliente. **No es el stack de implementación.**
+- Los artefactos de los prompts 01→10 se escriben bajo `supabase/functions/` de este repositorio: `supabase/functions/_shared/`, `supabase/functions/cotizar/`, `supabase/functions/cotizar/acl/mappers/`, etc.
+- `prototype/src/db/schema.sql` es un esquema de prototipo, no el esquema vigente. El esquema de base de datos relacional es `sql/schema/schema.sql` (PostgreSQL vía Supabase).
+
 ## Skills de proyecto (hub Edge)
 
 Cadena de implementación: `docs/PLAN_ESTILO_ARQUITECTONICO/`. Una skill por sesión. El paso 01 no carga skill.

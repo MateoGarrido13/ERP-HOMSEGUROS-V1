@@ -1,0 +1,636 @@
+{
+  "source": "ma-postman-collection",
+  "sourcePath": "CARTERA/Comisiones",
+  "name": "Comisiones",
+  "method": "GET",
+  "url": "https://apidev.mercantilandina.com.ar/cartera/v1/comisiones?size=20&page=1&desde=2025-08-01&hasta=2025-08-30&cuenta=87139&rama=5",
+  "path": [
+    "cartera",
+    "v1",
+    "comisiones"
+  ],
+  "headers": [
+    {
+      "key": "Authorization",
+      "value": "Bearer {{api.token}}"
+    },
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Ocp-Apim-Subscription-Key",
+      "value": "{{api.key}}"
+    }
+  ],
+  "query": [
+    {
+      "key": "size",
+      "value": "20",
+      "disabled": false
+    },
+    {
+      "key": "page",
+      "value": "1",
+      "disabled": false
+    },
+    {
+      "key": "desde",
+      "value": "2025-08-01",
+      "disabled": false
+    },
+    {
+      "key": "hasta",
+      "value": "2025-08-30",
+      "disabled": false
+    },
+    {
+      "key": "cuenta",
+      "value": "87139",
+      "disabled": false
+    },
+    {
+      "key": "rama",
+      "value": "5",
+      "disabled": false
+    }
+  ],
+  "description": "Obtener listado de polizas",
+  "body": null,
+  "exampleResponses": [
+    {
+      "name": "Comisiones",
+      "code": 200,
+      "status": "OK",
+      "body": {
+        "tamaño": 20,
+        "total_paginas": 13,
+        "pagina_actual": 1,
+        "total_elementos": 255,
+        "datos": [
+          {
+            "rama": 5,
+            "poliza": 15752614,
+            "endoso": 6,
+            "cuota": 1,
+            "comision": {
+              "cobranza": -2741.36,
+              "produccion": -19675.58,
+              "ayuda": 0,
+              "organizador": 0,
+              "otras": 0,
+              "totales": -19675.58
+            },
+            "productor": {
+              "id": 87139,
+              "nombre": "LOS CERROS DIRECTO MDP"
+            },
+            "costo": {
+              "moneda": "PESOS",
+              "premio": 137067.99,
+              "prima": 98377.92
+            },
+            "asegurado": {
+              "nombre": "ETCHEGARAY MARTIN GUILLERMO",
+              "dni": 0
+            },
+            "fecha_movimiento": "2025-08-29"
+          },
+          {
+            "rama": 5,
+            "poliza": 15752615,
+            "endoso": 6,
+            "cuota": 1,
+            "comision": {
+              "cobranza": -2377.97,
+              "produccion": -17221.17,
+              "ayuda": 0,
+              "organizador": 0,
+              "otras": 0,
+              "totales": -17221.17
+            },
+            "productor": {
+              "id": 87139,
+              "nombre": "LOS CERROS DIRECTO MDP"
+            },
+            "costo": {
+              "moneda": "PESOS",
+              "premio": 118898.38,
+              "prima": 86105.84
+            },
+            "asegurado": {
+              "nombre": "ETCHEGARAY MARTIN GUILLERMO",
+              "dni": 0
+            },
+            "fecha_movimiento": "2025-08-29"
+          },
+          {
+            "rama": 5,
+            "poliza": 15752657,
+            "endoso": 6,
+            "cuota": 1,
+            "comision": {
+              "cobranza": -2400.85,
+              "produccion": -14243.11,
+              "ayuda": 0,
+              "organizador": 0,
+              "otras": 0,
+              "totales": -14243.11
+            },
+            "productor": {
+              "id": 87139,
+              "nombre": "LOS CERROS DIRECTO MDP"
+            },
+            "costo": {
+              "moneda": "PESOS",
+              "premio": 120042.34,
+              "prima": 71215.54
+            },
+            "asegurado": {
+              "nombre": "LOPEZ MIQUELARENA JORGE LUIS",
+              "dni": 0
+            },
+            "fecha_movimiento": "2025-08-29"
+          },
+          {
+            "rama": 5,
+            "poliza": 15935431,
+            "endoso": 3,
+            "cuota": 1,
+            "comision": {
+              "cobranza": -1005.5,
+              "produccion": -6833.33,
+              "ayuda": 0,
+              "organizador": 0,
+              "otras": 0,
+              "totales": -6833.33
+            },
+            "productor": {
+              "id": 87139,
+              "nombre": "LOS CERROS DIRECTO MDP"
+            },
+            "costo": {
+              "moneda": "PESOS",
+              "premio": 50275.19,
+              "prima": 34166.66
+            },
+            "asegurado": {
+              "nombre": "TONTIKIAN ALBERTO FORTUNATO",
+              "dni": 0
+            },
+            "fecha_movimiento": "2025-08-29"
+          },
+          {
+            "rama": 5,
+            "poliza": 15974224,
+            "endoso": 3,
+            "cuota": 1,
+            "comision": {
+              "cobranza": -1467.76,
+              "produccion": -8707.53,
+              "ayuda": 0,
+              "organizador": 0,
+              "otras": 0,
+              "totales": -8707.53
+            },
+            "productor": {
+              "id": 87139,
+              "nombre": "LOS CERROS DIRECTO MDP"
+            },
+            "costo": {
+              "moneda": "PESOS",
+              "premio": 73387.93,
+              "prima": 43537.65
+            },
+            "asegurado": {
+              "nombre": "PALMEIRO CRISTIAN ADRIAN",
+              "dni": 0
+            },
+            "fecha_movimiento": "2025-08-29"
+          },
+          {
+            "rama": 5,
+            "poliza": 16143022,
+            "endoso": 0,
+            "cuota": 1,
+            "comision": {
+              "cobranza": -1258.09,
+              "produccion": -7463.66,
+              "ayuda": 0,
+              "organizador": 0,
+              "otras": 0,
+              "totales": -7463.66
+            },
+            "productor": {
+              "id": 87139,
+              "nombre": "LOS CERROS DIRECTO MDP"
+            },
+            "costo": {
+              "moneda": "PESOS",
+              "premio": 62904.48,
+              "prima": 37318.3
+            },
+            "asegurado": {
+              "nombre": "MORENO I MARIANA PATRICIA",
+              "dni": 0
+            },
+            "fecha_movimiento": "2025-08-29"
+          },
+          {
+            "rama": 5,
+            "poliza": 16143022,
+            "endoso": 1,
+            "cuota": 1,
+            "comision": {
+              "cobranza": -1316.18,
+              "produccion": -7808.28,
+              "ayuda": 0,
+              "organizador": 0,
+              "otras": 0,
+              "totales": -7808.28
+            },
+            "productor": {
+              "id": 87139,
+              "nombre": "LOS CERROS DIRECTO MDP"
+            },
+            "costo": {
+              "moneda": "PESOS",
+              "premio": 65809.01,
+              "prima": 39041.42
+            },
+            "asegurado": {
+              "nombre": "MORENO I MARIANA PATRICIA",
+              "dni": 0
+            },
+            "fecha_movimiento": "2025-08-29"
+          },
+          {
+            "rama": 5,
+            "poliza": 15224223,
+            "endoso": 11,
+            "cuota": 1,
+            "comision": {
+              "cobranza": 0,
+              "produccion": -10166.61,
+              "ayuda": 0,
+              "organizador": 0,
+              "otras": 0,
+              "totales": -10166.61
+            },
+            "productor": {
+              "id": 87139,
+              "nombre": "LOS CERROS DIRECTO MDP"
+            },
+            "costo": {
+              "moneda": "PESOS",
+              "premio": 85685.18,
+              "prima": 50833.03
+            },
+            "asegurado": {
+              "nombre": "MONTALIVET SERGIO RAUL",
+              "dni": 0
+            },
+            "fecha_movimiento": "2025-08-28"
+          },
+          {
+            "rama": 5,
+            "poliza": 15606613,
+            "endoso": 8,
+            "cuota": 1,
+            "comision": {
+              "cobranza": -1737.21,
+              "produccion": -10306.06,
+              "ayuda": 0,
+              "organizador": 0,
+              "otras": 0,
+              "totales": -10306.06
+            },
+            "productor": {
+              "id": 87139,
+              "nombre": "LOS CERROS DIRECTO MDP"
+            },
+            "costo": {
+              "moneda": "PESOS",
+              "premio": 86860.48,
+              "prima": 51530.29
+            },
+            "asegurado": {
+              "nombre": "VASCO FERNANDO PABLO A",
+              "dni": 0
+            },
+            "fecha_movimiento": "2025-08-28"
+          },
+          {
+            "rama": 5,
+            "poliza": 15610054,
+            "endoso": 8,
+            "cuota": 1,
+            "comision": {
+              "cobranza": -1595.16,
+              "produccion": -9463.37,
+              "ayuda": 0,
+              "organizador": 0,
+              "otras": 0,
+              "totales": -9463.37
+            },
+            "productor": {
+              "id": 87139,
+              "nombre": "LOS CERROS DIRECTO MDP"
+            },
+            "costo": {
+              "moneda": "PESOS",
+              "premio": 79758.22,
+              "prima": 47316.85
+            },
+            "asegurado": {
+              "nombre": "ALI JUAN CARLOS",
+              "dni": 0
+            },
+            "fecha_movimiento": "2025-08-28"
+          },
+          {
+            "rama": 5,
+            "poliza": 15652490,
+            "endoso": 5,
+            "cuota": 1,
+            "comision": {
+              "cobranza": -1241.44,
+              "produccion": -4334.16,
+              "ayuda": 0,
+              "organizador": 0,
+              "otras": 0,
+              "totales": -4334.16
+            },
+            "productor": {
+              "id": 87139,
+              "nombre": "LOS CERROS DIRECTO MDP"
+            },
+            "costo": {
+              "moneda": "PESOS",
+              "premio": 41381.26,
+              "prima": 21670.8
+            },
+            "asegurado": {
+              "nombre": "ESPOSITO FEDERICO",
+              "dni": 0
+            },
+            "fecha_movimiento": "2025-08-28"
+          },
+          {
+            "rama": 5,
+            "poliza": 15652490,
+            "endoso": 6,
+            "cuota": 1,
+            "comision": {
+              "cobranza": -1277.95,
+              "produccion": -4461.64,
+              "ayuda": 0,
+              "organizador": 0,
+              "otras": 0,
+              "totales": -4461.64
+            },
+            "productor": {
+              "id": 87139,
+              "nombre": "LOS CERROS DIRECTO MDP"
+            },
+            "costo": {
+              "moneda": "PESOS",
+              "premio": 42598.37,
+              "prima": 22308.18
+            },
+            "asegurado": {
+              "nombre": "ESPOSITO FEDERICO",
+              "dni": 0
+            },
+            "fecha_movimiento": "2025-08-28"
+          },
+          {
+            "rama": 5,
+            "poliza": 15680757,
+            "endoso": 7,
+            "cuota": 1,
+            "comision": {
+              "cobranza": -1464.58,
+              "produccion": -8688.69,
+              "ayuda": 0,
+              "organizador": 0,
+              "otras": 0,
+              "totales": -8688.69
+            },
+            "productor": {
+              "id": 87139,
+              "nombre": "LOS CERROS DIRECTO MDP"
+            },
+            "costo": {
+              "moneda": "PESOS",
+              "premio": 73229.14,
+              "prima": 43443.44
+            },
+            "asegurado": {
+              "nombre": "ANGELINI JOSE DARIO",
+              "dni": 0
+            },
+            "fecha_movimiento": "2025-08-28"
+          },
+          {
+            "rama": 5,
+            "poliza": 15733173,
+            "endoso": 6,
+            "cuota": 1,
+            "comision": {
+              "cobranza": -1214.47,
+              "produccion": -7204.86,
+              "ayuda": 0,
+              "organizador": 0,
+              "otras": 0,
+              "totales": -7204.86
+            },
+            "productor": {
+              "id": 87139,
+              "nombre": "LOS CERROS DIRECTO MDP"
+            },
+            "costo": {
+              "moneda": "PESOS",
+              "premio": 60723.31,
+              "prima": 36024.32
+            },
+            "asegurado": {
+              "nombre": "LLANOS GASTON FERNANDO",
+              "dni": 0
+            },
+            "fecha_movimiento": "2025-08-28"
+          },
+          {
+            "rama": 5,
+            "poliza": 15224223,
+            "endoso": 12,
+            "cuota": 1,
+            "comision": {
+              "cobranza": 0,
+              "produccion": 10166.61,
+              "ayuda": 0,
+              "organizador": 0,
+              "otras": 0,
+              "totales": 10166.61
+            },
+            "productor": {
+              "id": 87139,
+              "nombre": "LOS CERROS DIRECTO MDP"
+            },
+            "costo": {
+              "moneda": "PESOS",
+              "premio": -85685.18,
+              "prima": -50833.03
+            },
+            "asegurado": {
+              "nombre": "MONTALIVET SERGIO RAUL",
+              "dni": 0
+            },
+            "fecha_movimiento": "2025-08-28"
+          },
+          {
+            "rama": 5,
+            "poliza": 15652490,
+            "endoso": 7,
+            "cuota": 1,
+            "comision": {
+              "cobranza": 2519.39,
+              "produccion": 8795.8,
+              "ayuda": 0,
+              "organizador": 0,
+              "otras": 0,
+              "totales": 8795.8
+            },
+            "productor": {
+              "id": 87139,
+              "nombre": "LOS CERROS DIRECTO MDP"
+            },
+            "costo": {
+              "moneda": "PESOS",
+              "premio": -83979.63,
+              "prima": -43978.98
+            },
+            "asegurado": {
+              "nombre": "ESPOSITO FEDERICO",
+              "dni": 0
+            },
+            "fecha_movimiento": "2025-08-28"
+          },
+          {
+            "rama": 5,
+            "poliza": 15362989,
+            "endoso": 11,
+            "cuota": 1,
+            "comision": {
+              "cobranza": -2719.12,
+              "produccion": -17416.66,
+              "ayuda": 0,
+              "organizador": 0,
+              "otras": 0,
+              "totales": -17416.66
+            },
+            "productor": {
+              "id": 87139,
+              "nombre": "LOS CERROS DIRECTO MDP"
+            },
+            "costo": {
+              "moneda": "PESOS",
+              "premio": 135956.23,
+              "prima": 87083.32
+            },
+            "asegurado": {
+              "nombre": "BOBBIA EDUARDO OSCAR",
+              "dni": 0
+            },
+            "fecha_movimiento": "2025-08-27"
+          },
+          {
+            "rama": 5,
+            "poliza": 15367847,
+            "endoso": 11,
+            "cuota": 1,
+            "comision": {
+              "cobranza": -649.97,
+              "produccion": -3913.75,
+              "ayuda": 0,
+              "organizador": 0,
+              "otras": 0,
+              "totales": -3913.75
+            },
+            "productor": {
+              "id": 87139,
+              "nombre": "LOS CERROS DIRECTO MDP"
+            },
+            "costo": {
+              "moneda": "PESOS",
+              "premio": 32498.59,
+              "prima": 19568.74
+            },
+            "asegurado": {
+              "nombre": "SOSA APOLINAR RUBEN",
+              "dni": 0
+            },
+            "fecha_movimiento": "2025-08-27"
+          },
+          {
+            "rama": 5,
+            "poliza": 15377190,
+            "endoso": 11,
+            "cuota": 1,
+            "comision": {
+              "cobranza": -3574.84,
+              "produccion": -24294.34,
+              "ayuda": 0,
+              "organizador": 0,
+              "otras": 0,
+              "totales": -24294.34
+            },
+            "productor": {
+              "id": 87139,
+              "nombre": "LOS CERROS DIRECTO MDP"
+            },
+            "costo": {
+              "moneda": "PESOS",
+              "premio": 178741.95,
+              "prima": 121471.69
+            },
+            "asegurado": {
+              "nombre": "BERRUTTI DAMIAN",
+              "dni": 0
+            },
+            "fecha_movimiento": "2025-08-27"
+          },
+          {
+            "rama": 5,
+            "poliza": 15401492,
+            "endoso": 10,
+            "cuota": 1,
+            "comision": {
+              "cobranza": -1495.76,
+              "produccion": -8873.64,
+              "ayuda": 0,
+              "organizador": 0,
+              "otras": 0,
+              "totales": -8873.64
+            },
+            "productor": {
+              "id": 87139,
+              "nombre": "LOS CERROS DIRECTO MDP"
+            },
+            "costo": {
+              "moneda": "PESOS",
+              "premio": 74787.9,
+              "prima": 44368.18
+            },
+            "asegurado": {
+              "nombre": "GILES MARCELO JAVIER",
+              "dni": 0
+            },
+            "fecha_movimiento": "2025-08-27"
+          }
+        ]
+      }
+    }
+  ],
+  "tests": []
+}

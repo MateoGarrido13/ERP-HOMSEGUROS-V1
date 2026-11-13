@@ -1,0 +1,99 @@
+{
+  "source": "ma-postman-collection",
+  "sourcePath": "POLIZAS/Consultar bien de póliza",
+  "name": "Consultar bien de póliza",
+  "method": "GET",
+  "url": "https://apidev.mercantilandina.com.ar/polizas/v1/516504898/0/bienes/1",
+  "path": [
+    "polizas",
+    "v1",
+    "516504898",
+    "0",
+    "bienes",
+    "1"
+  ],
+  "headers": [
+    {
+      "key": "Authorization",
+      "value": "Bearer {{api.token}}"
+    },
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Ocp-Apim-Subscription-Key",
+      "value": "{{api.key}}"
+    }
+  ],
+  "query": [],
+  "description": "Consulta el estado de una solicitud",
+  "body": null,
+  "exampleResponses": [
+    {
+      "name": "Consultar bien de póliza",
+      "code": 200,
+      "status": "OK",
+      "body": {
+        "poliza": 516504898,
+        "endoso": 0,
+        "riesgos": [
+          {
+            "coberturas": [],
+            "subrama": {
+              "id": 1,
+              "nombre": "TRADICIONAL"
+            },
+            "nombre": "A  - RESPONSABILIDAD CIVIL LIMITADA",
+            "modalidad": "",
+            "descripcion": "",
+            "suma": 0,
+            "ajuste": 0,
+            "codigo": 500800,
+            "tasa": 0,
+            "prima": 0
+          }
+        ],
+        "auto": {
+          "vehiculo": {
+            "id": 976811,
+            "descripcion": "CHEVROLET SPIN 1.8 LT 5 AS",
+            "infoauto": 120431,
+            "tipo": {
+              "id": 1,
+              "nombre": "AUTOMOVIL"
+            },
+            "carroceria": {
+              "id": 3,
+              "nombre": "CAMIONETA RURAL"
+            },
+            "categoria": {
+              "id": 1,
+              "nombre": "SIN CATEGORIA"
+            }
+          },
+          "fabricado": 2013,
+          "dominio": "AT123CC",
+          "vin": "8AD2AKFWU7G068123",
+          "motor": "10DBS10030321",
+          "uso": {
+            "id": 1,
+            "nombre": "PARTICULAR"
+          },
+          "gnc": true,
+          "norodado": false,
+          "suma": 0,
+          "recuperador": {
+            "id": 0,
+            "nombre": ""
+          },
+          "asistencia": {
+            "id": 0,
+            "nombre": "0)No Posee"
+          }
+        }
+      }
+    }
+  ],
+  "tests": []
+}

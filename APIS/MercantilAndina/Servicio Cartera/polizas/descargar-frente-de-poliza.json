@@ -1,0 +1,42 @@
+{
+  "source": "ma-postman-collection",
+  "sourcePath": "POLIZAS/Descargar frente de póliza",
+  "name": "Descargar frente de póliza",
+  "method": "GET",
+  "url": "https://apidev.mercantilandina.com.ar/polizas/v1/516504898/0/frente",
+  "path": [
+    "polizas",
+    "v1",
+    "516504898",
+    "0",
+    "frente"
+  ],
+  "headers": [
+    {
+      "key": "Authorization",
+      "value": "Bearer {{api.token}}"
+    },
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Ocp-Apim-Subscription-Key",
+      "value": "{{api.key}}"
+    }
+  ],
+  "query": [],
+  "description": "Obtiene una URL para descargar una copia de póliza.",
+  "body": null,
+  "exampleResponses": [
+    {
+      "name": "Descargar frente de póliza",
+      "code": 200,
+      "status": "OK",
+      "body": {
+        "url": "https://servicios.qamercantilandina.com.ar/descarga/t/Dck3____1ZPWCrwRMytiwwX9qnvIhc.kzFEDRwOGJc9IIvRIBOT_cfYXrlVRxJfH4r4mD5Dlmyqg8GkWIHWHwxUHBsGDb.3f?nomFile=FRENTE[20260424134724398876].PDF"
+      }
+    }
+  ],
+  "tests": []
+}

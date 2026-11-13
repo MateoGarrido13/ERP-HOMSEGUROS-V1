@@ -12,3 +12,10 @@ export async function getAuthUser() {
   if (error || !data.user) return null;
   return data.user;
 }
+
+// Borra la cookie de sesión de este dispositivo. Es idempotente: sin cookie
+// también termina bien. No escribe auditoría.
+export async function clearSession() {
+  const supabase = await createClient();
+  await supabase.auth.signOut();
+}

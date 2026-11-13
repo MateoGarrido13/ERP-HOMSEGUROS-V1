@@ -1,0 +1,107 @@
+{
+  "source": "ma-postman-collection",
+  "sourcePath": "ASEGURADOS/Consultar cliente por doc y sexo",
+  "name": "Consultar cliente por doc y sexo",
+  "method": "GET",
+  "url": "https://apidev.mercantilandina.com.ar/clientes/v1/personas?sexo=M&dni=25568661",
+  "path": [
+    "clientes",
+    "v1",
+    "personas"
+  ],
+  "headers": [
+    {
+      "key": "Authorization",
+      "value": "Bearer {{api.token}}"
+    },
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Ocp-Apim-Subscription-Key",
+      "value": "{{api.key}}"
+    }
+  ],
+  "query": [
+    {
+      "key": "sexo",
+      "value": "M",
+      "disabled": false
+    },
+    {
+      "key": "dni",
+      "value": "25568661",
+      "disabled": false
+    }
+  ],
+  "description": "",
+  "body": null,
+  "exampleResponses": [
+    {
+      "name": "get-consultar cliente-doc y sexo",
+      "code": 200,
+      "status": "OK",
+      "body": {
+        "id": 2878241,
+        "persona": "FISICA",
+        "cuit": 0,
+        "cuil": 20255686616,
+        "nacimiento": "1976-12-30",
+        "sexo": "M",
+        "apellido": "SCHAFFER",
+        "nombre": "AUGUSTO PABLO",
+        "calle": "Juan Jose Valle",
+        "numero": 761,
+        "departamento": "",
+        "barrio": "",
+        "localidad": {
+          "id": 14703,
+          "nombre": "MAR DEL PLATA",
+          "provincia": "BUENOS AIRES",
+          "codigo_postal": 7600
+        },
+        "iva": {
+          "inscripcion": {
+            "id": 5,
+            "nombre": "Consumidor Final"
+          },
+          "retencion": false,
+          "percepcion": false
+        },
+        "actividad": {
+          "id": 46,
+          "nombre": "ACOPIADOR"
+        },
+        "cuenta": 9137858,
+        "estado": "ACTIVO",
+        "email": "lma.testeo@gmail.com",
+        "empresa": "",
+        "dni": 25568661,
+        "contacto": "SCHAFFER AUGUSTO PABLO",
+        "puesto": "",
+        "telefono1": "2234472517",
+        "telefono2": "2234472598",
+        "nacionalidad": {
+          "id": 1,
+          "nombre": "ARGENTINA"
+        },
+        "tipo_documento": "DU",
+        "razon_social": "SCHAFFER AUGUSTO PABLO",
+        "ingresos_brutos": {
+          "inscripcion": {
+            "id": 0,
+            "nombre": "No inscripto"
+          },
+          "retencion": false,
+          "percepcion": false
+        },
+        "estado_civil": {
+          "id": "",
+          "nombre": ""
+        }
+      }
+    }
+  ],
+  "tests": []
+}

@@ -14,7 +14,7 @@ Completá **solo** `supabase/functions/_shared/types.ts`. Ningún otro archivo.
 El archivo es la fuente de verdad de contratos entre capas. Debe exportar:
 
 - `SolicitudCotizacion` y `CotizacionCanonica` — copiadas del contexto base, sin campos extra
-- `IProveedorACL` — un método: `cotizar(solicitud: SolicitudCotizacion, signal: AbortSignal): Promise<CotizacionCanonica>`
+- `IProveedorACL` — un método: `cotizar(solicitud: SolicitudCotizacion, signal: AbortSignal): Promise<CotizacionCanonica[]>` (uno o más planes por proveedor)
 - `ICircuitBreaker` — `isOpen(): boolean`, `recordSuccess(): void`, `recordFailure(): void`
 - `CircuitBreakerOpciones` — `{ umbralFallas: number; ventanaMs: number; tiempoRecuperacionMs: number }`
 - `AppError` — clase que extiende `Error` con `readonly code: string`

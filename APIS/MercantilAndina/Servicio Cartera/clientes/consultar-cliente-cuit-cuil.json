@@ -1,0 +1,107 @@
+{
+  "source": "ma-postman-collection",
+  "sourcePath": "ASEGURADOS/Consultar cliente CUIT/CUIL",
+  "name": "Consultar cliente CUIT/CUIL",
+  "method": "GET",
+  "url": "https://apidev.mercantilandina.com.ar/clientes/v1/personas?CUIT=20255686616",
+  "path": [
+    "clientes",
+    "v1",
+    "personas"
+  ],
+  "headers": [
+    {
+      "key": "Authorization",
+      "value": "Bearer {{api.token}}"
+    },
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Ocp-Apim-Subscription-Key",
+      "value": "{{api.key}}"
+    }
+  ],
+  "query": [
+    {
+      "key": "CUIL",
+      "value": "20255686616",
+      "disabled": true
+    },
+    {
+      "key": "CUIT",
+      "value": "20255686616",
+      "disabled": false
+    }
+  ],
+  "description": "",
+  "body": null,
+  "exampleResponses": [
+    {
+      "name": "Consultar cliente CUIT/CUIL",
+      "code": 200,
+      "status": "OK",
+      "body": {
+        "id": 3133638,
+        "persona": "JURIDICA",
+        "cuit": 20255686616,
+        "cuil": 20255686616,
+        "nacimiento": "2000-01-01",
+        "sexo": "M",
+        "apellido": "SCHAFFER",
+        "nombre": "AUGUSTO PABLO",
+        "calle": "Juan Jose Valle 761",
+        "numero": 761,
+        "departamento": "",
+        "barrio": "",
+        "localidad": {
+          "id": 14703,
+          "nombre": "MAR DEL PLATA",
+          "provincia": "BUENOS AIRES",
+          "codigo_postal": 7600
+        },
+        "iva": {
+          "inscripcion": {
+            "id": 3,
+            "nombre": "Exento"
+          },
+          "retencion": false,
+          "percepcion": false
+        },
+        "actividad": {
+          "id": 140,
+          "nombre": "CONSORCIO"
+        },
+        "cuenta": 9393411,
+        "estado": "ACTIVO",
+        "email": "lma.testeo@gmail.com",
+        "empresa": "",
+        "dni": 0,
+        "contacto": "SCHAFFER AUGUSTO PABLO",
+        "puesto": "",
+        "telefono1": "2234472516",
+        "telefono2": "2234472516",
+        "nacionalidad": {
+          "id": 1,
+          "nombre": "ARGENTINA"
+        },
+        "tipo_documento": "DU",
+        "razon_social": "SCHAFFER AUGUSTO PABLO",
+        "ingresos_brutos": {
+          "inscripcion": {
+            "id": 1,
+            "nombre": "Inscripto"
+          },
+          "retencion": true,
+          "percepcion": true
+        },
+        "estado_civil": {
+          "id": "",
+          "nombre": ""
+        }
+      }
+    }
+  ],
+  "tests": []
+}

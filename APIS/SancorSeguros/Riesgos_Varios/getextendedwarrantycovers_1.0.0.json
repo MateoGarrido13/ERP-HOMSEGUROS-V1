@@ -1,0 +1,74 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Api Consulta de Coberturas",
+        "description": "Servicio para obtener coberturas de garantia extentidida.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://external-pre-api.gruposancorseguros.com/apissa/pre-catalog/quotations/covers/extendedwarranty"
+        }
+    ],
+    "paths": {
+        "/data": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Token del usuario.",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "statisticCode",
+                        "in": "query",
+                        "description": "Codigo estadistico.",
+                        "required": true,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "offeringCode",
+                        "in": "query",
+                        "description": "codigo de modulo.",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": [],
+        "securitySchemes": {
+            "clientID": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "gss_apiclient_id"
+            }
+        }
+    },
+    "security": [
+        {
+            "clientID": []
+        }
+    ]
+}

@@ -1,0 +1,42 @@
+{
+  "source": "ma-postman-collection",
+  "sourcePath": "POLIZAS/Descargar tarjeta rc",
+  "name": "Descargar tarjeta rc",
+  "method": "GET",
+  "url": "https://apidev.mercantilandina.com.ar/polizas/v1/516504898/0/tarjetarc",
+  "path": [
+    "polizas",
+    "v1",
+    "516504898",
+    "0",
+    "tarjetarc"
+  ],
+  "headers": [
+    {
+      "key": "Authorization",
+      "value": "Bearer {{api.token}}"
+    },
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Ocp-Apim-Subscription-Key",
+      "value": "{{api.key}}"
+    }
+  ],
+  "query": [],
+  "description": "Obtiene una URL para descargar una copia de póliza.",
+  "body": null,
+  "exampleResponses": [
+    {
+      "name": "Descargar tarjeta rc",
+      "code": 200,
+      "status": "OK",
+      "body": {
+        "url": "https://servicios.qamercantilandina.com.ar/descarga/t/De4S____1ZMczJmDwkXgok5t_mP7CoE9..RqqpFPKfQQgQYJGqlMrw0zr373Z3B8rArPXVUQeP2DSatDx8Q9N.Z1J4scA0ID?nomFile=TARJETARC[20260424135803188915].PDF"
+      }
+    }
+  ],
+  "tests": []
+}

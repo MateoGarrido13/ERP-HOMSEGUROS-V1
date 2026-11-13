@@ -1,0 +1,56 @@
+{
+  "source": "ma-postman-collection",
+  "sourcePath": "POLIZAS/Obtener cuotas de póliza",
+  "name": "Obtener cuotas de póliza",
+  "method": "GET",
+  "url": "https://apidev.mercantilandina.com.ar/polizas/v1/516504898/0/cuotas",
+  "path": [
+    "polizas",
+    "v1",
+    "516504898",
+    "0",
+    "cuotas"
+  ],
+  "headers": [
+    {
+      "key": "Authorization",
+      "value": "Bearer {{api.token}}"
+    },
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Ocp-Apim-Subscription-Key",
+      "value": "{{api.key}}"
+    }
+  ],
+  "query": [],
+  "description": "Consulta el estado de una solicitud",
+  "body": null,
+  "exampleResponses": [
+    {
+      "name": "Obtener cuotas de póliza",
+      "code": 200,
+      "status": "OK",
+      "body": {
+        "poliza": 516504898,
+        "endoso": 0,
+        "datos": [
+          {
+            "id": 1,
+            "vence": "2026-04-24",
+            "convenio": "2026-05-11",
+            "estado": "exigible",
+            "pagado": "0001-01-01",
+            "caja": "",
+            "moneda": "ARS",
+            "importe": 80297.75,
+            "recibo": false
+          }
+        ]
+      }
+    }
+  ],
+  "tests": []
+}
