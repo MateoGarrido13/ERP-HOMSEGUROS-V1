@@ -6,14 +6,16 @@
 | **Épica** | Acceso · [`../EPICA-acceso/spec.md`](../EPICA-acceso/spec.md) |
 | **CU origen** | CU-01 `docs/casos-de-uso/login-logout/CU-01-Acceso_Iniciar_Sesion.md` |
 | **Tipo** | Pantalla/UI · Datos/backend |
-| **Estado** | Borrador |
+| **Estado** | Aprobada |
 | **Autor** | Yaco10 con IA |
-| **Revisor** | — |
-| **Fecha** | 2026-10-31 |
+| **Revisor** | Yaco10 (autoaprobada, proyecto individual) |
+| **Fecha** | 2026-10-31 (aprobada 2026-11-13) |
 
 ## 1. Contexto y objetivo
 
 Puerta de entrada al ERP para PAS, directivo y administrativo. Las decisiones de sesión, rutas, modelo y auditoría están en la [spec de épica](../EPICA-acceso/spec.md); acá solo se define la pantalla de ingreso y su acción.
+
+La épica ya fijó la base y el proveedor de autenticación (2026-11-12): Supabase, local vía Docker durante el desarrollo, con Supabase Auth. `AuthProvider.signIn` de esta spec es, en concreto, `provider.supabase.ts` llamando a `supabase.auth.signInWithPassword`.
 
 **Objetivo:** con email y contraseña válidos de una cuenta activa se abre una sesión y se aterriza en el inicio del rol; con cualquier otro caso no se abre sesión y se informa el error correcto.
 
@@ -52,7 +54,7 @@ Puerta de entrada al ERP para PAS, directivo y administrativo. Las decisiones de
    - `credenciales` → error general "Email o contraseña incorrectos." (el mismo para email inexistente y contraseña errónea).
    - `inactiva` → el mismo mensaje. No se revela que la cuenta existe (CU-01 RN_3 y RN_4).
    - `servicio` → "No pudimos completar la operación. Probá de nuevo."
-5. En éxito: `createSession` → cookie → `auditoria.registrar(usuarioId, rol, 'ingreso')` → `redirect(inicioDelRol)`.
+5. En éxito: `signIn` ya dejó la sesión abierta (cookie gestionada por `@supabase/ssr`; no hay `createSession` propio, ver épica 4.4) → `auditoria.registrar(usuarioId, rol, 'ingreso')` → `redirect(inicioDelRol)`.
 
 El email se normaliza (`trim` + minúscula) antes de buscar.
 
@@ -123,16 +125,19 @@ Errores: { emailError?, passwordError?, formError? }
 
 ## 9. Supuestos
 
-- [ ] SUP-1: Los mensajes de validación de campo salen del prototipo y se aceptan tal cual. → *confirmado por: ___*
-- [ ] SUP-2: "Olvidé mi contraseña" vive en esta pantalla como enlace (CU-02 paso 1). → *confirmado por: ___*
+- [x] SUP-1: Los mensajes de validación de campo salen del prototipo y se aceptan tal cual. → *confirmado por: Yaco10, 2026-11-13.*
+- [x] SUP-2: "Olvidé mi contraseña" vive en esta pantalla como enlace (CU-02 paso 1). → *confirmado por: Yaco10, 2026-11-13 — se muestra el enlace aunque `/recuperar` (ERP-6) todavía no exista.*
 
 ## 10. Preguntas abiertas
 
-- [ ] PA-1: Duración de la sesión, sesiones múltiples e intentos fallidos: **ver PA-1 y PA-2 de la épica**; condicionan CA nuevos si se decide un bloqueo. → *quién decide: ___*
-- [ ] PA-2: Quién da de alta directivo y administrativo (PA-5 de la épica); sin eso no hay con qué probar esos roles fuera de los datos de ejemplo. → *quién decide: ___*
+- [x] PA-1: Duración de la sesión, sesiones múltiples e intentos fallidos: **ver PA-1 y PA-2 de la épica**; condicionan CA nuevos si se decide un bloqueo. → *resuelto en la épica (2026-11-13): duración/refresh por defecto de Supabase, múltiples sesiones permitidas; sin tope de intentos fallidos por ahora (PA-2 de la épica queda fuera de alcance de esta US, como ya dice §2).*
+- [x] PA-2: Quién da de alta directivo y administrativo (PA-5 de la épica); sin eso no hay con qué probar esos roles fuera de los datos de ejemplo. → *resuelto en la épica (2026-11-13): se crean a mano vía script/seed de Supabase; no hay pantalla de alta todavía.*
 
 ## 11. Historial de cambios
 
 | Fecha | Cambio | Motivo | PR |
 |---|---|---|---|
 | 2026-10-31 | Versión inicial | | |
+| 2026-11-12 | Se referencia la decisión de la épica: Supabase (local vía Docker) con Supabase Auth, sin backend propio para el login. | Decisión del equipo sobre la base de datos | |
+| 2026-11-13 | Se resuelven SUP-1, SUP-2, PA-1 y PA-2. Estado pasa a `Aprobada`. | Revisión de spec previa a implementar | |
+| 2026-11-13 | Corrección en 4.1 paso 5: se quita la referencia a `createSession` (no existe tal método; la sesión la abre `signIn` directamente, según la épica 4.4). | Inconsistencia detectada en revisión del plan | |
