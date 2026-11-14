@@ -52,7 +52,7 @@ Canónica y accesible desde la raíz del proyecto: `docs/`.
 No está completa.
 
 - `PRESENTACION-briefing-tecnico.md` cita `MODELO DE NEGOCIO.md` y `middleware.md`. Esos archivos no están en el repositorio.
-- El índice `docs/casos-de-uso/lista-casos-de-uso-HOM-ERP.md` anuncia carpetas sin archivos: cobranza (30–33), comisiones (39), cross-selling (57), `ADMINISTRATIVO-OWNER` (40–51 y 58–59) y back-office (52–54).
+- El índice `docs/casos-de-uso/lista-casos-de-uso-HOM-ERP.md` anuncia carpetas sin archivos: cobranza (30–33), comisiones (39), cross-selling (57), `ADMINISTRATIVO-OWNER` (40–51 y 58–59) y back-office (52–54). Login, pendientes, cartera, siniestros y rúbrica viven en `docs/casos-de-uso/` (canónico). CU-05f sigue ausente.
 - Siguen abiertas `docs/cuestiones-a-resolver.md` y la sección «Decisiones abiertas» del índice.
 - `prototype/AGENTS.md` es el stub que regenera Next. Este archivo, en la raíz, es el que lee `gga`.
 

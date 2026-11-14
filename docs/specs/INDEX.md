@@ -5,7 +5,7 @@ phase: 0
 
 # Inventario verificado — iteración 1 (Phase 0)
 
-Los casos de uso canónicos siguen en `docs/casos-de-uso/`. Este índice no los reemplaza: apunta a las rutas reales y las agrupa por feature SDD. Fuente de IDs in-scope: `docs/PLAN_CON_SKILLS.MD` §3. Decisiones cerradas: `front/docs/cuestiones-a-resolver.md` «Resuelto (iteración 1)».
+Los casos de uso canónicos siguen en `docs/casos-de-uso/`. Este índice no los reemplaza: apunta a las rutas reales y las agrupa por feature SDD. Fuente de IDs in-scope: `docs/PLAN_CON_SKILLS.MD` §3. Decisiones cerradas: `docs/cuestiones-a-resolver.md` «Resuelto (iteración 1)».
 
 Índice narrativo del producto (no recreado aquí): [`docs/casos-de-uso/lista-casos-de-uso-HOM-ERP.md`](../casos-de-uso/lista-casos-de-uso-HOM-ERP.md).
 
@@ -28,7 +28,7 @@ Seam: CU-08d abre cotizar; CU-16 es «Dar de alta» en Pendientes; CU-23 «+» r
 
 ## Inventario in-scope
 
-Rutas relativas a `docs/casos-de-uso/`. **Presente** = cuerpo de CU (flujo, RN/SUP). **Stub** = archivo con solo el título. Ningún ID in-scope está ausente del disco.
+Rutas relativas a `docs/casos-de-uso/`. **Presente** = cuerpo de CU (flujo, RN/SUP). **Stub** = archivo con solo el título. **Ausente** = anunciado y sin archivo en disco (hoy: CU-05f).
 
 ### `F-pendientes`
 
@@ -39,7 +39,7 @@ Rutas relativas a `docs/casos-de-uso/`. **Presente** = cuerpo de CU (flujo, RN/S
 | CU-05c | `PAS/pendientes/CU-05c-Pendientes_Aviso_Pago_Rechazado.md` | presente |
 | CU-05d | `PAS/pendientes/CU-05d-Pendientes_Aviso_Cotizacion_Enviada.md` | presente |
 | CU-05e | `PAS/pendientes/CU-05e-Pendientes_Aviso_Enviar_Poliza.md` | presente |
-| CU-05f | `PAS/pendientes/CU-05f-Pendientes_Aviso_Enviar_Cupon.md` | presente |
+| CU-05f | `PAS/pendientes/CU-05f-Pendientes_Aviso_Enviar_Cupon.md` | ausente |
 | CU-08b | `PAS/pendientes/CU-08b-Pendientes_Reactivar_Lead.md` | presente |
 | CU-08c | `PAS/pendientes/CU-08c-Pendientes_Descartar_Lead.md` | presente |
 | CU-08d | `PAS/pendientes/CU-08d-Lead_Enviar_Cotizacion.md` | presente |
@@ -59,8 +59,8 @@ Compañero de transiciones (no es un CU): `PAS/pendientes/TRANSICIONES.md`.
 | CU-14 | `PAS/multicotizador/CU-14-Multicotizador_Enviar_Propuesta_por_WhatsApp.md` | presente |
 | CU-15 | `PAS/multicotizador/CU-15-Multicotizador_Marcar_Resultado_de_Propuesta.md` | presente |
 | CU-16 | `PAS/multicotizador/CU-16-Multicotizador_Registrar_Poliza_Emitida.md` | presente |
-| CU-17 | `PAS/multicotizador/masivo/CU-17-Multicotizador_Cargar_Riesgo_Automotor.md` | presente |
-| CU-17b | `PAS/multicotizador/masivo/CU-17b-Multicotizador_Cargar_Riesgo_Hogar_Consorcio_Comercio.md` | presente |
+| CU-17 | `PAS/multicotizador/masivo/automotor/CU-17-AUT-Multicotizador_Cargar_Riesgo.md` | presente |
+| CU-17b | `PAS/multicotizador/masivo/automotor/CU-17b-Multicotizador_Cargar_Riesgo_Hogar_Consorcio_Comercio.md` | presente |
 | CU-18 | `PAS/multicotizador/masivo/automotor/CU-18-AUT-Multicotizador_Comparar_Cotizaciones.md` | presente (vigente). Multirramo teórico: `masivo/CU-18-Multicotizador_Comparar_Cotizaciones.md` |
 
 ### `F-cartera`
@@ -80,8 +80,8 @@ Compañero de transiciones (no es un CU): `PAS/pendientes/TRANSICIONES.md`.
 
 | CU | Archivo | Estado | Nota |
 | --- | --- | --- | --- |
-| CU-19 | `PAS/multicotizador/masivo/CU-19-Multicotizador_Ver_Comision_de_Cotizacion.md` | stub | diferido |
-| CU-20 | `PAS/multicotizador/masivo/CU-20-Multicotizador_Aplicar_Descuento.md` | stub | diferido |
+| CU-19 | `PAS/multicotizador/masivo/automotor/CU-19-AUT-Multicotizador_Ver_Comision_de_Cotizacion.md` | presente (diferido) | comisiones fuera de iteración 1 |
+| CU-20 | `PAS/multicotizador/masivo/automotor/CU-20-AUT-Multicotizador_Aplicar_Descuento.md` | presente (diferido) | comisiones fuera de iteración 1 |
 | CU-21 | `PAS/multicotizador/no-masivo/CU-21-Multicotizador_Cargar_Solicitud.md` | stub | AP/ART y ramos sin API, fuera |
 
 ## Checklist
