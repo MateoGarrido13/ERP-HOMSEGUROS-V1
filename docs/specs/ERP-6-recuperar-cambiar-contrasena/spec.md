@@ -6,10 +6,10 @@
 | **Épica** | Acceso · [`../EPICA-acceso/spec.md`](../EPICA-acceso/spec.md) |
 | **CU origen** | CU-02 `docs/casos-de-uso/login-logout/CU-02-Acceso_Recuperar_o_Cambiar_Contrasena.md` |
 | **Tipo** | Pantalla/UI · Integración (correo) · Datos/backend |
-| **Estado** | Borrador |
+| **Estado** | Aprobada |
 | **Autor** | Yaco10 con IA |
 | **Revisor** | — |
-| **Fecha** | 2026-10-31 |
+| **Fecha** | 2026-10-31 (aprobada 2026-11-15) |
 
 ## 1. Contexto y objetivo
 
@@ -163,3 +163,4 @@ Server Action cambiarContrasena(prev, FormData{ actual, password, confirm }) →
 | Fecha | Cambio | Motivo | PR |
 |---|---|---|---|
 | 2026-10-31 | Versión inicial | | |
+| 2026-11-15 | Aprobada en revisión conjunta | PA-1 Supabase Auth nativo (ya en ADR-004); PA-2 vigencia 24h con f_inicio; PA-3 límite x (sin definir); PA-4 no se cierran otras sesiones al cambiar contraseña; SUP-1 política alfanumérica (al menos un dígito, una mayúscula y una minúscula); SUP-2 canal de recuperación: correo asociado a la cuenta; SUP-3 enlace nuevo invalida el anterior del mismo usuario | |

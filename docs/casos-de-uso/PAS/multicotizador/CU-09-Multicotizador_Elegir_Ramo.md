@@ -32,7 +32,7 @@ R.4. **IR A (4)**
 
 *Reglas de negocio asociadas*
 RN_1: Solo un PAS autenticado puede cotizar. En el prototipo el rol de red no tiene la pestaña Cotizar (REF CU-01-Acceso_Iniciar_Sesion).
-RN_2: La pantalla muestra todos los ramos del broker, también los que todavía no están habilitados. Solo los habilitados abren un flujo.
+RN_2: Esta es la pantalla 1 del flujo, dentro de `/cotizar`. Muestra todos los ramos del broker, también los que todavía no están habilitados. Solo los habilitados abren un flujo. Si el PAS vuelve acá desde la carga del riesgo sin haber tocado "Calcular cotización", no se recuperan los campos de ese formulario (REF CU-17 4a).
 RN_3: En la iteración 1 los ramos habilitados son Automotor, Hogar, Consorcio y Comercio, y solo se cotizan contra compañías que tengan API de ese ramo. Accidentes Personales, ART, Responsabilidad Civil y Vida se ven pero no abren flujo.
 RN_4: Cada cotización es de un solo ramo. Para cotizar otro ramo, el PAS empieza otra cotización desde este caso.
 RN_5: El ramo define el tipo de flujo, que se bifurca después de indicar el cliente (REF CU 10). En la iteración 1 todos los ramos habilitados son masivos (hay API de precio): Automotor carga el riesgo en CU-17; Hogar, Consorcio y Comercio en CU-17b; después se compara (REF CU 18). CU-21 (solicitud sin API) queda fuera.

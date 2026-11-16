@@ -157,7 +157,7 @@ Skills marcadas «propuesta» no existen aún en el repo; el proceso SDD no depe
 docs/casos-de-uso/   # CU canónicos (read-only en SDD)
 docs/                # cuestiones, vistas
 docs/specs/                # INDEX.md, nfr.md, domain.md, <feature>.md|.plan.md|.tasks.md
-docs/adr/                  # ADRs de decisiones nuevas de la iteración
+docs/ADRs/                 # ADRs de decisiones nuevas de la iteración
 AGENTS.md                  # constitución viva del repo (no contradecir)
 PLAN_CON_SKILLS.MD         # esta especificación de iteración
 ```

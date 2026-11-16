@@ -6,10 +6,10 @@
 | **Épica** | Acceso · [`../EPICA-acceso/spec.md`](../EPICA-acceso/spec.md) |
 | **CU origen** | CU-03 `docs/casos-de-uso/login-logout/CU-03-Acceso_Ver_y_Editar_Perfil.md` |
 | **Tipo** | Pantalla/UI · Datos/backend |
-| **Estado** | Borrador |
+| **Estado** | Aprobada |
 | **Autor** | Yaco10 con IA |
 | **Revisor** | — |
-| **Fecha** | 2026-10-31 |
+| **Fecha** | 2026-10-31 (aprobada 2026-11-15) |
 
 ## 1. Contexto y objetivo
 
@@ -131,3 +131,4 @@ Server Action guardarPerfil(prev, FormData{ nombre, telefono }) → { nameError?
 | Fecha | Cambio | Motivo | PR |
 |---|---|---|---|
 | 2026-10-31 | Versión inicial | | |
+| 2026-11-15 | Aprobada en revisión conjunta | PA-1 email no editable (queda fijo por usuario); PA-2 modificación del nombre solo afecta propuestas futuras (PDF y documentos generados por el sistema con logo de compañía y nombre del PAS a cargo); SUP-1 matrícula vista por PAS y por directivo/administrativo, pero un PAS nunca ve la matrícula de otro PAS; SUP-2 teléfono: prefijo internacional con bandera en UI, campo sin '+' ni código área ni número, se concatenan y guardan en DB; SUP-3 guardar sin cambios se audita igual | |

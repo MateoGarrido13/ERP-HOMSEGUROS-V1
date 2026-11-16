@@ -11,9 +11,10 @@ Stack local (Docker) para desarrollo. Decisión y contexto completo en
   de la épica): `usuario.id` sigue `INTEGER` y `usuario.password` sigue
   existiendo. Esa reconciliación es una migración aparte, pendiente.
 - `config.toml`: configuración del proyecto local (puertos, etc.), generado por `supabase init`.
-- No hay `seed.sql` todavía: las cuentas de ejemplo (`prototype/src/lib/access.ts`)
-  se cargan como parte de ERP-5 (T-4/T-5 de su plan), cuando se decida cómo
-  crearlas como usuarios reales de Supabase Auth.
+- `seed.sql`: tres cuentas de ejemplo (PAS, directivo, administrativo) en
+  `auth.users` + `usuario`. El PAS también tiene fila en `productor`
+  (`matricula_ssn` 42108). Se cargan solas con `supabase db reset`.
+  Contraseñas: `Martin2026`, `Red2026`, `Admin2026` (solo local).
 
 El CLI (`supabase`) está instalado como dependencia de desarrollo de `front/`
 (`front/node_modules/.bin/supabase`), pero el proyecto (`supabase/`) vive en

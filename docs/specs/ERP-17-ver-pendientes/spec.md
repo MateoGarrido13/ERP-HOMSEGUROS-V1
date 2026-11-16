@@ -6,10 +6,10 @@
 | **Épica** | Pendientes (usa sesión y alcance de [`../EPICA-acceso/spec.md`](../EPICA-acceso/spec.md)) |
 | **CU origen** | CU-05 `docs/casos-de-uso/PAS/pendientes/CU-05-Pendientes_Ver_Pendientes.md` |
 | **Tipo** | Pantalla/UI · Datos/backend (solo lectura) |
-| **Estado** | Borrador |
+| **Estado** | Aprobada |
 | **Autor** | Yaco10 con IA |
 | **Revisor** | — |
-| **Fecha** | 2026-10-31 |
+| **Fecha** | 2026-10-31 (aprobada 2026-11-15) |
 
 ## 1. Contexto y objetivo
 
@@ -161,3 +161,4 @@ interface PendientesRepo {
 | Fecha | Cambio | Motivo | PR |
 |---|---|---|---|
 | 2026-10-31 | Versión inicial | | |
+| 2026-11-15 | Aprobada en revisión conjunta | PA-1 orden de avisos por fecha DESC (más reciente arriba; columna por verificar contra sql/schema/schema.sql); PA-2 avisos no resueltos siguen figurando, paginación mobile 5 / desktop 10; PA-3 directivo/administrativo ven /red con listado de PAS tras login; PA-4 avisos asociados a poliza y cliente con id_cliente e id_poliza; muestra 'N POLIZA:' y 'Cliente: [Apellido],[Nombre]', N POLIZA es el registrado en la compañía | |
