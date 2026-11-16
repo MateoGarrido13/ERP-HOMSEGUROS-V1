@@ -14,23 +14,23 @@ Se completa el proveedor de desarrollo con recuperación y cambio, luego las acc
 
 ## 2. Antes de empezar
 
-- [ ] Spec de ERP-6 en estado `Aprobada`, sin supuestos ni preguntas abiertas (hoy: PA-1 a PA-4 y SUP-1 a SUP-3).
-- [ ] Rama creada: `erp-6-recuperar-cambiar-contrasena`
-- [ ] **ERP-5 completado** (proveedor, sesión, DAL, layouts, componentes base).
-- [ ] PA-1 conocida: si ERP-9 ya eligió el proveedor de auth, ajustar T-2 y T-3 a su flujo de recuperación; si no, se hace sobre el proveedor de desarrollo.
+- [x] Spec de ERP-6 en estado `Aprobada`, sin supuestos ni preguntas abiertas (SUP-1 a SUP-3 y PA-1 a PA-4 cerrados 2026-11-13).
+- [x] Rama creada: `erp-6-recuperar-cambiar-contrasena`
+- [x] **ERP-5 completado** (proveedor, sesión, DAL, layouts, componentes base).
+- [x] PA-1 conocida: proveedor Supabase Auth (ERP-5), vigencia de enlace 24h, sin límite de pedidos, sin cierre de otras sesiones.
 
 ## 3. Tareas
 
 ### Fase 1 – Lógica
 
-- [ ] **T-1 – Validación de contraseña nueva**
+- [x] **T-1 – Validación de contraseña nueva**
   - **Qué:** función que valida contraseña nueva + confirmación + anterior (política, coincidencia, distinta de la anterior) con los mensajes de la spec 4.2.
   - **Archivos:** `front/src/lib/auth/validation.ts` (modificar), `front/src/lib/auth/validation.test.ts` (si hay tests)
   - **Depende de:** ERP-5 T-3
   - **Cubre:** CA-7, CA-9, RN-4
-  - **Verificación:** casos: vacía, 7 caracteres, sin número, igual a la anterior, no coincide, válida.
+  - **Verificación:** casos: vacía, 7 caracteres, sin mayúscula, sin minúscula, sin número, igual a la anterior, no coincide, válida.
 
-- [ ] **T-2 – Recuperación en el proveedor de desarrollo**
+- [x] **T-2 – Recuperación en el proveedor de desarrollo**
   - **Qué:** `requestPasswordReset` (genera token de un solo uso con vencimiento, invalida el anterior del mismo usuario, no hace nada si la cuenta no existe o está inactiva, y escribe el enlace en la consola del servidor), `checkResetToken`, `resetPassword` (invalida el token, reemplaza contraseña).
   - **Archivos:** `front/src/lib/auth/provider.dev.ts` (modificar)
   - **Depende de:** T-1
@@ -130,3 +130,4 @@ Se completa el proveedor de desarrollo con recuperación y cambio, luego las acc
 
 | Fecha | Tarea | Nota |
 |---|---|---|
+| 2026-11-13 | T-2 | `provider.dev.ts` creado con `TokenResetStore` (tokens en memoria, TTL 24h, SUP-3, enlace por consola). Tests en `provider.dev.test.ts`: 6 tests pasando (vigente, invalido, usado, vencido, invalida previo, consumir devuelve email). `tsc` y `eslint` sin errores. |

@@ -46,10 +46,22 @@ describe("phoneFieldError", () => {
 describe("passwordPolicyError", () => {
   test("menos de 8 caracteres o sin número", () => {
     expect(passwordPolicyError("corta1", "anterior")).toBe(
-      "La contraseña tiene que tener al menos 8 caracteres y un número.",
+      "La contraseña tiene que tener al menos 8 caracteres, una mayúscula, una minúscula y un número.",
     );
     expect(passwordPolicyError("sinnumeros", "anterior")).toBe(
-      "La contraseña tiene que tener al menos 8 caracteres y un número.",
+      "La contraseña tiene que tener al menos 8 caracteres, una mayúscula, una minúscula y un número.",
+    );
+  });
+
+  test("sin mayúscula", () => {
+    expect(passwordPolicyError("martin2027", "Martin2026")).toBe(
+      "La contraseña tiene que tener al menos 8 caracteres, una mayúscula, una minúscula y un número.",
+    );
+  });
+
+  test("sin minúscula", () => {
+    expect(passwordPolicyError("MARTIN2027", "Martin2026")).toBe(
+      "La contraseña tiene que tener al menos 8 caracteres, una mayúscula, una minúscula y un número.",
     );
   });
 

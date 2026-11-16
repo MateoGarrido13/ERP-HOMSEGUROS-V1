@@ -75,7 +75,7 @@ El token se toma de la URL solo para el formulario y se reenvía en el cuerpo de
 - Validaciones (campo → regla → mensaje):
   - `EMAIL` vacío/inválido → mensajes de ERP-5.
   - Contraseña nueva vacía → "Completá la contraseña nueva."
-  - Política: menos de 8 caracteres o sin número → "La contraseña tiene que tener al menos 8 caracteres y un número." (SUP-1)
+  - Política: menos de 8 caracteres, sin mayúscula, sin minúscula o sin número → "La contraseña tiene que tener al menos 8 caracteres, una mayúscula, una minúscula y un número." (SUP-1)
   - Igual a la anterior → "La contraseña nueva tiene que ser distinta de la anterior."
   - `CONFIRMACIÓN` vacía → "Completá la confirmación."; distinta → "Las contraseñas no coinciden."
   - `CONTRASEÑA ACTUAL` vacía → "Completá la contraseña actual."; incorrecta → "La contraseña actual no coincide."
@@ -147,20 +147,21 @@ Server Action cambiarContrasena(prev, FormData{ actual, password, confirm }) →
 
 ## 9. Supuestos
 
-- [ ] SUP-1: Política = mínimo 8 caracteres con un número, distinta de la anterior (del prototipo; ver SUP-5 de la épica). → *confirmado por: ___*
-- [ ] SUP-2: El canal es el correo (CU-02 SUP_1). → *confirmado por: ___*
-- [ ] SUP-3: Un enlace nuevo deja sin efecto el anterior del mismo usuario (el prototipo guarda uno solo). → *confirmado por: ___*
+- [x] SUP-1: Política = mínimo 8 caracteres, con al menos una mayúscula, una minúscula y un número, distinta de la anterior (del prototipo; ver SUP-5 de la épica). → *confirmado por: Yaco10, 2026-11-13 — política extendida: 8 caracteres, mayúscula, minúscula, número.*
+- [x] SUP-2: El canal es el correo (CU-02 SUP_1). → *confirmado por: Yaco10, 2026-11-13 — canal: correo electrónico.*
+- [x] SUP-3: Un enlace nuevo deja sin efecto el anterior del mismo usuario (el prototipo guarda uno solo). → *confirmado por: Yaco10, 2026-11-13 — solo un enlace vigente por usuario.*
 
 ## 10. Preguntas abiertas
 
-- [ ] PA-1: Servicio de correo y proveedor de autenticación (depende de ERP-9; Supabase Auth trae recuperación propia con otro formato de enlace). → *quién decide: equipo vía ERP-9*
-- [ ] PA-2: Vigencia del enlace (el prototipo usa 24 h; CU-02 SUP_2). → *quién decide: ___*
-- [ ] PA-3: ¿Hay límite de pedidos de enlace por email/IP? → *quién decide: ___*
-- [ ] PA-4: Al guardar la contraseña nueva, ¿se cierran las otras sesiones del usuario? (CU-02 SUP_4; el prototipo cierra la sesión en recuperar). → *quién decide: ___*
+- [x] PA-1: Servicio de correo y proveedor de autenticación → *respondido: Supabase Auth (ERP-5), proveedor ya implementado; vigencia de enlace: 24 horas (CU-02 SUP_2).*
+- [x] PA-2: Vigencia del enlace → *respondido: 24 horas.*
+- [x] PA-3: ¿Hay límite de pedidos de enlace por email/IP? → *respondido: no hay límite.*
+- [x] PA-4: Al guardar la contraseña nueva, ¿se cierran las otras sesiones del usuario? → *respondido: no, no se cierran otras sesiones.*
 
 ## 11. Historial de cambios
 
 | Fecha | Cambio | Motivo | PR |
 |---|---|---|---|
 | 2026-10-31 | Versión inicial | | |
+| 2026-11-13 | Aprobación del spec | SUP-1 a SUP-3 y PA-1 a PA-4 cerrados. Política de contraseña extendida a 8 caracteres, mayúscula, minúscula y número. Canal: correo. Vigencia: 24h. Sin límite de pedidos. Sin cierre de otras sesiones. | — |
 | 2026-11-15 | Aprobada en revisión conjunta | PA-1 Supabase Auth nativo (ya en ADR-004); PA-2 vigencia 24h con f_inicio; PA-3 límite x (sin definir); PA-4 no se cierran otras sesiones al cambiar contraseña; SUP-1 política alfanumérica (al menos un dígito, una mayúscula y una minúscula); SUP-2 canal de recuperación: correo asociado a la cuenta; SUP-3 enlace nuevo invalida el anterior del mismo usuario | |

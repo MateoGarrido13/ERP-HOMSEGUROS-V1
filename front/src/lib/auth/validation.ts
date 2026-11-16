@@ -21,8 +21,13 @@ export function phoneFieldError(phone: string) {
 }
 
 export function passwordPolicyError(password: string, previous: string) {
-  if (password.length < 8 || !/\d/.test(password)) {
-    return "La contraseña tiene que tener al menos 8 caracteres y un número.";
+  if (
+    password.length < 8 ||
+    !/[A-Z]/.test(password) ||
+    !/[a-z]/.test(password) ||
+    !/\d/.test(password)
+  ) {
+    return "La contraseña tiene que tener al menos 8 caracteres, una mayúscula, una minúscula y un número.";
   }
   if (password === previous) {
     return "La contraseña nueva tiene que ser distinta de la anterior.";
