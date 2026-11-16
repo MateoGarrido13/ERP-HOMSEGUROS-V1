@@ -1,13 +1,13 @@
 ## CU-18-AUT-Multicotizador_Comparar_Cotizaciones
 *Actor principal:* PAS
 *Actor secundario:* Mercantil Andina, Sancor Seguros, Zurich, La Segunda y Allianz (APIs de las compañías)
-*Precondiciones:* El PAS tiene una cotización de Automotor con el cliente asociado (REF CU-10-Multicotizador_Seleccionar_o_Crear_Cliente) y el vehículo cargado (REF CU-17-AUT-Multicotizador_Cargar_Riesgo). Hay conexión.
+*Precondiciones:* El PAS tiene una cotización de Automotor con el cliente asociado (REF CU-10-Multicotizador_Seleccionar_o_Crear_Cliente) y el vehículo cargado (REF CU-17-AUT-Multicotizador_Cargar_Riesgo). Ya tocó "Calcular cotización" y los campos obligatorios pasaron la validación, así que las consultas en paralelo ya fueron enviadas (REF CU-17 RN_8). Hay conexión.
 *Disparador:* Ver cuánto cuesta asegurar el vehículo en cada compañía
 
 *Flujo principal*
-1. El sistema arma el pedido con los datos del cliente y del vehículo y consulta en paralelo a todas las compañías habilitadas para Automotor
+1. Las consultas en paralelo ya salieron al tocar "Calcular cotización" en la carga del riesgo, con los campos obligatorios validados (REF CU-17 RN_8). El sistema toma esas respuestas para comparar
 2. El sistema muestra "Comparar primas" con una tarjeta por compañía, todas en estado "Cargando" (sin precio)
-3. A medida que cada compañía responde, el sistema pasa su tarjeta a "Listo" y muestra la cobertura y el precio mensual (*ALT COMPAÑIA FALLA, *ALT SIN RESPUESTA A TIEMPO, *ALT RECHAZA EL RIESGO)
+3. A medida que cada compañía responde, el sistema pasa su tarjeta a "Listo" y muestra la cobertura y el precio mensual (*ALT COMPAÑIA FALLA, *ALT SIN RESPUESTA A TIEMPO, *ALT RECHAZA EL RIESGO, *ALT VOLVER)
 4. El PAS marca una o más cotizaciones en estado "Listo", sin necesidad de esperar a las que siguen cargando (*ALT NINGUNA COTIZA)
 5. El sistema destaca como "Opción destacada" la de menor precio entre las marcadas, y a las demás las muestra como "Alternativa"
 6. El PAS selecciona "Armar propuesta" (*ALT CORREGIR EL RIESGO)
@@ -34,6 +34,12 @@
 3c.2. El sistema pasa su tarjeta a "No cotiza" e informa el motivo si la compañía lo devolvió
 3c.3. El sistema no ofrece reintentar, porque la respuesta no va a cambiar
 3c.4. **IR A (4)**
+
+`3d. El PAS selecciona Volver ya dadas las cotizaciones`
+3d.1. Ya hay cotizaciones de las compañías
+3d.2. El sistema abre el formulario de carga del bien con los campos que el PAS cargó (REF CU-17-AUT-Multicotizador_Cargar_Riesgo)
+3d.3. Esos datos persisten en la caché de ese cliente (REF CU-10-Multicotizador_Seleccionar_o_Crear_Cliente)
+3d.4. **FIN**
 
 `4a. Ninguna compañía cotiza`
 4a.1. Todas las compañías quedaron en "No disponible", "Sin respuesta" o "No cotiza"
@@ -79,8 +85,8 @@ R.3. **IR A (1)**
 5. Cambiar el riesgo o el cliente deja sin efecto las cotizaciones obtenidas
 
 *Reglas de negocio asociadas*
-RN_1: Se consulta a todas las compañías habilitadas para Automotor: Mercantil Andina, Sancor Seguros, Zurich, La Segunda y Allianz. El prototipo hoy muestra Sancor, Mercantil Andina y Allianz (REF CU 49).
-RN_2: La consulta es en paralelo y sin bloquear la pantalla. Una compañía lenta no congela al PAS.
+RN_1: Se consulta a todas las compañías habilitadas para Automotor: Mercantil Andina, Sancor Seguros, Zurich, La Segunda y Allianz. El envío de esas consultas es el de CU-17 RN_8, después de "Calcular cotización" y de validar los campos obligatorios. El prototipo hoy muestra Sancor, Mercantil Andina y Allianz (REF CU 49).
+RN_2: La consulta es en paralelo y sin bloquear la pantalla. Una compañía lenta no congela al PAS. El envío ocurre en CU-17; esta pantalla muestra las respuestas a medida que llegan.
 RN_3: Una comparación parcial es válida. El PAS puede avanzar con las compañías que respondieron.
 RN_4: Cada tarjeta indica su estado: "Cargando", "Listo", "No disponible", "Sin respuesta" o "No cotiza".
 RN_5: Solo se puede marcar una cotización en estado "Listo", es decir, una que tiene precio.
@@ -90,6 +96,7 @@ RN_8: Entre las cotizaciones marcadas, el sistema destaca la de menor precio. La
 RN_9: Una cotización de una compañía es una oferta ajena que caduca. No es una póliza y no obliga a emitirla.
 RN_10: Cambiar el cliente o los datos del vehículo invalida las cotizaciones obtenidas. Hay que volver a consultar.
 RN_11: Retomar una cotización "En curso" vuelve a consultar a las compañías, porque solo conserva el riesgo y no los precios (REF CU-12-Multicotizador_Guardar_y_Retomar_Cotizacion).
+RN_12: Una vez dadas las cotizaciones de las compañías, "Volver" abre el formulario de carga del bien con los campos que el PAS cargó. Esos datos persisten en la caché de ese cliente (REF CU-17, CU-10).
 RN_12: Las coberturas de todas las compañías se muestran con un nombre común, por ejemplo "Terceros completo", para que sean comparables.
 RN_13: Consultar a las compañías y marcar cotizaciones no se audita como acción del PAS. La auditoría empieza al generar la propuesta (REF CU 13, CU 51).
 RN_14: Cómo se comunica el sistema con cada compañía (autenticación, formato de los mensajes, tiempos y reintentos) se define en las especificaciones técnicas, no en este caso.

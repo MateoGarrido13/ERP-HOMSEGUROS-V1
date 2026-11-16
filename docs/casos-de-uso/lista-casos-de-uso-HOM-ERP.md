@@ -128,7 +128,7 @@ El mismo caso de uso puede comportarse distinto según el ramo. Para no repetir 
 
 `PAS/multicotizador/masivo/<ramo>/`
 
-Una carpeta por ramo. Hoy solo existe `automotor/`; el CU-17b (Hogar, Consorcio y Comercio) vive ahí hasta que haya carpetas por ramo. El CU-18 vigente es la variante AUT (`masivo/automotor/`). Existe además un CU-18 multirramo (versión de Mateo, `masivo/CU-18-Multicotizador_Comparar_Cotizaciones.md`) conservado como supuesto teórico: el flujo cambia entre ramos.
+Una carpeta por ramo. Hoy solo existe `automotor/`; el CU-17b (Hogar, Consorcio y Comercio) vive ahí hasta que haya carpetas por ramo. El CU-18 vigente es la variante AUT (`masivo/automotor/`).
 
 | #   | Caso de uso | Variantes | Absorbe | Origen | Fase |
 | --- | --- | --- | --- | --- | --- |
@@ -244,6 +244,8 @@ Definido, con el recorrido de pantalla todavía abierto:
 | 46  | Dar de alta un PAS                       | N      | MVP  |
 | 47  | Editar, suspender o dar de baja a un PAS | N      | MVP  |
 | 48  | Asignar roles y permisos                 | N      | MVP  |
+
+- `CU-46-Productores_Dar_de_Alta_PAS` Alta de PAS por la organización (archivo presente). CU-47 y CU-48 siguen sin archivo.
 
 ## Directivo y administrativo: configuración
 

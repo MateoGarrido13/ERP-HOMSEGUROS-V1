@@ -155,7 +155,6 @@ Valores de `ESTADO`:
 | CU-17-AUT | DESARROLLADO | Cargar riesgo Automotor; hub `/cotizar` aún responde 501 |
 | CU-17b | PENDIENTE | Cargar riesgo Hogar/Consorcio/Comercio; faltan campos por API |
 | CU-18-AUT | DESARROLLADO | Comparar cotizaciones (vigente AUT); estimado diferido |
-| CU-18 | DESARROLLADO | Comparar multirramo (supuesto teórico, no canónico) |
 | CU-19-AUT | DESARROLLADO | Ver comisión de cada cotización (negocio en `?`) |
 | CU-20-AUT | DESARROLLADO | Aplicar descuento sacrificando comisión (negocio en `?`) |
 | CU-21 | PENDIENTE | Cargar solicitud sin API (AP/ART); stub de 1 línea |

@@ -6,10 +6,10 @@
 | **Épica** | Acceso · [`../EPICA-acceso/spec.md`](../EPICA-acceso/spec.md) |
 | **CU origen** | CU-04 `docs/casos-de-uso/login-logout/CU-04-Acceso_Cerrar_Sesion.md` |
 | **Tipo** | Pantalla/UI · Datos/backend |
-| **Estado** | Borrador |
+| **Estado** | Aprobada |
 | **Autor** | Yaco10 con IA |
 | **Revisor** | — |
-| **Fecha** | 2026-10-31 |
+| **Fecha** | 2026-10-31 (aprobada 2026-11-15) |
 
 ## 1. Contexto y objetivo
 
@@ -124,3 +124,4 @@ Server Action cerrarSesion() → redirect('/')
 | Fecha | Cambio | Motivo | PR |
 |---|---|---|---|
 | 2026-10-31 | Versión inicial | | |
+| 2026-11-15 | Aprobada en revisión conjunta | PA-1 cerrar un dispositivo deja abiertas las sesiones de los otros; PA-2 no aviso de cotización sin guardar al cerrar (por ahora); PA-3 si falla el proveedor al destruir sesión: borrar cookie, redirigir a `/` y dejar error en el log; SUP-1 siempre se audita el cierre, incluso si la sesión estaba vencida (último mensaje en log: 'Se le venció la sesión e intento …'); SUP-2 cerrar sesión solo desde Perfil | |

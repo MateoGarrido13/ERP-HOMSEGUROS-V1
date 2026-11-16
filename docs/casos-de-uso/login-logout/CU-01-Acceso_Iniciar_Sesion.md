@@ -14,14 +14,21 @@
 7. El sistema compara la contraseña con la guardada (*ALT CREDENCIALES)
 8. El sistema abre una sesión asociada a ese usuario, a su rol y al alcance de datos de ese rol
 9. El sistema registra el ingreso EN SUS LOGS: usuario, rol, fecha y hora (REF CU 51)
-10. El sistema abre la pantalla de inicio del rol: el PAS entra a Pendientes; el directivo y el administrativo entran al dashboard de la red (REF CU 40)
+10. El sistema abre la pantalla de inicio del rol: el PAS entra a Pendientes; el directivo y el administrativo entran al dashboard de la red (REF CU 40) (*ALT CAMBIO INICIAL)
 
 *Flujos alternativos*
 
 `1. El sistema muestra la pantalla de ingreso`
 1.1. En este dispositivo ya hay una sesión vigente
-1.2. El sistema abre la pantalla de inicio del rol y no vuelve a pedir la contraseña
-1.3. **FIN**
+1.2. Si la cuenta exige cambio de contraseña inicial (REF CU-46 RN_8), el sistema no abre Pendientes ni el dashboard: **IR A (10a)**
+1.3. Si no, el sistema abre la pantalla de inicio del rol y no vuelve a pedir la contraseña
+1.4. **FIN**
+
+`10a. El PAS debe cambiar la contraseña inicial`
+10a.1. La cuenta nació en CU-46 y el PAS todavía no reemplazó la contraseña que cargó quien dio el alta
+10a.2. El sistema pide el cambio con la sesión abierta (REF CU-02 flujo C). No abre Pendientes
+10a.3. Cuando la contraseña nueva queda guardada y es distinta de la inicial, el sistema abre Pendientes
+10a.4. **FIN**
 
 `4. El sistema verifica que el email tenga formato válido y que la contraseña no esté vacía`
 4.1. Falta un campo o el email no tiene formato válido
@@ -37,15 +44,16 @@
 *Postcondiciones*
 1. La sesión queda abierta y asociada al usuario, a su rol y a su alcance de datos
 2. El ingreso queda asentado en el registro de auditoría, con fecha y hora
-3. El PAS queda en Pendientes; el directivo y el administrativo quedan en el dashboard de la red
+3. El PAS queda en Pendientes, salvo que deba cambiar la contraseña inicial (REF CU-46 RN_8): en ese caso queda en el cambio (REF CU-02 flujo C) y no opera hasta completarlo. El directivo y el administrativo quedan en el dashboard de la red
 
 *Reglas de negocio asociadas*
 RN_1: El ingreso es con email y contraseña. No hay alta de cuenta desde esta pantalla.
-RN_2: La cuenta la crea la organización. Un PAS no se registra solo.
+RN_2: La cuenta la crea la organización. Las altas las absorben los roles `directivo` y/o `administrativo` (REF CU-46). Un PAS no se registra solo. No hay autogestión.
 RN_3: Ante email inexistente o contraseña incorrecta, el aviso es el mismo.
 RN_4: Una cuenta suspendida o dada de baja no obtiene sesión.(se borro de la bd)
 RN_5: La sesión de un PAS alcanza solo su cartera. La del directivo y la del administrativo alcanzan la red.
 RN_6: Cada ingreso queda en el registro de auditoría.
+RN_7: Un PAS dado de alta en CU-46 debe cambiar la contraseña inicial en el primer ingreso, antes de Pendientes (REF CU-46 RN_8, CU-02 flujo C).
 
 *Supuestos a confirmar*
 SUP_1: El PAS aterriza en Pendientes y el directivo/administrativo en el dashboard de la red.

@@ -1,12 +1,6 @@
-// Carga las 3 cuentas de ejemplo del prototipo (prototype/src/lib/access.ts,
-// SUP-1 de la épica) como usuarios reales de Supabase Auth, más su fila en
-// `usuario` (y en `productor` para el PAS, con su matrícula — PA-9).
-//
-// No es supabase/seed.sql: `supabase db reset` no lo corre solo porque
-// necesita la API de administración de Auth (supabase.auth.admin.createUser),
-// no solo SQL. Vive en front/ (no en supabase/) para poder resolver
-// @supabase/supabase-js desde front/node_modules. Se corre a mano después de
-// `supabase db reset`, parado en front/:
+// Histórico: las 3 cuentas de ejemplo se cargan ahora con `supabase/seed.sql`
+// en cada `supabase db reset`. Este script queda por si hace falta recrearlas
+// vía Auth Admin API sin resetear la base.
 //
 //   node --env-file=.env.local scripts/seed-supabase.mjs
 //

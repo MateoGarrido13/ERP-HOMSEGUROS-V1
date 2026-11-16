@@ -33,6 +33,10 @@ RN_4: El cliente de la cotización es el de la póliza de origen y no se puede c
 RN_5: El PAS puede modificar cualquier dato precargado del riesgo antes de continuar; el sistema no obliga a cotizar con los mismos valores.
 RN_6: Si la póliza de origen no tiene todos los datos del riesgo, el sistema precarga lo que tiene y deja el resto para que el PAS lo complete.
 RN_7: A partir de la carga del riesgo, esta cotización sigue las mismas reglas que una cotización nueva (REF CU 13 en adelante).
+RN_8: Algunos proveedores solo dejan recotizar un automotor con póliza vigente (activa) si quien intenta recotizar es el PAS que emitió esa póliza (REF CU-17 RN_11). En este caso el PAS es quien emitió la póliza de origen. Si quien recotiza no es ese PAS, esos proveedores no devuelven cotización.
+
+*Riesgo registrado*
+La credencial con la que se envían y se reciben las cotizaciones de las APIs es única y, en algunos casos, corresponde a un solo PAS (un administrativo). No se podrá obtener de esas APIs la cartera de todos los clientes si se necesitara (REF CU-17, Riesgo registrado).
 
 *Supuestos a confirmar*
 SUP_1: Qué pasa con la póliza vigente cuando la recotización termina en una propuesta aceptada y una póliza nueva emitida para el mismo bien: si la anterior se da de baja sola o el PAS la retira a mano (REF CU 16, CU-27-Cartera_Ver_Detalle_Poliza).
