@@ -94,8 +94,8 @@ Primero repositorio y validación, luego la acción, luego la pantalla (lectura 
 
 ## 6. Validación final
 
-- [ ] `npm run lint` sin errores
-- [ ] `npm run build` pasa
+- [x] `npm run lint` sin errores (0 errores, 7 warnings de stubs de ERP-6)
+- [x] `npm run build` pasa
 - [ ] Todos los criterios de aceptación de la spec recorridos y marcados
 - [ ] Spec actualizada si el diseño cambió durante la implementación
 - [ ] PR abierto, revisado por el otro integrante
@@ -125,3 +125,16 @@ UPDATE 0
 ```
 | 2026-11-25 | T-3 | Acción `guardarPerfil` (campos: nombre, telefonoPrefijo, telefonoArea, telefonoNumero). RED: suite fallaba por import inexistente. `npx vitest run`: 36 passed (7 tests de la acción: válido, nombre vacío, teléfono inválido, campos manipulados ignorados, falla de escritura, falla de auditoría con reversión, guardar sin cambios audita). |
 | 2026-11-25 | T-4 a T-6 | Pantalla `/perfil` (page.tsx, profile-screen.tsx, phone-field.tsx): lectura, edición controlada (conserva lo escrito ante error), teléfono en tres partes con bandera, matrícula omitida si no hay, botón deshabilitado al guardar, foco al editar y al primer error, `role=alert` para falla general, ubica LogoutButton. `tsc --noEmit` sin errores, `npm run lint` 0 errores, `npm run build` OK. Sin tests de componentes (no hay jsdom/testing-library en el proyecto); verificación manual abajo. Enlace Cambiar contraseña preparado por prop `hrefCambiarContrasena`, sin destino hasta que ERP-6 cree `/perfil/contrasena`. |
+| 2026-11-25 | Validación final | `npm run lint`: 0 errores y 7 warnings (parámetros sin usar de stubs ERP-6). `npx tsc --noEmit`: sin errores. `npx vitest run`: 4 archivos, 43 tests passed. `npm run build`: OK. |
+
+### Verificación contra Supabase local (`next start` + sesión real, cuentas de ejemplo)
+
+```
+perfil PAS: 200 | Gómez: true | MATRÍCULA: true | 42108: true | +54 11 43219088: true | Editar: true | Cerrar sesión: true
+perfil directivo: 200 | MATRÍCULA: false | Ríos: true
+update propio filas: 1
+update ajeno filas: 0
+update rol: permission denied for table usuario
+tras guardar y recargar, +54 11 43219088: true
+```
+(El UPDATE se probó con el cliente de la sesión del usuario, equivalente a `actualizarPerfil`; el recorrido de formulario en navegador no se probó.)
