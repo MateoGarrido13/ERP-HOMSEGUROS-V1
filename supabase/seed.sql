@@ -81,6 +81,25 @@ VALUES
         '',
         false,
         false
+    ),
+    (
+        '00000000-0000-0000-0000-000000000000',
+        'd4444444-4444-4444-8444-444444444444',
+        'authenticated',
+        'authenticated',
+        'juan.perez@hom.com.ar',
+        extensions.crypt('Juan2026', extensions.gen_salt('bf', 10)),
+        now(),
+        '{"provider":"email","providers":["email"]}'::jsonb,
+        '{}'::jsonb,
+        now(),
+        now(),
+        '',
+        '',
+        '',
+        '',
+        false,
+        false
     );
 
 INSERT INTO auth.identities (
