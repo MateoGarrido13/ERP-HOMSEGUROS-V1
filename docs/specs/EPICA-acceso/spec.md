@@ -112,11 +112,11 @@ Interfaz que implementa `provider.supabase.ts` sobre `@supabase/supabase-js` / `
 interface AuthProvider {
   signIn(email, password, recordar?): Promise<{ ok: true; usuario } | { ok: false; motivo: 'credenciales' | 'inactiva' | 'servicio' }>
   validateSession(): Promise<{ usuarioId } | null>      // supabase.auth.getUser()
-  destroySession(): Promise<void>                       // supabase.auth.signOut(), idempotente
+  destroySession(): Promise<void>                       // supabase.auth.signOut({ scope: 'local' }): solo este dispositivo (ERP-8 PA-1), idempotente
   requestPasswordReset(email): Promise<{ enviado: boolean }>  // supabase.auth.resetPasswordForEmail; nunca revela si el email existe
-  checkResetToken(token): Promise<'vigente' | 'vencido' | 'usado' | 'invalido'>
-  resetPassword(token, nueva): Promise<'ok' | 'enlace-invalido' | 'igual-a-la-anterior'>
-  changePassword(usuarioId, actual, nueva): Promise<'ok' | 'actual-incorrecta' | 'igual-a-la-anterior'>  // supabase.auth.updateUser({ password })
+  checkResetToken(token): Promise<'vigente' | 'vencido' | 'usado' | 'invalido'>  // hoy solo valida la forma ('vigente' | 'invalido'): verifyOtp gasta el enlace, la vigencia real se ve al guardar (ERP-6 SUP-5)
+  resetPassword(token, nueva): Promise<{ ok: true; usuarioId; rol } | { ok: false; motivo: 'enlace-invalido' | 'igual-a-la-anterior' | 'politica' | 'servicio' }>  // devuelve quién cambió la contraseña para auditar (la sesión de recuperación ya se cerró); también comprueba que la cuenta esté activa (ERP-6 SUP-4)
+  changePassword(usuarioId, actual, nueva): Promise<'ok' | 'actual-incorrecta' | 'igual-a-la-anterior' | 'politica' | 'servicio'>  // supabase.auth.updateUser({ password })
 }
 interface UsuarioRepo   { porId(id); actualizarPerfil(id, { nombre, telefono }) }
 interface AuditoriaRepo { registrar(usuarioId, rol, accion) }
@@ -205,3 +205,4 @@ interface AuditoriaRepo { registrar(usuarioId, rol, accion) }
 | 2026-11-13 | Se resuelven SUP-1, SUP-3, SUP-5, SUP-6 y PA-1, PA-3, PA-4, PA-5, PA-6, PA-8 (ver §9 y §10). Quedan abiertas SUP-4, PA-2 y el resto de PA-7 (no bloquean el desarrollo). Estado pasa a `Aprobada`. | Revisión de spec previa a implementar ERP-5 | |
 | 2026-11-13 | `AuthProvider.signIn` gana un tercer parámetro `recordar` (checkbox "Recordarme" de ERP-5, visto en Figma y no documentado hasta ahora): controla si la cookie de sesión persiste o es de sesión del navegador. Se actualiza 4.4. | Revisión contra Figma de la pantalla de login de ERP-5 | |
 | 2026-11-13 | Se agrega y se resuelve PA-9: al implementar T-4 (migración de ERP-5) se encontró que `usuario.matricula` (esta épica) y `productor.matricula_ssn` (`sql/schema/schema.sql`) representan lo mismo, y que `usuario.apellido`/`usuario.dni` de cartera no están contemplados en el modelo 4.3 de esta épica. Se resuelve: sin `matricula` en `usuario` (se lee de `productor.matricula_ssn`); `apellido`/`dni` obligatorios para los tres roles; `nombre` de la épica se compone de `nombre` + `apellido`. Se actualiza 4.3. | Spec incompleta detectada durante la implementación; decisión tomada por el humano antes de seguir | |
+| 2026-11-25 | Se actualiza el contrato 4.4 de `AuthProvider` con lo implementado en ERP-6 y ERP-8 (`destroySession` local, `resetPassword` con resultado rico, `checkResetToken` solo de forma) | Reflejar las limitaciones de Supabase Auth halladas al implementar | |

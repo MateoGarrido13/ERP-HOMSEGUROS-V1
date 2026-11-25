@@ -4,7 +4,7 @@
 |---|---|
 | **Spec** | [`spec.md`](spec.md) (aprobada 2026-11-15; reconciliada 2026-11-25) |
 | **US** | ERP-8 |
-| **Estado** | Aprobado |
+| **Estado** | En ejecución (código integrado en `integracion/acceso-pendientes`; falta la prueba manual en navegador y la validación final) |
 | **Autor** | Yaco10 con IA |
 | **Revisor** | — |
 

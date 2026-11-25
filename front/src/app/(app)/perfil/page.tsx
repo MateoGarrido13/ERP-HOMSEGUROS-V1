@@ -6,8 +6,13 @@ import { UsuarioRepoSupabase } from "../../../lib/auth/provider.supabase";
 
 // Spec ERP-7: el usuario sale siempre de la sesión (nunca de la URL), así
 // que cada uno ve solo su perfil (RN-1).
-export default async function PerfilPage() {
+export default async function PerfilPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ aviso?: string }>;
+}) {
   const { usuarioId } = await verifySession();
+  const { aviso } = await searchParams;
   const usuario = await new UsuarioRepoSupabase().porId(usuarioId);
   if (!usuario) redirect("/");
 
@@ -21,8 +26,8 @@ export default async function PerfilPage() {
         organizacion: usuario.organizacion,
         matricula: usuario.matricula,
       }}
-      // hrefCambiarContrasena="/perfil/contrasena" → se agrega tras el merge
-      // de ERP-6, que crea esa ruta (CA-8).
+      hrefCambiarContrasena="/perfil/contrasena"
+      contrasenaActualizada={aviso === "contrasena-actualizada"}
     />
   );
 }

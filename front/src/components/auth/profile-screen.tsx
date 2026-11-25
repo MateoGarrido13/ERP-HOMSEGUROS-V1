@@ -33,6 +33,8 @@ interface ProfileScreenProps {
   // Destino de "Cambiar contraseña": lo crea ERP-6 (/perfil/contrasena). Sin
   // valor, el enlace no se muestra para no apuntar a una ruta inexistente.
   hrefCambiarContrasena?: string;
+  // Aviso de éxito tras cambiar la contraseña (ERP-6): `/perfil?aviso=...`.
+  contrasenaActualizada?: boolean;
 }
 
 function Fila({ etiqueta, valor }: { etiqueta: string; valor: string }) {
@@ -44,7 +46,11 @@ function Fila({ etiqueta, valor }: { etiqueta: string; valor: string }) {
   );
 }
 
-export function ProfileScreen({ usuario, hrefCambiarContrasena }: ProfileScreenProps) {
+export function ProfileScreen({
+  usuario,
+  hrefCambiarContrasena,
+  contrasenaActualizada = false,
+}: ProfileScreenProps) {
   const [editando, setEditando] = useState(false);
   const [nombre, setNombre] = useState(usuario.nombrePila);
   const [telefono, setTelefono] = useState<TelefonoPartes>(() => parsearTelefono(usuario.telefono));
@@ -106,6 +112,14 @@ export function ProfileScreen({ usuario, hrefCambiarContrasena }: ProfileScreenP
 
   return (
     <div className="flex flex-col gap-4 p-6">
+      {contrasenaActualizada ? (
+        <p
+          role="status"
+          className="rounded-xl border border-line bg-stage px-3 py-2.5 text-sm text-title"
+        >
+          Contraseña actualizada.
+        </p>
+      ) : null}
       <ScreenTitle className="text-[22px]">
         {usuario.nombrePila} {usuario.apellido}
       </ScreenTitle>
