@@ -1,12 +1,22 @@
-import type { ResultadoSignIn, Usuario } from "./types";
+import type { ResultadoSignIn, Rol, Usuario } from "./types";
 
 export type ResultadoRequestReset = { enviado: boolean };
 
 export type EstadoTokenReset = "vigente" | "vencido" | "usado" | "invalido";
 
-export type ResultadoReset = "ok" | "enlace-invalido" | "igual-a-la-anterior";
+// Ampliación respecto de la épica 4.4 (ERP-6): `resetPassword` devuelve quién
+// cambió la contraseña (la acción lo necesita para auditar `cambio-contrasena`
+// y la sesión de recuperación ya se cerró), y suma "politica" y "servicio".
+export type ResultadoReset =
+  | { ok: true; usuarioId: string; rol: Rol }
+  | { ok: false; motivo: "enlace-invalido" | "igual-a-la-anterior" | "politica" | "servicio" };
 
-export type ResultadoCambioPassword = "ok" | "actual-incorrecta" | "igual-a-la-anterior";
+export type ResultadoCambioPassword =
+  | "ok"
+  | "actual-incorrecta"
+  | "igual-a-la-anterior"
+  | "politica"
+  | "servicio";
 
 export interface SesionValidada {
   usuarioId: string;

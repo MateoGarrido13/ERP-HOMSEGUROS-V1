@@ -3,6 +3,7 @@ import {
   emailFieldError,
   inicioDelRol,
   normalizarEmail,
+  nuevaContrasenaErrors,
   passwordPolicyError,
   phoneFieldError,
 } from "./validation";
@@ -43,14 +44,22 @@ describe("phoneFieldError", () => {
   });
 });
 
+const MENSAJE_POLITICA =
+  "La contraseña tiene que tener al menos 8 caracteres, una mayúscula, una minúscula y un número.";
+
 describe("passwordPolicyError", () => {
-  test("menos de 8 caracteres o sin número", () => {
-    expect(passwordPolicyError("corta1", "anterior")).toBe(
-      "La contraseña tiene que tener al menos 8 caracteres y un número.",
-    );
-    expect(passwordPolicyError("sinnumeros", "anterior")).toBe(
-      "La contraseña tiene que tener al menos 8 caracteres y un número.",
-    );
+  test("vacía", () => {
+    expect(passwordPolicyError("", "Anterior1")).toBe("Completá la contraseña nueva.");
+  });
+
+  test("menos de 8 caracteres", () => {
+    expect(passwordPolicyError("Corta1a", "Anterior1")).toBe(MENSAJE_POLITICA);
+  });
+
+  test("sin número, sin mayúscula o sin minúscula", () => {
+    expect(passwordPolicyError("Sinnumeros", "Anterior1")).toBe(MENSAJE_POLITICA);
+    expect(passwordPolicyError("martin2027", "Martin2026")).toBe(MENSAJE_POLITICA);
+    expect(passwordPolicyError("MARTIN2027", "Martin2026")).toBe(MENSAJE_POLITICA);
   });
 
   test("igual a la anterior", () => {
@@ -59,8 +68,37 @@ describe("passwordPolicyError", () => {
     );
   });
 
+  test("sin anterior conocida (recuperación) no compara", () => {
+    expect(passwordPolicyError("Martin2026")).toBeNull();
+  });
+
   test("válida", () => {
     expect(passwordPolicyError("Martin2027", "Martin2026")).toBeNull();
+  });
+});
+
+describe("nuevaContrasenaErrors", () => {
+  test("confirmación vacía", () => {
+    expect(nuevaContrasenaErrors("Martin2027", "", "Martin2026")).toEqual({
+      confirmError: "Completá la confirmación.",
+    });
+  });
+
+  test("confirmación distinta", () => {
+    expect(nuevaContrasenaErrors("Martin2027", "Martin2028")).toEqual({
+      confirmError: "Las contraseñas no coinciden.",
+    });
+  });
+
+  test("política incumplida y confirmación distinta marcan ambos campos", () => {
+    expect(nuevaContrasenaErrors("corta", "otra")).toEqual({
+      passwordError: MENSAJE_POLITICA,
+      confirmError: "Las contraseñas no coinciden.",
+    });
+  });
+
+  test("válida", () => {
+    expect(nuevaContrasenaErrors("Martin2027", "Martin2027", "Martin2026")).toEqual({});
   });
 });
 
