@@ -80,7 +80,8 @@ export class AuthProviderSupabase implements AuthProvider {
 
   async destroySession(): Promise<void> {
     const supabase = await createClient();
-    await supabase.auth.signOut();
+    // Solo este dispositivo (ERP-8 PA-1): el alcance global cerraría los demás.
+    await supabase.auth.signOut({ scope: "local" });
   }
 
   async requestPasswordReset(_email: string): Promise<ResultadoRequestReset> {
