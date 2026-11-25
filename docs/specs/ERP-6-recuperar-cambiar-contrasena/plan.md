@@ -2,54 +2,54 @@
 
 | | |
 |---|---|
-| **Spec** | [`spec.md`](spec.md) (versión aprobada: pendiente) |
+| **Spec** | [`spec.md`](spec.md) (aprobada 2026-11-15; reconciliada 2026-11-25) |
 | **US** | ERP-6 |
-| **Estado** | Borrador |
+| **Estado** | Aprobado |
 | **Autor** | Yaco10 con IA |
 | **Revisor** | — |
 
 ## 1. Resumen del enfoque
 
-Se completa el proveedor de desarrollo con recuperación y cambio, luego las acciones, luego las tres pantallas. Recuperar y cambiar comparten validación y formulario de contraseña nueva, así que primero se hace la lógica común.
+Se completa el proveedor Supabase (`provider.supabase.ts`) con recuperación y cambio, luego las acciones, luego las tres pantallas. Recuperar y cambiar comparten validación y formulario de contraseña nueva, así que primero se hace la lógica común.
 
 ## 2. Antes de empezar
 
-- [ ] Spec de ERP-6 en estado `Aprobada`, sin supuestos ni preguntas abiertas (hoy: PA-1 a PA-4 y SUP-1 a SUP-3).
-- [ ] Rama creada: `erp-6-recuperar-cambiar-contrasena`
-- [ ] **ERP-5 completado** (proveedor, sesión, DAL, layouts, componentes base).
-- [ ] PA-1 conocida: si ERP-9 ya eligió el proveedor de auth, ajustar T-2 y T-3 a su flujo de recuperación; si no, se hace sobre el proveedor de desarrollo.
+- [x] Spec de ERP-6 en estado `Aprobada`, sin supuestos ni preguntas abiertas (reconciliada el 2026-11-25).
+- [ ] Rama creada desde `main`: `erp-6-recuperar-cambiar-contrasena`. La rama remota actual tiene un proveedor `provider.dev.ts` descartado por la spec: se rebasa/recrea desde `main` y solo se rescata `validation.ts` y su test si sirven.
+- [x] **ERP-5 completado** (proveedor Supabase, sesión, DAL, layouts, componentes base).
+- [x] PA-1 resuelta: Supabase Auth nativo; no hay proveedor de desarrollo.
 
 ## 3. Tareas
 
 ### Fase 1 – Lógica
 
 - [ ] **T-1 – Validación de contraseña nueva**
-  - **Qué:** función que valida contraseña nueva + confirmación + anterior (política, coincidencia, distinta de la anterior) con los mensajes de la spec 4.2.
-  - **Archivos:** `front/src/lib/auth/validation.ts` (modificar), `front/src/lib/auth/validation.test.ts` (si hay tests)
+  - **Qué:** función que valida contraseña nueva + confirmación + anterior (política 8 + dígito + mayúscula + minúscula, coincidencia, distinta de la anterior) con los mensajes de la spec 4.2.
+  - **Archivos:** `front/src/lib/auth/validation.ts` (modificar), `front/src/lib/auth/validation.test.ts` (modificar)
   - **Depende de:** ERP-5 T-3
   - **Cubre:** CA-7, CA-9, RN-4
-  - **Verificación:** casos: vacía, 7 caracteres, sin número, igual a la anterior, no coincide, válida.
+  - **Verificación:** casos: vacía, 7 caracteres, sin número, sin mayúscula, sin minúscula, igual a la anterior, no coincide, válida.
 
-- [ ] **T-2 – Recuperación en el proveedor de desarrollo**
-  - **Qué:** `requestPasswordReset` (genera token de un solo uso con vencimiento, invalida el anterior del mismo usuario, no hace nada si la cuenta no existe o está inactiva, y escribe el enlace en la consola del servidor), `checkResetToken`, `resetPassword` (invalida el token, reemplaza contraseña).
-  - **Archivos:** `front/src/lib/auth/provider.dev.ts` (modificar)
-  - **Depende de:** T-1
-  - **Cubre:** CA-3, CA-4, CA-6, CA-8, RN-2, RN-3, RN-5
-  - **Verificación:** test/script: usar el token dos veces → segunda `enlace-invalido`; token vencido (reloj inyectable) → `vencido`; cuenta suspendida → ningún token emitido.
+- [ ] **T-2 – Configuración de Supabase Auth**
+  - **Qué:** `otp_expiry = 86400` (24 h), `password_requirements` y longitud mínima 8 alineadas con T-1, URL de redirección `/recuperar/nueva`, plantilla de recuperación con el enlace hacia esa ruta (Mailpit local para ver el correo).
+  - **Archivos:** `supabase/config.toml` (modificar), plantilla de correo si hace falta
+  - **Depende de:** —
+  - **Cubre:** CA-4, CA-6, PA-2
+  - **Verificación:** pedir un enlace en local y leerlo en Mailpit; el enlace abre `/recuperar/nueva`.
 
-- [ ] **T-3 – Cambio de contraseña en el proveedor de desarrollo**
-  - **Qué:** `changePassword(usuarioId, actual, nueva)`.
-  - **Archivos:** `front/src/lib/auth/provider.dev.ts` (modificar)
-  - **Depende de:** T-1
-  - **Cubre:** CA-10, CA-11
-  - **Verificación:** test/script: actual incorrecta → `actual-incorrecta`; igual a anterior → `igual-a-la-anterior`; válida → la contraseña vieja ya no ingresa.
+- [ ] **T-3 – Recuperación y cambio en `provider.supabase.ts`**
+  - **Qué:** `requestPasswordReset` (`resetPasswordForEmail`, siempre `enviado: true` para no enumerar), `checkResetToken` (`verifyOtp` mapeado a vigente/vencido/usado/invalido), `resetPassword` (`updateUser`, un solo uso), `changePassword` (reautentica con la actual y `updateUser`). Sin cerrar otras sesiones. Si el usuario está inactivo no se emite enlace (RN-5).
+  - **Archivos:** `front/src/lib/auth/provider.supabase.ts` (modificar), `front/src/lib/auth/provider.supabase.test.ts` (nuevo, con cliente simulado)
+  - **Depende de:** T-1, T-2
+  - **Cubre:** CA-3, CA-4, CA-6, CA-8, CA-10, CA-11, RN-2, RN-3, RN-5
+  - **Verificación:** tests con cliente simulado: token usado dos veces → segunda `enlace-invalido`; vencido → `vencido`; cuenta suspendida → no se emite; actual incorrecta → `actual-incorrecta`; igual a la anterior → `igual-a-la-anterior`; manual contra Supabase local.
 
 ### Fase 2 – Acciones
 
 - [ ] **T-4 – Acciones de recuperar y restablecer**
   - **Qué:** `pedirRecuperacion` (aviso siempre igual) y `restablecer` (valida, llama al proveedor, audita `cambio-contrasena`, redirige a `/` con aviso).
   - **Archivos:** `front/src/app/(publico)/recuperar/actions.ts` (nuevo)
-  - **Depende de:** T-2, ERP-5 T-7
+  - **Depende de:** T-3, ERP-5 T-7
   - **Cubre:** CA-2, CA-3, CA-5, CA-6, CA-8, CA-12
   - **Verificación:** probar con `curl`/formulario: email desconocido y válido devuelven el mismo aviso; auditoría con una fila tras restablecer.
 
@@ -98,12 +98,12 @@ Se completa el proveedor de desarrollo con recuperación y cambio, luego las acc
 |---|---|
 | CA-1 | T-6 |
 | CA-2 | T-4, T-6 |
-| CA-3 | T-2, T-4, T-6 |
-| CA-4 | T-2, T-9 |
+| CA-3 | T-3, T-4, T-6 |
+| CA-4 | T-2, T-3, T-9 |
 | CA-5 | T-4, T-6 |
-| CA-6 | T-2, T-4, T-7 |
+| CA-6 | T-2, T-3, T-4, T-7 |
 | CA-7 | T-1, T-7 |
-| CA-8 | T-2, T-4, T-7 |
+| CA-8 | T-3, T-4, T-7 |
 | CA-9 | T-1, T-5, T-8 |
 | CA-10 | T-3, T-5, T-8 |
 | CA-11 | T-3, T-5 |
@@ -115,8 +115,8 @@ Se completa el proveedor de desarrollo con recuperación y cambio, luego las acc
 |---|---|
 | Enumeración de cuentas por diferencia de tiempo o texto | Mismo aviso y camino de código similar; revisar en T-4. |
 | Token filtrado en logs o en el encabezado `Referer` | No loguear la URL completa; `Referrer-Policy: no-referrer` en la pantalla de T-7. |
-| El proveedor real (ERP-9) maneja la recuperación con su propio flujo | La interfaz absorbe la diferencia; revisar T-2 y T-7 cuando ERP-9 cierre. |
-| Servicio de correo no definido | En desarrollo el enlace sale por consola; la integración real es una tarea nueva tras PA-1. |
+| El flujo de recuperación de Supabase usa token en el enlace (formato propio) | La interfaz `AuthProvider` lo absorbe; T-3 y T-7 lo prueban contra Supabase local. |
+| SMTP productivo y plantilla definitiva del correo | Fuera de alcance; local usa Mailpit. Es una tarea aparte antes de producción. |
 
 ## 6. Validación final
 
