@@ -38,7 +38,7 @@ Primero repositorio y validación, luego la acción, luego la pantalla (lectura 
 
 ### Fase 2 – Acción
 
-- [ ] **T-3 – Acción de guardar perfil**
+- [x] **T-3 – Acción de guardar perfil**
   - **Qué:** `guardarPerfil` con `verifySession()`; ignora cualquier campo que no sea `nombre` y `telefono`; actualiza, audita `perfil`, revalida `/perfil`.
   - **Archivos:** `front/src/app/(app)/perfil/actions.ts` (nuevo)
   - **Depende de:** T-1, T-2, ERP-5 T-7
@@ -123,3 +123,4 @@ UPDATE 0
 --- (d) matricula: esperado solo la propia (42108), no 99999
  matricula_ssn = 42108
 ```
+| 2026-11-25 | T-3 | Acción `guardarPerfil` (campos: nombre, telefonoPrefijo, telefonoArea, telefonoNumero). RED: suite fallaba por import inexistente. `npx vitest run`: 36 passed (7 tests de la acción: válido, nombre vacío, teléfono inválido, campos manipulados ignorados, falla de escritura, falla de auditoría con reversión, guardar sin cambios audita). |
