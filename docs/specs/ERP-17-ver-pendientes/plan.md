@@ -19,7 +19,7 @@ Solo lectura. Primero migración, tipos, formato y repositorio sobre Supabase co
 - [x] Spec de ERP-17 en estado `Aprobada`, sin supuestos ni preguntas abiertas (reconciliada el 2026-11-25).
 - [x] Rama creada: `erp-17-ver-pendientes`
 - [x] **ERP-5 completado** (sesión, DAL con rol, layout, `/pendientes` mínimo).
-- [ ] Datos de ejemplo de al menos dos PAS con asegurados y pólizas (se agregan al seed en T-3 para probar CA-7).
+- [x] Datos de ejemplo de al menos dos PAS con asegurados y pólizas (se agregan al seed en T-3 para probar CA-7).
 
 
 
@@ -43,7 +43,7 @@ Solo lectura. Primero migración, tipos, formato y repositorio sobre Supabase co
   - **Cubre:** CA-2, CA-4, CA-5, RN-5
   - **Verificación:** casos: 0, 1 y N; hoy, ayer, 10 días, fecha futura; cambio de día cerca de medianoche UTC.
 
-- [ ] **T-3 – Migración, repositorio y datos de ejemplo**
+- [x] **T-3 – Migración, repositorio y datos de ejemplo**
   - **Qué:** migración con las tablas `aviso` y `lead` y RLS por `id_productor`; interfaz `PendientesRepo` y `repo.supabase.ts` (único archivo que importa el SDK): filtra por `pasId`, ordena DESC, descarta (y loguea) tipos de aviso desconocidos, resuelve cliente y número de póliza; seed con avisos y leads del prototipo (datos ficticios) para dos PAS con sus asegurados y pólizas.
   - **Archivos:** `supabase/migrations/<timestamp>_aviso_lead.sql`, `front/src/lib/pendientes/repo.ts`, `front/src/lib/pendientes/repo.supabase.ts` (nuevos), `front/scripts/seed-supabase.mjs` (modificar)
   - **Depende de:** T-1, ERP-5 T-5
@@ -137,3 +137,4 @@ Solo lectura. Primero migración, tipos, formato y repositorio sobre Supabase co
 | Fecha | Tarea | Nota |
 | ----- | ----- | ---- |
 | 2026-11-25 | T-1, T-2 | Hechas primero con la spec vieja (el worktree estaba basado en main); tras cherry-pick de 3002ad7 se reconciliaron: `Aviso` pasa a `cliente { apellido, nombre }`. `npx vitest run src/lib/pendientes`: RED (módulo `./format` inexistente), luego GREEN 10/10 (0/1/N, hoy/ayer/10 días/futura, cruce de año, día de Buenos Aires vs UTC, paginación). |
+| 2026-11-25 | T-3 | Migración `20261125120000_aviso_lead.sql` (tablas `aviso`/`lead`, RLS `auth.uid() = id_productor`, solo SELECT a `authenticated`, función `avisos_del_productor()` SECURITY DEFINER para resolver cliente y N° de póliza, porque las políticas de `asegurado`/`poliza` siguen atadas a `app.*`). `supabase migration up` falló por una migración remota ajena (`20261125000000`, de otro agente), así que se aplicó el archivo con psql en una transacción y se registró en `schema_migrations`; sin reset. Seed `seed-supabase.mjs` aditivo: corrido 2 veces, mismos conteos (4 usuarios; 14 avisos, 13 leads). Test `repo.test.ts` RED (módulo inexistente) -> GREEN 13/13 con format. Aislamiento con sesión real de cada usuario (script): martín 12 avisos/11 leads, sofía 2/2, directivo 0/0, ajenos 0; martín pide `id_productor` de sofía -> 0 filas; insert/delete -> `permission denied`; anon -> `permission denied`. Orden DESC verificado. |
