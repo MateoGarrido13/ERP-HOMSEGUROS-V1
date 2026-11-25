@@ -115,23 +115,48 @@ export class UsuarioRepoSupabase implements UsuarioRepo {
 
     if (error || !fila) return null;
 
+    // RLS (productor_select_propio) solo deja ver la fila del propio usuario:
+    // un PAS nunca lee la matrícula de otro. Directivo y administrativo no
+    // tienen fila de productor, así que quedan sin matrícula.
+    const { data: productor } = await supabase
+      .from("productor")
+      .select("matricula_ssn")
+      .eq("id", id)
+      .maybeSingle<{ matricula_ssn: string }>();
+
     return {
       id: fila.id,
       email: fila.email,
       nombre: nombreCompleto(fila),
+      nombrePila: fila.nombre,
+      apellido: fila.apellido,
       telefono: fila.telefono,
       rol: fila.rol,
       organizacion: fila.organizacion,
       estado: fila.estado,
+      matricula: productor?.matricula_ssn ?? null,
     };
   }
 
+  // Solo escribe `nombre` (el apellido queda fijo) y `telefono`. La base lo
+  // refuerza: el UPDATE está limitado a esas columnas y a la fila propia.
   async actualizarPerfil(
-    _id: string,
-    _datos: { nombre: string; telefono: string },
+    id: string,
+    datos: { nombre: string; telefono: string },
   ): Promise<void> {
-    // Separar "nombre" en nombre/apellido al escribir no está decidido
-    // (PA-9 de la épica solo resolvió cómo se lee); se implementa en ERP-7.
-    throw new Error("No implementado (ERP-7)");
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("usuario")
+      .update({ nombre: datos.nombre, telefono: datos.telefono })
+      .eq("id", id)
+      .select("id");
+
+    if (error) {
+      throw new Error(`No se pudo actualizar el perfil: ${error.message}`);
+    }
+    // RLS filtra en silencio las filas ajenas: 0 filas = guardado sin efecto.
+    if (!data || data.length !== 1) {
+      throw new Error("No se pudo actualizar el perfil: no se modificó ninguna fila");
+    }
   }
 }

@@ -22,14 +22,14 @@ Primero repositorio y validación, luego la acción, luego la pantalla (lectura 
 
 ### Fase 1 – Datos y lógica
 
-- [ ] **T-1 – Repositorio de usuario**
+- [x] **T-1 – Repositorio de usuario**
   - **Qué:** implementar `UsuarioRepoSupabase.actualizarPerfil(id, { nombre, telefono })` (hoy es un stub); solo actualiza esos dos campos. `porId` ya existe.
   - **Archivos:** `front/src/lib/auth/provider.supabase.ts` (modificar), `front/src/lib/auth/provider.supabase.test.ts` (modificar/nuevo, cliente simulado)
   - **Depende de:** ERP-5 T-4, T-5
   - **Cubre:** CA-4, CA-6, RN-2
   - **Verificación:** test/script: tras `actualizarPerfil` cambian nombre y teléfono; rol, matrícula, organización y email no.
 
-- [ ] **T-2 – Validación de perfil**
+- [x] **T-2 – Validación de perfil**
   - **Qué:** validar nombre (no vacío, recortado) y teléfono (prefijo + código de área + número; 10 dígitos entre área y número, ignorando espacios y guiones); función que concatena las tres partes en solo dígitos.
   - **Archivos:** `front/src/lib/auth/validation.ts` (modificar), `front/src/lib/auth/validation.test.ts` (modificar)
   - **Depende de:** ERP-5 T-3
@@ -104,3 +104,22 @@ Primero repositorio y validación, luego la acción, luego la pantalla (lectura 
 
 | Fecha | Tarea | Nota |
 |---|---|---|
+| 2026-11-25 | T-1 | Repo en `UsuarioRepoSupabase` (porId con matrícula propia, actualizarPerfil verifica 1 fila). Hizo falta la migración `20261125000000_perfil_rls.sql` (commit 36e376b, aplicada con `supabase migration up`; prueba reproducible `supabase/tests/perfil_rls.sql`, salida abajo). `npx vitest run`: 29 passed. Sin RED previo: el método era un stub que lanzaba error. |
+| 2026-11-25 | T-2 | Funciones nuevas en validation.ts (nombre, teléfono en tres partes, componer/parsear). RED observado: 11 failed antes de implementar; luego `npx vitest run src/lib/auth`: 23 passed. |
+
+### Salida de `supabase/tests/perfil_rls.sql` (PAS de ejemplo, ROLLBACK al final)
+
+```
+--- (a) actualizar nombre y telefono propios: esperado UPDATE 1
+UPDATE 1
+    nombre     |   telefono    
+---------------+---------------
+ Martín Prueba | 5491143219088
+--- (b) rol / estado / email / apellido / organizacion: esperado ERROR permission denied
+ERROR:  permission denied for table usuario   (x5: rol, estado, email, apellido, organizacion)
+--- (c) fila ajena: UPDATE esperado 0 filas; SELECT esperado solo 1 fila (la propia)
+UPDATE 0
+ usuarios_visibles = 1
+--- (d) matricula: esperado solo la propia (42108), no 99999
+ matricula_ssn = 42108
+```
