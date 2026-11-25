@@ -34,7 +34,7 @@ export function passwordPolicyError(password: string, previous?: string) {
     !/[A-Z]/.test(password) ||
     !/[a-z]/.test(password)
   ) {
-    return "La contraseña tiene que tener al menos 8 caracteres, una mayúscula, una minúscula y un número.";
+    return "La contraseña tiene que tener al menos 8 caracteres, con un número, una mayúscula y una minúscula.";
   }
   if (previous !== undefined && password === previous) {
     return "La contraseña nueva tiene que ser distinta de la anterior.";

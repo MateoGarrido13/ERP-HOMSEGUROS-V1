@@ -176,8 +176,7 @@ export class AuthProviderSupabase implements AuthProvider {
     if (actual === nueva) return "igual-a-la-anterior";
 
     const { error } = await supabase.auth.updateUser({ password: nueva });
-    if (error) return motivoDeUpdateUser(error) === "servicio" ? "servicio" : motivoDeUpdateUser(error) as "igual-a-la-anterior" | "politica";
-    return "ok";
+    return error ? motivoDeUpdateUser(error) : "ok";
   }
 }
 

@@ -45,7 +45,7 @@ describe("phoneFieldError", () => {
 });
 
 const MENSAJE_POLITICA =
-  "La contraseña tiene que tener al menos 8 caracteres, una mayúscula, una minúscula y un número.";
+  "La contraseña tiene que tener al menos 8 caracteres, con un número, una mayúscula y una minúscula.";
 
 describe("passwordPolicyError", () => {
   test("vacía", () => {
