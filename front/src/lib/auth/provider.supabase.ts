@@ -122,14 +122,24 @@ export class AuthProviderSupabase implements AuthProvider {
 
     const cerrar = () => supabase.auth.signOut({ scope: "local" });
 
-    const { data: fila, error: filaError } = await supabase
-      .from("usuario")
-      .select("rol, estado")
-      .eq("id", data.user.id)
-      .single<{ rol: Usuario["rol"]; estado: Usuario["estado"] }>();
+    // El enlace ya se gastó: un fallo pasajero de la base no debe dejar al
+    // usuario con un "probá de nuevo" que no puede cumplir. Se reintenta una
+    // vez y, si sigue fallando, se cierra sin cambiar nada (RN-5: no se puede
+    // confirmar que la cuenta esté activa) y se informa que hay que pedir otro.
+    const usuarioId = data.user.id;
+    const leerFila = () =>
+      supabase
+        .from("usuario")
+        .select("rol, estado")
+        .eq("id", usuarioId)
+        .single<{ rol: Usuario["rol"]; estado: Usuario["estado"] }>();
+    let { data: fila, error: filaError } = await leerFila();
+    if (filaError || !fila) {
+      ({ data: fila, error: filaError } = await leerFila());
+    }
     if (filaError || !fila) {
       await cerrar();
-      return { ok: false, motivo: "servicio" };
+      return { ok: false, motivo: "enlace-invalido" };
     }
     // RN-5: una cuenta suspendida no puede restablecer.
     if (fila.estado === "suspendido") {

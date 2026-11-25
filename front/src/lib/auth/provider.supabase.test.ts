@@ -102,6 +102,34 @@ describe("resetPassword", () => {
     expect(auth.updateUser).not.toHaveBeenCalled();
   });
 
+  test("falla pasajera al leer usuario: reintenta una vez y sigue", async () => {
+    auth.verifyOtp.mockResolvedValue({ data: { user: { id: "u1" } }, error: null });
+    consultaUsuario
+      .mockResolvedValueOnce({ data: null, error: { message: "timeout" } })
+      .mockResolvedValueOnce({ data: { rol: "pas", estado: "activo" }, error: null });
+    auth.updateUser.mockResolvedValue({ data: {}, error: null });
+
+    expect(await proveedor.resetPassword(TOKEN, "Nueva2026")).toEqual({
+      ok: true,
+      usuarioId: "u1",
+      rol: "pas",
+    });
+    expect(consultaUsuario).toHaveBeenCalledTimes(2);
+  });
+
+  test("falla persistente al leer usuario: enlace gastado, no cambia la contraseña", async () => {
+    auth.verifyOtp.mockResolvedValue({ data: { user: { id: "u1" } }, error: null });
+    consultaUsuario.mockResolvedValue({ data: null, error: { message: "timeout" } });
+
+    expect(await proveedor.resetPassword(TOKEN, "Nueva2026")).toEqual({
+      ok: false,
+      motivo: "enlace-invalido",
+    });
+    expect(consultaUsuario).toHaveBeenCalledTimes(2);
+    expect(auth.updateUser).not.toHaveBeenCalled();
+    expect(auth.signOut).toHaveBeenCalledWith({ scope: "local" });
+  });
+
   test("falla del servicio al verificar: servicio", async () => {
     auth.verifyOtp.mockResolvedValue({ data: { user: null }, error: { status: 500 } });
     expect(await proveedor.resetPassword(TOKEN, "Nueva2026")).toEqual({

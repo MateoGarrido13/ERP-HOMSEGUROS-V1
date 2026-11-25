@@ -86,9 +86,11 @@ export async function restablecer(
 
   try {
     await registrarAuditoria(resultado.usuarioId, resultado.rol, "cambio-contrasena");
-  } catch {
-    // PA-3 de la épica: si falla la auditoría, la operación no se da por completa.
-    return { formError: MENSAJE_SERVICIO };
+  } catch (error) {
+    // La contraseña ya cambió y el enlace ya se gastó: decir que falló sería
+    // falso y el usuario no podría reintentar. Se deja constancia en el log
+    // (sin datos del enlace) y se sigue como éxito.
+    console.error("No se pudo auditar el cambio de contraseña (recuperación)", error);
   }
 
   redirect("/?aviso=contrasena-actualizada");
