@@ -1,3 +1,6 @@
+import { headers } from "next/headers";
+import { createClient as createStatelessClient } from "@supabase/supabase-js";
+
 import { createClient } from "../supabase/server";
 import { normalizarEmail } from "./validation";
 import type {
@@ -84,25 +87,136 @@ export class AuthProviderSupabase implements AuthProvider {
     await supabase.auth.signOut({ scope: "local" });
   }
 
-  async requestPasswordReset(_email: string): Promise<ResultadoRequestReset> {
-    throw new Error("No implementado (ERP-6)");
+  // Supabase Auth manda el correo de recuperación (plantilla en
+  // supabase/templates/recovery.html, enlace a /recuperar/nueva?token=<token_hash>).
+  // Nunca revela si el email existe: Supabase responde igual para cuentas
+  // inexistentes, y el límite nativo de pedidos se oculta como "enviado".
+  async requestPasswordReset(email: string): Promise<ResultadoRequestReset> {
+    const supabase = await createClient();
+    const { error } = await supabase.auth.resetPasswordForEmail(normalizarEmail(email), {
+      redirectTo: `${await urlBase()}/recuperar/nueva`,
+    });
+
+    if (!error) return { enviado: true };
+    if (error.code === "over_email_send_rate_limit" || error.status === 429) {
+      return { enviado: true };
+    }
+    return { enviado: false };
   }
 
-  async checkResetToken(_token: string): Promise<EstadoTokenReset> {
-    throw new Error("No implementado (ERP-6)");
+  // Supabase no ofrece una consulta que no consuma el enlace (verifyOtp lo
+  // gasta), así que acá solo se descarta lo que no tiene forma de token. La
+  // vigencia real (vencido/usado) se comprueba al guardar, en resetPassword.
+  async checkResetToken(token: string): Promise<EstadoTokenReset> {
+    return /^[A-Za-z0-9_-]{16,}$/.test(token) ? "vigente" : "invalido";
   }
 
-  async resetPassword(_token: string, _nueva: string): Promise<ResultadoReset> {
-    throw new Error("No implementado (ERP-6)");
+  async resetPassword(token: string, nueva: string): Promise<ResultadoReset> {
+    const supabase = await createClient();
+
+    // verifyOtp consume el enlace (un solo uso) y abre una sesión de
+    // recuperación; se cierra siempre antes de salir (solo esta sesión).
+    const { data, error } = await supabase.auth.verifyOtp({ type: "recovery", token_hash: token });
+    if (error || !data.user) {
+      return { ok: false, motivo: motivoDeVerifyOtp(error) };
+    }
+
+    const cerrar = () => supabase.auth.signOut({ scope: "local" });
+
+    // El enlace ya se gastó: un fallo pasajero de la base no debe dejar al
+    // usuario con un "probá de nuevo" que no puede cumplir. Se reintenta una
+    // vez y, si sigue fallando, se cierra sin cambiar nada (RN-5: no se puede
+    // confirmar que la cuenta esté activa) y se informa que hay que pedir otro.
+    const usuarioId = data.user.id;
+    const leerFila = () =>
+      supabase
+        .from("usuario")
+        .select("rol, estado")
+        .eq("id", usuarioId)
+        .single<{ rol: Usuario["rol"]; estado: Usuario["estado"] }>();
+    let { data: fila, error: filaError } = await leerFila();
+    if (filaError || !fila) {
+      ({ data: fila, error: filaError } = await leerFila());
+    }
+    if (filaError || !fila) {
+      await cerrar();
+      return { ok: false, motivo: "enlace-invalido" };
+    }
+    // RN-5: una cuenta suspendida no puede restablecer.
+    if (fila.estado === "suspendido") {
+      await cerrar();
+      return { ok: false, motivo: "enlace-invalido" };
+    }
+
+    const { error: updateError } = await supabase.auth.updateUser({ password: nueva });
+    await cerrar();
+    if (updateError) return { ok: false, motivo: motivoDeUpdateUser(updateError) };
+
+    return { ok: true, usuarioId: data.user.id, rol: fila.rol };
   }
 
   async changePassword(
-    _usuarioId: string,
-    _actual: string,
-    _nueva: string,
+    usuarioId: string,
+    actual: string,
+    nueva: string,
   ): Promise<ResultadoCambioPassword> {
-    throw new Error("No implementado (ERP-6)");
+    const supabase = await createClient();
+    const { data: sesion, error: sesionError } = await supabase.auth.getUser();
+    // El id viene de la sesión del servidor: si no coincide, no se toca nada.
+    if (sesionError || !sesion.user?.email || sesion.user.id !== usuarioId) {
+      return "servicio";
+    }
+
+    // La contraseña actual se comprueba con un cliente sin cookies, para no
+    // reemplazar la sesión del navegador ni sus opciones de persistencia.
+    const verificador = createStatelessClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      { auth: { persistSession: false, autoRefreshToken: false } },
+    );
+    const { error: loginError } = await verificador.auth.signInWithPassword({
+      email: sesion.user.email,
+      password: actual,
+    });
+    if (loginError) {
+      return loginError.code === "invalid_credentials" ? "actual-incorrecta" : "servicio";
+    }
+    // Se descarta la sesión auxiliar creada solo para verificar.
+    await verificador.auth.signOut({ scope: "local" });
+
+    if (actual === nueva) return "igual-a-la-anterior";
+
+    const { error } = await supabase.auth.updateUser({ password: nueva });
+    return error ? motivoDeUpdateUser(error) : "ok";
   }
+}
+
+async function urlBase() {
+  const configurada = process.env.NEXT_PUBLIC_SITE_URL;
+  if (configurada) return configurada.replace(/\/$/, "");
+  const h = await headers();
+  const host = h.get("x-forwarded-host") ?? h.get("host") ?? "127.0.0.1:3000";
+  const proto = h.get("x-forwarded-proto") ?? (host.startsWith("127.0.0.1") || host.startsWith("localhost") ? "http" : "https");
+  return `${proto}://${host}`;
+}
+
+interface ErrorAuth {
+  code?: string;
+  status?: number;
+}
+
+function motivoDeVerifyOtp(error: ErrorAuth | null) {
+  // otp_expired / token vencido, usado o inexistente: el enlace ya no sirve.
+  if (error && (error.status === undefined || error.status < 500) && error.status !== 429) {
+    return "enlace-invalido" as const;
+  }
+  return "servicio" as const;
+}
+
+function motivoDeUpdateUser(error: ErrorAuth) {
+  if (error.code === "same_password") return "igual-a-la-anterior" as const;
+  if (error.code === "weak_password") return "politica" as const;
+  return "servicio" as const;
 }
 
 export class UsuarioRepoSupabase implements UsuarioRepo {
