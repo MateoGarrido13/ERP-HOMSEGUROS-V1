@@ -27,7 +27,7 @@ Cada usuario consulta su ficha y actualiza su nombre y teléfono. `/perfil` tamb
 
 **Fuera de alcance:**
 - Cambiar rol, matrícula, organización o email (los asigna la organización: CU-46/48).
-- Actualizar el nombre en propuestas ya generadas (PA-2).
+- Actualizar el nombre en propuestas y documentos ya generados (PA-2: el cambio solo rige para los futuros).
 - Cambio de contraseña (ERP-6) y cierre de sesión (ERP-8).
 
 ## 3. Componentes afectados
@@ -38,7 +38,8 @@ Cada usuario consulta su ficha y actualiza su nombre y teléfono. `/perfil` tamb
 | Pantalla de perfil | `front/src/components/auth/profile-screen.tsx` | nuevo (cliente, alterna lectura/edición) |
 | Acción | `front/src/app/(app)/perfil/actions.ts` | nuevo |
 | Validación | `front/src/lib/auth/validation.ts` | amplía (`phoneFieldError`, nombre) |
-| Repositorio | `UsuarioRepo.porId`, `UsuarioRepo.actualizarPerfil` | ver épica 4.4 |
+| Repositorio | `UsuarioRepo.porId`, `UsuarioRepo.actualizarPerfil` (hoy sin implementar en `UsuarioRepoSupabase`) | ver épica 4.4 |
+| Selector de prefijo | `front/src/components/auth/phone-field.tsx` | nuevo (prefijo con bandera + código de área + número) |
 
 ## 4. Diseño
 
@@ -58,12 +59,12 @@ Como el nombre se lee del usuario en cada pedido, "las propuestas y mensajes pos
 | Pantalla / componente | Estados | Comportamiento |
 |---|---|---|
 | Perfil | cargando · lectura · edición · guardando · error de campo · error general · éxito | Con menú. En edición, rol/matrícula/organización quedan en solo lectura (`readOnly`). |
-| Matrícula | visible / oculta | Si el usuario no tiene matrícula (directivo, administrativo: SUP-1) se omite la fila. |
+| Matrícula | visible / oculta | Se muestra solo la matrícula propia; si el usuario no tiene (directivo, administrativo: SUP-1) se omite la fila. Un PAS nunca ve la matrícula de otro PAS. |
 
 - Validaciones (campo → regla → mensaje):
   - `NOMBRE` vacío o solo espacios → "Completá el nombre."
-  - `TELÉFONO` sin 10 dígitos (se ignoran espacios y guiones) → "El teléfono tiene que tener 10 dígitos."
-- Se guarda el nombre sin espacios sobrantes y el teléfono tal como se escribió (SUP-2).
+  - `TELÉFONO`: código de área + número sin 10 dígitos (se ignoran espacios y guiones) → "El teléfono tiene que tener 10 dígitos."
+- Se edita solo la columna `nombre`; el `apellido` queda fijo y se muestra junto al nombre en lectura (decidido el 2026-11-25). Se guarda el nombre sin espacios sobrantes. El teléfono se arma con tres partes: prefijo internacional (selector con bandera, por defecto Argentina), código de área y número, sin `+`, espacios ni guiones en los campos; se concatenan en solo dígitos y se guarda un único valor (SUP-2).
 - Referencia de diseño: `prototype/src/components/auth/profile-screen.tsx` y Figma.
 
 ### 4.4 Contratos
@@ -88,7 +89,7 @@ Server Action guardarPerfil(prev, FormData{ nombre, telefono }) → { nameError?
 | Situación | Comportamiento esperado |
 |---|---|
 | Nombre vacío | Marca el campo; no guarda ni audita. |
-| Teléfono con otra cantidad de dígitos | Marca el campo; no guarda ni audita. |
+| Teléfono con área + número de otra cantidad de dígitos | Marca el campo; no guarda ni audita. |
 | Sin cambios al guardar | Guarda igual y audita (SUP-3). |
 | Intento de enviar `rol`/`usuarioId` en el formulario | Se ignoran. |
 | Sesión vencida al guardar | Redirige a `/`; no se guarda. |
@@ -117,14 +118,14 @@ Server Action guardarPerfil(prev, FormData{ nombre, telefono }) → { nameError?
 
 ## 9. Supuestos
 
-- [ ] SUP-1: Directivo y administrativo no tienen matrícula y esa fila no se muestra (CU-03 SUP_3). → *confirmado por: ___*
-- [ ] SUP-2: Formato del teléfono: texto libre con exactamente 10 dígitos (prototipo, p. ej. `11 4321-9088`). Prefijos internacionales no se contemplan. → *confirmado por: ___*
-- [ ] SUP-3: Guardar sin cambios se audita igual. → *confirmado por: ___*
+- [x] SUP-1: Directivo y administrativo no tienen matrícula propia y esa fila no se muestra (CU-03 SUP_3). Cada usuario ve solo su propia matrícula; un PAS nunca ve la de otro PAS. → *confirmado por: revisión conjunta 2026-11-15; reconfirmado 2026-11-25*
+- [x] SUP-2: Teléfono: selector de prefijo internacional con bandera (por defecto +54), campo de código de área y campo de número, sin `+`, espacios ni guiones. Se concatenan y se guardan como un único valor de solo dígitos. La regla de longitud (10 dígitos entre código de área y número) se mantiene para todos los prefijos. → *confirmado por: revisión conjunta 2026-11-15; regla de longitud de 10 dígitos para todos los prefijos reconfirmada el 2026-11-25*
+- [x] SUP-3: Guardar sin cambios se audita igual. → *confirmado por: revisión conjunta 2026-11-15*
 
 ## 10. Preguntas abiertas
 
-- [ ] PA-1: ¿El email de ingreso se puede cambiar desde el perfil o solo lo cambia la organización? (CU-03 SUP_2). Esta spec asume que **no**. → *quién decide: ___*
-- [ ] PA-2: ¿El nombre editado reemplaza al de propuestas ya generadas o solo a las próximas? (CU-03 SUP_4). → *quién decide: ___*
+- [x] PA-1: El email de ingreso no se edita desde el perfil; queda fijo por usuario. → *decidió: revisión conjunta 2026-11-15*
+- [x] PA-2: El nombre editado solo afecta propuestas y documentos futuros (PDF y documentos con logo de compañía y nombre del PAS a cargo). → *decidió: revisión conjunta 2026-11-15*
 
 ## 11. Historial de cambios
 
@@ -132,3 +133,4 @@ Server Action guardarPerfil(prev, FormData{ nombre, telefono }) → { nameError?
 |---|---|---|---|
 | 2026-10-31 | Versión inicial | | |
 | 2026-11-15 | Aprobada en revisión conjunta | PA-1 email no editable (queda fijo por usuario); PA-2 modificación del nombre solo afecta propuestas futuras (PDF y documentos generados por el sistema con logo de compañía y nombre del PAS a cargo); SUP-1 matrícula vista por PAS y por directivo/administrativo, pero un PAS nunca ve la matrícula de otro PAS; SUP-2 teléfono: prefijo internacional con bandera en UI, campo sin '+' ni código área ni número, se concatenan y guardan en DB; SUP-3 guardar sin cambios se audita igual | |
+| 2026-11-25 | Se reconcilian las secciones 2 a 6 y 9-10 con lo decidido el 15/11 (teléfono en tres partes, matrícula por rol, alcance de PA-2) | Dejar la spec consistente antes de implementar | |
