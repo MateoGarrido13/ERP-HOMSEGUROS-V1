@@ -35,7 +35,7 @@ El usuario sale del ERP en el dispositivo que usa. La sesión del servidor se de
 |---|---|---|
 | Botón + confirmación | `front/src/components/auth/logout-button.tsx` | nuevo (cliente) |
 | Acción | `front/src/app/(app)/perfil/logout-action.ts` | nuevo |
-| Sesión | `front/src/lib/auth/session.ts` (`clearSession`) | amplía |
+| Sesión | `front/src/lib/auth/session.ts` (`clearSession`) y `AuthProviderSupabase.destroySession` | amplía |
 | Pantalla | `front/src/app/(app)/perfil/page.tsx` | ubica el botón (ERP-7 crea la pantalla) |
 
 ## 4. Diseño
@@ -46,7 +46,7 @@ El usuario sale del ERP en el dispositivo que usa. La sesión del servidor se de
 2. "Cancelar" cierra el diálogo; la sesión sigue y el usuario queda en la misma pantalla. No hay llamada al servidor.
 3. "Confirmar" → `cerrarSesion()`:
    1. Lee la cookie de sesión.
-   2. Si la sesión es válida: obtiene `usuarioId` y `rol`, `AuthProvider.destroySession(token)` y `auditoria.registrar('cierre')`.
+   2. Si la sesión es válida: obtiene `usuarioId` y `rol`, `AuthProvider.destroySession()` y `auditoria.registrar('cierre')`.
    3. Si ya estaba vencida o no existe: no audita (no hay usuario identificable, SUP-1).
    4. Siempre borra la cookie y redirige a `/`.
 4. La acción es idempotente: ejecutarla dos veces seguidas termina igual en `/`.
@@ -110,14 +110,14 @@ Server Action cerrarSesion() → redirect('/')
 
 ## 9. Supuestos
 
-- [ ] SUP-1: Si la sesión ya estaba vencida no se audita el cierre (no hay usuario identificable). → *confirmado por: ___*
-- [ ] SUP-2: "Cerrar sesión" vive solo en Perfil (CU-04 SUP_1). → *confirmado por: ___*
+- [x] SUP-1: Si la sesión ya estaba vencida no se audita el cierre (no hay usuario identificable); solo queda log del servidor. → *confirmado por: 2026-11-25 (el acta del 15/11 decía "siempre se audita"; se resolvió a favor de lo que el sistema puede cumplir)*
+- [x] SUP-2: "Cerrar sesión" vive solo en Perfil (CU-04 SUP_1). → *confirmado por: revisión conjunta 2026-11-15*
 
 ## 10. Preguntas abiertas
 
-- [ ] PA-1: ¿Cerrar en un dispositivo deja abiertas las sesiones de los otros? (CU-04 SUP_2; relacionado con PA-1 de la épica). Esta spec asume que sí las deja abiertas. → *quién decide: ___*
-- [ ] PA-2: Con una cotización en curso sin guardar, ¿se avisa que se pierde antes de confirmar? (CU-04 SUP_3, CU-12). Queda fuera hasta que exista el multicotizador. → *quién decide: ___*
-- [ ] PA-3: Si falla el proveedor al destruir la sesión, ¿es aceptable que la sesión del servidor siga válida hasta que venza? Alternativa: reintento en segundo plano. → *quién decide: ___*
+- [x] PA-1: Cerrar en un dispositivo deja abiertas las sesiones de los otros. → *decidió: revisión conjunta 2026-11-15*
+- [x] PA-2: Sin aviso de cotización sin guardar al cerrar (por ahora; depende de CU-12). → *decidió: revisión conjunta 2026-11-15*
+- [x] PA-3: Si falla el proveedor al destruir la sesión: se borra la cookie, se redirige a `/` y queda el error en el log. → *decidió: revisión conjunta 2026-11-15*
 
 ## 11. Historial de cambios
 
@@ -125,3 +125,4 @@ Server Action cerrarSesion() → redirect('/')
 |---|---|---|---|
 | 2026-10-31 | Versión inicial | | |
 | 2026-11-15 | Aprobada en revisión conjunta | PA-1 cerrar un dispositivo deja abiertas las sesiones de los otros; PA-2 no aviso de cotización sin guardar al cerrar (por ahora); PA-3 si falla el proveedor al destruir sesión: borrar cookie, redirigir a `/` y dejar error en el log; SUP-1 siempre se audita el cierre, incluso si la sesión estaba vencida (último mensaje en log: 'Se le venció la sesión e intento …'); SUP-2 cerrar sesión solo desde Perfil | |
+| 2026-11-25 | Se cierran SUP/PA; SUP-1 queda como no auditar con sesión vencida; se ajusta la firma de `destroySession` | Dejar la spec consistente antes de implementar | |

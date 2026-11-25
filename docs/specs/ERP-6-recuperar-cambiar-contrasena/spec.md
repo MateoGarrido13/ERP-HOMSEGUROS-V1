@@ -27,9 +27,10 @@ Dos caminos: **recuperar** (sin sesión, por enlace al correo) y **cambiar** (co
 - Auditoría `cambio-contrasena`.
 
 **Fuera de alcance:**
-- Plantilla visual definitiva del correo y elección del servicio de correo (depende de ERP-9 / proveedor de auth: PA-1).
+- Plantilla visual definitiva del correo (se usa la plantilla de Supabase Auth; su personalización y el servicio SMTP productivo son una tarea aparte).
 - Recuperación por WhatsApp (CU-02 SUP_1).
-- Cierre de otras sesiones al cambiar (PA-4).
+- Cierre de otras sesiones al cambiar la contraseña (PA-4: no se cierran).
+- Límite propio de pedidos de enlace (PA-3: se usa el límite nativo de Supabase Auth).
 
 ## 3. Componentes afectados
 
@@ -41,7 +42,8 @@ Dos caminos: **recuperar** (sin sesión, por enlace al correo) y **cambiar** (co
 | Formularios | `front/src/components/auth/recover-form.tsx`, `reset-password-form.tsx`, `change-password-form.tsx` | nuevos |
 | Acciones | `front/src/app/(publico)/recuperar/actions.ts`, `front/src/app/(app)/perfil/contrasena/actions.ts` | nuevas |
 | Validación | `front/src/lib/auth/validation.ts` | amplía (política, coincidencia) |
-| Proveedor | `AuthProvider.requestPasswordReset / checkResetToken / resetPassword / changePassword` | ver épica 4.4 |
+| Proveedor | `AuthProvider.requestPasswordReset / checkResetToken / resetPassword / changePassword` en `front/src/lib/auth/provider.supabase.ts` | ver épica 4.4 |
+| Configuración Supabase | `supabase/config.toml` (vigencia del enlace, política de contraseña, URL de redirección) | modifica |
 
 ## 4. Diseño
 
@@ -75,7 +77,7 @@ El token se toma de la URL solo para el formulario y se reenvía en el cuerpo de
 - Validaciones (campo → regla → mensaje):
   - `EMAIL` vacío/inválido → mensajes de ERP-5.
   - Contraseña nueva vacía → "Completá la contraseña nueva."
-  - Política: menos de 8 caracteres o sin número → "La contraseña tiene que tener al menos 8 caracteres y un número." (SUP-1)
+  - Política: menos de 8 caracteres, o sin un dígito, una mayúscula y una minúscula → "La contraseña tiene que tener al menos 8 caracteres, con un número, una mayúscula y una minúscula." (SUP-1)
   - Igual a la anterior → "La contraseña nueva tiene que ser distinta de la anterior."
   - `CONFIRMACIÓN` vacía → "Completá la confirmación."; distinta → "Las contraseñas no coinciden."
   - `CONTRASEÑA ACTUAL` vacía → "Completá la contraseña actual."; incorrecta → "La contraseña actual no coincide."
@@ -90,8 +92,10 @@ Server Action restablecer(prev, FormData{ token, password, confirm }) → { pass
 Server Action cambiarContrasena(prev, FormData{ actual, password, confirm }) → { currentError?, passwordError?, confirmError?, formError? } | redirect('/perfil')
 ```
 - Pedir y restablecer: públicas. Cambiar: cualquier rol, solo sobre su propia cuenta (el `usuarioId` sale de la sesión, nunca del formulario).
-- Enlace: de un solo uso; vigencia a definir (PA-2). El correo no incluye la contraseña. El token se guarda hasheado si la implementación es propia.
-- Servicio de correo: a definir con el proveedor (PA-1). En desarrollo, `provider.dev.ts` no envía correo: deja el enlace en la consola del servidor.
+- Enlace: de un solo uso; vigencia 24 h (PA-2; `otp_expiry = 86400` en la configuración de Supabase). El correo no incluye la contraseña. El token lo gestiona Supabase Auth; la app no lo guarda.
+- Proveedor: Supabase Auth nativo (PA-1, ADR-004): `resetPasswordForEmail` y `verifyOtp` para el enlace, `updateUser({ password })` para guardar. En desarrollo local el correo se lee en Inbucket/Mailpit del stack local de Supabase. No hay `provider.dev.ts`.
+- Límite de pedidos: el nativo de Supabase Auth (PA-3); la app no agrega lógica propia.
+- Otras sesiones: no se cierran al cambiar la contraseña (PA-4).
 
 ## 5. Reglas de negocio
 
@@ -110,7 +114,7 @@ Server Action cambiarContrasena(prev, FormData{ actual, password, confirm }) →
 |---|---|
 | Email vacío o inválido | Marca el campo; no busca la cuenta. |
 | Email inexistente / cuenta inactiva | Mismo aviso; no se envía nada. |
-| Pedidos repetidos del enlace | Un enlace nuevo invalida el anterior (SUP-3). Posible abuso: PA-3. |
+| Pedidos repetidos del enlace | Un enlace nuevo invalida el anterior (SUP-3). Abuso: límite nativo de Supabase (PA-3); si Supabase lo rechaza, se muestra el mismo aviso genérico sin revelar nada. |
 | Enlace vencido, usado o inválido | "Este enlace ya no sirve. Pedí uno nuevo." |
 | Enlace usado dos veces (doble clic en Guardar) | La segunda llamada recibe "enlace inválido"; la contraseña no cambia dos veces. |
 | Contraseñas que no coinciden / no cumplen / igual a la anterior | Marca el campo, no reemplaza. |
@@ -147,16 +151,16 @@ Server Action cambiarContrasena(prev, FormData{ actual, password, confirm }) →
 
 ## 9. Supuestos
 
-- [ ] SUP-1: Política = mínimo 8 caracteres con un número, distinta de la anterior (del prototipo; ver SUP-5 de la épica). → *confirmado por: ___*
-- [ ] SUP-2: El canal es el correo (CU-02 SUP_1). → *confirmado por: ___*
-- [ ] SUP-3: Un enlace nuevo deja sin efecto el anterior del mismo usuario (el prototipo guarda uno solo). → *confirmado por: ___*
+- [x] SUP-1: Política = mínimo 8 caracteres con al menos un dígito, una mayúscula y una minúscula, y distinta de la anterior. Se valida en la app y se configura igual en Supabase Auth (`password_requirements`). → *confirmado por: revisión conjunta 2026-11-15; reconfirmado 2026-11-25*
+- [x] SUP-2: El canal es el correo asociado a la cuenta (CU-02 SUP_1). → *confirmado por: revisión conjunta 2026-11-15*
+- [x] SUP-3: Un enlace nuevo deja sin efecto el anterior del mismo usuario. → *confirmado por: revisión conjunta 2026-11-15*
 
 ## 10. Preguntas abiertas
 
-- [ ] PA-1: Servicio de correo y proveedor de autenticación (depende de ERP-9; Supabase Auth trae recuperación propia con otro formato de enlace). → *quién decide: equipo vía ERP-9*
-- [ ] PA-2: Vigencia del enlace (el prototipo usa 24 h; CU-02 SUP_2). → *quién decide: ___*
-- [ ] PA-3: ¿Hay límite de pedidos de enlace por email/IP? → *quién decide: ___*
-- [ ] PA-4: Al guardar la contraseña nueva, ¿se cierran las otras sesiones del usuario? (CU-02 SUP_4; el prototipo cierra la sesión en recuperar). → *quién decide: ___*
+- [x] PA-1: Proveedor de autenticación y correo → Supabase Auth nativo (ADR-004). → *decidió: revisión conjunta 2026-11-15*
+- [x] PA-2: Vigencia del enlace → 24 h. → *decidió: revisión conjunta 2026-11-15*
+- [x] PA-3: Límite de pedidos → el nativo de Supabase Auth, sin lógica propia. → *decidió: 2026-11-25 (el acta del 15/11 lo dejaba sin definir)*
+- [x] PA-4: Otras sesiones al guardar → no se cierran. → *decidió: revisión conjunta 2026-11-15*
 
 ## 11. Historial de cambios
 
@@ -164,3 +168,4 @@ Server Action cambiarContrasena(prev, FormData{ actual, password, confirm }) →
 |---|---|---|---|
 | 2026-10-31 | Versión inicial | | |
 | 2026-11-15 | Aprobada en revisión conjunta | PA-1 Supabase Auth nativo (ya en ADR-004); PA-2 vigencia 24h con f_inicio; PA-3 límite x (sin definir); PA-4 no se cierran otras sesiones al cambiar contraseña; SUP-1 política alfanumérica (al menos un dígito, una mayúscula y una minúscula); SUP-2 canal de recuperación: correo asociado a la cuenta; SUP-3 enlace nuevo invalida el anterior del mismo usuario | |
+| 2026-11-25 | Se reconcilian las secciones 2 a 6 y 9-10 con lo decidido el 15/11; PA-3 = límite nativo de Supabase; SUP-1 confirmada como 8 + dígito + mayúscula + minúscula; se elimina `provider.dev.ts` | Dejar la spec consistente antes de implementar | |

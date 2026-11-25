@@ -2,9 +2,9 @@
 
 | | |
 |---|---|
-| **Spec** | [`spec.md`](spec.md) (versión aprobada: pendiente) |
+| **Spec** | [`spec.md`](spec.md) (aprobada 2026-11-15; reconciliada 2026-11-25) |
 | **US** | ERP-7 |
-| **Estado** | Borrador |
+| **Estado** | Aprobado |
 | **Autor** | Yaco10 con IA |
 | **Revisor** | — |
 
@@ -14,24 +14,24 @@ Primero repositorio y validación, luego la acción, luego la pantalla (lectura 
 
 ## 2. Antes de empezar
 
-- [ ] Spec de ERP-7 en estado `Aprobada`, sin supuestos ni preguntas abiertas (hoy: SUP-1 a SUP-3, PA-1 y PA-2).
+- [x] Spec de ERP-7 en estado `Aprobada`, sin supuestos ni preguntas abiertas (reconciliada el 2026-11-25).
 - [ ] Rama creada: `erp-7-ver-editar-perfil`
-- [ ] **ERP-5 completado** (sesión, DAL, layout con menú, componentes base).
+- [x] **ERP-5 completado** (sesión, DAL, layout con menú, componentes base).
 
 ## 3. Tareas
 
 ### Fase 1 – Datos y lógica
 
 - [ ] **T-1 – Repositorio de usuario**
-  - **Qué:** `UsuarioRepo.porId` y `actualizarPerfil(id, { nombre, telefono })` en la implementación de desarrollo; solo actualiza esos dos campos.
-  - **Archivos:** `front/src/lib/auth/usuario-repo.ts` (nuevo: interfaz), `front/src/lib/auth/usuario-repo.dev.ts` (nuevo)
+  - **Qué:** implementar `UsuarioRepoSupabase.actualizarPerfil(id, { nombre, telefono })` (hoy es un stub); solo actualiza esos dos campos. `porId` ya existe.
+  - **Archivos:** `front/src/lib/auth/provider.supabase.ts` (modificar), `front/src/lib/auth/provider.supabase.test.ts` (modificar/nuevo, cliente simulado)
   - **Depende de:** ERP-5 T-4, T-5
   - **Cubre:** CA-4, CA-6, RN-2
   - **Verificación:** test/script: tras `actualizarPerfil` cambian nombre y teléfono; rol, matrícula, organización y email no.
 
 - [ ] **T-2 – Validación de perfil**
-  - **Qué:** validar nombre (no vacío, recortado) y teléfono (10 dígitos ignorando espacios y guiones).
-  - **Archivos:** `front/src/lib/auth/validation.ts` (modificar), `front/src/lib/auth/validation.test.ts` (si hay tests)
+  - **Qué:** validar nombre (no vacío, recortado) y teléfono (prefijo + código de área + número; 10 dígitos entre área y número, ignorando espacios y guiones); función que concatena las tres partes en solo dígitos.
+  - **Archivos:** `front/src/lib/auth/validation.ts` (modificar), `front/src/lib/auth/validation.test.ts` (modificar)
   - **Depende de:** ERP-5 T-3
   - **Cubre:** CA-3
   - **Verificación:** casos: nombre vacío, solo espacios, teléfono de 9/10/11 dígitos, `11 4321-9088` válido.
@@ -48,18 +48,18 @@ Primero repositorio y validación, luego la acción, luego la pantalla (lectura 
 ### Fase 3 – Interfaz
 
 - [ ] **T-4 – Pantalla de perfil en modo lectura**
-  - **Qué:** Server Component que carga el usuario de la sesión y renderiza `NOMBRE`, `ROL`, `MATRÍCULA` (si aplica), `ORGANIZACIÓN`, `TELÉFONO`, y el acceso a "Cambiar contraseña".
-  - **Archivos:** `front/src/app/(app)/perfil/page.tsx` (nuevo), `front/src/components/auth/profile-screen.tsx` (nuevo)
+  - **Qué:** Server Component que carga el usuario de la sesión y renderiza `NOMBRE`, `ROL`, `MATRÍCULA` (solo la propia y si aplica), `ORGANIZACIÓN`, `TELÉFONO`, y el acceso a "Cambiar contraseña".
+  - **Archivos:** `front/src/app/(app)/perfil/page.tsx` (reemplaza el placeholder), `front/src/components/auth/profile-screen.tsx` (nuevo)
   - **Depende de:** T-1, ERP-5 T-10
   - **Cubre:** CA-1, CA-8, CA-9
   - **Verificación:** ingresar con las 3 cuentas de ejemplo: datos correctos; directivo/administrativo sin fila de matrícula.
 
 - [ ] **T-5 – Modo edición**
-  - **Qué:** alternar lectura/edición en cliente; solo `NOMBRE` y `TELÉFONO` editables; "Guardar" con `useActionState`; "Cancelar" restaura sin llamar al servidor; errores por campo; vuelve a lectura tras éxito.
-  - **Archivos:** `front/src/components/auth/profile-screen.tsx` (modificar)
+  - **Qué:** alternar lectura/edición en cliente; solo `NOMBRE` y `TELÉFONO` editables (teléfono con selector de prefijo con bandera, código de área y número); "Guardar" con `useActionState`; "Cancelar" restaura sin llamar al servidor; errores por campo; vuelve a lectura tras éxito.
+  - **Archivos:** `front/src/components/auth/profile-screen.tsx` (modificar), `front/src/components/auth/phone-field.tsx` (nuevo)
   - **Depende de:** T-3, T-4
   - **Cubre:** CA-2, CA-3, CA-4, CA-5
-  - **Verificación:** recorrido manual; tras guardar y recargar el dato persiste (mientras corra el servidor de desarrollo).
+  - **Verificación:** recorrido manual; tras guardar y recargar el dato persiste en Supabase local.
 
 ### Fase 4 – Pulido
 
@@ -89,7 +89,7 @@ Primero repositorio y validación, luego la acción, luego la pantalla (lectura 
 | Riesgo | Mitigación / cómo detectarlo |
 |---|---|
 | `profile-screen` es compartido con ERP-8 (botón de cerrar sesión) | Coordinar el orden; ERP-8 solo agrega el botón sin tocar la edición. |
-| Persistencia en memoria se pierde al reiniciar | Aceptado para desarrollo; se resuelve con ERP-9. |
+| La tabla `usuario` tiene `nombre` y `apellido` separados | Decidido: se edita solo `nombre`; `apellido` fijo y visible en lectura. |
 | Nombre usado luego en propuestas | Anotar en la spec del multicotizador que debe leerlo del usuario de sesión (PA-2). |
 
 ## 6. Validación final
