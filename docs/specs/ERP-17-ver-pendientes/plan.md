@@ -17,7 +17,7 @@ Solo lectura. Primero tipos, formato y repositorio con datos de ejemplo; luego l
 ## 2. Antes de empezar
 
 - [x] Spec de ERP-17 en estado `Aprobada`, sin supuestos ni preguntas abiertas (hoy: SUP-1 a SUP-4, PA-1 a PA-4).
-- [ ] Rama creada: `erp-17-ver-pendientes`
+- [x] Rama creada: `erp-17-ver-pendientes`
 - [ ] **ERP-5 completado** (sesión, DAL con rol, layout, `/pendientes` mínimo).
 - [x] Datos de ejemplo de al menos dos PAS (agregar un segundo PAS al proveedor de desarrollo de ERP-5 para probar CA-7).
 
@@ -29,14 +29,14 @@ Solo lectura. Primero tipos, formato y repositorio con datos de ejemplo; luego l
 
 ### Fase 1 – Datos y lógica
 
-- [ ] **T-1 – Tipos del dominio de pendientes**
+- [x] **T-1 – Tipos del dominio de pendientes**
   - **Qué:** `Aviso`, `Lead`, `TipoAviso`, `CoberturaAviso` según spec 4.3.
   - **Archivos:** `front/src/lib/pendientes/types.ts` (nuevo)
   - **Depende de:** —
   - **Cubre:** CA-3, CA-5, RN-2, RN-3
   - **Verificación:** `npx tsc --noEmit` sin errores.
 
-- [ ] **T-2 – Formato: contadores, fechas y días transcurridos**
+- [x] **T-2 – Formato: contadores, fechas y días transcurridos**
   - **Qué:** `avisoCountLabel`, `leadCountLabel`, `formatFecha(dd/mm/aaaa)`, `diasTranscurridosLabel(fecha, hoy)` con zona `America/Argentina/Buenos_Aires`; fecha futura → "Cargado hoy".
   - **Archivos:** `front/src/lib/pendientes/format.ts` (nuevo), `front/src/lib/pendientes/format.test.ts` (si hay tests)
   - **Depende de:** T-1
@@ -135,5 +135,4 @@ Solo lectura. Primero tipos, formato y repositorio con datos de ejemplo; luego l
 
 | Fecha | Tarea | Nota |
 | ----- | ----- | ---- |
-
-
+| 2026-11-25 | T-1, T-2 | `npx tsc --noEmit` sin errores. `npx vitest run src/lib/pendientes`: RED (módulo `./format` inexistente, 0 tests), luego GREEN 10/10 (contadores 0/1/N, hoy/ayer/10 días/futura, cruce de año, día de Buenos Aires vs UTC, paginación). |
