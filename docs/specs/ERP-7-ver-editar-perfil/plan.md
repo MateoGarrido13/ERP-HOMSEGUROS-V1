@@ -22,14 +22,14 @@ Primero repositorio y validación, luego la acción, luego la pantalla (lectura 
 
 ### Fase 1 – Datos y lógica
 
-- [ ] **T-1 – Repositorio de usuario**
+- [x] **T-1 – Repositorio de usuario**
   - **Qué:** implementar `UsuarioRepoSupabase.actualizarPerfil(id, { nombre, telefono })` (hoy es un stub); solo actualiza esos dos campos. `porId` ya existe.
   - **Archivos:** `front/src/lib/auth/provider.supabase.ts` (modificar), `front/src/lib/auth/provider.supabase.test.ts` (modificar/nuevo, cliente simulado)
   - **Depende de:** ERP-5 T-4, T-5
   - **Cubre:** CA-4, CA-6, RN-2
   - **Verificación:** test/script: tras `actualizarPerfil` cambian nombre y teléfono; rol, matrícula, organización y email no.
 
-- [ ] **T-2 – Validación de perfil**
+- [x] **T-2 – Validación de perfil**
   - **Qué:** validar nombre (no vacío, recortado) y teléfono (prefijo + código de área + número; 10 dígitos entre área y número, ignorando espacios y guiones); función que concatena las tres partes en solo dígitos.
   - **Archivos:** `front/src/lib/auth/validation.ts` (modificar), `front/src/lib/auth/validation.test.ts` (modificar)
   - **Depende de:** ERP-5 T-3
@@ -38,7 +38,7 @@ Primero repositorio y validación, luego la acción, luego la pantalla (lectura 
 
 ### Fase 2 – Acción
 
-- [ ] **T-3 – Acción de guardar perfil**
+- [x] **T-3 – Acción de guardar perfil**
   - **Qué:** `guardarPerfil` con `verifySession()`; ignora cualquier campo que no sea `nombre` y `telefono`; actualiza, audita `perfil`, revalida `/perfil`.
   - **Archivos:** `front/src/app/(app)/perfil/actions.ts` (nuevo)
   - **Depende de:** T-1, T-2, ERP-5 T-7
@@ -47,14 +47,14 @@ Primero repositorio y validación, luego la acción, luego la pantalla (lectura 
 
 ### Fase 3 – Interfaz
 
-- [ ] **T-4 – Pantalla de perfil en modo lectura**
+- [x] **T-4 – Pantalla de perfil en modo lectura**
   - **Qué:** Server Component que carga el usuario de la sesión y renderiza `NOMBRE`, `ROL`, `MATRÍCULA` (solo la propia y si aplica), `ORGANIZACIÓN`, `TELÉFONO`, y el acceso a "Cambiar contraseña".
   - **Archivos:** `front/src/app/(app)/perfil/page.tsx` (reemplaza el placeholder), `front/src/components/auth/profile-screen.tsx` (nuevo)
   - **Depende de:** T-1, ERP-5 T-10
   - **Cubre:** CA-1, CA-8, CA-9
   - **Verificación:** ingresar con las 3 cuentas de ejemplo: datos correctos; directivo/administrativo sin fila de matrícula.
 
-- [ ] **T-5 – Modo edición**
+- [x] **T-5 – Modo edición**
   - **Qué:** alternar lectura/edición en cliente; solo `NOMBRE` y `TELÉFONO` editables (teléfono con selector de prefijo con bandera, código de área y número); "Guardar" con `useActionState`; "Cancelar" restaura sin llamar al servidor; errores por campo; vuelve a lectura tras éxito.
   - **Archivos:** `front/src/components/auth/profile-screen.tsx` (modificar), `front/src/components/auth/phone-field.tsx` (nuevo)
   - **Depende de:** T-3, T-4
@@ -63,7 +63,7 @@ Primero repositorio y validación, luego la acción, luego la pantalla (lectura 
 
 ### Fase 4 – Pulido
 
-- [ ] **T-6 – Estados y accesibilidad**
+- [x] **T-6 – Estados y accesibilidad**
   - **Qué:** botón deshabilitado al guardar, mensajes de error asociados a campos, foco al editar, mensaje general de falla de escritura.
   - **Archivos:** `front/src/components/auth/profile-screen.tsx`
   - **Depende de:** T-5
@@ -94,8 +94,8 @@ Primero repositorio y validación, luego la acción, luego la pantalla (lectura 
 
 ## 6. Validación final
 
-- [ ] `npm run lint` sin errores
-- [ ] `npm run build` pasa
+- [x] `npm run lint` sin errores (0 errores, 7 warnings de stubs de ERP-6)
+- [x] `npm run build` pasa
 - [ ] Todos los criterios de aceptación de la spec recorridos y marcados
 - [ ] Spec actualizada si el diseño cambió durante la implementación
 - [ ] PR abierto, revisado por el otro integrante
@@ -104,3 +104,37 @@ Primero repositorio y validación, luego la acción, luego la pantalla (lectura 
 
 | Fecha | Tarea | Nota |
 |---|---|---|
+| 2026-11-25 | T-1 | Repo en `UsuarioRepoSupabase` (porId con matrícula propia, actualizarPerfil verifica 1 fila). Hizo falta la migración `20261125000000_perfil_rls.sql` (commit 36e376b, aplicada con `supabase migration up`; prueba reproducible `supabase/tests/perfil_rls.sql`, salida abajo). `npx vitest run`: 29 passed. Sin RED previo: el método era un stub que lanzaba error. |
+| 2026-11-25 | T-2 | Funciones nuevas en validation.ts (nombre, teléfono en tres partes, componer/parsear). RED observado: 11 failed antes de implementar; luego `npx vitest run src/lib/auth`: 23 passed. |
+
+### Salida de `supabase/tests/perfil_rls.sql` (PAS de ejemplo, ROLLBACK al final)
+
+```
+--- (a) actualizar nombre y telefono propios: esperado UPDATE 1
+UPDATE 1
+    nombre     |   telefono    
+---------------+---------------
+ Martín Prueba | 5491143219088
+--- (b) rol / estado / email / apellido / organizacion: esperado ERROR permission denied
+ERROR:  permission denied for table usuario   (x5: rol, estado, email, apellido, organizacion)
+--- (c) fila ajena: UPDATE esperado 0 filas; SELECT esperado solo 1 fila (la propia)
+UPDATE 0
+ usuarios_visibles = 1
+--- (d) matricula: esperado solo la propia (42108), no 99999
+ matricula_ssn = 42108
+```
+| 2026-11-25 | T-3 | Acción `guardarPerfil` (campos: nombre, telefonoPrefijo, telefonoArea, telefonoNumero). RED: suite fallaba por import inexistente. `npx vitest run`: 36 passed (7 tests de la acción: válido, nombre vacío, teléfono inválido, campos manipulados ignorados, falla de escritura, falla de auditoría con reversión, guardar sin cambios audita). |
+| 2026-11-25 | T-4 a T-6 | Pantalla `/perfil` (page.tsx, profile-screen.tsx, phone-field.tsx): lectura, edición controlada (conserva lo escrito ante error), teléfono en tres partes con bandera, matrícula omitida si no hay, botón deshabilitado al guardar, foco al editar y al primer error, `role=alert` para falla general, ubica LogoutButton. `tsc --noEmit` sin errores, `npm run lint` 0 errores, `npm run build` OK. Sin tests de componentes (no hay jsdom/testing-library en el proyecto); verificación manual abajo. Enlace Cambiar contraseña preparado por prop `hrefCambiarContrasena`, sin destino hasta que ERP-6 cree `/perfil/contrasena`. |
+| 2026-11-25 | Validación final | `npm run lint`: 0 errores y 7 warnings (parámetros sin usar de stubs ERP-6). `npx tsc --noEmit`: sin errores. `npx vitest run`: 4 archivos, 43 tests passed. `npm run build`: OK. |
+
+### Verificación contra Supabase local (`next start` + sesión real, cuentas de ejemplo)
+
+```
+perfil PAS: 200 | Gómez: true | MATRÍCULA: true | 42108: true | +54 11 43219088: true | Editar: true | Cerrar sesión: true
+perfil directivo: 200 | MATRÍCULA: false | Ríos: true
+update propio filas: 1
+update ajeno filas: 0
+update rol: permission denied for table usuario
+tras guardar y recargar, +54 11 43219088: true
+```
+(El UPDATE se probó con el cliente de la sesión del usuario, equivalente a `actualizarPerfil`; el recorrido de formulario en navegador no se probó.)

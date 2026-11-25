@@ -17,5 +17,6 @@ export async function getAuthUser() {
 // también termina bien. No escribe auditoría.
 export async function clearSession() {
   const supabase = await createClient();
-  await supabase.auth.signOut();
+  // Solo este dispositivo (ERP-8 PA-1): el alcance global cerraría los demás.
+  await supabase.auth.signOut({ scope: "local" });
 }
