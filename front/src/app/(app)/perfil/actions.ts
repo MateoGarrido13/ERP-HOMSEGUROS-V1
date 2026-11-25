@@ -19,6 +19,8 @@ export interface EstadoGuardarPerfil {
 }
 
 const MENSAJE_FALLA = "No pudimos guardar los cambios. Probá de nuevo.";
+const MENSAJE_SIN_REVERTIR =
+  "Se guardaron los cambios pero no pudimos registrarlos. Revisá tu perfil y probá de nuevo si algo no coincide.";
 
 // Spec ERP-7 4.4: el usuario sale de la sesión; solo se leen `nombre` y las
 // tres partes del teléfono. Cualquier otro campo del formulario (usuarioId,
@@ -54,15 +56,22 @@ export async function guardarPerfil(
     } catch (error) {
       // PA-3 de la épica: si falla la auditoría la operación no se completa.
       console.error("No se pudo auditar el cambio de perfil", error);
+      let revertido = false;
       if (anterior) {
         try {
           await repo.actualizarPerfil(usuarioId, {
             nombre: anterior.nombrePila,
             telefono: anterior.telefono,
           });
+          revertido = true;
         } catch (reversion) {
           console.error("No se pudo revertir el cambio de perfil", reversion);
         }
+      }
+      if (!revertido) {
+        // Los datos nuevos quedaron guardados: no decir que falló sin más.
+        revalidatePath("/perfil");
+        return { formError: MENSAJE_SIN_REVERTIR };
       }
       return { formError: MENSAJE_FALLA };
     }

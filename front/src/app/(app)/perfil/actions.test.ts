@@ -97,6 +97,18 @@ describe("guardarPerfil", () => {
     expect(m.revalidatePath).not.toHaveBeenCalled();
   });
 
+  test("falla de auditoría y de la reversión: avisa que los datos quedaron guardados", async () => {
+    m.registrarAuditoria.mockRejectedValue(new Error("audit"));
+    m.actualizarPerfil
+      .mockResolvedValueOnce(undefined)
+      .mockRejectedValueOnce(new Error("revert"));
+    const r = await guardarPerfil({}, form(VALIDO));
+    expect(r.ok).toBeUndefined();
+    expect(r.formError).toContain("Se guardaron los cambios");
+    expect(r.formError).not.toBe("No pudimos guardar los cambios. Probá de nuevo.");
+    expect(m.revalidatePath).toHaveBeenCalledWith("/perfil");
+  });
+
   test("guardar sin cambios también audita (SUP-3)", async () => {
     m.porId.mockResolvedValue({ nombrePila: "Martín", telefono: "541143219088" });
     const r = await guardarPerfil({}, form(VALIDO));
