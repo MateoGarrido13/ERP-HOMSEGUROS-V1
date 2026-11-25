@@ -47,14 +47,14 @@ Primero repositorio y validación, luego la acción, luego la pantalla (lectura 
 
 ### Fase 3 – Interfaz
 
-- [ ] **T-4 – Pantalla de perfil en modo lectura**
+- [x] **T-4 – Pantalla de perfil en modo lectura**
   - **Qué:** Server Component que carga el usuario de la sesión y renderiza `NOMBRE`, `ROL`, `MATRÍCULA` (solo la propia y si aplica), `ORGANIZACIÓN`, `TELÉFONO`, y el acceso a "Cambiar contraseña".
   - **Archivos:** `front/src/app/(app)/perfil/page.tsx` (reemplaza el placeholder), `front/src/components/auth/profile-screen.tsx` (nuevo)
   - **Depende de:** T-1, ERP-5 T-10
   - **Cubre:** CA-1, CA-8, CA-9
   - **Verificación:** ingresar con las 3 cuentas de ejemplo: datos correctos; directivo/administrativo sin fila de matrícula.
 
-- [ ] **T-5 – Modo edición**
+- [x] **T-5 – Modo edición**
   - **Qué:** alternar lectura/edición en cliente; solo `NOMBRE` y `TELÉFONO` editables (teléfono con selector de prefijo con bandera, código de área y número); "Guardar" con `useActionState`; "Cancelar" restaura sin llamar al servidor; errores por campo; vuelve a lectura tras éxito.
   - **Archivos:** `front/src/components/auth/profile-screen.tsx` (modificar), `front/src/components/auth/phone-field.tsx` (nuevo)
   - **Depende de:** T-3, T-4
@@ -63,7 +63,7 @@ Primero repositorio y validación, luego la acción, luego la pantalla (lectura 
 
 ### Fase 4 – Pulido
 
-- [ ] **T-6 – Estados y accesibilidad**
+- [x] **T-6 – Estados y accesibilidad**
   - **Qué:** botón deshabilitado al guardar, mensajes de error asociados a campos, foco al editar, mensaje general de falla de escritura.
   - **Archivos:** `front/src/components/auth/profile-screen.tsx`
   - **Depende de:** T-5
@@ -124,3 +124,4 @@ UPDATE 0
  matricula_ssn = 42108
 ```
 | 2026-11-25 | T-3 | Acción `guardarPerfil` (campos: nombre, telefonoPrefijo, telefonoArea, telefonoNumero). RED: suite fallaba por import inexistente. `npx vitest run`: 36 passed (7 tests de la acción: válido, nombre vacío, teléfono inválido, campos manipulados ignorados, falla de escritura, falla de auditoría con reversión, guardar sin cambios audita). |
+| 2026-11-25 | T-4 a T-6 | Pantalla `/perfil` (page.tsx, profile-screen.tsx, phone-field.tsx): lectura, edición controlada (conserva lo escrito ante error), teléfono en tres partes con bandera, matrícula omitida si no hay, botón deshabilitado al guardar, foco al editar y al primer error, `role=alert` para falla general, ubica LogoutButton. `tsc --noEmit` sin errores, `npm run lint` 0 errores, `npm run build` OK. Sin tests de componentes (no hay jsdom/testing-library en el proyecto); verificación manual abajo. Enlace Cambiar contraseña preparado por prop `hrefCambiarContrasena`, sin destino hasta que ERP-6 cree `/perfil/contrasena`. |
