@@ -1,13 +1,28 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState, useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useActionState, useEffect, useRef, useState } from "react";
 
 import { iniciarSesion, type EstadoIniciarSesion } from "../../app/(publico)/actions";
 import { BrandButton } from "../ui/brand-button";
 import { TextField } from "../ui/text-field";
 
 const ESTADO_INICIAL: EstadoIniciarSesion = {};
+
+// Aviso de éxito tras restablecer la contraseña (ERP-6): `/?aviso=...`.
+function AvisoContrasenaActualizada() {
+  const aviso = useSearchParams().get("aviso");
+  if (aviso !== "contrasena-actualizada") return null;
+  return (
+    <p
+      role="status"
+      className="rounded-xl border border-line bg-stage px-3 py-2.5 text-sm text-title"
+    >
+      Contraseña actualizada. Ingresá con la nueva.
+    </p>
+  );
+}
 
 export function LoginForm() {
   const [estado, action, pending] = useActionState(iniciarSesion, ESTADO_INICIAL);
@@ -36,6 +51,9 @@ export function LoginForm() {
 
   return (
     <form action={action} className="flex flex-col gap-5">
+      <Suspense fallback={null}>
+        <AvisoContrasenaActualizada />
+      </Suspense>
       {estado.formError ? (
         <p
           ref={alertRef}
@@ -75,7 +93,7 @@ export function LoginForm() {
           Recordarme
         </label>
         <Link href="/recuperar" className="text-link underline underline-offset-2">
-          ¿Olvidaste tu contraseña?
+          Olvidé mi contraseña
         </Link>
       </div>
       <BrandButton type="submit" disabled={pending}>

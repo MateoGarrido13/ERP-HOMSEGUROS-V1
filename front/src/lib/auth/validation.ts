@@ -20,6 +20,12 @@ export function phoneFieldError(phone: string) {
   return null;
 }
 
+export const MENSAJE_POLITICA =
+  "La contraseña tiene que tener al menos 8 caracteres, con un número, una mayúscula y una minúscula.";
+
+export const MENSAJE_IGUAL_A_LA_ANTERIOR =
+  "La contraseña nueva tiene que ser distinta de la anterior.";
+
 export const PASSWORD_POLICY_HINT =
   "Al menos 8 caracteres, con una mayúscula, una minúscula y un número.";
 
@@ -34,10 +40,10 @@ export function passwordPolicyError(password: string, previous?: string) {
     !/[A-Z]/.test(password) ||
     !/[a-z]/.test(password)
   ) {
-    return "La contraseña tiene que tener al menos 8 caracteres, con un número, una mayúscula y una minúscula.";
+    return MENSAJE_POLITICA;
   }
   if (previous !== undefined && password === previous) {
-    return "La contraseña nueva tiene que ser distinta de la anterior.";
+    return MENSAJE_IGUAL_A_LA_ANTERIOR;
   }
   return null;
 }
