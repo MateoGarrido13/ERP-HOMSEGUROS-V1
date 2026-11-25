@@ -17,7 +17,7 @@ Solo lectura. Primero migración, tipos, formato y repositorio sobre Supabase co
 ## 2. Antes de empezar
 
 - [x] Spec de ERP-17 en estado `Aprobada`, sin supuestos ni preguntas abiertas (reconciliada el 2026-11-25).
-- [ ] Rama creada: `erp-17-ver-pendientes`
+- [x] Rama creada: `erp-17-ver-pendientes`
 - [x] **ERP-5 completado** (sesión, DAL con rol, layout, `/pendientes` mínimo).
 - [ ] Datos de ejemplo de al menos dos PAS con asegurados y pólizas (se agregan al seed en T-3 para probar CA-7).
 
@@ -29,14 +29,14 @@ Solo lectura. Primero migración, tipos, formato y repositorio sobre Supabase co
 
 ### Fase 1 – Datos y lógica
 
-- [ ] **T-1 – Tipos del dominio de pendientes**
+- [x] **T-1 – Tipos del dominio de pendientes**
   - **Qué:** `Aviso` (con `cliente { apellido, nombre }` y `numeroPoliza`), `Lead`, `TipoAviso`, `CoberturaAviso` según spec 4.3.
   - **Archivos:** `front/src/lib/pendientes/types.ts` (nuevo)
   - **Depende de:** —
   - **Cubre:** CA-3, CA-5, RN-2, RN-3
   - **Verificación:** `npx tsc --noEmit` sin errores.
 
-- [ ] **T-2 – Formato: contadores, fechas y días transcurridos**
+- [x] **T-2 – Formato: contadores, fechas y días transcurridos**
   - **Qué:** `avisoCountLabel`, `leadCountLabel`, `formatFecha(dd/mm/aaaa)`, `diasTranscurridosLabel(fecha, hoy)` con zona `America/Argentina/Buenos_Aires`; fecha futura → "Cargado hoy"; `paginar(items, pagina, tamano)`.
   - **Archivos:** `front/src/lib/pendientes/format.ts` (nuevo), `front/src/lib/pendientes/format.test.ts` (nuevo)
   - **Depende de:** T-1
@@ -136,5 +136,4 @@ Solo lectura. Primero migración, tipos, formato y repositorio sobre Supabase co
 
 | Fecha | Tarea | Nota |
 | ----- | ----- | ---- |
-
-
+| 2026-11-25 | T-1, T-2 | Hechas primero con la spec vieja (el worktree estaba basado en main); tras cherry-pick de 3002ad7 se reconciliaron: `Aviso` pasa a `cliente { apellido, nombre }`. `npx vitest run src/lib/pendientes`: RED (módulo `./format` inexistente), luego GREEN 10/10 (0/1/N, hoy/ayer/10 días/futura, cruce de año, día de Buenos Aires vs UTC, paginación). |

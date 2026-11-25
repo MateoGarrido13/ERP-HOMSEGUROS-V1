@@ -14,8 +14,7 @@ export interface Aviso {
   tipo: TipoAviso;
   cobertura: CoberturaAviso;
   fechaImportancia: string;
-  clienteNombre: string;
-  clienteApellido: string;
+  cliente: { apellido: string; nombre: string };
   // Número de póliza registrado en la compañía (`poliza.numero_poliza`).
   numeroPoliza: string;
 }
