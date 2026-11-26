@@ -18,6 +18,11 @@ export function LeadBoard({ leads, hoy }: { leads: Lead[]; hoy: string }) {
       <h2 id="titulo-leads" className="text-lg font-semibold text-title">
         {leadCountLabel(leads.length)}
       </h2>
+      {vista.items.length === 0 ? (
+        <p className="rounded-xl bg-disabled px-4 py-6 text-center text-sm text-slate">
+          No tenés leads por ahora.
+        </p>
+      ) : null}
       {vista.items.map((lead) => (
         <LeadCard
           key={lead.id}
