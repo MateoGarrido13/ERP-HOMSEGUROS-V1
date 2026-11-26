@@ -18,6 +18,15 @@ Cada carpeta de código tiene su propio `package.json` y se instala y despliega 
 
 - Figma (wireframes y diseño del ERP): https://www.figma.com/design/dqM3vmFc3i8F3FyKIqiXvD/HOM-Seguros-ERP-–-Diseño (fileKey `dqM3vmFc3i8F3FyKIqiXvD`)
 
+## Jira
+
+Jira es la fuente de verdad del trabajo: todo trabajo entra por un issue y deja su resultado en Jira. Antes de trabajar, leer `docs/politica-jira.md` (reglas de entrada y salida, qué puede hacer el agente por su cuenta y qué consulta) y `docs/guia-jira.md` (estructura Épica → Historia → Subtarea, Tareas, etiquetas, estados).
+
+- Sin issue no se arranca: se propone crearlo y se espera confirmación.
+- Los criterios de aceptación de una historia son el alcance; no se cambian en silencio.
+- Al terminar, reflejar en Jira lo verificado y el estado, y anotar como Tarea enlazada lo que surja y no entre en el trabajo actual (con confirmación antes de crear issues).
+- Si una acción en Jira queda bloqueada por permisos, avisar; no rodearla.
+
 ## Desarrollo spec-driven
 
 Trabajamos con spec y plan antes de implementar. Antes de redactar o ejecutar una spec o un plan, leer `docs/guia-spec-driven.md` (proceso y política de uso) y partir de los templates en `docs/templates/`. Las specs y planes viven en `docs/specs/ERP-<n>-<slug>/`.
