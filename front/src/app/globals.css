@@ -27,6 +27,8 @@
   /* Menú lateral de escritorio (Figma, "PAS PC · Perfil · Ver"). */
   --hom-color-nav: #f7fafa;
   --hom-color-nav-active: #e5f2f2;
+  /* Panel de marca de las pantallas de acceso en escritorio. */
+  --hom-color-brand-panel: #ebf5f5;
 }
 
 @theme inline {
@@ -51,6 +53,7 @@
   --color-disabled: var(--hom-color-disabled);
   --color-nav: var(--hom-color-nav);
   --color-nav-active: var(--hom-color-nav-active);
+  --color-brand-panel: var(--hom-color-brand-panel);
   --font-sans: var(--font-dm), "DM Sans", sans-serif;
   --radius-pill: 999px;
   --radius-card: 12px;
