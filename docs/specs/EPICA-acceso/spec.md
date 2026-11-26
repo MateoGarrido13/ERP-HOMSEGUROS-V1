@@ -8,7 +8,7 @@
 | **Tipo** | Datos/backend · Pantalla/UI |
 | **Estado** | Aprobada |
 | **Autor** | Yaco10 con IA |
-| **Revisor** | Yaco10 (autoaprobada, proyecto individual) |
+| **Revisor** | Yaco10 (autoaprobada; revisión posterior del equipo pendiente) |
 | **Fecha** | 2026-10-31 (aprobada 2026-11-13) |
 
 ## 1. Contexto y objetivo
