@@ -6,10 +6,10 @@
 | **Épica** | Acceso (con alcance sobre Pendientes) |
 | **CU origen** | CU-01 a CU-04 `docs/casos-de-uso/login-logout/`; CU-05 `docs/casos-de-uso/PAS/pendientes/CU-05-Pendientes_Ver_Pendientes.md` |
 | **Tipo** | Pantalla/UI |
-| **Estado** | Borrador |
+| **Estado** | Aprobada |
 | **Autor** | Yaco10 con IA |
-| **Revisor** | Pendiente |
-| **Fecha** | 2026-11-26 |
+| **Revisor** | Yaco10 (autoaprobada, proyecto individual) |
+| **Fecha** | 2026-11-26 (aprobada 2026-11-26) |
 
 ## 1. Contexto y objetivo
 
@@ -148,6 +148,7 @@ Referencia de diseño (Figma, archivo `dqM3vmFc3i8F3FyKIqiXvD`): Acceso PC `80:7
 
 | Fecha | Cambio | Motivo | PR |
 |---|---|---|---|
+| 2026-11-26 | Aprobada. Se agrega al template de spec el frame de escritorio en 4.2 (CA-12) | Aprobación de Yaco10 | |
 | 2026-11-26 | Figma actualizado: vigencia de 24 horas, ayuda de contraseña con la política completa, placeholder "Nombre" y teléfono en tres partes (PC y mobile) | PA-2 | |
 | 2026-11-26 | Resueltos SUP-1 a SUP-5 y PA-1 y PA-2 (punto de corte 1024 px; cambiar contraseña como Editar perfil; avatar con iniciales; menú lateral para todos los roles; detalle de Aviso y Lead fuera de alcance; panel de marca con color y mensaje; Figma lo actualiza el agente) | Revisión del borrador con Yaco10 | |
 | 2026-11-26 | Versión inicial (borrador) | Las specs de Acceso y Pendientes se redactaron solo para mobile; el Figma trae las versiones de escritorio. Decisiones del 2026-11-26: teléfono en tres partes, vigencia de 24 horas, menú solo con lo implementado | |
