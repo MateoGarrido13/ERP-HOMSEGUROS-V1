@@ -98,15 +98,15 @@ Server Action guardarPerfil(prev, FormData{ nombre, telefono }) → { nameError?
 
 ## 7. Criterios de aceptación verificables
 
-- [ ] CA-1: `/perfil` muestra `NOMBRE`, `ROL`, `MATRÍCULA`, `ORGANIZACIÓN` y teléfono del usuario de la sesión.
-- [ ] CA-2: Al seleccionar "Editar" solo `NOMBRE` y `TELÉFONO` son editables.
-- [ ] CA-3: Con nombre vacío, o teléfono sin 10 dígitos, se marca el campo y no se guarda.
-- [ ] CA-4: Al guardar un perfil válido se vuelve a lectura mostrando los datos nuevos, también tras recargar la página.
-- [ ] CA-5: "Cancelar" restaura los valores previos y no hace ningún cambio persistido.
-- [ ] CA-6: Un envío manipulado con `rol` o `usuarioId` ajeno no modifica esos datos ni el perfil de otro usuario.
-- [ ] CA-7: Cada guardado exitoso crea una fila de auditoría `perfil` con usuario, rol y fecha/hora.
-- [ ] CA-8: Desde `/perfil` hay acceso a "Cambiar contraseña".
-- [ ] CA-9: El directivo y el administrativo ven su perfil sin una fila de matrícula vacía (según SUP-1).
+- [x] CA-1: `/perfil` muestra `NOMBRE`, `ROL`, `MATRÍCULA`, `ORGANIZACIÓN` y teléfono del usuario de la sesión. → *verificado en el navegador: `/perfil` del PAS muestra rol, matrícula, organización y teléfono (2026-11-26).*
+- [x] CA-2: Al seleccionar "Editar" solo `NOMBRE` y `TELÉFONO` son editables. → *verificado en el navegador: al pulsar Editar solo quedan habilitados `nombre` y los tres campos del teléfono.*
+- [x] CA-3: Con nombre vacío, o teléfono sin 10 dígitos, se marca el campo y no se guarda. → *verificado en el navegador: nombre vacío y teléfono de 3 dígitos marcan el campo y la BD no cambia.*
+- [x] CA-4: Al guardar un perfil válido se vuelve a lectura mostrando los datos nuevos, también tras recargar la página. → *verificado en el navegador: tras guardar vuelve a lectura con los datos nuevos y se mantienen al recargar.*
+- [x] CA-5: "Cancelar" restaura los valores previos y no hace ningún cambio persistido. → *verificado en el navegador y contra la BD: Cancelar restaura el valor previo, sin escrituras.*
+- [x] CA-6: Un envío manipulado con `rol` o `usuarioId` ajeno no modifica esos datos ni el perfil de otro usuario. → *verificado en el navegador: se inyectaron `rol`, `usuarioId`, `id`, `matricula` y `email` en el form; rol, email y el perfil de otro PAS quedaron intactos.*
+- [x] CA-7: Cada guardado exitoso crea una fila de auditoría `perfil` con usuario, rol y fecha/hora. → *verificado consultando `auditoria`: un guardado exitoso suma una fila `perfil`.*
+- [x] CA-8: Desde `/perfil` hay acceso a "Cambiar contraseña". → *verificado en el navegador: el enlace «Cambiar contraseña» lleva a `/perfil/contrasena`.*
+- [x] CA-9: El directivo y el administrativo ven su perfil sin una fila de matrícula vacía (según SUP-1). → *verificado en el navegador con el directivo: el perfil no muestra fila de matrícula.*
 
 ## 8. Decisiones descartadas
 

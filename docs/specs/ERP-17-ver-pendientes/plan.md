@@ -125,7 +125,7 @@ Solo lectura. Primero migración, tipos, formato y repositorio sobre Supabase co
 
 - [x] `npm run lint` sin errores
 - [x] `npm run build` pasa
-- [ ] Todos los criterios de aceptación de la spec recorridos y marcados
+- [x] Todos los criterios de aceptación de la spec recorridos y marcados
 - [ ] Spec actualizada si el diseño cambió durante la implementación
 - [ ] PR abierto, revisado por el otro integrante
 

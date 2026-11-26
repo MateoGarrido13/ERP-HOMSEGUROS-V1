@@ -91,14 +91,14 @@ Server Action cerrarSesion() → redirect('/')
 
 ## 7. Criterios de aceptación verificables
 
-- [ ] CA-1: `/perfil` tiene la opción "Cerrar sesión".
-- [ ] CA-2: Al seleccionarla se pide confirmación.
-- [ ] CA-3: Al cancelar, la sesión sigue abierta y el usuario permanece en la misma pantalla.
-- [ ] CA-4: Al confirmar se muestra `/` sin menú y la cookie de sesión ya no existe.
-- [ ] CA-5: Reenviar la cookie anterior a una ruta protegida redirige a `/` (la sesión se invalidó en el servidor).
-- [ ] CA-6: Un cierre confirmado crea una fila de auditoría `cierre` con usuario, rol y fecha/hora.
-- [ ] CA-7: Con la sesión vencida, confirmar igualmente termina en `/` sin error.
-- [ ] CA-8: Sin sesión, abrir `/perfil`, `/pendientes` o `/red` redirige a `/`.
+- [x] CA-1: `/perfil` tiene la opción "Cerrar sesión". → *verificado en el navegador: `/perfil` tiene «Cerrar sesión».*
+- [x] CA-2: Al seleccionarla se pide confirmación. → *verificado en el navegador: aparece el diálogo «¿Querés cerrar la sesión?».*
+- [x] CA-3: Al cancelar, la sesión sigue abierta y el usuario permanece en la misma pantalla. → *verificado en el navegador: Cancelar cierra el diálogo, sigue en `/perfil` y no se audita.*
+- [x] CA-4: Al confirmar se muestra `/` sin menú y la cookie de sesión ya no existe. → *verificado en el navegador: al confirmar se muestra `/` sin menú y la cookie `sb-*` queda sin valor.*
+- [x] CA-5: Reenviar la cookie anterior a una ruta protegida redirige a `/` (la sesión se invalidó en el servidor). → *verificado: reenviar la cookie anterior a `/pendientes` redirige a `/`.*
+- [x] CA-6: Un cierre confirmado crea una fila de auditoría `cierre` con usuario, rol y fecha/hora. → *verificado consultando `auditoria`: un cierre confirmado suma una fila `cierre`.*
+- [x] CA-7: Con la sesión vencida, confirmar igualmente termina en `/` sin error. → *verificado: con la sesión ya invalidada en el servidor, confirmar termina en `/` sin error.*
+- [x] CA-8: Sin sesión, abrir `/perfil`, `/pendientes` o `/red` redirige a `/`. → *verificado: sin sesión, `/perfil`, `/pendientes` y `/red` redirigen a `/`.*
 
 ## 8. Decisiones descartadas
 
