@@ -57,6 +57,18 @@ const cuentas = [
     matricula: "43377",
   },
   {
+    // PAS sin avisos ni leads (no figura en `datosPorPas`): sirve para probar
+    // los estados vacíos de /pendientes (ERP-17 CA-2 y CA-4).
+    email: "ignacio.vega@hom.com.ar",
+    password: "Ignacio2026",
+    nombre: "Ignacio",
+    apellido: "Vega",
+    dni: 29887766,
+    telefono: "11 4321-4400",
+    rol: "pas",
+    matricula: "44550",
+  },
+  {
     email: "laura.rios@hom.com.ar",
     password: "Red2026",
     nombre: "Laura",
