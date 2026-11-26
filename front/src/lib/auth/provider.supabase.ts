@@ -125,7 +125,23 @@ export class AuthProviderSupabase implements AuthProvider {
       return { ok: false, motivo: motivoDeVerifyOtp(error) };
     }
 
-    const cerrar = () => supabase.auth.signOut({ scope: "local" });
+    // ERP-292: cerrar la sesión de recuperación nunca debe cambiar el resultado
+    // (la contraseña puede haber cambiado ya y el enlace está gastado).
+    const idRecuperacion = data.user.id;
+    const cerrar = async () => {
+      try {
+        await supabase.auth.signOut({ scope: "local" });
+      } catch (error) {
+        console.error(
+          "[recuperacion]",
+          JSON.stringify({
+            evento: "recuperacion.signout-fallo",
+            usuarioId: idRecuperacion,
+            motivo: error instanceof Error ? error.message : "error desconocido",
+          }),
+        );
+      }
+    };
 
     // El enlace ya se gastó: un fallo pasajero de la base no debe dejar al
     // usuario con un "probá de nuevo" que no puede cumplir. Se reintenta una
@@ -160,8 +176,17 @@ export class AuthProviderSupabase implements AuthProvider {
 
     try {
       await alCambiar?.({ usuarioId, rol: fila.rol });
-    } catch {
-      // La contraseña ya cambió: un fallo de quien llama no la deshace.
+    } catch (error) {
+      // La contraseña ya cambió: un fallo de quien llama no la deshace, pero
+      // queda un registro buscable (ERP-291).
+      console.error(
+        "[recuperacion]",
+        JSON.stringify({
+          evento: "recuperacion.alcambiar-fallo",
+          usuarioId,
+          motivo: error instanceof Error ? error.message : "error desconocido",
+        }),
+      );
     } finally {
       await cerrar();
     }
