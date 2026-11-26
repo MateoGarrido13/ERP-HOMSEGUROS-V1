@@ -53,12 +53,12 @@ Instrucciones para quien lo completa (humano o IA):
 <Pasos del flujo principal tal como los implementa la solución. Flujos alternativos que requieren manejo especial.>
 
 ### 4.2 Pantallas y estados [OPCIONAL – UI]
-| Pantalla / componente | Estados (cargando, vacío, error, éxito, deshabilitado) | Comportamiento |
-|---|---|---|
+| Pantalla / componente | Estados (cargando, vacío, error, éxito, deshabilitado) | Comportamiento en mobile | Comportamiento en escritorio |
+|---|---|---|---|
 
 - Navegación de entrada y de salida:
 - Validaciones de formulario (campo → regla → mensaje):
-- Referencia de diseño: <link a Figma / wireframe>
+- Referencia de diseño: <link a Figma / wireframe, con el frame mobile **y** el frame de escritorio; si falta alguno, indicarlo como supuesto o pregunta abierta>
 
 ### 4.3 Modelo de datos [OPCIONAL – datos]
 | Entidad | Campos (tipo) | Relaciones | Notas |
