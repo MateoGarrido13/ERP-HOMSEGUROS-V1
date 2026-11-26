@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 
-import { registrarAuditoria } from "../../../lib/audit";
+import { registrarAuditoriaSinFallar } from "../../../lib/audit";
 import { AuthProviderSupabase } from "../../../lib/auth/provider.supabase";
 import {
   MENSAJE_IGUAL_A_LA_ANTERIOR,
@@ -68,15 +68,11 @@ export async function restablecer(
 
   // La auditoría se escribe dentro de la sesión de recuperación (la policy
   // exige usuario_id = auth.uid()); después el proveedor la cierra.
+  // La contraseña ya cambió y el enlace ya se gastó: si la auditoría falla se
+  // sigue como éxito (decir que falló sería falso y no se podría reintentar),
+  // pero `registrarAuditoriaSinFallar` deja un registro buscable (ERP-291).
   const resultado = await provider.resetPassword(token, password, async ({ usuarioId, rol }) => {
-    try {
-      await registrarAuditoria(usuarioId, rol, "cambio-contrasena");
-    } catch (error) {
-      // La contraseña ya cambió y el enlace ya se gastó: decir que falló sería
-      // falso y el usuario no podría reintentar. Se deja constancia en el log
-      // (sin datos del enlace) y se sigue como éxito.
-      console.error("No se pudo auditar el cambio de contraseña (recuperación)", error);
-    }
+    await registrarAuditoriaSinFallar(usuarioId, rol, "cambio-contrasena");
   });
   if (!resultado.ok) {
     switch (resultado.motivo) {

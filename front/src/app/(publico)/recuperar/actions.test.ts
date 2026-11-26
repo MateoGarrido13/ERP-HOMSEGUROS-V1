@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 
 const m = vi.hoisted(() => ({
-  registrarAuditoria: vi.fn(),
+  registrarAuditoriaSinFallar: vi.fn(),
   checkResetToken: vi.fn(),
   resetPassword: vi.fn(),
   redirect: vi.fn(),
 }));
 
-vi.mock("../../../lib/audit", () => ({ registrarAuditoria: m.registrarAuditoria }));
+vi.mock("../../../lib/audit", () => ({ registrarAuditoriaSinFallar: m.registrarAuditoriaSinFallar }));
 vi.mock("../../../lib/auth/provider.supabase", () => ({
   AuthProviderSupabase: class {
     checkResetToken = m.checkResetToken;
@@ -45,25 +45,24 @@ describe("restablecer: auditoría de cambio-contrasena (ERP-6 CA-12)", () => {
 
     await expect(restablecer({}, formulario())).rejects.toThrow("REDIRECT:/?aviso=contrasena-actualizada");
 
-    expect(m.registrarAuditoria).toHaveBeenCalledTimes(1);
-    expect(m.registrarAuditoria).toHaveBeenCalledWith("u1", "pas", "cambio-contrasena");
+    expect(m.registrarAuditoriaSinFallar).toHaveBeenCalledTimes(1);
+    expect(m.registrarAuditoriaSinFallar).toHaveBeenCalledWith("u1", "pas", "cambio-contrasena");
   });
 
-  test("si la auditoría falla igual termina en éxito y deja el error en el log", async () => {
-    m.registrarAuditoria.mockRejectedValue(new Error("RLS"));
+  test("si la auditoría no se pudo escribir igual termina en éxito (el helper ya dejó el registro)", async () => {
+    m.registrarAuditoriaSinFallar.mockResolvedValue(false);
     m.resetPassword.mockImplementation(async (_t, _p, alCambiar) => {
       await alCambiar({ usuarioId: "u1", rol: "pas" });
       return { ok: true, usuarioId: "u1", rol: "pas" };
     });
 
     await expect(restablecer({}, formulario())).rejects.toThrow("REDIRECT:/?aviso=contrasena-actualizada");
-    expect(console.error).toHaveBeenCalled();
   });
 
   test("si no se cambió la contraseña no se audita", async () => {
     m.resetPassword.mockResolvedValue({ ok: false, motivo: "enlace-invalido" });
 
     expect(await restablecer({}, formulario())).toEqual({ enlaceInvalido: true });
-    expect(m.registrarAuditoria).not.toHaveBeenCalled();
+    expect(m.registrarAuditoriaSinFallar).not.toHaveBeenCalled();
   });
 });

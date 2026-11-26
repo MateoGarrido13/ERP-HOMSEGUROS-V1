@@ -132,6 +132,64 @@ describe("resetPassword", () => {
     expect(alCambiar).not.toHaveBeenCalled();
   });
 
+  test("ERP-292: si signOut lanza después de cambiar la contraseña, igual devuelve ok", async () => {
+    auth.verifyOtp.mockResolvedValue({ data: { user: { id: "u1" } }, error: null });
+    consultaUsuario.mockResolvedValue({ data: { rol: "pas", estado: "activo" }, error: null });
+    auth.updateUser.mockResolvedValue({ data: {}, error: null });
+    auth.signOut.mockRejectedValue(new Error("network"));
+    vi.spyOn(console, "error").mockImplementation(() => {});
+
+    expect(await proveedor.resetPassword(TOKEN, "Nueva2026")).toEqual({
+      ok: true,
+      usuarioId: "u1",
+      rol: "pas",
+    });
+    expect(console.error).toHaveBeenCalled();
+  });
+
+  test("ERP-292: si signOut devuelve { error } (lo habitual en supabase-js) también queda registrado y el resultado no cambia", async () => {
+    auth.verifyOtp.mockResolvedValue({ data: { user: { id: "u1" } }, error: null });
+    consultaUsuario.mockResolvedValue({ data: { rol: "pas", estado: "activo" }, error: null });
+    auth.updateUser.mockResolvedValue({ data: {}, error: null });
+    auth.signOut.mockResolvedValue({ error: new Error("503 https://x.test/logout?token_hash=SECRETO") });
+    vi.spyOn(console, "error").mockImplementation(() => {});
+
+    expect(await proveedor.resetPassword(TOKEN, "Nueva2026")).toEqual({ ok: true, usuarioId: "u1", rol: "pas" });
+
+    const [etiqueta, json] = vi.mocked(console.error).mock.calls[0] as [string, string];
+    expect(etiqueta).toBe("[recuperacion]");
+    expect(JSON.parse(json)).toEqual({ evento: "recuperacion.signout-fallo", usuarioId: "u1", motivo: "503 [url]" });
+    expect(json).not.toContain("SECRETO");
+  });
+
+  test("ERP-292: si signOut lanza en un camino de rechazo, devuelve el mismo motivo", async () => {
+    auth.verifyOtp.mockResolvedValue({ data: { user: { id: "u1" } }, error: null });
+    consultaUsuario.mockResolvedValue({ data: { rol: "pas", estado: "suspendido" }, error: null });
+    auth.signOut.mockRejectedValue(new Error("network"));
+    vi.spyOn(console, "error").mockImplementation(() => {});
+
+    expect(await proveedor.resetPassword(TOKEN, "Nueva2026")).toEqual({
+      ok: false,
+      motivo: "enlace-invalido",
+    });
+  });
+
+  test("ERP-291: si alCambiar falla deja un registro buscable y no deshace el cambio", async () => {
+    auth.verifyOtp.mockResolvedValue({ data: { user: { id: "u1" } }, error: null });
+    consultaUsuario.mockResolvedValue({ data: { rol: "pas", estado: "activo" }, error: null });
+    auth.updateUser.mockResolvedValue({ data: {}, error: null });
+    vi.spyOn(console, "error").mockImplementation(() => {});
+
+    const r = await proveedor.resetPassword(TOKEN, "Nueva2026", async () => {
+      throw new Error("callback roto");
+    });
+
+    expect(r).toEqual({ ok: true, usuarioId: "u1", rol: "pas" });
+    const [etiqueta, json] = vi.mocked(console.error).mock.calls[0] as [string, string];
+    expect(etiqueta).toBe("[recuperacion]");
+    expect(JSON.parse(json)).toEqual({ evento: "recuperacion.alcambiar-fallo", usuarioId: "u1", motivo: "callback roto" });
+  });
+
   test("enlace vencido o ya usado: enlace-invalido y no cambia nada", async () => {
     auth.verifyOtp.mockResolvedValue({
       data: { user: null },
