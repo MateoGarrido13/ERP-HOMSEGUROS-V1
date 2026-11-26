@@ -12,7 +12,7 @@ import type {
   SesionValidada,
   UsuarioRepo,
 } from "./provider";
-import type { ResultadoSignIn, Usuario } from "./types";
+import type { ResultadoSignIn, Rol, Usuario } from "./types";
 
 interface FilaUsuario {
   id: string;
@@ -114,7 +114,7 @@ export class AuthProviderSupabase implements AuthProvider {
   async resetPassword(
     token: string,
     nueva: string,
-    alCambiar?: (quien: { usuarioId: string; rol: Usuario["rol"] }) => Promise<void>,
+    alCambiar?: (quien: { usuarioId: string; rol: Rol }) => Promise<void>,
   ): Promise<ResultadoReset> {
     const supabase = await createClient();
 
