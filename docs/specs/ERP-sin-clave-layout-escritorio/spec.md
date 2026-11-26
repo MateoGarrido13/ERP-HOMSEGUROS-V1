@@ -133,19 +133,20 @@ Referencia de diseño (Figma, archivo `dqM3vmFc3i8F3FyKIqiXvD`): Acceso PC `80:7
 
 ## 9. Supuestos
 
-- [ ] SUP-1: El punto de corte entre mobile y escritorio es 1024 px (`lg` de Tailwind). El Figma solo trae frames de 390 y 1440 px. → *confirmado por: ___*
-- [ ] SUP-2: La pantalla de cambiar contraseña (`/perfil/contrasena`) no tiene frame de PC. Se asume el mismo tratamiento que "Editar perfil": mismo menú lateral, formulario de 360 px alineado a la izquierda del contenido y botones debajo. → *confirmado por: ___*
-- [ ] SUP-3: El avatar del perfil muestra las iniciales de nombre y apellido, como en el frame de PC. → *confirmado por: ___*
-- [ ] SUP-4: El menú lateral aplica a todos los roles con sus ítems actuales. El diseño web de directivo y administrativo es un wireframe y no se implementa más allá de eso. → *confirmado por: ___*
-- [ ] SUP-5: El detalle de Aviso y de Lead no se implementa hasta tener su spec; las tarjetas de Pendientes conservan su comportamiento actual en escritorio. → *confirmado por: ___*
+- [x] SUP-1: El punto de corte entre mobile y escritorio es 1024 px (`lg` de Tailwind). El Figma solo trae frames de 390 y 1440 px. → *confirmado por: Yaco10, 2026-11-26*
+- [x] SUP-2: La pantalla de cambiar contraseña (`/perfil/contrasena`) no tiene frame de PC. Se asume el mismo tratamiento que "Editar perfil": mismo menú lateral, formulario de 360 px alineado a la izquierda del contenido y botones debajo. → *confirmado por: Yaco10, 2026-11-26*
+- [x] SUP-3: El avatar del perfil muestra las iniciales de nombre y apellido, como en el frame de PC. → *confirmado por: Yaco10, 2026-11-26*
+- [x] SUP-4: El menú lateral aplica a todos los roles con sus ítems actuales. El diseño web de directivo y administrativo es un wireframe y no se implementa más allá de eso. → *confirmado por: Yaco10, 2026-11-26*
+- [x] SUP-5: El detalle de Aviso y de Lead no se implementa hasta tener su spec; las tarjetas de Pendientes conservan su comportamiento actual en escritorio. → *confirmado por: Yaco10, 2026-11-26*
 
 ## 10. Preguntas abiertas
 
-- [ ] PA-1: El panel de marca del login muestra en Figma una ilustración placeholder. ¿Se usa una imagen definitiva, un color de fondo con el mensaje o el placeholder? → *respuesta / quién decide: ___*
-- [ ] PA-2: ¿Quién actualiza el Figma con las cinco diferencias de la sección 4.2? → *respuesta / quién decide: ___*
+- [x] PA-1: El panel de marca del login muestra en Figma una ilustración placeholder. → Se implementa un panel con color de fondo suave y el mensaje "Bienvenido al Portal PAS", sin imagen; la ilustración se agrega cuando exista. *decidió: Yaco10, 2026-11-26*
+- [x] PA-2: ¿Quién actualiza el Figma con las diferencias de la sección 4.2? → Lo actualiza el agente conectado a Figma (con aval de Yaco10). *decidió: Yaco10, 2026-11-26*
 
 ## 11. Historial de cambios
 
 | Fecha | Cambio | Motivo | PR |
 |---|---|---|---|
+| 2026-11-26 | Resueltos SUP-1 a SUP-5 y PA-1 y PA-2 (punto de corte 1024 px; cambiar contraseña como Editar perfil; avatar con iniciales; menú lateral para todos los roles; detalle de Aviso y Lead fuera de alcance; panel de marca con color y mensaje; Figma lo actualiza el agente) | Revisión del borrador con Yaco10 | |
 | 2026-11-26 | Versión inicial (borrador) | Las specs de Acceso y Pendientes se redactaron solo para mobile; el Figma trae las versiones de escritorio. Decisiones del 2026-11-26: teléfono en tres partes, vigencia de 24 horas, menú solo con lo implementado | |
