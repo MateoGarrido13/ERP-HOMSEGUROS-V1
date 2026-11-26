@@ -116,8 +116,10 @@ Referencia de diseño (Figma, archivo `dqM3vmFc3i8F3FyKIqiXvD`): Acceso PC `80:7
 - [ ] CA-8: Pendientes en escritorio muestra Avisos y Leads lado a lado con sus contadores y 10 registros por página; en mobile, 5.
 - [ ] CA-9: Pendientes sin registros muestra, en mobile y en escritorio, el mensaje "No tenés avisos por ahora." y "No tenés leads por ahora." en su sección, con el contador en cero.
 - [ ] CA-10: Ninguna pantalla scrollea en horizontal a 390, 768, 1024 y 1440 px de ancho.
-- [ ] CA-11: Los tests existentes de Acceso, Perfil y Pendientes siguen pasando sin modificarse, y a 390 px de ancho las pantallas se ven como antes de este cambio.
+- [ ] CA-11: Los tests existentes de Acceso, Perfil y Pendientes siguen pasando sin modificarse, y a 390 px de ancho las pantallas se ven como antes de este cambio, salvo los ajustes de proporciones de CA-13 y CA-14.
 - [ ] CA-12: El template `docs/templates/template-spec.md` exige indicar el frame de escritorio en la sección 4.2.
+- [ ] CA-13: En mobile la barra de navegación inferior queda fija abajo y no se va al hacer scroll; el contenido no queda tapado por ella.
+- [ ] CA-14: En mobile, login y recuperar contraseña muestran el bloque del formulario centrado verticalmente en el alto disponible, con el pie abajo; no queda un hueco grande bajo el formulario.
 
 > CA-1 a CA-10 se validan en el navegador con la lista de prueba manual de la épica; CA-11 con `tsc`, `lint`, tests y revisión visual a 390 px.
 
@@ -153,3 +155,4 @@ Referencia de diseño (Figma, archivo `dqM3vmFc3i8F3FyKIqiXvD`): Acceso PC `80:7
 | 2026-11-26 | Resueltos SUP-1 a SUP-5 y PA-1 y PA-2 (punto de corte 1024 px; cambiar contraseña como Editar perfil; avatar con iniciales; menú lateral para todos los roles; detalle de Aviso y Lead fuera de alcance; panel de marca con color y mensaje; Figma lo actualiza el agente) | Revisión del borrador con Yaco10 | |
 | 2026-11-26 | Versión inicial (borrador) | Las specs de Acceso y Pendientes se redactaron solo para mobile; el Figma trae las versiones de escritorio. Decisiones del 2026-11-26: teléfono en tres partes, vigencia de 24 horas, menú solo con lo implementado | |
 | 2026-11-26 | CA-4 y CA-9 ajustados al código y a lo decidido al implementar: la vigencia va en el aviso de recuperación (ERP-6) y el mensaje de vacío rige también en mobile (ERP-17) | Decisión de Yaco10; se actualizan las specs de ERP-6 y ERP-17 | |
+| 2026-11-26 | CA-13 y CA-14: ajustes de proporciones de mobile (barra inferior fija; acceso centrado verticalmente) | Feedback de Yaco10 al probar: el formulario del login quedaba muy arriba con mucho espacio abajo y la barra inferior se iba al scrollear. El login de mobile del Figma está alineado arriba; se decide centrarlo | |
