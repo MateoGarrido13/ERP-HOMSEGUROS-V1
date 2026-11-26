@@ -32,7 +32,7 @@ export function AuthShell({ children, volver = false, pieEnMobile = false }: Aut
             <span aria-hidden="true">‹</span> Volver
           </Link>
         ) : null}
-        <div className="flex flex-1 flex-col lg:mx-auto lg:w-full lg:max-w-[360px] lg:flex-none lg:justify-center lg:py-16 lg:my-auto">
+        <div className="flex flex-1 flex-col justify-center sm:flex-none sm:justify-start lg:mx-auto lg:w-full lg:max-w-[360px] lg:flex-none lg:justify-center lg:py-16 lg:my-auto">
           <Image
             src="/hom-logo.png"
             alt="HOM, Profesionales en Seguros"
@@ -41,7 +41,7 @@ export function AuthShell({ children, volver = false, pieEnMobile = false }: Aut
             priority
             className="mx-auto h-16 w-auto"
           />
-          <div className="mx-auto mt-8 flex w-full flex-1 flex-col gap-5 sm:flex-none">
+          <div className="mx-auto mt-8 flex w-full flex-col gap-5">
             {children}
           </div>
         </div>

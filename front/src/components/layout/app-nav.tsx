@@ -27,7 +27,11 @@ export function AppNav({ items, variante }: AppNavProps) {
   return (
     <nav
       aria-label="Navegación principal"
-      className={lateral ? "flex flex-col gap-1" : "flex border-t border-line bg-white lg:hidden"}
+      className={
+        lateral
+          ? "flex flex-col gap-1"
+          : "fixed inset-x-0 bottom-0 z-40 flex h-16 border-t border-line bg-white pb-[env(safe-area-inset-bottom)] lg:hidden"
+      }
     >
       {items.map((item) => {
         const activo = estaActivo(pathname, item.href);
@@ -41,7 +45,7 @@ export function AppNav({ items, variante }: AppNavProps) {
                 ? `rounded-lg px-3 py-2.5 text-sm ${
                     activo ? "bg-nav-active font-medium text-primary" : "text-slate hover:bg-nav-active/60"
                   }`
-                : `flex-1 py-3 text-center text-sm ${activo ? "font-medium text-primary" : "text-slate"}`
+                : `flex flex-1 items-center justify-center text-sm ${activo ? "font-medium text-primary" : "text-slate"}`
             }
           >
             {item.label}
