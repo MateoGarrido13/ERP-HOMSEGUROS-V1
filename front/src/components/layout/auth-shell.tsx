@@ -32,7 +32,10 @@ export function AuthShell({ children, volver = false, pieEnMobile = false }: Aut
             <span aria-hidden="true">‹</span> Volver
           </Link>
         ) : null}
-        <div className="flex flex-1 flex-col justify-center sm:flex-none sm:justify-start lg:mx-auto lg:w-full lg:max-w-[360px] lg:flex-none lg:justify-center lg:py-16 lg:my-auto">
+        <div className="flex flex-1 flex-col sm:flex-none lg:mx-auto lg:w-full lg:max-w-[360px] lg:flex-none lg:justify-center lg:py-16 lg:my-auto">
+          {/* Mobile: el bloque queda en el centro óptico (40/60 del espacio libre), algo
+              por encima del centro geométrico, como es habitual en pantallas de acceso. */}
+          <div aria-hidden="true" className="flex-[2] sm:hidden" />
           <Image
             src="/hom-logo.png"
             alt="HOM, Profesionales en Seguros"
@@ -44,6 +47,7 @@ export function AuthShell({ children, volver = false, pieEnMobile = false }: Aut
           <div className="mx-auto mt-8 flex w-full flex-col gap-5">
             {children}
           </div>
+          <div aria-hidden="true" className="flex-[3] sm:hidden" />
         </div>
         <p
           className={`text-center text-xs text-hint ${
