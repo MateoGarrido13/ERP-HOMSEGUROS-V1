@@ -111,7 +111,11 @@ export class AuthProviderSupabase implements AuthProvider {
     return /^[A-Za-z0-9_-]{16,}$/.test(token) ? "vigente" : "invalido";
   }
 
-  async resetPassword(token: string, nueva: string): Promise<ResultadoReset> {
+  async resetPassword(
+    token: string,
+    nueva: string,
+    alCambiar?: (quien: { usuarioId: string; rol: Usuario["rol"] }) => Promise<void>,
+  ): Promise<ResultadoReset> {
     const supabase = await createClient();
 
     // verifyOtp consume el enlace (un solo uso) y abre una sesión de
@@ -149,10 +153,20 @@ export class AuthProviderSupabase implements AuthProvider {
     }
 
     const { error: updateError } = await supabase.auth.updateUser({ password: nueva });
-    await cerrar();
-    if (updateError) return { ok: false, motivo: motivoDeUpdateUser(updateError) };
+    if (updateError) {
+      await cerrar();
+      return { ok: false, motivo: motivoDeUpdateUser(updateError) };
+    }
 
-    return { ok: true, usuarioId: data.user.id, rol: fila.rol };
+    try {
+      await alCambiar?.({ usuarioId, rol: fila.rol });
+    } catch {
+      // La contraseña ya cambió: un fallo de quien llama no la deshace.
+    } finally {
+      await cerrar();
+    }
+
+    return { ok: true, usuarioId, rol: fila.rol };
   }
 
   async changePassword(

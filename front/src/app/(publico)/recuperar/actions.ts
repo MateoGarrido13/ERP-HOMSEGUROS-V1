@@ -66,7 +66,18 @@ export async function restablecer(
   const errores = nuevaContrasenaErrors(password, confirm);
   if (errores.passwordError || errores.confirmError) return errores;
 
-  const resultado = await provider.resetPassword(token, password);
+  // La auditoría se escribe dentro de la sesión de recuperación (la policy
+  // exige usuario_id = auth.uid()); después el proveedor la cierra.
+  const resultado = await provider.resetPassword(token, password, async ({ usuarioId, rol }) => {
+    try {
+      await registrarAuditoria(usuarioId, rol, "cambio-contrasena");
+    } catch (error) {
+      // La contraseña ya cambió y el enlace ya se gastó: decir que falló sería
+      // falso y el usuario no podría reintentar. Se deja constancia en el log
+      // (sin datos del enlace) y se sigue como éxito.
+      console.error("No se pudo auditar el cambio de contraseña (recuperación)", error);
+    }
+  });
   if (!resultado.ok) {
     switch (resultado.motivo) {
       case "enlace-invalido":
@@ -82,15 +93,6 @@ export async function restablecer(
       default:
         return { formError: MENSAJE_SERVICIO };
     }
-  }
-
-  try {
-    await registrarAuditoria(resultado.usuarioId, resultado.rol, "cambio-contrasena");
-  } catch (error) {
-    // La contraseña ya cambió y el enlace ya se gastó: decir que falló sería
-    // falso y el usuario no podría reintentar. Se deja constancia en el log
-    // (sin datos del enlace) y se sigue como éxito.
-    console.error("No se pudo auditar el cambio de contraseña (recuperación)", error);
   }
 
   redirect("/?aviso=contrasena-actualizada");
