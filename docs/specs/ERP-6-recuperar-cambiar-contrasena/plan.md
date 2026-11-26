@@ -120,10 +120,10 @@ Se completa el proveedor Supabase (`provider.supabase.ts`) con recuperación y c
 
 ## 6. Validación final
 
-- [ ] `npm run lint` sin errores
-- [ ] `npm run build` pasa
-- [ ] Todos los criterios de aceptación de la spec recorridos y marcados
-- [ ] Spec actualizada si el diseño cambió durante la implementación
+- [x] `npm run lint` sin errores
+- [x] `npm run build` pasa (2026-11-26, en una copia limpia de la rama)
+- [x] Todos los criterios de aceptación de la spec recorridos y marcados
+- [x] Spec actualizada si el diseño cambió durante la implementación (paso 7 de 4.1 y changelog, 2026-11-26)
 - [ ] PR abierto, revisado por el otro integrante
 
 ## 7. Bitácora de ejecución
@@ -135,3 +135,4 @@ Se completa el proveedor Supabase (`provider.supabase.ts`) con recuperación y c
 | 2026-11-25 | T-3 | `AuthProviderSupabase`: `resetPasswordForEmail`, `verifyOtp`+`updateUser`, `changePassword` (reautentica con cliente sin cookies). `npx vitest run` → 35 tests OK (16 del proveedor, con cliente simulado). `resetPassword` devuelve `{ok,usuarioId,rol}` (ampliación de la épica 4.4, para auditar). `checkResetToken` solo valida la forma: `verifyOtp` consume el enlace. Cuenta suspendida: se rechaza al guardar; el correo sí sale (no hay consulta anónima a `usuario`). |
 | 2026-11-25 | T-4 a T-8 | Acciones, `/recuperar`, `/recuperar/nueva`, `/perfil/contrasena` y aviso de éxito en `/`. `npx tsc --noEmit`, `npm run lint` (0 errores) y `npm run build` OK. Acceso "Cambiar contraseña" desde Perfil: pendiente (ERP-7 construye `perfil/page.tsx`). |
 | 2026-11-25 | T-9 | Botón deshabilitado al enviar, foco en errores, `Referrer-Policy: no-referrer` (metadata y `proxy.ts`), token solo en campo oculto, nunca logueado. Falta revisión manual de logs/teclado. |
+| 2026-11-26 | Fix CA-12 | La auditoría del restablecimiento por enlace se escribía con la sesión ya cerrada y la RLS la rechazaba. `resetPassword(token, nueva, alCambiar)` audita antes de cerrar la sesión de recuperación. Tests: 3 en `provider.supabase.test.ts` y 3 en `recuperar/actions.test.ts`; recorrido de CA-1 a CA-12 en el navegador OK | |

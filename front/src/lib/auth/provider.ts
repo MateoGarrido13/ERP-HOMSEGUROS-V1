@@ -31,7 +31,15 @@ export interface AuthProvider {
   destroySession(): Promise<void>;
   requestPasswordReset(email: string): Promise<ResultadoRequestReset>;
   checkResetToken(token: string): Promise<EstadoTokenReset>;
-  resetPassword(token: string, nueva: string): Promise<ResultadoReset>;
+  // `alCambiar` corre solo si la contraseña ya cambió y mientras la sesión de
+  // recuperación sigue abierta: es el único momento en que hay `auth.uid()`
+  // para auditar (la policy de `auditoria` lo exige). Si falla, no deshace el
+  // cambio; quien lo pasa decide qué registrar.
+  resetPassword(
+    token: string,
+    nueva: string,
+    alCambiar?: (quien: { usuarioId: string; rol: Rol }) => Promise<void>,
+  ): Promise<ResultadoReset>;
   changePassword(
     usuarioId: string,
     actual: string,

@@ -56,7 +56,7 @@ Dos caminos: **recuperar** (sin sesión, por enlace al correo) y **cambiar** (co
 4. La pantalla muestra **siempre** el aviso: "Si el email está registrado, va a llegar un mensaje para elegir una contraseña nueva. El enlace vence en 24 horas." (también para email inexistente o cuenta inactiva; a una cuenta suspendida el correo puede llegar, pero su enlace no sirve para restablecer: SUP-4).
 5. Falla del servicio de correo → "No pudimos enviar el mensaje. Probá de nuevo." y no queda emitido ningún enlace (el proveedor debe revertirlo).
 6. El enlace abre `/recuperar/nueva?token=…`. `checkResetToken` solo valida la forma del token: Supabase no permite saber si está vencido o usado sin gastarlo (SUP-5). Un token con forma inválida → "Este enlace ya no sirve. Pedí uno nuevo." con enlace a `/recuperar`.
-7. El usuario carga `CONTRASEÑA NUEVA` y `CONFIRMACIÓN`. La acción valida coincidencia y política; luego `resetPassword(token, nueva)`: consume el enlace, comprueba que la cuenta esté activa y guarda la contraseña. Si el enlace está vencido o usado, o la cuenta está suspendida o dada de baja → "Este enlace ya no sirve. Pedí uno nuevo." y no se cambia nada.
+7. El usuario carga `CONTRASEÑA NUEVA` y `CONFIRMACIÓN`. La acción valida coincidencia y política; luego `resetPassword(token, nueva, alCambiar)`: consume el enlace, comprueba que la cuenta esté activa y guarda la contraseña; con la sesión de recuperación todavía abierta llama a `alCambiar` (la acción audita `cambio-contrasena` ahí, porque la policy de `auditoria` exige `usuario_id = auth.uid()`) y recién después la cierra. Si el enlace está vencido o usado, o la cuenta está suspendida o dada de baja → "Este enlace ya no sirve. Pedí uno nuevo." y no se cambia nada.
 8. En éxito: se invalida el enlace, queda sin efecto la contraseña anterior, se audita `cambio-contrasena` y se redirige a `/` con aviso de éxito.
 
 **Cambiar (con sesión)**
@@ -124,22 +124,22 @@ Server Action cambiarContrasena(prev, FormData{ actual, password, confirm }) →
 ## 7. Criterios de aceptación verificables
 
 **Recuperar**
-- [ ] CA-1: En `/` hay una opción "Olvidé mi contraseña" que lleva a un formulario que pide `EMAIL`.
-- [ ] CA-2: Con email vacío o inválido se marca el campo y el proveedor no busca la cuenta.
-- [ ] CA-3: Con email no registrado y con cuenta suspendida se ve el mismo aviso que con una cuenta válida; con una cuenta suspendida el enlace no permite restablecer la contraseña.
-- [ ] CA-4: Con cuenta válida se envía un correo con un enlace de un solo uso y con vencimiento; el correo no contiene la contraseña.
-- [ ] CA-5: Si el servicio de correo falla se informa que no se pudo enviar y el enlace no queda vigente.
-- [ ] CA-6: Un enlace vencido o ya usado, al guardar la contraseña nueva, muestra "Este enlace ya no sirve. Pedí uno nuevo." y no cambia la contraseña.
-- [ ] CA-7: La pantalla de contraseña nueva pide `CONTRASEÑA NUEVA` y `CONFIRMACIÓN`; no guarda si no coinciden, si no cumplen la política o si es igual a la anterior.
-- [ ] CA-8: Al guardar, la contraseña anterior deja de servir para ingresar, el enlace queda invalidado y se vuelve a `/`.
+- [x] CA-1: En `/` hay una opción "Olvidé mi contraseña" que lleva a un formulario que pide `EMAIL`. → *verificado en el navegador: «Olvidé mi contraseña» en `/` lleva a `/recuperar` con el campo `EMAIL`.*
+- [x] CA-2: Con email vacío o inválido se marca el campo y el proveedor no busca la cuenta. → *verificado en el navegador: email vacío o sin formato marca el campo y no sale ningún correo.*
+- [x] CA-3: Con email no registrado y con cuenta suspendida se ve el mismo aviso que con una cuenta válida; con una cuenta suspendida el enlace no permite restablecer la contraseña. → *verificado en el navegador: no registrada, válida y suspendida muestran el mismo aviso; con la cuenta suspendida el enlace muestra «Este enlace ya no sirve.» y no cambia la contraseña.*
+- [x] CA-4: Con cuenta válida se envía un correo con un enlace de un solo uso y con vencimiento; el correo no contiene la contraseña. → *verificado con Mailpit local: llega el correo con enlace de un solo uso y no contiene la contraseña.*
+- [x] CA-5: Si el servicio de correo falla se informa que no se pudo enviar y el enlace no queda vigente. → *verificado deteniendo el servicio de correo local: se muestra «No pudimos enviar el mensaje. Probá de nuevo.».*
+- [x] CA-6: Un enlace vencido o ya usado, al guardar la contraseña nueva, muestra "Este enlace ya no sirve. Pedí uno nuevo." y no cambia la contraseña. → *verificado en el navegador: el enlace ya usado muestra exactamente «Este enlace ya no sirve. Pedí uno nuevo.» y no cambia la contraseña. El vencimiento por tiempo (24 h) no se recorrió: comparte el mismo camino de error (`otp_expired`).*
+- [x] CA-7: La pantalla de contraseña nueva pide `CONTRASEÑA NUEVA` y `CONFIRMACIÓN`; no guarda si no coinciden, si no cumplen la política o si es igual a la anterior. → *verificado en el navegador: pide `CONTRASEÑA NUEVA` y `CONFIRMACIÓN`; rechaza si no coinciden, si no cumplen la política o si es igual a la anterior (este último caso consume el enlace, como documenta la acción).*
+- [x] CA-8: Al guardar, la contraseña anterior deja de servir para ingresar, el enlace queda invalidado y se vuelve a `/`. → *verificado: tras guardar, la contraseña anterior deja de servir, la nueva sirve, el enlace queda gastado y se vuelve a `/?aviso=contrasena-actualizada`.*
 
 **Cambiar**
-- [ ] CA-9: Desde Perfil > "Cambiar contraseña" se piden `CONTRASEÑA ACTUAL`, `CONTRASEÑA NUEVA` y `CONFIRMACIÓN`.
-- [ ] CA-10: Con la contraseña actual incorrecta se informa el error y no se guarda.
-- [ ] CA-11: Un usuario solo puede cambiar su propia contraseña (el identificador no viaja en el formulario).
+- [x] CA-9: Desde Perfil > "Cambiar contraseña" se piden `CONTRASEÑA ACTUAL`, `CONTRASEÑA NUEVA` y `CONFIRMACIÓN`. → *verificado en el navegador: Perfil > «Cambiar contraseña» pide `actual`, `password` y `confirm`.*
+- [x] CA-10: Con la contraseña actual incorrecta se informa el error y no se guarda. → *verificado en el navegador: con la contraseña actual incorrecta no se guarda ni se audita.*
+- [x] CA-11: Un usuario solo puede cambiar su propia contraseña (el identificador no viaja en el formulario). → *verificado: el formulario no tiene inputs ocultos ni identificador de usuario; la acción usa la sesión.*
 
 **Transversal**
-- [ ] CA-12: Cada cambio exitoso crea una fila de auditoría `cambio-contrasena` sin contraseña ni token.
+- [x] CA-12: Cada cambio exitoso crea una fila de auditoría `cambio-contrasena` sin contraseña ni token. → *verificado consultando `auditoria` tras cambiar por enlace y desde Perfil (+1 en cada caso); la tabla no tiene columna de contraseña ni token. Corregido el 2026-11-26: el restablecimiento por enlace no escribía la fila porque la sesión de recuperación se cerraba antes de auditar; ahora `resetPassword` recibe `alCambiar` y audita antes de cerrarla.*
 
 ## 8. Decisiones descartadas
 
@@ -173,3 +173,4 @@ Server Action cambiarContrasena(prev, FormData{ actual, password, confirm }) →
 | 2026-11-25 | Se reconcilian las secciones 2 a 6 y 9-10 con lo decidido el 15/11; PA-3 = límite nativo de Supabase; SUP-1 confirmada como 8 + dígito + mayúscula + minúscula; se elimina `provider.dev.ts` | Dejar la spec consistente antes de implementar | |
 | 2026-11-25 | Desvíos hallados al implementar: el enlace se valida al guardar (SUP-5) y la cuenta suspendida se bloquea al guardar (SUP-4); se ajustan 4.1 pasos 3, 4, 6 y 7, RN-5, CA-3, CA-6 y casos borde. `resetPassword` y `changePassword` devuelven un resultado más rico que el de la épica 4.4 (necesario para auditar) | Limitaciones de Supabase Auth detectadas en la implementación | |
 | 2026-11-26 | El aviso del paso 4 agrega "El enlace vence en 24 horas." | Decisión de Yaco10 al implementar la spec de layout de escritorio: el código no tiene la pantalla "Revisá tu correo" del Figma y el aviso no informaba la vigencia | |
+| 2026-11-26 | `resetPassword` recibe un callback `alCambiar` que audita `cambio-contrasena` antes de cerrar la sesión de recuperación; el resultado deja de ser el único medio para auditar | Defecto hallado al verificar CA-12: la acción auditaba con la sesión ya cerrada y la policy de `auditoria` (`usuario_id = auth.uid()`) rechazaba el insert | |

@@ -90,6 +90,48 @@ describe("resetPassword", () => {
     expect(auth.signOut).toHaveBeenCalledWith({ scope: "local" });
   });
 
+  test("éxito: llama a alCambiar con el usuario y el rol mientras la sesión de recuperación sigue abierta", async () => {
+    auth.verifyOtp.mockResolvedValue({ data: { user: { id: "u1" } }, error: null });
+    consultaUsuario.mockResolvedValue({ data: { rol: "pas", estado: "activo" }, error: null });
+    auth.updateUser.mockResolvedValue({ data: {}, error: null });
+    const orden: string[] = [];
+    auth.signOut.mockImplementation(async () => {
+      orden.push("signOut");
+    });
+    const alCambiar = vi.fn(async () => {
+      orden.push("alCambiar");
+    });
+
+    const r = await proveedor.resetPassword(TOKEN, "Nueva2026", alCambiar);
+
+    expect(r).toEqual({ ok: true, usuarioId: "u1", rol: "pas" });
+    expect(alCambiar).toHaveBeenCalledWith({ usuarioId: "u1", rol: "pas" });
+    expect(orden).toEqual(["alCambiar", "signOut"]);
+  });
+
+  test("alCambiar que falla no deshace el cambio: igual cierra la sesión y devuelve ok", async () => {
+    auth.verifyOtp.mockResolvedValue({ data: { user: { id: "u1" } }, error: null });
+    consultaUsuario.mockResolvedValue({ data: { rol: "pas", estado: "activo" }, error: null });
+    auth.updateUser.mockResolvedValue({ data: {}, error: null });
+
+    const r = await proveedor.resetPassword(TOKEN, "Nueva2026", async () => {
+      throw new Error("auditoría caída");
+    });
+
+    expect(r).toEqual({ ok: true, usuarioId: "u1", rol: "pas" });
+    expect(auth.signOut).toHaveBeenCalledWith({ scope: "local" });
+  });
+
+  test("si no se cambia la contraseña, alCambiar no se llama", async () => {
+    auth.verifyOtp.mockResolvedValue({ data: { user: { id: "u1" } }, error: null });
+    consultaUsuario.mockResolvedValue({ data: { rol: "pas", estado: "suspendido" }, error: null });
+    const alCambiar = vi.fn();
+
+    await proveedor.resetPassword(TOKEN, "Nueva2026", alCambiar);
+
+    expect(alCambiar).not.toHaveBeenCalled();
+  });
+
   test("enlace vencido o ya usado: enlace-invalido y no cambia nada", async () => {
     auth.verifyOtp.mockResolvedValue({
       data: { user: null },

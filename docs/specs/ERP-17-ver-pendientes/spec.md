@@ -126,18 +126,18 @@ interface PendientesRepo {
 
 ## 7. Criterios de aceptación verificables
 
-- [ ] CA-1: Tras ingresar como PAS (ERP-5) se llega a `/pendientes`.
-- [ ] CA-2: Con N avisos se ve "1 aviso" si N = 1, "N avisos" si N > 1 y "0 avisos" sin tarjetas si N = 0.
-- [ ] CA-3: Cada aviso muestra `Cliente: Apellido, Nombre`, `N POLIZA:` con el número registrado en la compañía, tipo de cobertura (Hogar, Automotor o Integrales), fecha de importancia y tipo; los avisos van del más reciente al más antiguo.
-- [ ] CA-4: Con M leads se ve "1 lead" si M = 1, "M leads" si M > 1 y "0 leads" sin tarjetas si M = 0.
-- [ ] CA-5: Cada lead muestra origen, cliente, ramo, última modificación en `dd/mm/aaaa` y días: "Cargado hoy", "1 día transcurrido" o "N días transcurridos" según corresponda.
-- [ ] CA-6: Al abrir un aviso se ven sus datos y no existe campo de descripción editable; al abrir un lead se ve su descripción en solo lectura.
-- [ ] CA-7: Con dos PAS distintos, cada uno ve únicamente sus propios avisos y leads; modificar la URL o un parámetro no permite ver los del otro.
-- [ ] CA-8: Abrir, cerrar y recargar la bandeja no cambia ningún dato (la pantalla no tiene Server Actions ni escrituras).
-- [ ] CA-9: Solo existen los cuatro tipos de aviso de RN-3; un tipo fuera de la lista no se muestra y se registra en el log del servidor.
-- [ ] CA-10: Sin sesión, `/pendientes` redirige a `/`.
-- [ ] CA-11: Con más de 5 registros en mobile (o más de 10 en desktop) la lista se pagina y se puede navegar entre páginas sin cambiar datos.
-- [ ] CA-12: Un directivo o administrativo que abre `/pendientes` es redirigido a `/red`.
+- [x] CA-1: Tras ingresar como PAS (ERP-5) se llega a `/pendientes`. → *verificado en el navegador: el login del PAS termina en `/pendientes`.*
+- [x] CA-2 (parcial en navegador): Con N avisos se ve "1 aviso" si N = 1, "N avisos" si N > 1 y "0 avisos" sin tarjetas si N = 0. → *verificado en el navegador («12 avisos») y con `format.test.ts` para 0, 1 y N; el estado vacío no se recorrió en el navegador (no hay un PAS sin avisos en los datos de ejemplo).*
+- [x] CA-3: Cada aviso muestra `Cliente: Apellido, Nombre`, `N POLIZA:` con el número registrado en la compañía, tipo de cobertura (Hogar, Automotor o Integrales), fecha de importancia y tipo; los avisos van del más reciente al más antiguo. → *verificado en el navegador: `Cliente: Apellido, Nombre`, `N POLIZA:`, cobertura y fecha; fechas en orden descendente.*
+- [x] CA-4: Con M leads se ve "1 lead" si M = 1, "M leads" si M > 1 y "0 leads" sin tarjetas si M = 0. → *verificado en el navegador («11 leads») y con `format.test.ts`.*
+- [x] CA-5: Cada lead muestra origen, cliente, ramo, última modificación en `dd/mm/aaaa` y días: "Cargado hoy", "1 día transcurrido" o "N días transcurridos" según corresponda. → *verificado en el navegador: origen, cliente, ramo, `dd/mm/aaaa` y «N días transcurridos».*
+- [x] CA-6: Al abrir un aviso se ven sus datos y no existe campo de descripción editable; al abrir un lead se ve su descripción en solo lectura. → *verificado en el navegador: el aviso abre sus datos sin campos editables; el lead muestra la descripción en solo lectura.*
+- [x] CA-7: Con dos PAS distintos, cada uno ve únicamente sus propios avisos y leads; modificar la URL o un parámetro no permite ver los del otro. → *verificado en el navegador con dos PAS: 0 avisos en común entre ambos.*
+- [x] CA-8: Abrir, cerrar y recargar la bandeja no cambia ningún dato (la pantalla no tiene Server Actions ni escrituras). → *verificado en el navegador: recargar la bandeja no dispara ningún POST.*
+- [x] CA-9 (solo test unitario): Solo existen los cuatro tipos de aviso de RN-3; un tipo fuera de la lista no se muestra y se registra en el log del servidor. → *verificado con `repo.test.ts` (descarta y registra un tipo fuera de RN-3).*
+- [x] CA-10: Sin sesión, `/pendientes` redirige a `/`. → *verificado: sin sesión, `/pendientes` redirige a `/`.*
+- [x] CA-11: Con más de 5 registros en mobile (o más de 10 en desktop) la lista se pagina y se puede navegar entre páginas sin cambiar datos. → *verificado en el navegador: mobile 5 por página (3 páginas de avisos), escritorio 10 por página, y «Siguiente» navega sin escrituras.*
+- [x] CA-12: Un directivo o administrativo que abre `/pendientes` es redirigido a `/red`. → *verificado en el navegador: el directivo que abre `/pendientes` termina en `/red`.*
 
 ## 8. Decisiones descartadas
 
