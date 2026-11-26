@@ -145,6 +145,13 @@ export function nuevaContrasenaErrors(
   return errores;
 }
 
+// Iniciales para el avatar del perfil: primera letra de la primera palabra del
+// nombre y del apellido (spec de layout de escritorio, SUP-3).
+export function iniciales(nombrePila: string, apellido: string) {
+  const inicial = (texto: string) => texto.trim().charAt(0).toLocaleUpperCase("es");
+  return `${inicial(nombrePila)}${inicial(apellido)}`;
+}
+
 export function inicioDelRol(rol: Rol) {
   return rol === "pas" ? "/pendientes" : "/red";
 }
