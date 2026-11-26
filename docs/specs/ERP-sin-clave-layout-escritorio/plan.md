@@ -6,7 +6,7 @@
 | **US** | Sin clave Jira todavía |
 | **Estado** | Aprobado |
 | **Autor** | Yaco10 con IA |
-| **Revisor** | Yaco10 (autoaprobado, proyecto individual) |
+| **Revisor** | Yaco10 (autoaprobado; revisión posterior del equipo pendiente) |
 
 ## 1. Resumen del enfoque
 
