@@ -4,9 +4,9 @@
 |---|---|
 | **Spec** | [`spec.md`](spec.md) (versión aprobada: 2026-11-26) |
 | **US** | Sin clave Jira todavía |
-| **Estado** | Borrador |
+| **Estado** | Aprobado |
 | **Autor** | Yaco10 con IA |
-| **Revisor** | Pendiente |
+| **Revisor** | Yaco10 (autoaprobado, proyecto individual) |
 
 ## 1. Resumen del enfoque
 
@@ -137,4 +137,4 @@ Se construye de lo común a lo particular: primero el contenedor de la app (men�
 
 | Fecha | Tarea | Nota |
 |---|---|---|
-| 2026-11-26 | — | Plan en borrador. Hallazgo al planificar: `pager.tsx` ya usa 768 px para el tamaño de página, y la spec fija 1024 px (T-1) |
+| 2026-11-26 | — | Plan aprobado por Yaco10. Plan en borrador. Hallazgo al planificar: `pager.tsx` ya usa 768 px para el tamaño de página, y la spec fija 1024 px (T-1) |
