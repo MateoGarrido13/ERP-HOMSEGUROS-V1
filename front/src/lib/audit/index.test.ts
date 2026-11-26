@@ -48,6 +48,16 @@ describe("registrarAuditoriaSinFallar (ERP-291)", () => {
   });
 });
 
+describe("registrarAuditoriaSinFallar: secretos dentro del mensaje", () => {
+  test("una URL con token en el mensaje del error no llega al log", async () => {
+    registrar.mockRejectedValue(new Error("fetch failed: https://x.test/auth/v1/verify?token_hash=SECRETO"));
+    await registrarAuditoriaSinFallar("u1", "pas", "cambio-contrasena");
+    const salida = JSON.stringify(vi.mocked(console.error).mock.calls);
+    expect(salida).not.toContain("SECRETO");
+    expect(salida).toContain("[url]");
+  });
+});
+
 describe("registrarAuditoria (sin cambios)", () => {
   test("sigue propagando el error al que llama", async () => {
     registrar.mockRejectedValue(new Error("RLS"));

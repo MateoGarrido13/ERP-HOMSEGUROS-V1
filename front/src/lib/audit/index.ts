@@ -1,5 +1,6 @@
 import { AuditoriaRepoSupabase } from "./repo.supabase";
 import type { AccionAuditoria, Rol } from "../auth/types";
+import { motivoSeguro } from "../errores";
 
 const auditoriaRepo = new AuditoriaRepoSupabase();
 
@@ -13,8 +14,9 @@ export function registrarAuditoria(usuarioId: string, rol: Rol, accion: AccionAu
 // Para los caminos donde la acción principal ya se hizo y no se puede deshacer
 // (ERP-291): si la auditoría falla, no se rompe la operación, pero queda un
 // registro estructurado y buscable (`evento: "auditoria.fallo"`) para alertar
-// o revisar a mano. Solo se loguea el mensaje del error, nunca el objeto
-// completo, para no arrastrar tokens ni contraseñas.
+// o revisar a mano. Solo se loguea el mensaje del error (sin URLs y acotado,
+// ver `motivoSeguro`), nunca el objeto completo, para no arrastrar tokens ni
+// contraseñas.
 export async function registrarAuditoriaSinFallar(
   usuarioId: string,
   rol: Rol,
@@ -31,7 +33,7 @@ export async function registrarAuditoriaSinFallar(
         accion,
         usuarioId,
         rol,
-        motivo: error instanceof Error ? error.message : "error desconocido",
+        motivo: motivoSeguro(error),
       }),
     );
     return false;

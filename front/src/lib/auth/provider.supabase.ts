@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { createClient as createStatelessClient } from "@supabase/supabase-js";
 
 import { createClient } from "../supabase/server";
+import { motivoSeguro } from "../errores";
 import { normalizarEmail } from "./validation";
 import type {
   AuthProvider,
@@ -129,17 +130,17 @@ export class AuthProviderSupabase implements AuthProvider {
     // (la contraseña puede haber cambiado ya y el enlace está gastado).
     const idRecuperacion = data.user.id;
     const cerrar = async () => {
-      try {
-        await supabase.auth.signOut({ scope: "local" });
-      } catch (error) {
+      const registrar = (motivo: unknown) =>
         console.error(
           "[recuperacion]",
-          JSON.stringify({
-            evento: "recuperacion.signout-fallo",
-            usuarioId: idRecuperacion,
-            motivo: error instanceof Error ? error.message : "error desconocido",
-          }),
+          JSON.stringify({ evento: "recuperacion.signout-fallo", usuarioId: idRecuperacion, motivo: motivoSeguro(motivo) }),
         );
+      try {
+        // supabase-js suele informar el fallo en `{ error }` en vez de lanzar.
+        const { error: signOutError } = await supabase.auth.signOut({ scope: "local" });
+        if (signOutError) registrar(signOutError);
+      } catch (error) {
+        registrar(error);
       }
     };
 
@@ -184,7 +185,7 @@ export class AuthProviderSupabase implements AuthProvider {
         JSON.stringify({
           evento: "recuperacion.alcambiar-fallo",
           usuarioId,
-          motivo: error instanceof Error ? error.message : "error desconocido",
+          motivo: motivoSeguro(error),
         }),
       );
     } finally {
