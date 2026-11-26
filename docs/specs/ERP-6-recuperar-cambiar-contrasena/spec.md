@@ -52,11 +52,11 @@ Dos caminos: **recuperar** (sin sesión, por enlace al correo) y **cambiar** (co
 **Recuperar**
 1. En `/` el usuario elige "Olvidé mi contraseña" → `/recuperar`.
 2. Envía `EMAIL`. La acción valida formato; si es inválido marca el campo y no busca la cuenta.
-3. Llama `requestPasswordReset(email)`. El proveedor, solo si la cuenta existe y está activa, genera un enlace de un solo uso con vencimiento y lo envía por correo.
-4. La pantalla muestra **siempre** el aviso: "Si el email está registrado, va a llegar un mensaje para elegir una contraseña nueva." (también para email inexistente o cuenta inactiva, sin enviar nada).
+3. Llama `requestPasswordReset(email)`. El proveedor pide a Supabase Auth el enlace de un solo uso con vencimiento, que se envía por correo si el email existe. Como un cliente anónimo no puede leer `usuario`, el estado de la cuenta se comprueba recién al guardar (paso 7).
+4. La pantalla muestra **siempre** el aviso: "Si el email está registrado, va a llegar un mensaje para elegir una contraseña nueva." (también para email inexistente o cuenta inactiva; a una cuenta suspendida el correo puede llegar, pero su enlace no sirve para restablecer: SUP-4).
 5. Falla del servicio de correo → "No pudimos enviar el mensaje. Probá de nuevo." y no queda emitido ningún enlace (el proveedor debe revertirlo).
-6. El enlace abre `/recuperar/nueva?token=…`. `checkResetToken` valida: si está vencido, usado o es inválido → "Este enlace ya no sirve. Pedí uno nuevo." con enlace a `/recuperar`.
-7. Con enlace vigente, el usuario carga `CONTRASEÑA NUEVA` y `CONFIRMACIÓN`. La acción valida coincidencia y política; luego `resetPassword(token, nueva)`.
+6. El enlace abre `/recuperar/nueva?token=…`. `checkResetToken` solo valida la forma del token: Supabase no permite saber si está vencido o usado sin gastarlo (SUP-5). Un token con forma inválida → "Este enlace ya no sirve. Pedí uno nuevo." con enlace a `/recuperar`.
+7. El usuario carga `CONTRASEÑA NUEVA` y `CONFIRMACIÓN`. La acción valida coincidencia y política; luego `resetPassword(token, nueva)`: consume el enlace, comprueba que la cuenta esté activa y guarda la contraseña. Si el enlace está vencido o usado, o la cuenta está suspendida o dada de baja → "Este enlace ya no sirve. Pedí uno nuevo." y no se cambia nada.
 8. En éxito: se invalida el enlace, queda sin efecto la contraseña anterior, se audita `cambio-contrasena` y se redirige a `/` con aviso de éxito.
 
 **Cambiar (con sesión)**
@@ -105,7 +105,7 @@ Server Action cambiarContrasena(prev, FormData{ actual, password, confirm }) →
 | RN-2 | Mismo aviso para email inexistente y cuenta inactiva. | CU-02 RN_2 |
 | RN-3 | Enlace de un solo uso y con vencimiento; el correo no muestra la contraseña. | CU-02 RN_3 |
 | RN-4 | La nueva cumple la política y es distinta de la anterior. | CU-02 RN_4 |
-| RN-5 | Cuenta suspendida o dada de baja no recibe enlace. | CU-02 RN_5 |
+| RN-5 | Una cuenta suspendida o dada de baja no puede restablecer su contraseña (el enlace no sirve al guardar). | CU-02 RN_5 (adaptada: SUP-4) |
 | RN-6 | La auditoría anota el cambio sin la contraseña. | CU-02 RN_6 |
 
 ## 6. Casos borde y manejo de errores
@@ -113,9 +113,9 @@ Server Action cambiarContrasena(prev, FormData{ actual, password, confirm }) →
 | Situación | Comportamiento esperado |
 |---|---|
 | Email vacío o inválido | Marca el campo; no busca la cuenta. |
-| Email inexistente / cuenta inactiva | Mismo aviso; no se envía nada. |
+| Email inexistente / cuenta inactiva | Mismo aviso. Email inexistente: no se envía nada. Cuenta suspendida: el correo puede salir, pero el enlace no restablece (SUP-4). |
 | Pedidos repetidos del enlace | Un enlace nuevo invalida el anterior (SUP-3). Abuso: límite nativo de Supabase (PA-3); si Supabase lo rechaza, se muestra el mismo aviso genérico sin revelar nada. |
-| Enlace vencido, usado o inválido | "Este enlace ya no sirve. Pedí uno nuevo." |
+| Enlace vencido, usado o inválido | "Este enlace ya no sirve. Pedí uno nuevo." Se detecta al guardar (token con forma inválida, al abrir). |
 | Enlace usado dos veces (doble clic en Guardar) | La segunda llamada recibe "enlace inválido"; la contraseña no cambia dos veces. |
 | Contraseñas que no coinciden / no cumplen / igual a la anterior | Marca el campo, no reemplaza. |
 | Falla del servicio de correo | Mensaje de error; no queda enlace emitido. |
@@ -126,10 +126,10 @@ Server Action cambiarContrasena(prev, FormData{ actual, password, confirm }) →
 **Recuperar**
 - [ ] CA-1: En `/` hay una opción "Olvidé mi contraseña" que lleva a un formulario que pide `EMAIL`.
 - [ ] CA-2: Con email vacío o inválido se marca el campo y el proveedor no busca la cuenta.
-- [ ] CA-3: Con email no registrado y con cuenta suspendida se ve el mismo aviso que con una cuenta válida y no se envía correo.
+- [ ] CA-3: Con email no registrado y con cuenta suspendida se ve el mismo aviso que con una cuenta válida; con una cuenta suspendida el enlace no permite restablecer la contraseña.
 - [ ] CA-4: Con cuenta válida se envía un correo con un enlace de un solo uso y con vencimiento; el correo no contiene la contraseña.
 - [ ] CA-5: Si el servicio de correo falla se informa que no se pudo enviar y el enlace no queda vigente.
-- [ ] CA-6: Un enlace vencido o ya usado muestra "Este enlace ya no sirve. Pedí uno nuevo." y no permite cambiar la contraseña.
+- [ ] CA-6: Un enlace vencido o ya usado, al guardar la contraseña nueva, muestra "Este enlace ya no sirve. Pedí uno nuevo." y no cambia la contraseña.
 - [ ] CA-7: La pantalla de contraseña nueva pide `CONTRASEÑA NUEVA` y `CONFIRMACIÓN`; no guarda si no coinciden, si no cumplen la política o si es igual a la anterior.
 - [ ] CA-8: Al guardar, la contraseña anterior deja de servir para ingresar, el enlace queda invalidado y se vuelve a `/`.
 
@@ -154,6 +154,8 @@ Server Action cambiarContrasena(prev, FormData{ actual, password, confirm }) →
 - [x] SUP-1: Política = mínimo 8 caracteres con al menos un dígito, una mayúscula y una minúscula, y distinta de la anterior. Se valida en la app y se configura igual en Supabase Auth (`password_requirements`). → *confirmado por: revisión conjunta 2026-11-15; reconfirmado 2026-11-25*
 - [x] SUP-2: El canal es el correo asociado a la cuenta (CU-02 SUP_1). → *confirmado por: revisión conjunta 2026-11-15*
 - [x] SUP-3: Un enlace nuevo deja sin efecto el anterior del mismo usuario. → *confirmado por: revisión conjunta 2026-11-15*
+- [x] SUP-4: A una cuenta suspendida no se le impide recibir el correo; se bloquea al guardar. → *confirmado por: 2026-11-25 (opción "bloquear al guardar"; evita una función SQL `security definer` y el riesgo de enumeración)*
+- [x] SUP-5: La vigencia del enlace se detecta al guardar y no al abrir la pantalla, porque `verifyOtp` de Supabase consume el enlace y no hay consulta que no lo gaste. → *confirmado por: 2026-11-25 (opción "detectar al guardar"; evita que los escáneres de correo gasten el enlace)*
 
 ## 10. Preguntas abiertas
 
@@ -169,3 +171,4 @@ Server Action cambiarContrasena(prev, FormData{ actual, password, confirm }) →
 | 2026-10-31 | Versión inicial | | |
 | 2026-11-15 | Aprobada en revisión conjunta | PA-1 Supabase Auth nativo (ya en ADR-004); PA-2 vigencia 24h con f_inicio; PA-3 límite x (sin definir); PA-4 no se cierran otras sesiones al cambiar contraseña; SUP-1 política alfanumérica (al menos un dígito, una mayúscula y una minúscula); SUP-2 canal de recuperación: correo asociado a la cuenta; SUP-3 enlace nuevo invalida el anterior del mismo usuario | |
 | 2026-11-25 | Se reconcilian las secciones 2 a 6 y 9-10 con lo decidido el 15/11; PA-3 = límite nativo de Supabase; SUP-1 confirmada como 8 + dígito + mayúscula + minúscula; se elimina `provider.dev.ts` | Dejar la spec consistente antes de implementar | |
+| 2026-11-25 | Desvíos hallados al implementar: el enlace se valida al guardar (SUP-5) y la cuenta suspendida se bloquea al guardar (SUP-4); se ajustan 4.1 pasos 3, 4, 6 y 7, RN-5, CA-3, CA-6 y casos borde. `resetPassword` y `changePassword` devuelven un resultado más rico que el de la épica 4.4 (necesario para auditar) | Limitaciones de Supabase Auth detectadas en la implementación | |

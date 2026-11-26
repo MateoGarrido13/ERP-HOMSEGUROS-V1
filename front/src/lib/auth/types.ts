@@ -9,10 +9,17 @@ export interface Usuario {
   // PA-9 de la épica); apellido y dni son internos de UsuarioRepo, no se
   // exponen acá.
   nombre: string;
+  // Partes del nombre completo (ERP-7): solo `nombrePila` es editable desde
+  // el perfil; `apellido` queda fijo y se muestra junto al nombre.
+  nombrePila: string;
+  apellido: string;
   telefono: string;
   rol: Rol;
   organizacion: string;
   estado: EstadoUsuario;
+  // Matrícula propia del PAS (productor.matricula_ssn); null para los demás
+  // roles, que no tienen fila en `productor` (SUP-3 de la épica).
+  matricula: string | null;
 }
 
 // Subconjunto de Usuario para contextos fuera del repositorio de usuarios

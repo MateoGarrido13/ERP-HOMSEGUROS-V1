@@ -17,7 +17,13 @@ export function proxy(request: NextRequest) {
     // Con cookie, redirigir al inicio del rol requeriría consultarlo en la
     // base (no está en la cookie): esa redirección la hace la página (T-11),
     // no el proxy.
-    return NextResponse.next();
+    const response = NextResponse.next();
+    if (pathname === "/recuperar/nueva") {
+      // El token del enlace va en la URL: que no salga por el Referer ni se cachee.
+      response.headers.set("Referrer-Policy", "no-referrer");
+      response.headers.set("Cache-Control", "no-store");
+    }
+    return response;
   }
 
   if (!tieneCookieDeSesion(request)) {

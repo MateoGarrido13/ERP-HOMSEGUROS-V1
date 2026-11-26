@@ -4,7 +4,7 @@
 |---|---|
 | **Spec** | [`spec.md`](spec.md) (aprobada 2026-11-15; reconciliada 2026-11-25) |
 | **US** | ERP-8 |
-| **Estado** | Aprobado |
+| **Estado** | En ejecución (código integrado en `integracion/acceso-pendientes`; falta la prueba manual en navegador y la validación final) |
 | **Autor** | Yaco10 con IA |
 | **Revisor** | — |
 
@@ -24,7 +24,7 @@ Cambio chico (2 a 3 tareas): la acción en el servidor y el botón con confirmac
 
 ### Fase 1 – Lógica
 
-- [ ] **T-1 – Acción de cerrar sesión**
+- [x] **T-1 – Acción de cerrar sesión**
   - **Qué:** `cerrarSesion`: lee la cookie; si la sesión es válida, `destroySession` y auditoría `cierre`; siempre borra la cookie y redirige a `/`. Idempotente; ante falla del proveedor, borra igual y deja el error en el log.
   - **Archivos:** `front/src/app/(app)/perfil/logout-action.ts` (nuevo), `front/src/lib/auth/session.ts` (modificar: `clearSession`)
   - **Depende de:** ERP-5 T-6, T-7
@@ -34,7 +34,7 @@ Cambio chico (2 a 3 tareas): la acción en el servidor y el botón con confirmac
 
 ### Fase 2 – Interfaz
 
-- [ ] **T-2 – Botón y diálogo de confirmación**
+- [x] **T-2 – Botón y diálogo de confirmación**
   - **Qué:** `LogoutButton` (cliente) con diálogo modal (foco atrapado, `Esc` cancela); "Cancelar" cierra sin llamar al servidor; "Cerrar sesión" invoca la acción con botón deshabilitado mientras corre. Se ubica en `/perfil`.
   - **Archivos:** `front/src/components/auth/logout-button.tsx` (nuevo), `front/src/components/auth/profile-screen.tsx` (modificar: ubicar el botón)
   - **Depende de:** T-1, ERP-7 T-4
@@ -44,7 +44,7 @@ Cambio chico (2 a 3 tareas): la acción en el servidor y el botón con confirmac
 
 ### Fase 3 – Casos borde y pulido
 
-- [ ] **T-3 – Rutas protegidas sin caché y recorrido de seguridad**
+- [x] **T-3 – Rutas protegidas sin caché y recorrido de seguridad**
   - **Qué:** encabezado `Cache-Control: no-store` en las respuestas del grupo `(app)`; verificar que tras cerrar, reutilizar la cookie y usar "Atrás" no muestran datos nuevos.
   - **Archivos:** `front/src/proxy.ts` (ya fija `Cache-Control: no-store`; verificar que cubre el grupo `(app)` y no las estáticas)
   - **Depende de:** T-2
@@ -74,8 +74,8 @@ Cambio chico (2 a 3 tareas): la acción en el servidor y el botón con confirmac
 
 ## 6. Validación final
 
-- [ ] `npm run lint` sin errores
-- [ ] `npm run build` pasa
+- [x] `npm run lint` sin errores (0 errores, 7 warnings de stubs de ERP-6)
+- [x] `npm run build` pasa
 - [ ] Todos los criterios de aceptación de la spec recorridos y marcados
 - [ ] Spec actualizada si el diseño cambió durante la implementación
 - [ ] PR abierto, revisado por el otro integrante
@@ -84,3 +84,7 @@ Cambio chico (2 a 3 tareas): la acción en el servidor y el botón con confirmac
 
 | Fecha | Tarea | Nota |
 |---|---|---|
+| 2026-11-25 | T-1 | Acción ya existía; verificada contra la spec y cubierta con `logout-action.test.ts` (7 tests: con sesión audita y destruye, orden auditar→destruir, sesión vencida sin auditoría, falla del proveedor borra cookie igual, falla de auditoría no traba, idempotencia). `npx vitest run`: 43 passed. DESVÍO: `destroySession` y `clearSession` llaman `signOut()` con alcance global y cierran TAMBIÉN las sesiones de otros dispositivos (probado: signOut global deja inválida la sesión B; con `{ scope: 'local' }` B sigue válida). Contradice PA-1 (los otros dispositivos quedan abiertos). Corregirlo toca `session.ts` y `AuthProviderSupabase.destroySession`, fuera de la surface: queda reportado. |
+| 2026-11-25 | T-2 | `LogoutButton` ya existía (diálogo role=dialog aria-modal, foco atrapado, Esc cancela, Cancelar sin llamada al servidor, botones deshabilitados mientras corre) y se ubica en `/perfil` vía `ProfileScreen` (ERP-7). Verificado leyendo el código y con curl de `/perfil` (contiene el botón Cerrar sesión); no hay tests de componentes (sin jsdom). La interacción del diálogo en navegador NO se probó. |
+| 2026-11-25 | T-3 | El `Cache-Control: no-store` ya está en `src/proxy.ts` (no en next.config.ts). Con `next start -p 3001` y Supabase local: sin cookie `/perfil`, `/pendientes`, `/red` → 307 a `/`; con sesión PAS `/perfil` → 200 con `cache-control: no-store`; tras cerrar la sesión (signOut local) reenviar la cookie vieja a `/perfil` → 307 a `/`. |
+| 2026-11-25 | Validación final | `npm run lint`: 0 errores y 7 warnings (parámetros sin usar de stubs ERP-6). `npx tsc --noEmit`: sin errores. `npx vitest run`: 4 archivos, 43 tests passed. `npm run build`: OK. |
