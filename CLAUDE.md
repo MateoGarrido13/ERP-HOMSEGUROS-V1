@@ -20,7 +20,10 @@ Cada carpeta de código tiene su propio `package.json` y se instala y despliega 
 
 ## Jira
 
-Jira es la fuente de verdad del trabajo: todo trabajo entra por un issue y deja su resultado en Jira. Antes de trabajar, leer `docs/politica-jira.md` (reglas de entrada y salida, qué puede hacer el agente por su cuenta y qué consulta) y `docs/guia-jira.md` (estructura Épica → Historia → Subtarea, Tareas, etiquetas, estados).
+Jira es la fuente de verdad del trabajo: todo trabajo entra por un issue y deja su resultado en Jira. La política completa se carga acá abajo; la estructura (Épica → Historia → Subtarea, Tareas, etiquetas, estados) está en `docs/guia-jira.md` y se lee antes de crear o editar issues.
+
+@docs/politica-jira.md
+
 
 - Sin issue no se arranca: se propone crearlo y se espera confirmación.
 - Los criterios de aceptación de una historia son el alcance; no se cambian en silencio.
