@@ -75,7 +75,7 @@ Referencia de diseño (Figma, archivo `dqM3vmFc3i8F3FyKIqiXvD`): Acceso PC `80:7
 - Menú lateral por rol: PAS = Pendientes y Perfil; directivo y administrativo = Red y Perfil. Solo se muestran ítems con pantalla existente (épica de Acceso 4.2; decisión 2026-11-26).
 - Accesibilidad: el menú lateral es un `nav` con el ítem actual marcado con `aria-current="page"`; el diálogo atrapa el foco y se cierra con Escape (comportamiento actual, a conservar).
 
-**Diferencias entre el diseño de PC y lo decidido (se implementa lo decidido):**
+**Diferencias entre el diseño de PC y lo decidido (se implementa lo decidido).** El 2026-11-26 se actualizó el Figma para los cuatro primeros puntos, tanto en las pantallas de PC como en las de mobile. El menú no se tocó: el diseño muestra el menú final y la implementación va agregando ítems a medida que existen sus pantallas.
 
 | Dónde | Dice el Figma | Se implementa | Fuente |
 |---|---|---|---|
@@ -148,5 +148,6 @@ Referencia de diseño (Figma, archivo `dqM3vmFc3i8F3FyKIqiXvD`): Acceso PC `80:7
 
 | Fecha | Cambio | Motivo | PR |
 |---|---|---|---|
+| 2026-11-26 | Figma actualizado: vigencia de 24 horas, ayuda de contraseña con la política completa, placeholder "Nombre" y teléfono en tres partes (PC y mobile) | PA-2 | |
 | 2026-11-26 | Resueltos SUP-1 a SUP-5 y PA-1 y PA-2 (punto de corte 1024 px; cambiar contraseña como Editar perfil; avatar con iniciales; menú lateral para todos los roles; detalle de Aviso y Lead fuera de alcance; panel de marca con color y mensaje; Figma lo actualiza el agente) | Revisión del borrador con Yaco10 | |
 | 2026-11-26 | Versión inicial (borrador) | Las specs de Acceso y Pendientes se redactaron solo para mobile; el Figma trae las versiones de escritorio. Decisiones del 2026-11-26: teléfono en tres partes, vigencia de 24 horas, menú solo con lo implementado | |
