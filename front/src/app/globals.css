@@ -24,6 +24,9 @@
   --hom-color-field-line: #c5ccd4;
   --hom-color-stage: #f5f5f5;
   --hom-color-disabled: #eef0f3;
+  /* Menú lateral de escritorio (Figma, "PAS PC · Perfil · Ver"). */
+  --hom-color-nav: #f7fafa;
+  --hom-color-nav-active: #e5f2f2;
 }
 
 @theme inline {
@@ -46,6 +49,8 @@
   --color-field-line: var(--hom-color-field-line);
   --color-stage: var(--hom-color-stage);
   --color-disabled: var(--hom-color-disabled);
+  --color-nav: var(--hom-color-nav);
+  --color-nav-active: var(--hom-color-nav-active);
   --font-sans: var(--font-dm), "DM Sans", sans-serif;
   --radius-pill: 999px;
   --radius-card: 12px;
