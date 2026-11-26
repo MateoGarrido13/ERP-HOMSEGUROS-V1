@@ -4,8 +4,10 @@ import { useSyncExternalStore } from "react";
 
 import { BrandButton } from "../ui/brand-button";
 
-// 5 por página en mobile y 10 en desktop (PA-2). `md` de Tailwind = 768px.
-const CONSULTA_DESKTOP = "(min-width: 768px)";
+// 5 por página en mobile y 10 en desktop (PA-2). El punto de corte es el mismo
+// que el del layout de escritorio: `lg` de Tailwind = 1024px (spec de layout
+// de escritorio, SUP-1).
+const CONSULTA_DESKTOP = "(min-width: 1024px)";
 
 function suscribir(cb: () => void) {
   const mq = window.matchMedia(CONSULTA_DESKTOP);
