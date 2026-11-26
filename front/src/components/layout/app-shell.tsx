@@ -35,7 +35,8 @@ export function AppShell({ rol, children }: { rol: Rol; children: ReactNode }) {
         <AppNav items={items} variante="lateral" />
       </aside>
       <div className="flex min-h-dvh flex-1 flex-col lg:min-w-0">
-        <main className="flex-1">{children}</main>
+        {/* En mobile la barra inferior es fija: el contenido deja su alto libre. */}
+        <main className="flex-1 pb-[calc(4rem+env(safe-area-inset-bottom))] lg:pb-0">{children}</main>
         <AppNav items={items} variante="inferior" />
       </div>
     </div>
