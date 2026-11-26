@@ -67,8 +67,8 @@ La página no tiene ninguna Server Action ni ejecuta escrituras (CA-8).
 
 | Pantalla / componente | Estados | Comportamiento |
 |---|---|---|
-| Sección de avisos | cargando (esqueleto) · con datos · vacío · error | Vacío: "0 avisos" sin tarjetas. |
-| Sección de leads | cargando · con datos · vacío · error | Vacío: "0 leads" sin tarjetas. Cada sección es independiente: la falla de una no oculta la otra. |
+| Sección de avisos | cargando (esqueleto) · con datos · vacío · error | Vacío: "0 avisos", sin tarjetas y con el mensaje "No tenés avisos por ahora.". |
+| Sección de leads | cargando · con datos · vacío · error | Vacío: "0 leads", sin tarjetas y con el mensaje "No tenés leads por ahora.". Cada sección es independiente: la falla de una no oculta la otra. |
 | Tarjeta de aviso | cerrada · abierta | Abierta muestra el detalle de solo lectura. |
 | Tarjeta de lead | cerrada · abierta | Abierta muestra la descripción de solo lectura. |
 
@@ -114,9 +114,9 @@ interface PendientesRepo {
 
 | Situación | Comportamiento esperado |
 |---|---|
-| Sin avisos | "0 avisos", sin tarjetas; los leads se muestran igual. |
+| Sin avisos | "0 avisos" y el mensaje "No tenés avisos por ahora.", sin tarjetas; los leads se muestran igual. |
 | Sin leads | "0 leads", sin tarjetas. |
-| Sin avisos ni leads | Ambas secciones en cero, sin mensaje de error. |
+| Sin avisos ni leads | Ambas secciones en cero, cada una con su mensaje de vacío y sin mensaje de error. |
 | Lead modificado hoy / ayer / hace N días | "Cargado hoy" / "1 día transcurrido" / "N días transcurridos". |
 | Fecha futura en un lead (dato inconsistente) | Se trata como "Cargado hoy" y no se muestran días negativos. |
 | Rol directivo o administrativo en la ruta | Redirige a `/red` (PA-3). |
@@ -169,3 +169,4 @@ interface PendientesRepo {
 | 2026-10-31 | Versión inicial | | |
 | 2026-11-15 | Aprobada en revisión conjunta | PA-1 orden de avisos por fecha DESC (más reciente arriba; columna por verificar contra sql/schema/schema.sql); PA-2 avisos no resueltos siguen figurando, paginación mobile 5 / desktop 10; PA-3 directivo/administrativo ven /red con listado de PAS tras login; PA-4 avisos asociados a poliza y cliente con id_cliente e id_poliza; muestra 'N POLIZA:' y 'Cliente: [Apellido],[Nombre]', N POLIZA es el registrado en la compañía | |
 | 2026-11-25 | Se reconcilian secciones 2 a 6 y 9-10 con el acta del 15/11: orden DESC, paginación 5/10, redirección a `/red`, modelo con ids de cliente y póliza, repositorio sobre Supabase en vez de `repo.dev.ts`; se agregan CA-11 y CA-12 | Dejar la spec consistente antes de implementar | |
+| 2026-11-26 | Los estados vacíos muestran un mensaje ("No tenés avisos por ahora." / "No tenés leads por ahora.") además del contador en cero | Decisión de Yaco10 al implementar la spec de layout de escritorio: el Figma lo muestra en mobile y escritorio | |

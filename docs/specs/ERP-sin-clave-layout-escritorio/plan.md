@@ -49,7 +49,7 @@ Se construye de lo común a lo particular: primero el contenedor de la app (men�
   - **Cubre:** CA-3
   - **Verificación:** a 1440 px, dos paneles con el formulario centrado; a 390 px, idéntico a antes; el error de credenciales se ve bien en ambos; los tests existentes pasan.
 
-- [ ] **T-4 – Recuperar contraseña en dos paneles, "Volver" y textos**
+- [x] **T-4 – Recuperar contraseña en dos paneles, "Volver" y textos**
   - **Qué:** se aplica el contenedor de T-3 a recuperar 1, 2 y 3; en escritorio llevan el enlace "Volver" arriba a la izquierda del panel derecho. La pantalla "Revisá tu correo" dice que el enlace vence en 24 horas, y la ayuda de nueva contraseña usa `PASSWORD_POLICY_HINT` (la política completa).
   - **Archivos:** `front/src/app/(publico)/recuperar/page.tsx`, `front/src/app/(publico)/recuperar/nueva/page.tsx`, `front/src/components/auth/recover-form.tsx`, `front/src/components/auth/reset-password-form.tsx`
   - **Depende de:** T-3
@@ -141,11 +141,11 @@ Se construye de lo común a lo particular: primero el contenedor de la app (men�
 | 2026-11-26 | T-1 | `pager.tsx` pasa de 768 a 1024 px (`37798c7`) |
 | 2026-11-26 | T-2 | `AppShell` con menú lateral y barra inferior; `app-nav.tsx` (cliente) para el ítem activo; tokens `nav` y `nav-active` (`a624b71`). Los ítems no llevan ícono: no hay assets de íconos en el repo |
 | 2026-11-26 | T-3 | `auth-shell.tsx` con dos paneles; el login pasa a usarlo; mobile sin cambios, verificado con captura a 390 y 1440 px (`11174c6`) |
-| 2026-11-26 | T-4 | Parcial: recuperar 1 y 3 usan el contenedor y el enlace "Volver" (`11174c6`). Pendiente: el texto de vigencia (24 horas) y la pantalla "Revisá tu correo" no existen en el código (ver nota abajo) |
+| 2026-11-26 | T-4 | Recuperar usa el contenedor y el enlace "Volver" (`11174c6`); la vigencia de 24 horas se agregó al aviso existente (ver desvíos) |
 | 2026-11-26 | T-5, T-6 | Perfil con avatar de iniciales (`iniciales()` con 4 tests), botones en fila, edición en dos columnas (`f2de427`). La tarjeta de Rol, Matrícula y Organización queda como tarjeta de solo lectura (no como campos deshabilitados) para no cambiar mobile. Cambiar contraseña con formulario de 360 px (`6debcf9`) |
 | 2026-11-26 | T-7 | Diálogo de cerrar sesión: solo estilos de escritorio (420 px, fondo blanco); textos y orden de botones sin cambios (`6debcf9`) |
-| 2026-11-26 | T-8 | Pendientes: dos columnas desde `lg` (`e65a8bd`). Los estados vacíos siguen como en ERP-17 ("0 avisos", sin mensaje); la spec de escritorio (CA-9) pide un mensaje: contradicción a resolver |
+| 2026-11-26 | T-8 | Pendientes: dos columnas desde `lg` (`e65a8bd`). Se agrega el mensaje de estado vacío por sección (ver desvíos) |
 
-**Desvíos a resolver con el autor de la spec (se frenó, no se decidió solo):**
-1. **Vigencia del enlace (CA-4).** El diseño tiene una pantalla "Revisá tu correo" con "Vence en 24 horas", pero el código muestra un aviso en la misma pantalla ("Si el email está registrado, va a llegar un mensaje…") sin vigencia. Agregar la vigencia cambia el texto de ERP-6.
-2. **Estado vacío (CA-9).** ERP-17 dice "0 avisos" sin tarjetas y sin mensaje; la spec de escritorio y el Figma muestran "No tenés avisos por ahora." por columna.
+**Desvíos hallados al implementar y cómo se resolvieron (decisión de Yaco10, 2026-11-26):**
+1. **Vigencia del enlace (CA-4).** El código no tiene la pantalla "Revisá tu correo": se agregó "El enlace vence en 24 horas." al aviso que ya se muestra tras pedir el enlace. Se actualizó la spec de ERP-6.
+2. **Estado vacío (CA-9).** Pendientes muestra "No tenés avisos por ahora." y "No tenés leads por ahora." en mobile y escritorio. Se actualizó la spec de ERP-17.
