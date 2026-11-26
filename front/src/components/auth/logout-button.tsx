@@ -69,9 +69,9 @@ export function LogoutButton() {
             role="dialog"
             aria-modal="true"
             aria-labelledby={tituloId}
-            className="w-full max-w-[390px] rounded-xl border border-danger-border bg-danger-bg p-4"
+            className="w-full max-w-[390px] rounded-xl border border-danger-border bg-danger-bg p-4 lg:max-w-[420px] lg:border-line lg:bg-white lg:p-6 lg:shadow-xl"
           >
-            <p id={tituloId} className="text-sm font-medium text-title">
+            <p id={tituloId} className="text-sm font-medium text-title lg:text-base">
               ¿Querés cerrar la sesión?
             </p>
             <BrandButton

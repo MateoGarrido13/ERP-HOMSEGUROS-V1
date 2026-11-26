@@ -26,7 +26,7 @@ export interface EstadoRestablecer {
 }
 
 const AVISO_RECUPERACION =
-  "Si el email está registrado, va a llegar un mensaje para elegir una contraseña nueva.";
+  "Si el email está registrado, va a llegar un mensaje para elegir una contraseña nueva. El enlace vence en 24 horas.";
 const MENSAJE_ENVIO = "No pudimos enviar el mensaje. Probá de nuevo.";
 const MENSAJE_SERVICIO = "No pudimos completar la operación. Probá de nuevo.";
 

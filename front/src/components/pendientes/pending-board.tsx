@@ -20,6 +20,11 @@ export function PendingBoard({ avisos }: { avisos: Aviso[] }) {
       <h2 id="titulo-avisos" className="text-lg font-semibold text-title">
         {avisoCountLabel(avisos.length)}
       </h2>
+      {vista.items.length === 0 ? (
+        <p className="rounded-xl bg-disabled px-4 py-6 text-center text-sm text-slate">
+          No tenés avisos por ahora.
+        </p>
+      ) : null}
       {vista.items.map((aviso) => (
         <NoticeCard
           key={aviso.id}

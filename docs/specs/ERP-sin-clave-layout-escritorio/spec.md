@@ -69,7 +69,7 @@ Referencia de diseño (Figma, archivo `dqM3vmFc3i8F3FyKIqiXvD`): Acceso PC `80:7
 | Perfil · editar y editar con error | Una columna | Formulario de dos columnas: Nombre y Teléfono arriba; Rol y Matrícula debajo; Organización al final. El teléfono sigue en tres partes (decisión 2026-11-26). Enlace "Perfil" de vuelta arriba |
 | Cerrar sesión | Diálogo | Diálogo modal centrado de 420 px con fondo atenuado y los botones Cerrar sesión y Cancelar |
 | Pendientes · lista | Avisos y Leads apilados, 5 por página | Avisos y Leads lado a lado, cada uno con su contador ("3 avisos", "2 leads") y 10 por página |
-| Pendientes · vacío | Mensajes de vacío apilados | Dos columnas, cada una con "No tenés avisos por ahora." y "No tenés leads por ahora." |
+| Pendientes · vacío | Mensaje de vacío por sección, apiladas ("No tenés avisos por ahora." y "No tenés leads por ahora.") | Dos columnas, cada una con su mensaje |
 
 - Navegación de entrada y de salida: igual que hoy. Las tarjetas de Pendientes mantienen su comportamiento actual; el detalle de Aviso y Lead queda fuera de alcance.
 - Menú lateral por rol: PAS = Pendientes y Perfil; directivo y administrativo = Red y Perfil. Solo se muestran ítems con pantalla existente (épica de Acceso 4.2; decisión 2026-11-26).
@@ -80,7 +80,7 @@ Referencia de diseño (Figma, archivo `dqM3vmFc3i8F3FyKIqiXvD`): Acceso PC `80:7
 | Dónde | Dice el Figma | Se implementa | Fuente |
 |---|---|---|---|
 | Teléfono (editar perfil) | Un solo campo | Tres partes: prefijo (por defecto +54), área y número | ERP-7, decisión 2026-11-26 |
-| Recuperar 2 · vigencia | "Vence en 30 minutos" | "Vence en 24 horas" | ERP-6 PA-2 y `otp_expiry = 86400`, decisión 2026-11-26 |
+| Recuperar 2 · vigencia | Pantalla "Revisá tu correo" con "Vence en 30 minutos" | Sin pantalla propia: el aviso que se muestra tras pedir el enlace agrega "El enlace vence en 24 horas." | ERP-6 PA-2 y `otp_expiry = 86400`, decisión 2026-11-26 |
 | Recuperar 3 · ayuda | "Mínimo 8 caracteres" | El texto de la política vigente (8 o más caracteres con mayúscula, minúscula y número) | ERP-6 SUP-1 |
 | Editar perfil · nombre | Placeholder "Nombre y apellido" | Campo "Nombre"; el apellido no se edita | ERP-7 |
 | Menú | Cotizar, Cartera, Siniestros, Pendientes, Perfil | Solo los ítems con pantalla implementada | Decisión 2026-11-26 |
@@ -109,12 +109,12 @@ Referencia de diseño (Figma, archivo `dqM3vmFc3i8F3FyKIqiXvD`): Acceso PC `80:7
 - [ ] CA-1: Con ancho igual o mayor al punto de corte, las pantallas autenticadas muestran el menú lateral y no la barra inferior; por debajo, se ve la barra inferior y no el lateral.
 - [ ] CA-2: El menú lateral del PAS muestra Pendientes y Perfil; el de directivo y administrativo, Red y Perfil. El ítem de la pantalla actual está resaltado y marcado con `aria-current="page"`.
 - [ ] CA-3: Login, login con error y recuperar 1, 2 y 3 se ven en escritorio con dos paneles y el formulario del panel derecho centrado; en mobile se ven como antes.
-- [ ] CA-4: "Revisá tu correo" indica que el enlace vence en 24 horas y la ayuda de nueva contraseña muestra la política vigente completa.
+- [ ] CA-4: El aviso que se muestra tras pedir el enlace de recuperación indica que vence en 24 horas, y la ayuda de nueva contraseña muestra la política vigente completa.
 - [ ] CA-5: Perfil en escritorio muestra avatar con iniciales, tarjeta de datos y los tres botones en una fila.
 - [ ] CA-6: Editar perfil en escritorio muestra Nombre y Teléfono en dos columnas, con el teléfono en tres partes; guardar, cancelar y los errores se comportan igual que en mobile.
 - [ ] CA-7: Cerrar sesión muestra un diálogo centrado con fondo atenuado en escritorio; Cancelar y Escape lo cierran sin cerrar sesión.
 - [ ] CA-8: Pendientes en escritorio muestra Avisos y Leads lado a lado con sus contadores y 10 registros por página; en mobile, 5.
-- [ ] CA-9: Pendientes sin registros muestra, en escritorio, un mensaje de vacío por columna.
+- [ ] CA-9: Pendientes sin registros muestra, en mobile y en escritorio, el mensaje "No tenés avisos por ahora." y "No tenés leads por ahora." en su sección, con el contador en cero.
 - [ ] CA-10: Ninguna pantalla scrollea en horizontal a 390, 768, 1024 y 1440 px de ancho.
 - [ ] CA-11: Los tests existentes de Acceso, Perfil y Pendientes siguen pasando sin modificarse, y a 390 px de ancho las pantallas se ven como antes de este cambio.
 - [ ] CA-12: El template `docs/templates/template-spec.md` exige indicar el frame de escritorio en la sección 4.2.
@@ -152,3 +152,4 @@ Referencia de diseño (Figma, archivo `dqM3vmFc3i8F3FyKIqiXvD`): Acceso PC `80:7
 | 2026-11-26 | Figma actualizado: vigencia de 24 horas, ayuda de contraseña con la política completa, placeholder "Nombre" y teléfono en tres partes (PC y mobile) | PA-2 | |
 | 2026-11-26 | Resueltos SUP-1 a SUP-5 y PA-1 y PA-2 (punto de corte 1024 px; cambiar contraseña como Editar perfil; avatar con iniciales; menú lateral para todos los roles; detalle de Aviso y Lead fuera de alcance; panel de marca con color y mensaje; Figma lo actualiza el agente) | Revisión del borrador con Yaco10 | |
 | 2026-11-26 | Versión inicial (borrador) | Las specs de Acceso y Pendientes se redactaron solo para mobile; el Figma trae las versiones de escritorio. Decisiones del 2026-11-26: teléfono en tres partes, vigencia de 24 horas, menú solo con lo implementado | |
+| 2026-11-26 | CA-4 y CA-9 ajustados al código y a lo decidido al implementar: la vigencia va en el aviso de recuperación (ERP-6) y el mensaje de vacío rige también en mobile (ERP-17) | Decisión de Yaco10; se actualizan las specs de ERP-6 y ERP-17 | |

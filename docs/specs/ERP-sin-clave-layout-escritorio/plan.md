@@ -26,14 +26,14 @@ Se construye de lo común a lo particular: primero el contenedor de la app (men�
 
 ### Fase 1 – Base común
 
-- [ ] **T-1 – Alinear el tamaño de página de Pendientes con el punto de corte de 1024 px**
+- [x] **T-1 – Alinear el tamaño de página de Pendientes con el punto de corte de 1024 px**
   - **Qué:** hoy `CONSULTA_DESKTOP` es `(min-width: 768px)`; pasa a `(min-width: 1024px)` para que 5/10 por página cambien en el mismo ancho que el layout (SUP-1, RN-2).
   - **Archivos:** `front/src/components/pendientes/pager.tsx`
   - **Depende de:** —
   - **Cubre:** RN-2, CA-8
   - **Verificación:** a 1023 px se ven 5 por página y a 1024 px, 10; `npm run test`, `tsc` y `npm run lint` pasan.
 
-- [ ] **T-2 – Menú lateral en escritorio y barra inferior en mobile**
+- [x] **T-2 – Menú lateral en escritorio y barra inferior en mobile**
   - **Qué:** `AppShell` muestra, desde 1024 px, un menú lateral de 240 px con el logo arriba y los ítems del rol; por debajo, la barra inferior actual. El ítem de la pantalla actual va resaltado y con `aria-current="page"`; como eso requiere conocer la ruta, la lista de ítems pasa a un componente de cliente nuevo. Ítems según rol: PAS = Pendientes y Perfil; directivo y administrativo = Red y Perfil.
   - **Archivos:** `front/src/components/layout/app-shell.tsx` (modificar), `front/src/components/layout/app-nav.tsx` (nuevo, cliente)
   - **Depende de:** —
@@ -42,14 +42,14 @@ Se construye de lo común a lo particular: primero el contenedor de la app (men�
 
 ### Fase 2 – Acceso
 
-- [ ] **T-3 – Contenedor de acceso de dos paneles y login**
+- [x] **T-3 – Contenedor de acceso de dos paneles y login**
   - **Qué:** componente compartido con panel izquierdo de marca (color de fondo suave y mensaje "Bienvenido al Portal PAS", sin imagen, PA-1) y panel derecho con el formulario centrado de 360 px y el pie. Desde 1024 px reemplaza la tarjeta centrada actual (`sm:`); por debajo, el login queda igual que hoy. Se aplica al login, con y sin error.
   - **Archivos:** `front/src/components/layout/auth-shell.tsx` (nuevo), `front/src/app/(publico)/page.tsx` (modificar)
   - **Depende de:** —
   - **Cubre:** CA-3
   - **Verificación:** a 1440 px, dos paneles con el formulario centrado; a 390 px, idéntico a antes; el error de credenciales se ve bien en ambos; los tests existentes pasan.
 
-- [ ] **T-4 – Recuperar contraseña en dos paneles, "Volver" y textos**
+- [x] **T-4 – Recuperar contraseña en dos paneles, "Volver" y textos**
   - **Qué:** se aplica el contenedor de T-3 a recuperar 1, 2 y 3; en escritorio llevan el enlace "Volver" arriba a la izquierda del panel derecho. La pantalla "Revisá tu correo" dice que el enlace vence en 24 horas, y la ayuda de nueva contraseña usa `PASSWORD_POLICY_HINT` (la política completa).
   - **Archivos:** `front/src/app/(publico)/recuperar/page.tsx`, `front/src/app/(publico)/recuperar/nueva/page.tsx`, `front/src/components/auth/recover-form.tsx`, `front/src/components/auth/reset-password-form.tsx`
   - **Depende de:** T-3
@@ -58,21 +58,21 @@ Se construye de lo común a lo particular: primero el contenedor de la app (men�
 
 ### Fase 3 – Perfil
 
-- [ ] **T-5 – Perfil (ver) con avatar y botones en una fila**
+- [x] **T-5 – Perfil (ver) con avatar y botones en una fila**
   - **Qué:** en escritorio, avatar circular con las iniciales de nombre y apellido (SUP-3), tarjeta de datos de 560 px y los botones Editar, Cambiar contraseña y Cerrar sesión en una fila. La función que calcula las iniciales lleva su test.
   - **Archivos:** `front/src/components/auth/profile-screen.tsx`, `front/src/lib/auth/validation.ts` (función de iniciales), `front/src/lib/auth/validation.test.ts`
   - **Depende de:** T-2
   - **Cubre:** CA-5
   - **Verificación:** test de iniciales (nombre compuesto, un solo nombre, tildes); a 1440 px se ve como el frame "PAS PC · Perfil · Ver"; a 390 px sin cambios.
 
-- [ ] **T-6 – Editar perfil en dos columnas y cambiar contraseña con el mismo tratamiento**
+- [x] **T-6 – Editar perfil en dos columnas y cambiar contraseña con el mismo tratamiento**
   - **Qué:** en escritorio, el formulario de edición va en dos columnas (Nombre y Teléfono; Rol y Matrícula; Organización) con el teléfono en tres partes; el enlace de vuelta a Perfil queda arriba. La pantalla de cambiar contraseña usa el mismo estilo: formulario de 360 px alineado a la izquierda con los botones debajo (SUP-2). Guardar, cancelar y errores no cambian.
   - **Archivos:** `front/src/components/auth/profile-screen.tsx`, `front/src/components/auth/phone-field.tsx`, `front/src/components/auth/change-password-form.tsx`, `front/src/app/(app)/perfil/contrasena/page.tsx`
   - **Depende de:** T-5
   - **Cubre:** CA-6
   - **Verificación:** editar y guardar un perfil válido; provocar el error de nombre vacío y de teléfono corto a 1440 y 390 px; cambiar la contraseña de Juan; los tests existentes pasan sin modificarse.
 
-- [ ] **T-7 – Diálogo de cerrar sesión centrado**
+- [x] **T-7 – Diálogo de cerrar sesión centrado**
   - **Qué:** en escritorio el diálogo es un modal centrado de 420 px con fondo atenuado; Cancelar y Escape lo cierran sin cerrar sesión; conserva el foco atrapado.
   - **Archivos:** `front/src/components/auth/logout-button.tsx`
   - **Depende de:** T-5
@@ -81,7 +81,7 @@ Se construye de lo común a lo particular: primero el contenedor de la app (men�
 
 ### Fase 4 – Pendientes
 
-- [ ] **T-8 – Avisos y Leads lado a lado**
+- [x] **T-8 – Avisos y Leads lado a lado**
   - **Qué:** en escritorio, dos columnas con contador ("3 avisos", "2 leads") y 10 por página; sin registros, un mensaje de vacío por columna. En mobile, apilados y 5 por página, como hoy.
   - **Archivos:** `front/src/components/pendientes/pending-board.tsx`, `front/src/components/pendientes/notice-card.tsx`, `front/src/components/pendientes/lead-card.tsx`, `front/src/components/pendientes/section-skeleton.tsx`
   - **Depende de:** T-1, T-2
@@ -138,3 +138,14 @@ Se construye de lo común a lo particular: primero el contenedor de la app (men�
 | Fecha | Tarea | Nota |
 |---|---|---|
 | 2026-11-26 | — | Plan aprobado por Yaco10. Plan en borrador. Hallazgo al planificar: `pager.tsx` ya usa 768 px para el tamaño de página, y la spec fija 1024 px (T-1) |
+| 2026-11-26 | T-1 | `pager.tsx` pasa de 768 a 1024 px (`37798c7`) |
+| 2026-11-26 | T-2 | `AppShell` con menú lateral y barra inferior; `app-nav.tsx` (cliente) para el ítem activo; tokens `nav` y `nav-active` (`a624b71`). Los ítems no llevan ícono: no hay assets de íconos en el repo |
+| 2026-11-26 | T-3 | `auth-shell.tsx` con dos paneles; el login pasa a usarlo; mobile sin cambios, verificado con captura a 390 y 1440 px (`11174c6`) |
+| 2026-11-26 | T-4 | Recuperar usa el contenedor y el enlace "Volver" (`11174c6`); la vigencia de 24 horas se agregó al aviso existente (ver desvíos) |
+| 2026-11-26 | T-5, T-6 | Perfil con avatar de iniciales (`iniciales()` con 4 tests), botones en fila, edición en dos columnas (`f2de427`). La tarjeta de Rol, Matrícula y Organización queda como tarjeta de solo lectura (no como campos deshabilitados) para no cambiar mobile. Cambiar contraseña con formulario de 360 px (`6debcf9`) |
+| 2026-11-26 | T-7 | Diálogo de cerrar sesión: solo estilos de escritorio (420 px, fondo blanco); textos y orden de botones sin cambios (`6debcf9`) |
+| 2026-11-26 | T-8 | Pendientes: dos columnas desde `lg` (`e65a8bd`). Se agrega el mensaje de estado vacío por sección (ver desvíos) |
+
+**Desvíos hallados al implementar y cómo se resolvieron (decisión de Yaco10, 2026-11-26):**
+1. **Vigencia del enlace (CA-4).** El código no tiene la pantalla "Revisá tu correo": se agregó "El enlace vence en 24 horas." al aviso que ya se muestra tras pedir el enlace. Se actualizó la spec de ERP-6.
+2. **Estado vacío (CA-9).** Pendientes muestra "No tenés avisos por ahora." y "No tenés leads por ahora." en mobile y escritorio. Se actualizó la spec de ERP-17.

@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 import {
   componerTelefono,
+  iniciales,
   emailFieldError,
   nombreFieldError,
   parsearTelefono,
@@ -180,5 +181,24 @@ describe("parsearTelefono / telefonoLegible", () => {
   test("legible", () => {
     expect(telefonoLegible("541143219088")).toBe("+54 11 43219088");
     expect(telefonoLegible("")).toBe("—");
+  });
+});
+
+describe("iniciales", () => {
+  test("primera letra de nombre y apellido, en mayúscula", () => {
+    expect(iniciales("Laura", "Benítez")).toBe("LB");
+  });
+
+  test("con nombre o apellido compuesto usa la primera palabra de cada uno", () => {
+    expect(iniciales("María José", "de la Torre")).toBe("MD");
+  });
+
+  test("respeta tildes y minúsculas", () => {
+    expect(iniciales("álvaro", "ñandú")).toBe("ÁÑ");
+  });
+
+  test("sin apellido, solo la del nombre; sin nada, vacío", () => {
+    expect(iniciales("Laura", "")).toBe("L");
+    expect(iniciales("  ", " ")).toBe("");
   });
 });

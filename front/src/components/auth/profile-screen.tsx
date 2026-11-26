@@ -5,6 +5,7 @@ import { useActionState, useEffect, useRef, useState } from "react";
 
 import { guardarPerfil, type EstadoGuardarPerfil } from "../../app/(app)/perfil/actions";
 import {
+  iniciales,
   parsearTelefono,
   telefonoLegible,
   type TelefonoPartes,
@@ -111,7 +112,7 @@ export function ProfileScreen({
   );
 
   return (
-    <div className="flex flex-col gap-4 p-6">
+    <div className="flex flex-col gap-4 p-6 lg:max-w-[720px] lg:gap-5 lg:p-8">
       {contrasenaActualizada ? (
         <p
           role="status"
@@ -120,17 +121,34 @@ export function ProfileScreen({
           Contraseña actualizada.
         </p>
       ) : null}
-      <ScreenTitle className="text-[22px]">
+      {editando ? (
+        <button
+          type="button"
+          onClick={cancelar}
+          className="hidden items-center gap-1 self-start text-sm text-slate hover:text-title lg:flex"
+        >
+          <span aria-hidden="true">‹</span> Perfil
+        </button>
+      ) : null}
+      {editando ? null : (
+        <div
+          aria-hidden="true"
+          className="hidden h-[72px] w-[72px] items-center justify-center rounded-full bg-nav-active text-lg font-medium text-primary lg:flex"
+        >
+          {iniciales(usuario.nombrePila, usuario.apellido)}
+        </div>
+      )}
+      <ScreenTitle className="text-[22px] lg:text-[26px]">
         {usuario.nombrePila} {usuario.apellido}
       </ScreenTitle>
       {editando ? (
-        <form action={action} noValidate className="flex flex-col gap-3.5">
+        <form action={action} noValidate className="flex flex-col gap-3.5 lg:grid lg:grid-cols-2 lg:gap-x-6 lg:gap-y-4">
           {estado.formError ? (
             <p
               ref={alertaRef}
               role="alert"
               tabIndex={-1}
-              className="rounded-xl border border-danger-border bg-danger-bg px-3 py-2.5 text-sm text-danger outline-none"
+              className="rounded-xl border border-danger-border bg-danger-bg px-3 py-2.5 text-sm text-danger outline-none lg:col-span-2"
             >
               {estado.formError}
             </p>
@@ -150,17 +168,25 @@ export function ProfileScreen({
             onChange={setTelefono}
             error={estado.phoneError}
           />
-          {tarjetaFija}
-          <BrandButton type="submit" disabled={pendiente}>
-            {pendiente ? "Guardando…" : "Guardar"}
-          </BrandButton>
-          <BrandButton type="button" variant="outline" disabled={pendiente} onClick={cancelar}>
-            Cancelar
-          </BrandButton>
+          <div className="lg:col-span-2 lg:max-w-[560px]">{tarjetaFija}</div>
+          <div className="flex flex-col gap-3.5 lg:col-span-2 lg:flex-row lg:gap-3">
+            <BrandButton type="submit" disabled={pendiente} className="lg:w-auto lg:px-6">
+              {pendiente ? "Guardando…" : "Guardar"}
+            </BrandButton>
+            <BrandButton
+              type="button"
+              variant="outline"
+              disabled={pendiente}
+              onClick={cancelar}
+              className="lg:w-auto lg:px-6"
+            >
+              Cancelar
+            </BrandButton>
+          </div>
         </form>
       ) : (
         <>
-          <SurfaceCard>
+          <SurfaceCard className="lg:max-w-[560px]">
             <dl className="flex flex-col gap-3">
               {filasFijas.map((f) => (
                 <Fila key={f.etiqueta} {...f} />
@@ -168,19 +194,21 @@ export function ProfileScreen({
               <Fila etiqueta="Teléfono" valor={telefonoLegible(usuario.telefono)} />
             </dl>
           </SurfaceCard>
-          <BrandButton type="button" onClick={empezarEdicion}>
-            Editar
-          </BrandButton>
-          {hrefCambiarContrasena ? (
-            <Link
-              href={hrefCambiarContrasena}
-              className="text-center text-sm text-link underline underline-offset-2"
-            >
-              Cambiar contraseña
-            </Link>
-          ) : null}
-          <div className="text-center">
-            <LogoutButton />
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-3">
+            <BrandButton type="button" onClick={empezarEdicion} className="lg:w-auto lg:px-6">
+              Editar
+            </BrandButton>
+            {hrefCambiarContrasena ? (
+              <Link
+                href={hrefCambiarContrasena}
+                className="text-center text-sm text-link underline underline-offset-2 lg:inline-flex lg:h-10 lg:items-center lg:justify-center lg:rounded-full lg:border lg:border-field-line lg:px-6 lg:font-medium lg:text-title lg:no-underline lg:hover:bg-stage"
+              >
+                Cambiar contraseña
+              </Link>
+            ) : null}
+            <div className="text-center lg:ml-3">
+              <LogoutButton />
+            </div>
           </div>
         </>
       )}
